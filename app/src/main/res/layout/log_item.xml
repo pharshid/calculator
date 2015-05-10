@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" 
+    android:id="@+id/relativeLayout2"
+    android:orientation="vertical"
+
+    >
+    <CheckBox
+        android:id="@+id/add_to_favorites"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:button="@android:drawable/btn_star"
+        android:gravity="center"
+
+        />
+
+
+    <TextView
+         android:layout_width="match_parent"
+ 	     android:layout_height="wrap_content" 
+ 	     android:id="@+id/Log_title"
+         style="@style/CustomButton"
+         android:textSize="@dimen/log_expression_txt_size"
+        android:paddingTop="@dimen/padding_small"
+        android:textColor="@android:color/holo_blue_light"
+        android:gravity="left"
+        android:layout_toRightOf="@id/add_to_favorites"
+
+
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/LOG_detail"
+        android:layout_below="@+id/Log_title"
+        style="@style/CustomButton"
+        android:textSize="@dimen/log_result_txt_size"
+        android:textColor="@android:color/darker_gray"
+        android:gravity="right"
+
+        android:layout_toRightOf="@id/add_to_favorites"
+
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/LOG_tag"
+        android:layout_below="@id/LOG_detail"
+        style="@style/CustomButton"
+        android:textSize="@dimen/log_result_txt_size"
+        android:textColor="@android:color/darker_gray"
+        android:gravity="right"
+        android:layout_toRightOf="@id/add_to_favorites"
+        android:visibility="gone"
+        />
+
+
+</RelativeLayout>

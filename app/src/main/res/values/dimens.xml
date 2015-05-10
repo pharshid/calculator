@@ -1,0 +1,37 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+
+
+    <dimen name="activity_horizontal_margin">3dp</dimen>
+    <dimen name="activity_vertical_margin">3dp</dimen>
+    <dimen name="padding_small">4.0dp</dimen>
+    <dimen name="padding_medium">8.0dp</dimen>
+    <dimen name="padding_large">12.0dp</dimen>
+
+
+    <dimen name="text_size_medium">20sp</dimen>
+    <dimen name="app_icon_top_text_size">70sp</dimen>
+    <dimen name="app_icon_bottom_text_size">25sp</dimen>
+    <dimen name="app_title_top_margin_in_about">25dp</dimen>
+    <dimen name="btn_scientific_text_size">27sp</dimen>
+
+
+    <color name="abc_search_url_text_normal">#ff7fa87f</color>
+
+    <color name="arkaplan">#fffbfbfb</color>
+    <color name="yesil">#ff15e6b0</color>
+    <color name="beyaz">#ffffffff</color>
+    <color name="sonuc_renk">#ffb5b5b5</color>
+    <color name="btn1_1">#ff3a3a3a</color>
+    <color name="btn1_2">#803a3a3a</color>
+    <color name="btn2_1">#ff4a4a4a</color>
+    <color name="btn2_2">#804a4a4a</color>
+    <color name="btn3_1">#ff15e6b0</color>
+    <color name="btn3_2">#8015e6b0</color>
+    <color name="hata">#fff30050</color>
+    <color name="sonuc_dogru">#ff00bbd3</color>
+
+
+</resources>

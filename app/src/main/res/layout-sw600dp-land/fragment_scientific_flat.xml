@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayoutScientificCalc"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="horizontal"
+>
+
+
+
+
+
+
+        <LinearLayout
+            android:id="@+id/SecondRowScientific"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center" >
+
+            <Button
+                android:id="@+id/buttonSinus"
+                style="@style/scientific_button_port"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="@string/sin"
+                android:tag="@string/trigonomic"
+                />
+
+            <Button
+                android:id="@+id/buttonTan"
+                style="@style/scientific_button_port"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:text="@string/tan"
+                android:tag="@string/trigonomic"
+                />
+
+
+            <Button
+                android:id="@+id/buttonln"
+                style="@style/scientific_button_port"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+
+                android:layout_weight="1"
+                android:text="@string/ln"
+                android:tag="@string/ln_tag"
+
+                />
+
+
+            <Button
+                android:id="@+id/buttone"
+                style="@style/scientific_button_port"
+
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+
+                android:layout_weight="1"
+                android:text="@string/e"
+                android:tag="@string/e"
+
+                />
+
+
+            <Button
+                android:id="@+id/buttonpower"
+                style="@style/scientific_button_port"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+
+                android:text="@string/power"
+                android:tag="@string/power"
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ThirdRowScientific"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center" >
+
+
+
+          <Button
+            android:id="@+id/buttonCosinus"
+            style="@style/scientific_button_port"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+
+            android:layout_weight="1"
+            android:text="@string/cos"
+              android:tag="@string/trigonomic"
+            />
+
+
+            <Button
+                android:id="@+id/buttonCot"
+                style="@style/scientific_button_port"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="@string/cot"
+                android:tag="@string/trigonomic"
+                />
+
+            <Button
+                android:id="@+id/buttonlog"
+                style="@style/scientific_button_port"
+
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+
+                android:layout_weight="1"
+                android:text="@string/log"
+                android:tag="@string/log_tag"
+                />
+
+
+            <Button
+                android:id="@+id/buttonpie"
+                style="@style/scientific_button_port"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+
+                android:text="@string/Pi"
+                android:tag="@string/Pi"
+                />
+
+
+            <Button
+                android:id="@+id/buttonrad"
+                style="@style/scientific_button_port"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+
+                android:text="@string/sqrt"
+                android:tag="@string/sqrt"
+                />
+
+
+
+          <!--  <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1">
+
+                <Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/switch1"
+                    android:layout_centerInParent="true"
+                    android:textOff="DEG"
+                    android:textOn="RAD"
+                    android:checked="true"
+                    />
+            </RelativeLayout>
+-->
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
+</LinearLayout>

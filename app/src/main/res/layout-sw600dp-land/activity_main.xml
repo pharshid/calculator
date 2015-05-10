@@ -1,0 +1,276 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="horizontal"
+    tools:context=".MainActivity"
+    android:id="@+id/activity_body">
+
+
+
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+
+        >
+
+        <fragment
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.sepidsa.calculator.LogFragment"
+            android:tag="jake"
+            tools:layout="@layout/fragment_log"
+
+            />
+
+        </FrameLayout>
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="7"
+            >
+
+            <LinearLayout
+
+                android:id="@+id/MotherTop"
+                style="@style/TopSection"
+                android:orientation="vertical"
+                android:layout_weight="21"
+
+                >
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    >
+
+
+                    <com.sepidsa.calculator.AutoResizeTextView
+                        android:id="@+id/result"
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        style="@style/text_switcher"
+                        android:text="0"
+                        android:gravity="center_vertical|right"
+                        android:maxLines="1"
+                        android:paddingRight="@dimen/padding_medium"
+                        android:background="#1abc9c"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/scientific_mode_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:background="@android:color/transparent"
+                        android:textColor="@android:color/white"
+                        android:paddingLeft="@dimen/padding_small"
+                        android:text="RAD"
+                        />
+
+                    <TextView
+                        android:id="@+id/m_vaiable_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@id/scientific_mode_textview"
+                        android:background="@android:color/transparent"
+                        android:textColor="@android:color/white"
+                        android:paddingLeft="@dimen/padding_small"
+                        android:text=" M = 0"
+                        android:inputType="textMultiLine|textNoSuggestions"
+
+                        />
+
+
+
+
+
+                </RelativeLayout>
+
+
+
+
+            </LinearLayout>
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="12"
+                android:background="@android:color/transparent"
+                android:orientation="horizontal"
+                >
+
+
+
+
+                <com.sepidsa.calculator.AutoResizeTextView
+                    android:id="@+id/translationEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="@style/translation_box"
+                    />
+
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/fragment_container"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="66"
+                android:orientation="horizontal"
+                android:baselineAligned="true">
+
+                <LinearLayout
+                    android:id="@+id/FourthRowScientific"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".35"
+                    android:orientation="vertical"
+                    android:gravity="center" >
+
+                    <Button
+                        android:id="@+id/buttonColors"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        style="@style/CustomButton.icon_button."
+                        android:text="q"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:tag="q"
+                        android:textColor="#DADFE1"
+
+
+                        />
+
+                    <Button
+                        android:id="@+id/buttonLanguage"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        style="@style/CustomButton.icon_button."
+                        android:text="@string/language"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:textColor="#DADFE1"
+
+
+                        />
+
+
+                    <Button
+                        android:id="@+id/buttonMute"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        style="@style/CustomButton.icon_button."
+                        android:tag="@string/volume_high"
+                        android:text=""
+                        android:gravity="center_horizontal|center_vertical"
+                        android:textColor="#DADFE1"
+
+                        />
+
+
+
+
+
+                    <Button
+                        android:id="@+id/buttonSettings"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:text="@string/settings"
+                        android:tag="feedBack"
+                        style="@style/CustomButton.icon_button."
+                        android:gravity="center_horizontal|center_vertical"
+                        android:textColor="#DADFE1"
+
+                        />
+
+
+                      <RelativeLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="fill_parent"
+                   android:layout_weight="1">
+
+                   <Switch
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:id="@+id/switch_deg_rad"
+                       android:layout_centerInParent="true"
+                       android:textOff="DEG"
+                       android:textOn="RAD"
+                       android:checked="true"
+                       />
+               </RelativeLayout>
+
+
+
+
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/portrait_viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="99.5"
+                        android:tag="landscape_tablet"
+                        />
+                    <com.viewpagerindicator.CirclePageIndicator
+                        android:id="@+id/view_pager_indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:paddingTop="1dp"/>
+
+
+
+                </LinearLayout>
+
+
+                <fragment
+                    android:id="@+id/middle_frame"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:name="com.sepidsa.calculator.DialpadFragment"
+                    tools:layout="@layout/deprecated_fragment_dialpad_flat" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+
+
+
+</LinearLayout>

@@ -1,0 +1,221 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <style name="CustomButton">
+        <item name="android:textColor">@color/gray_buttons_text_color</item>
+        <item name="android:textSize">@dimen/btn_text_size</item>
+
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:background">@android:color/transparent</item>
+
+        <item name="android:soundEffectsEnabled">false</item>
+
+    </style>
+
+    <style name="CustomButton.DIGIT" parent="CustomButton">
+
+
+        <item name="android:background">@drawable/selector_for_btn_dialpad</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+
+    </style>
+
+    <style name="CustomButton.RETRO" parent="CustomButton">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="CustomButton.RETRO.grey" parent="CustomButton.RETRO">
+        <item name="android:background">@drawable/selector_for_btn_grey</item>
+    </style>
+ <style name="CustomButton.RETRO.clear" parent="CustomButton.RETRO">
+        <item name="android:background">@drawable/selector_for_btn_c</item>
+    </style>
+ <style name="CustomButton.RETRO.black" parent="CustomButton.RETRO">
+        <item name="android:background">@drawable/selector_for_btn_black</item>
+    </style>
+
+    <style name="CustomButton.RETRO.black.scientific" parent="CustomButton.RETRO.black">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+ <style name="CustomButton.RETRO.plus" parent="CustomButton.RETRO">
+        <item name="android:background">@drawable/selector_for_btn_plus</item>
+    </style>
+ <style name="CustomButton.RETRO.equally" parent="CustomButton.RETRO">
+        <item name="android:background">@drawable/selector_for_btn_equally</item>
+    </style>
+
+
+    <style name="CustomButton.SCIENTIFIC" parent="CustomButton">
+
+        <item name="android:textSize">@dimen/btn_scientific_text_size</item>
+
+        <item name="android:background">@drawable/selector_for_btn_dialpad</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="CustomButton.ripple" parent="CustomButton">
+
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+
+    </style>
+
+
+
+    <style name="CustomButton.TABLET" parent="CustomButton">
+
+        <item name="android:background">@drawable/selector_for_btn_dialpad</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+
+
+    </style>
+
+
+    <style name="DIALPADBUTTON.LAND_NORMAL." parent="CustomButton">
+
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/normal_land_btn_text_size</item>
+        <item name="android:background">@drawable/selector_for_btn_dialpad</item>
+
+    </style>
+
+
+    <style name="DIALPADBUTTON.LAND_NORMAL.DIGIT" parent="DIALPADBUTTON.LAND_NORMAL.">
+        <item name="android:layout_marginRight">@dimen/padding_small</item>
+        <item name="android:layout_marginLeft">@dimen/padding_small</item>
+
+
+
+    </style>
+
+
+
+    <style name="scientific_button_port" parent="CustomButton">
+        <item name="android:textSize">@dimen/scientific_button_text_size</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@drawable/selector_for_btn_dialpad</item>
+
+    </style>
+
+
+
+    <style name="scientific_button_land_phone" parent="CustomButton">
+        <item name="android:textSize">@dimen/scientific_button_text_size</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+    </style>
+
+    <style name="scientific_button_land" parent="CustomButton">
+        <item name="android:textSize">@dimen/scientific_button_text_size</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+    </style>
+
+    <style name="CustomButton.icon_button." parent="CustomButton">
+        <item name="android:textSize">@dimen/icon_button_size</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+
+
+
+    <style name="icon_button.portrait" parent="scientific_button_port">
+        <item name="android:textSize">@dimen/icon_button_size</item>
+    </style>
+
+
+
+
+
+
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+    <style name="Divider">
+
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?android:attr/dividerHeight</item>
+        <item name="android:background">?android:attr/dividerHorizontal</item>
+        <item name="android:layout_marginBottom">@dimen/viewpager_margin_sideways</item>
+
+
+    </style>
+
+
+    <style name="Theme.AlertDialog" parent="@android:style/Theme.Holo.Light.Dialog">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">#659F26</item>
+
+
+        <item name="android:windowTitleStyle">@style/Theme.AlertDialog</item>
+    </style>
+
+    <style name="TopSection">
+        <item name="android:layout_weight">0.3</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:orientation">vertical</item>
+
+    </style>
+
+    <style name="translation_box">
+        <item name="android:textSize">@dimen/translation_text_size</item>
+        <item name="android:textColor">@android:color/darker_gray</item>
+        <item name="android:paddingLeft">@dimen/padding_small</item>
+        <item name="android:paddingRight">@dimen/padding_medium</item>
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:gravity">right|center_vertical</item>
+        <item name="android:inputType">textMultiLine|textNoSuggestions</item>
+        <item name="android:cursorVisible">false</item>
+        <item name="android:fadeScrollbars">true</item>
+        <item name="android:textIsSelectable">true</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:background">@android:color/white</item>
+
+    </style>
+
+    <style name="viewpager" >
+
+        <item name="android:layout_marginBottom">@dimen/padding_medium</item>
+
+
+    </style>
+
+    <style name="text_switcher">
+        <item name="android:inputType">textNoSuggestions</item>
+        <item name="android:cursorVisible">false</item>
+        <item name="android:textIsSelectable">true</item>
+
+        <item name="android:paddingRight">@dimen/padding_small</item>
+        <item name="android:paddingLeft">@dimen/padding_medium</item>
+
+        <item name="android:textSize">@dimen/result_text_size</item>
+    </style>
+
+    <style name="list_view_Log">
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+
+</resources>

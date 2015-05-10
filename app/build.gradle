@@ -1,0 +1,40 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion '21.1.2'
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 21
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+        }
+    }
+    productFlavors {
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+}
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'libs'
+
+
+    }
+}
+
+
+
+dependencies {
+    compile 'com.android.support:support-v4:21.+'
+    compile(name: 'library-2.4.1', ext: 'aar')
+    compile 'info.hoang8f:android-segmented:1.0.4'
+
+}
