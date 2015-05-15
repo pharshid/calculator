@@ -36,9 +36,6 @@ local.properties
 # Local IDEA workspace
 *.ideaworkspace.xml
 
-# Gradle cache
-*.gradle
-
 # Sandbox stuff
 _sandbox
 

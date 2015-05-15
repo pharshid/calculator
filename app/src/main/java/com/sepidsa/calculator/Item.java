@@ -27,4 +27,20 @@ public class Item implements Serializable {
         Tag = _tag;
     }
 
+    public String getOperation() {
+        return Operation;
+    }
+
+    public String getResult() {
+        return Result;
+    }
+
+    public boolean getStarred() {
+        return Starred;
+    }
+
+    public String getTag() {
+        return Tag;
+    }
+
 }

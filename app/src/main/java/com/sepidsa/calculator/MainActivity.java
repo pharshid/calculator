@@ -62,11 +62,13 @@ import java.util.Stack;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener,  CompoundButton.OnCheckedChangeListener, PopoverView.PopoverViewDelegate, TextView.OnEditorActionListener {
 
-
+    private static final String FRAGMENT_TAG_DATA_PROVIDER = "data provider";
+    private static final String FRAGMENT_LIST_VIEW = "list view";
     private static final byte REFRESH = 4;
     private static final byte LANGUAGE_ARABIC =3 ;
     private static final byte LANGUAGE_GERMAN =4 ;
     private static final byte LANGUAGE_ITALIAN =5 ;
+    private static final String LOG_DATA_KEY = "log data";
     Log_Adapter mLogAdapter;
     Serializable mListView ;
     //TextSwitcher mResultTextSwitcher = null;
@@ -207,6 +209,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TinyDB db = new TinyDB(getApplicationContext());
+        mListView = db.getListString(LOG_DATA_KEY);
         boolean isnull = false;
         if (savedInstanceState != null) {
             mISRetroThemeOn = savedInstanceState.getBoolean("mISRetroThemeOn");
@@ -225,11 +229,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(new ERVExpandableDataProviderFragment(), FRAGMENT_TAG_DATA_PROVIDER)
+                    .commit();
+
             mJustPressedExecuteButton = true;
         } else {
             //        Configuration Change (rotation) occurred so better load the savedinstancestate values
             //        TODO
-            mListView = savedInstanceState.getSerializable("mListView");
+//            mListView = savedInstanceState.getSerializable("mListView");
         }
 
         setMViewPager(fragmentManager);
@@ -550,7 +558,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 mViewPager.setAdapter(null);
                 List<Fragment> fList = new ArrayList<Fragment>();
 
-                fList.add(new LogFragment());
+                //fList.add(new LogFragment());
+
+                fList.add(new RecyclerListViewFragment());
                 fList.add(new DialpadFragment());
                 fList.add(new ScientificFragment());
 //                fList.add(new ColorPickerFragment());
@@ -797,6 +807,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mViewPagerIndicator.setFillColor(getThemeColorCode());
 //        mViewPagerIndicator.setPageColor(getThemeColorCode());
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        TinyDB db = new TinyDB(getApplicationContext());
+        db.putListString(LOG_DATA_KEY, (getmListView()));
     }
 
     public int getTranslationLanguage(){
@@ -2331,6 +2348,19 @@ imm.hideSoftInputFromWindow(yourEditText.getWindowToken(), 0);
             //add label and star to current number on adapter
         }
         return false;
+    }
+
+    public AbstractExpandableDataProvider getDataProvider() {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG_DATA_PROVIDER);
+        if (fragment!=null) {
+            return ((ERVExpandableDataProviderFragment) fragment).getDataProvider();
+        } else {
+            fragment = new ERVExpandableDataProviderFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(fragment, FRAGMENT_TAG_DATA_PROVIDER)
+                    .commit();
+            return ((ERVExpandableDataProviderFragment) fragment).getDataProvider();
+        }
     }
 }
 
