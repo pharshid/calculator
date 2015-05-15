@@ -812,8 +812,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     protected void onStop() {
         super.onStop();
-        TinyDB db = new TinyDB(getApplicationContext());
-        db.putListString(LOG_DATA_KEY, (getmListView()));
+//        TinyDB db = new TinyDB(getApplicationContext());
+//        db.putListString(LOG_DATA_KEY, (getmListView()));
     }
 
     public int getTranslationLanguage(){
