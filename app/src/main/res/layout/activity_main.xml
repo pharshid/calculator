@@ -138,7 +138,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/favorite_list"
-                android:visibility="invisible"
+                android:visibility="visible"
 
                 />
 

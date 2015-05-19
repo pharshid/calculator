@@ -121,11 +121,11 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
                 boolean on = ((ToggleButton) view).isChecked();
 
                 if (on) {
-                    //result in Radian
-                    ((MainActivity)getActivity()).  setAngleMode(false);
+                    //result shown  in Degress
+                    ((MainActivity)getActivity()).  setAngleMode(true);
                 } else {
-                    //result in Degress
-                    ((MainActivity)getActivity()). setAngleMode(true);
+                    //result shown in Radian
+                    ((MainActivity)getActivity()). setAngleMode(false);
 
                 }
                 break;
@@ -173,7 +173,7 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
                 ((Button) mView.findViewById(R.id.buttonTan)).setText("a"+ getResources().getString(R.string.taninverse));
                 ((Button) mView.findViewById(R.id.buttonCot)).setText("a"+ getResources().getString(R.string.cotinverse));
 
-               ((Button) mView.findViewById(R.id.buttonSinusH)).setText("a"+ getResources().getString(R.string.sinhinverse));
+               ((Button) mView.findViewById(R.id.buttonSinusH)).setText("a"+ getResources().getString(R.string.csch));
                 ((Button) mView.findViewById(R.id.buttonCosinusH)).setText("a"+ getResources().getString(R.string.sech));
                 ((Button) mView.findViewById(R.id.buttonTanH)).setText("a"+ getResources().getString(R.string.coth));
                 ((Button) mView.findViewById(R.id.buttonCotH)).setText("a"+ getResources().getString(R.string.tanh));
@@ -196,8 +196,8 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
                 ((Button) mView.findViewById(R.id.buttonTan)).setText(getResources().getString(R.string.taninverse));
                 ((Button) mView.findViewById(R.id.buttonCot)).setText(getResources().getString(R.string.cotinverse));
 
-                ((Button) mView.findViewById(R.id.buttonSinusH)).setText(getResources().getString(R.string.sinhinverse));
-                ((Button) mView.findViewById(R.id.buttonCosinusH)).setText(getResources().getString(R.string.asech));
+                ((Button) mView.findViewById(R.id.buttonSinusH)).setText(getResources().getString(R.string.csch));
+                ((Button) mView.findViewById(R.id.buttonCosinusH)).setText(getResources().getString(R.string.sech));
                 ((Button) mView.findViewById(R.id.buttonTanH)).setText(getResources().getString(R.string.coth));
                 ((Button) mView.findViewById(R.id.buttonCotH)).setText(getResources().getString(R.string.tanh));
             } else {
@@ -265,10 +265,10 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
         boolean on = ((ToggleButton) buttonView).isChecked();
 
         if (on) {
-            //result in Radian
+            //result in Degress
             ((MainActivity)getActivity()). setAngleMode(true);
         } else {
-            //result in Degress
+            //result in Radian
             ((MainActivity)getActivity()). setAngleMode(false);
 
         }

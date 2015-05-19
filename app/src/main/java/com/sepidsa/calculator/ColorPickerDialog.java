@@ -23,9 +23,12 @@ import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ViewSwitcher;
 
 import info.hoang8f.android.segmented.SegmentedGroup;
 
@@ -38,6 +41,8 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
 
     public static final int SIZE_LARGE = 1;
     public static final int SIZE_SMALL = 2;
+    private static final String KEY_COLORS_KEYPAD = "color_keypad" ;
+    protected static final String KEY_SELECTED_COLOR_KEYPAD = "selected_color_keypad";
 
     protected AlertDialog mAlertDialog;
 
@@ -50,31 +55,39 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
 
     protected int mTitleResId = R.string.color_picker_default_title;
     protected int[] mColors = null;
+    protected int[] mColorsKeypad = null;
+
     protected String[] mColorContentDescriptions = null;
     protected int mSelectedColor;
     protected int mColumns;
     protected int mSize;
+    private int mSelectedKeypadColor;
 
-    private ColorPickerPalette mPalette;
+    private ColorPickerPalette mPaletteMaintheme;
+    private ColorPickerPalette mPalettekeypad;
+
     private ProgressBar mProgress;
 
     protected ColorPickerSwatch.OnColorSelectedListener mListener;
+    private ViewSwitcher mViewSwitcher;
 
     public ColorPickerDialog() {
         // Empty constructor required for dialog fragments.
     }
 
-    public static ColorPickerDialog newInstance(int titleResId, int[] colors, int selectedColor,
-            int columns, int size) {
+    public static ColorPickerDialog newInstance(int titleResId, int selectedColor, int[] colors, int[] keypadColors,
+                                                int selectedkeypadColor, int size, int columns) {
         ColorPickerDialog ret = new ColorPickerDialog();
-        ret.initialize(titleResId, colors, selectedColor, columns, size);
+        ret.initialize(titleResId, colors, selectedColor,keypadColors,selectedkeypadColor, columns, size);
         return ret;
     }
 
-    public void initialize(int titleResId, int[] colors, int selectedColor, int columns, int size) {
+    public void initialize(int titleResId, int[] colors,int selectedColor, int[] keypadColors, int selectedkeypadColor, int columns, int size) {
         setArguments(titleResId, columns, size);
         setColors(colors, selectedColor);
+        setKeypadColors(keypadColors, selectedkeypadColor);
     }
+
 
     public void setArguments(int titleResId, int columns, int size) {
         Bundle bundle = new Bundle();
@@ -100,7 +113,9 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
 
         if (savedInstanceState != null) {
             mColors = savedInstanceState.getIntArray(KEY_COLORS);
+            mColorsKeypad = savedInstanceState.getIntArray(KEY_COLORS_KEYPAD);
             mSelectedColor = (Integer) savedInstanceState.getSerializable(KEY_SELECTED_COLOR);
+            mSelectedKeypadColor = (Integer) savedInstanceState.getSerializable(KEY_SELECTED_COLOR_KEYPAD);
             mColorContentDescriptions = savedInstanceState.getStringArray(
                     KEY_COLOR_CONTENT_DESCRIPTIONS);
         }
@@ -111,21 +126,37 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
         final Activity activity = getActivity();
 
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.color_picker_dialog, null);
-        mProgress = (ProgressBar) view.findViewById(android.R.id.progress);
-        mPalette = (ColorPickerPalette) view.findViewById(R.id.color_picker);
-        mPalette.init(mSize, mColumns, this);
+//        mProgress = (ProgressBar) view.findViewById(android.R.id.progress);
+
+
+        mPalettekeypad = (ColorPickerPalette) view.findViewById(R.id.color_picker_keypad);
+        mPalettekeypad.init(mSize, mColumns, this);
+        mPaletteMaintheme = (ColorPickerPalette) view.findViewById(R.id.color_picker_theme);
+        mPaletteMaintheme.init(mSize, mColumns, this);
+
+        mViewSwitcher = (ViewSwitcher)view.findViewById(R.id.color_picker_holder);
+        Animation slide_in_left, slide_out_right;
+
+        slide_in_left = AnimationUtils.loadAnimation(getActivity(),
+                android.R.anim.fade_in);
+        slide_out_right = AnimationUtils.loadAnimation(getActivity(),
+                android.R.anim.fade_out);
+
+        mViewSwitcher.setInAnimation(slide_in_left);
+        mViewSwitcher.setOutAnimation(slide_out_right);
+
+        //        mColorsKeypad = Utils.ColorUtils.colorChoiceForKeypad(getActivity().getApplicationContext());
 
         if (mColors != null) {
+//            refreshPalette(mPaletteMaintheme,mColors,mSelectedColor,mColorContentDescriptions);
 
-            showPaletteView();
             prepareThemeSegmentedControl(view);
         }
 
-
         mAlertDialog = new AlertDialog.Builder(activity)
-            .setTitle(mTitleResId)
-            .setView(view)
-            .create();
+                .setTitle(mTitleResId)
+                .setView(view)
+                .create();
 
         return mAlertDialog;
     }
@@ -141,73 +172,52 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
                     (ColorPickerSwatch.OnColorSelectedListener) getTargetFragment();
             listener.onColorSelected(color);
         }
+        if(mViewSwitcher.getCurrentView().getTag().equals("theme")) {
+            if (color != mSelectedColor) {
+                mSelectedColor = color;
+                // Redraw palette to show checkmark on newly selected color before dismissing.
+                refreshPalette(mPaletteMaintheme, mColors, mSelectedColor, mColorContentDescriptions);
+                ((MainActivity)getActivity()).saveColorPreference(mSelectedColor);
+                ((MainActivity)getActivity()).  aButtonIsPressed("requestingThemeColorChange", mSelectedColor);
 
-        if (color != mSelectedColor) {
-            mSelectedColor = color;
-            // Redraw palette to show checkmark on newly selected color before dismissing.
-            mPalette.drawPalette(mColors, mSelectedColor);
+            }
+        }else {
+            if (color != mSelectedKeypadColor) {
+                mSelectedKeypadColor = color;
+                // Redraw palette to show checkmark on newly selected color before dismissing.
+                refreshPalette(mPalettekeypad, mColorsKeypad, mSelectedKeypadColor, mColorContentDescriptions);
+                ((MainActivity)getActivity()).changeTheme(mSelectedKeypadColor);
+
+            }
         }
-
         dismiss();
     }
 
-    public void showPaletteView() {
-        if (mProgress != null && mPalette != null) {
-            mProgress.setVisibility(View.GONE);
-            refreshPalette();
-            mPalette.setVisibility(View.VISIBLE);
-        }
-    }
 
-    public void showProgressBarView() {
-        if (mProgress != null && mPalette != null) {
-            mProgress.setVisibility(View.VISIBLE);
-            mPalette.setVisibility(View.GONE);
-        }
-    }
+
 
     public void setColors(int[] colors, int selectedColor) {
         if (mColors != colors || mSelectedColor != selectedColor) {
             mColors = colors;
             mSelectedColor = selectedColor;
-            refreshPalette();
+//            refreshPalette(mPaletteMaintheme,mColors,mSelectedColor,mColorContentDescriptions);
         }
     }
 
-    public void setColors(int[] colors) {
-        if (mColors != colors) {
-            mColors = colors;
-            refreshPalette();
+    private void setKeypadColors(int[] colors, int selectedColor) {
+        if (mColorsKeypad != colors || mSelectedKeypadColor != selectedColor) {
+            mColorsKeypad = colors;
+            mSelectedKeypadColor = selectedColor;
+//            refreshPalette(mPalettekeypad,mColorsKeypad,mSelectedKeypadColor,mColorContentDescriptions);
         }
     }
 
-    public void setSelectedColor(int color) {
-        if (mSelectedColor != color) {
-            mSelectedColor = color;
-            refreshPalette();
+    private void refreshPalette(ColorPickerPalette pallette, int[] colors , int selectedColor,String [] colorDescriptions) {
+        if (pallette != null && colors != null) {
+            pallette.drawPalette(colors, selectedColor, colorDescriptions);
         }
     }
 
-    public void setColorContentDescriptions(String[] colorContentDescriptions) {
-        if (mColorContentDescriptions != colorContentDescriptions) {
-            mColorContentDescriptions = colorContentDescriptions;
-            refreshPalette();
-        }
-    }
-
-    private void refreshPalette() {
-        if (mPalette != null && mColors != null) {
-            mPalette.drawPalette(mColors, mSelectedColor, mColorContentDescriptions);
-        }
-    }
-
-    public int[] getColors() {
-        return mColors;
-    }
-
-    public int getSelectedColor() {
-        return mSelectedColor;
-    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -215,6 +225,9 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
         outState.putIntArray(KEY_COLORS, mColors);
         outState.putSerializable(KEY_SELECTED_COLOR, mSelectedColor);
         outState.putStringArray(KEY_COLOR_CONTENT_DESCRIPTIONS, mColorContentDescriptions);
+
+        outState.putIntArray(KEY_COLORS_KEYPAD, mColorsKeypad);
+        outState.putSerializable(KEY_SELECTED_COLOR_KEYPAD, mSelectedKeypadColor);
     }
 
     private void prepareThemeSegmentedControl(View view) {
@@ -224,7 +237,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
         SegmentedGroup themeSegment = (SegmentedGroup) view.findViewById(R.id.segmented);
         themeSegment.setOnCheckedChangeListener(this);
         themeSegment.setTintColor(((MainActivity)getActivity()).getThemeColorCode());
-        switch (  ((MainActivity)getActivity()). getCurrentThemePreference()) {
+        switch ( 0) {
             case 0 : // light theme
 
                 buttonLightTheme.setChecked(true);
@@ -248,11 +261,16 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
             case R.id.light_theme_button:
                 //Light theme
                 if(((MainActivity)getActivity()).isRetroThemeSelected() == true){
-                            ((MainActivity) getActivity()).setRetrothemeSelected(false);
-                            ((MainActivity) getActivity()).recreate();
+                    ((MainActivity) getActivity()).setRetrothemeSelected(false);
+                    getActivity().recreate();
                 }
-                ((MainActivity)getActivity()).  changeTheme(0);
+//                ((MainActivity)getActivity()).changeTheme(mSelectedColor);
 
+                refreshPalette(mPaletteMaintheme,mColors,mSelectedColor,mColorContentDescriptions);
+
+                if ( mViewSwitcher.getCurrentView().getTag().equals("keypad")){
+                    mViewSwitcher.showNext();
+                }
                 break;
 
             case R.id.dark_theme_button :
@@ -260,11 +278,15 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
                 if(((MainActivity)getActivity()).isRetroThemeSelected() == true){
                     ((MainActivity) getActivity()).setRetrothemeSelected(false);
 
-                    ((MainActivity)getActivity()).recreate();
+                    getActivity().recreate();
                 }
-                ((MainActivity)getActivity()). changeTheme(1);
-                break;
+//                ((MainActivity)getActivity()). changeTheme(mSelectedKeypadColor);
+                refreshPalette(mPalettekeypad, mColorsKeypad, mSelectedKeypadColor, mColorContentDescriptions);
+                if ( ((String)mViewSwitcher.getCurrentView().getTag()).equals("theme")){
+                    mViewSwitcher.showNext();
+                }
 
+                break;
             //Dark Theme
             case R.id.retro_theme_button :
                 if(((MainActivity)getActivity()).isRetroThemeSelected() == false){
@@ -273,7 +295,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
                     ((MainActivity)getActivity()).recreate();
 
                 }
-                ((MainActivity)getActivity()). changeTheme(2);
+                ((MainActivity)getActivity()). changeTheme(-1);
 
                 break;
         }

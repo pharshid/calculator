@@ -212,16 +212,21 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         TinyDB db = new TinyDB(getApplicationContext());
         mListView = db.getListString(LOG_DATA_KEY);
         boolean isnull = false;
-        if (savedInstanceState != null) {
-            mISRetroThemeOn = savedInstanceState.getBoolean("mISRetroThemeOn");
+
+        if (getCurrentThemePreference() == 2) {
+            mISRetroThemeOn = true;
+        }else {
+            mISRetroThemeOn = false;
         }
-        Log.d("sinatra","here in oncreate   retro is "+ mISRetroThemeOn + "bunde  is null  "+ isnull);
 
         if(mISRetroThemeOn){
             setContentView(R.layout.activity_main_retro);
         }else {
             setContentView(R.layout.activity_main);
         }
+
+
+
 
 //        ctx = this;
         //Call the set overlay, you can put the logic of checking if overlay is already called with a simple sharedpreference
@@ -259,7 +264,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         if(findViewById(R.id.switch_deg_rad) != null) {
             ((Switch) (findViewById(R.id.switch_deg_rad))).setChecked(getAngleMode());
             ((Switch) (findViewById(R.id.switch_deg_rad))).setOnCheckedChangeListener(this);
-            ((Switch) (findViewById(R.id.switch_deg_rad))).setOnClickListener(this);
         }
 
 
@@ -298,34 +302,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
 
 
-//        ImageButton btnSpeak = (ImageButton) findViewById(R.id.btn_mic);
-//         final int RESULT_SPEECH = 1;
-//        btnSpeak.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent intent = new Intent(
-//                        RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-//
-//                String languagePref = "fa";//or, whatever iso code...
-//                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, languagePref);
-//                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, languagePref);
-//                intent.putExtra(RecognizerIntent.EXTRA_ONLY_RETURN_LANGUAGE_PREFERENCE, languagePref);
-//
-////                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "fa_IR");
-//
-//                try {
-//                    startActivityForResult(intent, RESULT_SPEECH);
-//
-//                } catch (ActivityNotFoundException a) {
-//                    Toast t = Toast.makeText(getApplicationContext(),
-//                            "Opps! Your device doesn't support Speech to Text",
-//                            Toast.LENGTH_SHORT);
-//                    t.show();
-//                }
-//            }
-//        });
+
     }
 
 
@@ -427,9 +404,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             resultTextView.setBackgroundColor(getThemeColorCode());
         }
         if(getAngleMode() == true){
-            mScientificModeTextView.setText("RAD");
-        }else{
             mScientificModeTextView.setText("DEG");
+        }else{
+            mScientificModeTextView.setText("RAD");
         }
         Runnable runnable = new Runnable() {
             public void run() {
@@ -717,21 +694,21 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public boolean getAngleMode(){
         //TODO set a cool default theme color
         SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("angleMode", MODE_PRIVATE);
-        return appPreferences.getBoolean("isRad",false);
+        return appPreferences.getBoolean("isDeg",true);
     }
 
-    void setAngleMode(boolean isRad){
+    void setAngleMode(boolean isDeg){
         SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("angleMode", MODE_PRIVATE);
         SharedPreferences.Editor editor = appPreferences.edit();
-        if(isRad){
+        if(isDeg){
 
-            editor.putBoolean("isRad", true);
-            mScientificModeTextView.setText("RAD");
+            editor.putBoolean("isDeg", true);
+            mScientificModeTextView.setText("DEG");
 
         }else{
 
-            editor.putBoolean("isRad", false);
-            mScientificModeTextView.setText("DEG");
+            editor.putBoolean("isDeg", false);
+            mScientificModeTextView.setText("RAD");
 
         }
         editor.apply();
@@ -755,9 +732,17 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         //TODO set a cool default theme color
         //light theme is 0
         //dark theme is 1
-        //retro theme is 2
+        //retro theme is -1
         saveThemePreference(themeNumber);
         applyTheme(themeNumber);
+    }
+
+    // Saving the selected color theme to prefrence
+    public void saveColorPreference(int colorCode){
+        SharedPreferences appPreferences =getApplicationContext().getSharedPreferences("themecolors",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = appPreferences.edit();
+        editor.putInt("THEMECOLOR", colorCode);
+        editor.commit();
     }
 
 
@@ -774,31 +759,34 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         // todo send intent to other fragments
 //        this.getWindow().getDecorView();
         switch (themeNumber){
-            case 0:
-                // light theme
-                activityView.setBackgroundColor(Color.WHITE);
-                mTranslationBox.setBackgroundColor(Color.WHITE);
-                resultTextView.setTextColor(Color.WHITE);
-                break;
+//            case 0:
+//                // light theme
+////                activityView.setBackgroundColor(Color.WHITE);
+////                mTranslationBox.setBackgroundColor(Color.WHITE);
+////                resultTextView.setTextColor(Color.WHITE);
+//
+//            case 1:
+//                // dark theme #ff3a3a3a
+//                activityView.setBackgroundColor( Color.parseColor("#1c1c1c"));
+//                mTranslationBox.setBackgroundColor(Color.parseColor("#1c1c1c"));
+//                break;
 
-            case 1:
+            case -1:
                 // dark theme #ff3a3a3a
-                activityView.setBackgroundColor( Color.parseColor("#1c1c1c"));
-                mTranslationBox.setBackgroundColor(Color.parseColor("#1c1c1c"));
-                break;
-
-            case 2:
-                // dark theme #ff3a3a3a
-                activityView.setBackground( getDrawable(R.drawable.background_normal));
+//                activityView.setBackground(getDrawable(R.drawable.background_normal));
                 mTranslationBox.setBackgroundColor(Color.TRANSPARENT);
                 resultTextView.setBackgroundColor(Color.TRANSPARENT);
                 result_textView_holder.setBackgroundColor(Color.TRANSPARENT);
-                return;
+                break;
 
+            default :
+                activityView.setBackgroundColor(themeNumber);
+                resultTextView.setTextColor(Color.WHITE);
+                resultTextView.setBackgroundColor(getThemeColorCode());
+                mTranslationBox.setBackgroundColor(themeNumber);
+                break;
         }
         sendChangeThemeIntent();
-
-
     }
 
 
@@ -1244,7 +1232,18 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             if(currentButtonValue != null) {
                 pushLastButton(currentButtonValue);
             }
+            mTemp = "∞";
 
+            // Happens if it is devision by zero
+            return 1;
+        }
+        catch (NumberFormatException e) {
+
+            mExpressionBuffer = new StringBuilder(testSubject);
+            if(currentButtonValue != null) {
+                pushLastButton(currentButtonValue);
+            }
+        mTemp = "error";
             // Happens if it is devision by zero
             return 1;
         }
@@ -1260,7 +1259,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             return 2;
         }
-        // returning zero means there's to problems what so ever
+        // returning zero means there's no problems what so ever
         return 0;
     }
 
@@ -1399,73 +1398,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 }
 
                 break;
-
-
-                /*
-                if(resultIsNegative) {
-                    mTranslationBox.setText("moins " + NumberConverterFrench.convert(integerFraction));
-                }
-                else {
-                    mTranslationBox.setText(NumberConverterFrench.convert(integerFraction));
-                }
-
-                if (!decimal_fraction.equals("")) {
-                    partII = NumberConverterFrenchPartII.convert(decimal_fraction);
-                    mTranslationBox.append(partII);
-                }*//*
-
-                formatter = new RuleBasedNumberFormat(new ULocale("ar_EG"), RuleBasedNumberFormat.SPELLOUT);
-                mTranslationBox.setText(formatter.format(new BigDecimal(resultWithoutCommas)));
-                break;*/
-
-      /*      case LANGUAGE_GERMAN:
-                if(mResultBeforeSignification.longValue()== 42 && decimal_fraction.equals("")& !resultIsNegative) {
-                    mTranslationBox.setText("google quelle est la réponse à la vie l'univers et tout");
-                    return;
-                }
-
-
-*//*
-                if(resultIsNegative) {
-                    mTranslationBox.setText("moins " + NumberConverterFrench.convert(integerFraction));
-                }
-                else {
-                    mTranslationBox.setText(NumberConverterFrench.convert(integerFraction));
-                }
-
-                if (!decimal_fraction.equals("")) {
-                    partII = NumberConverterFrenchPartII.convert(decimal_fraction);
-                    mTranslationBox.append(partII);
-                }*//*
-
-                formatter = new RuleBasedNumberFormat(new ULocale("de_AT"), RuleBasedNumberFormat.SPELLOUT);
-                mTranslationBox.setText(formatter.format(new BigDecimal(resultWithoutCommas)));
-                break;*/
-
-     /*       case LANGUAGE_ITALIAN:
-                if(mResultBeforeSignification.longValue()== 42 && decimal_fraction.equals("")& !resultIsNegative) {
-                    mTranslationBox.setText("google quelle est la réponse à la vie l'univers et tout");
-                    return;
-                }
-
-
-*//*
-                if(resultIsNegative) {
-                    mTranslationBox.setText("moins " + NumberConverterFrench.convert(integerFraction));
-                }
-                else {
-                    mTranslationBox.setText(NumberConverterFrench.convert(integerFraction));
-                }
-
-                if (!decimal_fraction.equals("")) {
-                    partII = NumberConverterFrenchPartII.convert(decimal_fraction);
-                    mTranslationBox.append(partII);
-                }*//*
-
-                formatter = new RuleBasedNumberFormat(new ULocale("it_IT"), RuleBasedNumberFormat.SPELLOUT);
-                mTranslationBox.setText(formatter.format(new BigDecimal(resultWithoutCommas)));
-                break;
-*/
 
 
             case LANGUAGE_PERSIAN:
@@ -1844,12 +1776,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 getResources().getString(R.string.cosh) + "(",
                 getResources().getString(R.string.tanh) + "(",
                 getResources().getString(R.string.coth) + "(",
+                getResources().getString(R.string.sech) + "(",
+                getResources().getString(R.string.csch) + "(",
 
                 getResources().getString(R.string.asinh) + "(" ,
                 getResources().getString(R.string.acosh) + "("  ,
                 getResources().getString(R.string.atanh) + "("  ,
                 getResources().getString(R.string.acoth) + "(" ,
-                getResources().getString(R.string.acsch) + "(",
+                getResources().getString(R.string.asech) + "(",
                 getResources().getString(R.string.acsch) + "(",
 
                 getResources().getString(R.string.ln_tag), getResources().getString(R.string.power), getResources().getString(R.string.log_tag),
@@ -1874,13 +1808,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
     }
 
-    // Saving the selected color theme to prefrence
-    private void saveColorPreference(int colorCode){
-        SharedPreferences appPreferences =getApplicationContext().getSharedPreferences("themecolors",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = appPreferences.edit();
-        editor.putInt("THEMECOLOR", colorCode);
-        editor.commit();
-    }
 
 
 
@@ -1970,27 +1897,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
                 sendLogMessage(getMExpressionString().toString(), mTemp,true, String.valueOf(mTagHimself.getText()));
 
-//                EditText tagHimself = (EditText) findViewById(R.id.tag_himself);
-//                tagHimself.requestFocus();
-//
-//
-//
-//                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//                imm.showSoftInput(tagHimself, InputMethodManager.SHOW_IMPLICIT);
 
-                break;
-            /* code for show of hiding keyboard
-
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-imm.showSoftInput(yourEditText, InputMethodManager.SHOW_IMPLICIT);
-
-
-
-
-InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-imm.hideSoftInputFromWindow(yourEditText.getWindowToken(), 0);
-
-             */
 
 
 
@@ -2026,20 +1933,20 @@ imm.hideSoftInputFromWindow(yourEditText.getWindowToken(), 0);
 
             case R.id.buttonColors:
 
-                ColorPickerDialog colorcalendar = ColorPickerDialog.newInstance(
+                final ColorPickerDialog colorcalendar = ColorPickerDialog.newInstance(
                         R.string.color_picker_default_title,
-                        Utils.ColorUtils.colorChoice(getApplicationContext()),
-                        mSelectedColorCal0,
-                        5,
-                        Utils.isTablet(this)? ColorPickerDialog.SIZE_LARGE : ColorPickerDialog.SIZE_SMALL);
+                        mSelectedColorCal0, Utils.ColorUtils.colorChoice(getApplicationContext()),Utils.ColorUtils.colorChoiceForKeypad(getApplicationContext()),
+                        mSelectedColorCal0, Utils.isTablet(this)? ColorPickerDialog.SIZE_LARGE : ColorPickerDialog.SIZE_SMALL, 5
+                );
 
                 //Implement listener to get selected color value
                 colorcalendar.setOnColorSelectedListener(new ColorPickerSwatch.OnColorSelectedListener(){
 
                     @Override
                     public void onColorSelected(int color) {
+
                         mSelectedColorCal0=color;
-                        aButtonIsPressed("requestingThemeColorChange", color);
+//                        aButtonIsPressed("requestingThemeColorChange", color);
 
                     }
 

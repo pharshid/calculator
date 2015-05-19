@@ -29,7 +29,7 @@
     <string name="cosh">cosh</string>
     <string name="tanh">tanh</string>
     <string name="coth">coth</string>
-    <string name="sinhinverse">csch</string>
+    <string name="csch">csch</string>
     <string name="sech">sech</string>
 
     <string name="asinh">asinh</string>

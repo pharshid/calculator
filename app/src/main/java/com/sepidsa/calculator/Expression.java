@@ -224,22 +224,68 @@ public class  Expression{
         BigDecimal ans = new BigDecimal("0");
         boolean found = false;
         if(s.length() > 0 ) {
-            if (s.indexOf("sinh") == 0) {
+            if (s.indexOf("asinh") == 0) {
+                s = s.substring(5);
+                ans = trig();
+                double doubleAns = ans.doubleValue();
+                ans = new BigDecimal(Math.log(doubleAns + Math.sqrt(Math.pow(doubleAns, 2) + 1.0)));
+
+                found = true;
+            }else if (s.indexOf("sinh") == 0) {
+                s = s.substring(4);
+                ans = new BigDecimal(Math.sinh(trig().doubleValue()));
+                found = true;
+            }else if (s.indexOf("asin") == 0) {
                 s = s.substring(4);
                 if (mDeg_flag) {
-                    ans = new BigDecimal(Math.sinh(trig().doubleValue()));
+                    ans = new BigDecimal(Math.toDegrees(Math.asin(trig().doubleValue())));
                 } else {
-                    ans = new BigDecimal(Math.sinh(Math.toRadians(trig().doubleValue())));
+//                    ans = new BigDecimal(Math.toRadians(Math.asin(trig().doubleValue())));
+                    ans = new BigDecimal(Math.asin(trig().doubleValue()));
+
                 }
                 found = true;
-            } else if (s.indexOf("sin") == 0) {
+            }
+            else if (s.indexOf("sin") == 0) {
                 s = s.substring(3);
                 if (mDeg_flag) {
-                    ans = new BigDecimal(Math.sin(trig().doubleValue()));
-                } else {
                     ans = new BigDecimal(Math.sin(Math.toRadians(trig().doubleValue())));
+
+                } else {
+                    ans = new BigDecimal(Math.sin(trig().doubleValue()));
                 }
                 found = true;
+            }
+//        Math.log(x + Math.sqrt(x*x + 1.0));
+            //CSC is 1/sin(X)
+            else if (s.indexOf("acsch") == 0) {
+                // = asinh (1/x)
+                s = s.substring(5);
+                ans = trig();
+                double doubleAns = 1 / ans.doubleValue();
+                ans = new BigDecimal(Math.log(doubleAns + Math.sqrt(Math.pow(doubleAns, 2) + 1.0)));
+
+                found = true;
+
+
+            } else if (s.indexOf("acsc") == 0) {
+                s = s.substring(4);
+                if (mDeg_flag) {
+                    ans = new BigDecimal(Math.pow(Math.asin(Math.toDegrees(trig().doubleValue())), -1));
+
+                    //1/asin
+                } else {
+                    ans = new BigDecimal(Math.pow(Math.asin(trig().doubleValue()), -1));
+
+                }
+                found = true;
+            }else if (s.indexOf("csch") == 0) {
+                // = 1/sinh (x)
+                s = s.substring(4);
+                ans = new BigDecimal(Math.pow(Math.sinh(trig().doubleValue()),-1));
+                found = true;
+
+
             } else if (s.indexOf("csc") == 0) {
                 s = s.substring(3);
                 if (mDeg_flag) {
@@ -248,80 +294,64 @@ public class  Expression{
                     ans = new BigDecimal(Math.pow(Math.sin(Math.toRadians(trig().doubleValue())), -1));
                 }
                 found = true;
-            } else if (s.indexOf("asin") == 0) {
-                s = s.substring(4);
-                if (mDeg_flag) {
-                    ans = new BigDecimal(Math.asin(trig().doubleValue()));
-                } else {
-                    ans = new BigDecimal(Math.asin(Math.toRadians(trig().doubleValue())));
-                }
-                found = true;
-            } else if (s.indexOf("asinh") == 0) {
+            }else if (s.indexOf("acosh") == 0) {
                 s = s.substring(5);
                 ans = trig();
                 double doubleAns = ans.doubleValue();
-                if (mDeg_flag) {
-                    ans = new BigDecimal(Math.log(doubleAns + Math.sqrt(Math.pow(doubleAns, 2) + 1.0)));
-                } else {
-                    ans = new BigDecimal(Math.log(Math.toRadians(doubleAns) + Math.sqrt(Math.pow(Math.toRadians(doubleAns), 2) + 1.0)));
-                    // todo what for radians
-                }
+                ans = new BigDecimal(Math.log(doubleAns + Math.sqrt(Math.pow(doubleAns, 2) - 1.0)));
+
                 found = true;
             }
 
-//        Math.log(x + Math.sqrt(x*x + 1.0));
-            //CSC is 1/sin(X)
-            else if (s.indexOf("acsc") == 0) {
+            else if (s.indexOf("acos") == 0) {
                 s = s.substring(4);
                 if (mDeg_flag) {
-                    //1/asin
-                    ans = new BigDecimal(Math.pow(Math.asin(trig().doubleValue()), -1));
+                    ans = new BigDecimal(Math.toDegrees(Math.acos(trig().doubleValue())));
+
                 } else {
-                    ans = new BigDecimal(Math.pow(Math.asin(Math.toRadians(trig().doubleValue())), -1));
+                    ans = new BigDecimal(Math.acos(trig().doubleValue()));
+
                 }
                 found = true;
-            } else if (s.indexOf("acsch") == 0) {
-                // = asinh (1/x)
+
+            }
+            else if (s.indexOf("cosh") == 0) {
+                s = s.substring(4);
+                ans = new BigDecimal(Math.cosh(trig().doubleValue()));
+                found = true;
+            }else if (s.indexOf("cos") == 0) {
+                s = s.substring(3);
+                if (mDeg_flag) {
+                    ans = new BigDecimal(Math.cos(Math.toRadians(trig().doubleValue())));
+
+                } else {
+                    ans = new BigDecimal(Math.cos(trig().doubleValue()));
+                }
+                found = true;
+            } else if (s.indexOf("asech") == 0) {
                 s = s.substring(5);
                 ans = trig();
                 double doubleAns = 1 / ans.doubleValue();
-                if (mDeg_flag) {
-                    ans = new BigDecimal(Math.log(doubleAns + Math.sqrt(Math.pow(doubleAns, 2) + 1.0)));
-                } else {
+                ans = new BigDecimal(Math.log(doubleAns + Math.sqrt(Math.pow(doubleAns, 2) - 1.0)));
 
-                    ans = new BigDecimal(Math.log( Math.toRadians(doubleAns) + Math.sqrt(Math.pow( Math.toRadians(doubleAns), 2) + 1.0)));
-                    // todo what for radians
-                }
                 found = true;
-
-
-            } else if (s.indexOf("cosh") == 0) {
+            } else if (s.indexOf("asec") == 0) {
                 s = s.substring(4);
                 if (mDeg_flag) {
-                    ans = new BigDecimal(Math.cosh(trig().doubleValue()));
+                    ans = new BigDecimal(Math.pow(Math.acos(Math.toDegrees(trig().doubleValue())), -1));
+
                 } else {
-                    ans = new BigDecimal(Math.cosh(Math.toRadians(trig().doubleValue())));
+                    ans = new BigDecimal(Math.pow(Math.acos(trig().doubleValue()), -1));
+
                 }
                 found = true;
-            } else if (s.indexOf("acosh") == 0) {
-                s = s.substring(5);
-                ans = trig();
-                double doubleAns = ans.doubleValue();
-                if (mDeg_flag) {
-                    ans = new BigDecimal(Math.log(doubleAns + Math.sqrt(Math.pow(doubleAns, 2) - 1.0)));
-                } else {
-                    ans = new BigDecimal(Math.log(Math.toRadians(doubleAns) + Math.sqrt(Math.pow(Math.toRadians(doubleAns), 2) - 1.0)));
-                    // todo what for radians
-                }
+            }  else if (s.indexOf("sech") == 0) {
+                // = asinh (1/x)
+                s = s.substring(4);
+                ans = new BigDecimal(Math.pow(Math.cosh(trig().doubleValue()),-1));
                 found = true;
-            } else if (s.indexOf("cos") == 0) {
-                s = s.substring(3);
-                if (mDeg_flag) {
-                    ans = new BigDecimal(Math.cos(trig().doubleValue()));
-                } else {
-                    ans = new BigDecimal(Math.cos(Math.toRadians(trig().doubleValue())));
-                }
-                found = true;
+
+
             } else if (s.indexOf("sec") == 0) {
                 s = s.substring(3);
                 if (mDeg_flag) {
@@ -330,111 +360,77 @@ public class  Expression{
                     ans = new BigDecimal(Math.pow(Math.cos(Math.toRadians(trig().doubleValue())), -1));
                 }
                 found = true;
-            } else if (s.indexOf("acos") == 0) {
-                s = s.substring(4);
-                if (mDeg_flag) {
-                    ans = new BigDecimal(Math.acos(trig().doubleValue()));
-                } else {
-                    ans = new BigDecimal(Math.acos(Math.toRadians(trig().doubleValue())));
-                }
-                found = true;
-            } else if (s.indexOf("asec") == 0) {
-                s = s.substring(4);
-                if (mDeg_flag) {
-                    ans = new BigDecimal(Math.pow(Math.acos(trig().doubleValue()), -1));
-                } else {
-                    ans = new BigDecimal(Math.pow(Math.acos(Math.toRadians(trig().doubleValue())), -1));
-                }
-                found = true;
-            } else if (s.indexOf("asech") == 0) {
-                s = s.substring(5);
-                ans = trig();
-                double doubleAns = 1 / ans.doubleValue();
-                if (mDeg_flag) {
-                    ans = new BigDecimal(Math.log(doubleAns + Math.sqrt(Math.pow(doubleAns, 2) - 1.0)));
-                } else {
-                    ans = new BigDecimal(Math.log(Math.toRadians(doubleAns) + Math.sqrt(Math.pow(Math.toRadians(doubleAns), 2) - 1.0)));
-                    // todo what for radians
-                }
-                found = true;
-            } else if (s.indexOf("tanh") == 0) {
-                s = s.substring(4);
-                if (mDeg_flag) {
-                    ans = new BigDecimal(Math.tanh(trig().doubleValue()));
-                } else {
-                    ans = new BigDecimal(Math.tanh(Math.toRadians(trig().doubleValue())));
-                }
-                found = true;
             } else if (s.indexOf("atanh") == 0) {
                 s = s.substring(5);
                 ans = trig();
                 double doubleAns = ans.doubleValue();
-                if (mDeg_flag) {
-//                return 0.5*Math.log( (x + 1.0) / (x - 1.0) );
-                    ans = new BigDecimal(0.5 * Math.log((doubleAns + 1.0) / (doubleAns - 1.0)));
-                } else {
-                    ans = new BigDecimal(0.5 * Math.log((Math.toRadians(doubleAns) + 1.0) / (Math.toRadians(doubleAns) - 1.0)));
-                    // todo what for radians
-                }
-                found = true;
-            } else if (s.indexOf("tan") == 0) {
-                s = s.substring(3);
-                if (mDeg_flag) {
-                    ans = new BigDecimal(Math.tan(trig().doubleValue()));
-                } else {
-                    ans = new BigDecimal(Math.tan(Math.toRadians(trig().doubleValue())));
-                }
-                found = true;
+//                return 0.5*Math.log( (x + 1.0) / (1 - x) );
+                ans = new BigDecimal(0.5 * Math.log((doubleAns + 1.0) / (1 - doubleAns )));
 
-            } else if (s.indexOf("atan") == 0) {
+                found = true;
+            }
+            else if (s.indexOf("atan") == 0) {
                 s = s.substring(4);
                 if (mDeg_flag) {
+                    ans = new BigDecimal(Math.toDegrees(Math.atan(trig().doubleValue())));
+
+                } else {
                     ans = new BigDecimal(Math.atan(trig().doubleValue()));
-                } else {
-                    ans = new BigDecimal(Math.atan(Math.toRadians(trig().doubleValue())));
-                }
-                found = true;
 
-            } else if (s.indexOf("coth") == 0) {
-                s = s.substring(4);
-                if (mDeg_flag) {
-                    ans = new BigDecimal(1.0 / Math.tanh(trig().doubleValue()));
-                } else {
-                    ans = new BigDecimal(1.0 / Math.tanh(Math.toRadians(trig().doubleValue())));
                 }
                 found = true;
-            } else if (s.indexOf("cot") == 0) {
+            }else if (s.indexOf("tanh") == 0) {
+                s = s.substring(4);
+                ans = new BigDecimal(Math.tanh(trig().doubleValue()));
+                found = true;
+            }
+            else if (s.indexOf("tan") == 0) {
                 s = s.substring(3);
                 if (mDeg_flag) {
-                    ans = new BigDecimal(1.0 / Math.tan(trig().doubleValue()));
+                    ans = new BigDecimal(Math.tan(Math.toRadians(trig().doubleValue())));
+
                 } else {
-                    ans = new BigDecimal(1.0 / Math.tan(Math.toRadians(trig().doubleValue())));
+                    ans = new BigDecimal(Math.tan(trig().doubleValue()));
+
                 }
                 found = true;
 
-            } else if (s.indexOf("acot") == 0) {
-                s = s.substring(4);
-                if (mDeg_flag) {
-                    ans = new BigDecimal(1.0 / Math.atan(trig().doubleValue()));
-                } else {
-                    ans = new BigDecimal(1.0 / Math.atan(Math.toRadians(trig().doubleValue())));
-                }
-                found = true;
-
-            } else if (s.indexOf("acoth") == 0) {
+            }
+            else if (s.indexOf("acoth") == 0) {
                 s = s.substring(5);
                 ans = trig();
-                double doubleAns = 1 / ans.doubleValue();
-                if (mDeg_flag) {
+                double doubleAns = ans.doubleValue();
 //                return 0.5*Math.log( (x + 1.0) / (x - 1.0) );
-                    ans = new BigDecimal(0.5 * Math.log((doubleAns + 1.0) / (doubleAns - 1.0)));
+                ans = new BigDecimal(0.5 * Math.log((doubleAns + 1.0) / (doubleAns - 1.0)));
+                found = true;
+            }
+            else if (s.indexOf("acot") == 0) {
+                s = s.substring(4);
+                if (mDeg_flag) {
+                    ans = new BigDecimal(1.0 /Math.toDegrees( Math.atan(trig().doubleValue())));
                 } else {
-
-                    ans = new BigDecimal(0.5 * Math.log((Math.toRadians(doubleAns) + 1.0) / (Math.toRadians(doubleAns) - 1.0)));
-                    // todo what for radians
+                    ans = new BigDecimal(1.0 / Math.atan(trig().doubleValue()));
                 }
                 found = true;
-            } else if (s.indexOf("log") == 0) {
+
+            }
+            else if (s.indexOf("coth") == 0) {
+                s = s.substring(4);
+                ans = new BigDecimal(1.0 / Math.tanh(trig().doubleValue()));
+                found = true;
+            }
+            else if (s.indexOf("cot") == 0) {
+                s = s.substring(3);
+                if (mDeg_flag) {
+                    ans = new BigDecimal(1.0 / Math.tan(Math.toRadians(trig().doubleValue())));
+
+                } else {
+                    ans = new BigDecimal(1.0 / Math.tan(trig().doubleValue()));
+
+                }
+                found = true;
+
+            }  else if (s.indexOf("log") == 0) {
                 s = s.substring(3);
                 ans = new BigDecimal(Math.log10(trig().doubleValue()));
                 found = true;

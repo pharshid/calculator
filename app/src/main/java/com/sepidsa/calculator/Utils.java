@@ -15,25 +15,9 @@
  *******************************************************************************/
 package com.sepidsa.calculator;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.text.Html;
-import android.text.SpannableStringBuilder;
-import android.text.method.LinkMovementMethod;
-import android.view.LayoutInflater;
-import android.widget.TextView;
 
 /**
  * 
@@ -70,6 +54,20 @@ public class Utils {
 		    }
 		    return mColorChoices;
 		}
+
+        public static int[] colorChoiceForKeypad(Context context){
+
+            int[] mColorChoices=null;
+            String[] color_array = context.getResources().getStringArray(R.array.keypad_color_choice_values);
+
+            if (color_array!=null && color_array.length>0) {
+                mColorChoices = new int[color_array.length];
+                for (int i = 0; i < color_array.length; i++) {
+                    mColorChoices[i] = Color.parseColor(color_array[i]);
+                }
+            }
+            return mColorChoices;
+        }
 		
 		/**
 		 * Parse whiteColor

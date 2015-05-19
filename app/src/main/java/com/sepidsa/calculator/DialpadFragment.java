@@ -241,10 +241,10 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
                 boolean on = ((Switch) view).isChecked();
 
                 if (on) {
-                    //result in Radian
+                    //result in Degree
                     ((MainActivity)getActivity()).  setAngleMode(true);
                 } else {
-                    //result in Degress
+                    //result in Radian
                     ((MainActivity)getActivity()). setAngleMode(false);
 
                 }
@@ -309,27 +309,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
     }
 
     private void setBackgroundColorForOperators() {
-//    if ( android.os.Build.VERSION.SDK_INT < 21){
-//        mView.findViewById(R.id.buttonTimes).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.SRC_IN);
-//        mView.findViewById(R.id.buttonDevide).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.SRC_IN);
-//        mView.findViewById(R.id.buttonPlus).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.SRC_IN);
-//        mView.findViewById(R.id.buttonMinus).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.SRC_IN);
-//        mView.findViewById(R.id.openParen).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.SRC_IN);
-//        mView.findViewById(R.id.closeParen).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.SRC_IN);
-//        mView.findViewById(R.id.buttonPercent).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.SRC_IN);
-//
-//
-//    }else {
-//        mView.findViewById(R.id.buttonTimes).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.OVERLAY);
-//        mView.findViewById(R.id.buttonDevide).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.OVERLAY);
-//        mView.findViewById(R.id.buttonPlus).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.OVERLAY);
-//        mView.findViewById(R.id.buttonMinus).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.OVERLAY);
-//        mView.findViewById(R.id.openParen).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.OVERLAY);
-//        mView.findViewById(R.id.closeParen).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.OVERLAY);
-//        mView.findViewById(R.id.buttonPercent).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.OVERLAY);
-//
-//
-//    }
+
         mView.findViewById(R.id.buttonTimes).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.SRC_ATOP);
         mView.findViewById(R.id.buttonDevide).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.SRC_ATOP);
         mView.findViewById(R.id.buttonPlus).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.SRC_ATOP);

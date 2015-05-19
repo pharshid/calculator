@@ -19,4 +19,25 @@
         <item>#ff4444</item>
         <item>#FF4081</item>
     </string-array>
+
+    <string-array name="keypad_color_choice_values" translatable="false">
+
+        <item>#FFCDD2</item>
+        <item>#F8BBD0</item>
+        <item>#E1BEE7</item>
+        <item>#D1C4E9</item>
+        <item>#9FA8DA</item>
+        <item>#90CAF9</item>
+        <item>#8C9EFF</item>
+        <item>#80DEEA</item>
+        <item>#81D4FA</item>
+        <item>#80CBC4</item>
+        <item>#C5E1A5</item>
+        <item>#E6EE9C</item>
+        <item>#FFCC80</item>
+        <item>#B0BEC5</item>
+        <item>#FF8A65</item>
+        <item>#FF4081</item>
+    </string-array>
+
 </resources>

@@ -67,20 +67,40 @@
         </info.hoang8f.android.segmented.SegmentedGroup>
 
 
-        <ProgressBar
-            android:id="@android:id/progress"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center" />
+        <ViewSwitcher
 
-        <com.sepidsa.calculator.ColorPickerPalette
-            android:id="@+id/color_picker"
+            android:id="@+id/color_picker_holder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+
+            <com.sepidsa.calculator.ColorPickerPalette
+                android:id="@+id/color_picker_theme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:tag="theme"
+
+                />
+            <com.sepidsa.calculator.ColorPickerPalette
+            android:id="@+id/color_picker_keypad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:visibility="gone" />
+                android:tag="keypad"
+            />
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="HELOO"/>-->
+
+
+        </ViewSwitcher>
+
+
+
     </LinearLayout>
 </ScrollView>
