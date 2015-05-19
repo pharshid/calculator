@@ -1,6 +1,7 @@
 package com.sepidsa.calculator;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -40,6 +41,7 @@ import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sepidsa.calculator.data.LogContract;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.io.Serializable;
@@ -62,9 +64,7 @@ import java.util.Stack;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener,  CompoundButton.OnCheckedChangeListener, PopoverView.PopoverViewDelegate, TextView.OnEditorActionListener {
 
-    private static final String FRAGMENT_TAG_DATA_PROVIDER = "data provider";
-    private static final String FRAGMENT_LIST_VIEW = "list view";
-    private static final byte REFRESH = 4;
+    private static final String FRAGMENT_TAG_LOG_ = "log fragment";
     private static final byte LANGUAGE_ARABIC =3 ;
     private static final byte LANGUAGE_GERMAN =4 ;
     private static final byte LANGUAGE_ITALIAN =5 ;
@@ -82,6 +82,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private static final byte TOTAL_PAGE_COUNT = 3;
     private byte mDefaultPage;
     private boolean mISRetroThemeOn = false;
+
 //    private byte mDelta = -2;
      /*  Contstant for viewpager page selection
     there's the versions of this values a portrait value and a Wide Tablet value. Instead of
@@ -229,9 +230,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(new ERVExpandableDataProviderFragment(), FRAGMENT_TAG_DATA_PROVIDER)
-                    .commit();
 
             mJustPressedExecuteButton = true;
         } else {
@@ -560,7 +558,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
                 //fList.add(new LogFragment());
 
-                fList.add(new RecyclerListViewFragment());
+                fList.add(new AnimatedLogFragment());
                 fList.add(new DialpadFragment());
                 fList.add(new ScientificFragment());
 //                fList.add(new ColorPickerFragment());
@@ -589,7 +587,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
                 List<Fragment> fList = new ArrayList<Fragment>();
 
-                fList.add(new LogFragment());
+                fList.add(new AnimatedLogFragment());
                 fList.add(new DialpadFragment());
 //                fList.add(new ColorPickerFragment());
 
@@ -614,7 +612,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
                 if(fragmentManager.findFragmentByTag("jake") != null){
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    LogFragment fragment = new LogFragment();
+                    AnimatedLogFragment fragment = new AnimatedLogFragment();
                     fragmentTransaction.replace(R.id.container, fragment);
                     fragmentTransaction.commit();
                 }
@@ -704,7 +702,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public int getThemeColorCode(){
         //TODO set a cool default theme color
         SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("themecolors", MODE_PRIVATE);
-        return appPreferences.getInt("THEMECOLOR",Color.parseColor("#1abc9c"));
+        return appPreferences.getInt("THEMECOLOR", Color.parseColor("#1abc9c"));
     }
 
     public boolean watchedIntro(){
@@ -807,13 +805,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mViewPagerIndicator.setFillColor(getThemeColorCode());
 //        mViewPagerIndicator.setPageColor(getThemeColorCode());
 
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        TinyDB db = new TinyDB(getApplicationContext());
-        db.putListString(LOG_DATA_KEY, (getmListView()));
     }
 
     public int getTranslationLanguage(){
@@ -1796,10 +1787,27 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         Intent intent = new Intent("LogIntent");
         // add data
         intent.putExtra("OPERATION", Operation );
-        intent.putExtra("RESULT", Result );
-        intent.putExtra("STARRED", starred );
-        intent.putExtra("TAG", tagText );
+        intent.putExtra("RESULT", Result);
+        intent.putExtra("STARRED", starred);
+        intent.putExtra("TAG", tagText);
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+        ContentValues cv = new ContentValues();
+        cv.put(LogContract.LogEntry.COLUMN_RESULT,Result);
+        cv.put(LogContract.LogEntry.COLUMN_OPERATION,Operation);
+        cv.put(LogContract.LogEntry.COLUMN_TAG,tagText);
+        cv.put(LogContract.LogEntry.COLUMN_STARRED, 0);
+
+        getContentResolver().insert(LogContract.LogEntry.CONTENT_URI,cv);
+
+
+//        if(mActivityLogAdapter != null ) {
+//            mActivityLogAdapter.notifyDataSetChanged();
+//        }
+//
+//        if(mActivtyLogListView != null ) {
+//            mActivtyLogListView.invalidate();
+//        }
+
     }
 
 
@@ -2270,7 +2278,7 @@ imm.hideSoftInputFromWindow(yourEditText.getWindowToken(), 0);
                             // Replace any fragments currently in the container view with a fragment
                             // representing the next page (indicated by the just-incremented currentPage
                             // variable).
-                    .replace(R.id.log_container, new LogFragment())
+                    .replace(R.id.log_container, new AnimatedLogFragment())
 
                             // Add this transaction to the back stack, allowing users to press Back
                             // to get to the front of the card.
@@ -2350,18 +2358,7 @@ imm.hideSoftInputFromWindow(yourEditText.getWindowToken(), 0);
         return false;
     }
 
-    public AbstractExpandableDataProvider getDataProvider() {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG_DATA_PROVIDER);
-        if (fragment!=null) {
-            return ((ERVExpandableDataProviderFragment) fragment).getDataProvider();
-        } else {
-            fragment = new ERVExpandableDataProviderFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .add(fragment, FRAGMENT_TAG_DATA_PROVIDER)
-                    .commit();
-            return ((ERVExpandableDataProviderFragment) fragment).getDataProvider();
-        }
-    }
+
 }
 
 

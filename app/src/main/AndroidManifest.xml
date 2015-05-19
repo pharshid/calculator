@@ -35,6 +35,12 @@
             </intent-filter>
 
         </activity>
+        <provider
+            android:authorities="com.sepidsa.calculator"
+            android:name=".data.LogProvider"
+            android:exported="false"
+            android:syncable="true"/>
+
     </application>
 
 </manifest>
