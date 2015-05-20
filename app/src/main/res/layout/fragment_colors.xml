@@ -21,14 +21,14 @@
         >
 
         <RadioButton
-            android:id="@+id/dark_theme_button"
+            android:id="@+id/keypad_theme_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
             style="@style/RadioButton" />
 
         <RadioButton
-            android:id="@+id/light_theme_button"
+            android:id="@+id/accent_color_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""

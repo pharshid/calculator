@@ -177,9 +177,10 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
                 mSelectedColor = color;
                 // Redraw palette to show checkmark on newly selected color before dismissing.
                 refreshPalette(mPaletteMaintheme, mColors, mSelectedColor, mColorContentDescriptions);
-                ((MainActivity)getActivity()).saveColorPreference(mSelectedColor);
-                ((MainActivity)getActivity()).  aButtonIsPressed("requestingThemeColorChange", mSelectedColor);
-
+                ((MainActivity)getActivity()).saveAccentColorCode(mSelectedColor);
+                ((MainActivity)getActivity()).  aButtonIsPressed("requestingAccentColorChange", mSelectedColor);
+                //save accent color
+                //redraw theme
             }
         }else {
             if (color != mSelectedKeypadColor) {
@@ -187,7 +188,9 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
                 // Redraw palette to show checkmark on newly selected color before dismissing.
                 refreshPalette(mPalettekeypad, mColorsKeypad, mSelectedKeypadColor, mColorContentDescriptions);
                 ((MainActivity)getActivity()).changeTheme(mSelectedKeypadColor);
-
+                //save keypad color
+                //save keypad font color
+                //redraw theme
             }
         }
         dismiss();
@@ -231,8 +234,8 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
     }
 
     private void prepareThemeSegmentedControl(View view) {
-        RadioButton buttonLightTheme = (RadioButton) view.findViewById(R.id.light_theme_button);
-        RadioButton buttonDarkTheme = (RadioButton) view.findViewById(R.id.dark_theme_button);
+        RadioButton buttonLightTheme = (RadioButton) view.findViewById(R.id.accent_color_button);
+        RadioButton buttonDarkTheme = (RadioButton) view.findViewById(R.id.keypad_theme_button);
 
         SegmentedGroup themeSegment = (SegmentedGroup) view.findViewById(R.id.segmented);
         themeSegment.setOnCheckedChangeListener(this);
@@ -258,8 +261,8 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
         switch (i) {
 
-            case R.id.light_theme_button:
-                //Light theme
+            case R.id.accent_color_button:
+                //change accent color
                 if(((MainActivity)getActivity()).isRetroThemeSelected() == true){
                     ((MainActivity) getActivity()).setRetrothemeSelected(false);
                     getActivity().recreate();
@@ -273,7 +276,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
                 }
                 break;
 
-            case R.id.dark_theme_button :
+            case R.id.keypad_theme_button:
                 //Dark Theme
                 if(((MainActivity)getActivity()).isRetroThemeSelected() == true){
                     ((MainActivity) getActivity()).setRetrothemeSelected(false);

@@ -431,7 +431,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             mTranslationBox.setTypeface(mTranslationBoxTypeface);
         }
 
-        applyTheme(getCurrentThemePreference());
+        applyTheme(getCurrentThemePreference(),true);
 
 
 
@@ -726,33 +726,39 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
 
-    public void changeTheme(int themeNumber){
+    public void changeTheme(int themeNumber, boolean whiteKeyad){
         //TODO set a cool default theme color
         //light theme is 0
         //dark theme is 1
         //retro theme is -1
-        saveThemePreference(themeNumber);
-        applyTheme(themeNumber);
+        saveKeypadColorCode(themeNumber);
+        applyTheme(themeNumber, whiteKeyad);
     }
 
     // Saving the selected color theme to prefrence
-    public void saveColorPreference(int colorCode){
+    public void saveAccentColorCode(int colorCode){
         SharedPreferences appPreferences =getApplicationContext().getSharedPreferences("themecolors",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = appPreferences.edit();
-        editor.putInt("THEMECOLOR", colorCode);
+        editor.putInt("ACCENT_COLOR_CODE", colorCode);
         editor.commit();
     }
 
 
-    private void saveThemePreference(int themeNumber) {
+    private void saveKeypadColorCode(int themeNumber) {
         SharedPreferences appPreferences =getApplicationContext().getSharedPreferences("themecolors", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = appPreferences.edit();
-        editor.putInt("THEME_NUMBER", themeNumber);
+        editor.putInt("KEYPAD_COLOR_CODE", themeNumber);
         editor.commit();
     }
 
+    void redrawAccent(){
 
-    private void applyTheme(int themeNumber) {
+        if(!mISRetroThemeOn) {
+
+        }
+
+    }
+    private void applyTheme(int themeNumber, boolean whiteKeypad) {
         View activityView = findViewById(R.id.activity_body);
         // todo send intent to other fragments
 //        this.getWindow().getDecorView();
@@ -778,15 +784,19 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 break;
 
             default :
-                activityView.setBackgroundColor(themeNumber);
-                resultTextView.setTextColor(Color.WHITE);
-                resultTextView.setBackgroundColor(getThemeColorCode());
-                mTranslationBox.setBackgroundColor(themeNumber);
+                changeKeypadAccentColor(themeNumber, activityView,whiteKeypad);
                 break;
         }
         sendChangeThemeIntent();
     }
 
+    void changeKeypadAccentColor(int themeNumber, View activityView,boolean whiteKeypad) {
+        activityView.setBackgroundColor(themeNumber);
+        resultTextView.setTextColor(Color.WHITE);
+        resultTextView.setBackgroundColor(getThemeColorCode());
+        mTranslationBox.setBackgroundColor(themeNumber);
+
+    }
 
 
     public void setMViewPagerIndicatorColor(){
@@ -1807,7 +1817,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public void aButtonIsPressed(String requestedAction, int colorCode ) {
 
         if(requestedAction.equals( "requestingThemeColorChange" )){
-            saveColorPreference(colorCode);
+            saveAccentColorCode(colorCode);
             sendChangeThemeColorIntent();
             setMViewPagerIndicatorColor();
             resultTextView.setBackgroundColor(getThemeColorCode());
