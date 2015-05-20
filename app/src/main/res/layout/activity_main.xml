@@ -239,6 +239,17 @@
 
                     />
 
+                <Button
+                    android:id="@+id/buttonParallax"
+                    style="@style/icon_button.portrait"
+                    android:layout_weight="1"
+                    android:text="p"
+                    android:textColor="#DADFE1"
+                    android:tag="p"
+                    android:gravity="center_horizontal"
+
+                    />
+
 
             </LinearLayout>
 

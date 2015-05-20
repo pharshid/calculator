@@ -459,6 +459,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         ( (Button)findViewById(R.id.buttonColors)).setText("q");
         ( findViewById(R.id.buttonColors)).setOnClickListener(this);
 
+        ( (Button)findViewById(R.id.buttonParallax)).setTypeface(mIconFont);
+        ( (Button)findViewById(R.id.buttonParallax)).setText("z");
+        ( findViewById(R.id.buttonParallax)).setOnClickListener(this);
+
+
     }
 
     private boolean getVolumeFromPreference(){
@@ -1904,11 +1909,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             case R.id.favorites_list:
 
 
-                ViewGroup rootView = (ViewGroup)findViewById(R.id.activity_body);
-                PopoverView popoverView = new PopoverView(this, R.layout.popover_showed_view);
-                popoverView.setContentSizeForViewInPopover(new Point(600, 600));
-                popoverView.setDelegate(this);
-                popoverView.showPopoverFromRectInViewGroup(rootView, PopoverView.getFrameForView(v), PopoverView.PopoverArrowDirectionAny, true);
+//                ViewGroup rootView = (ViewGroup)findViewById(R.id.activity_body);
+//                PopoverView popoverView = new PopoverView(this, R.layout.popover_showed_view);
+//                popoverView.setContentSizeForViewInPopover(new Point(600, 600));
+//                popoverView.setDelegate(this);
+//                popoverView.showPopoverFromRectInViewGroup(rootView, PopoverView.getFrameForView(v), PopoverView.PopoverArrowDirectionAny, true);
+
+                FragmentManager fm = getSupportFragmentManager();
+                FavoritesFragment favoritesDialog = new FavoritesFragment();
+                favoritesDialog.show(fm, "fragment_favorites");
                 break;
 
             case R.id.add_to_favorites:
@@ -1932,6 +1941,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 mButton = (Button)findViewById(R.id.buttonLanguage);
                 showSpinner();
                 break;
+
+            case R.id.buttonParallax:
+                Intent myIntent = new Intent(MainActivity.this, ParallaxActivity.class);
+                MainActivity.this.startActivity(myIntent);
+                break;
+
 
             case R.id.buttonMute:
                 reverseVolume();

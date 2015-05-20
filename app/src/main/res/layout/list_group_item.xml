@@ -114,12 +114,12 @@
                 android:focusableInTouchMode="false"
                 android:layout_width="wrap_content"
                 android:text="DELETE"/>
-            <Button android:id="@+id/copyButton"
+            <Button android:id="@+id/labelButton"
                 android:layout_height="50dip"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:layout_width="wrap_content"
-                android:text="COPY"/>
+                android:text="LABEL"/>
             <Button android:id="@+id/shareButton"
                 android:layout_height="50dip"
                 android:layout_width="wrap_content"

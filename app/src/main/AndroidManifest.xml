@@ -27,6 +27,7 @@
             android:label="@string/app_name"
             android:windowSoftInputMode="stateHidden"
 
+
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,6 +36,16 @@
             </intent-filter>
 
         </activity>
+
+        <activity android:name=".ParallaxActivity"
+            android:label="parallaxactivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <provider
             android:authorities="com.sepidsa.calculator"
             android:name=".data.LogProvider"
