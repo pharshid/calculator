@@ -15,27 +15,82 @@
        limitations under the License.
 -->
 <!-- NOTE: should use FrameLayout or RelativeLayout for parent of the "@id/container" view (for Android 2.3 compatibility) -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/commonListItemStyle"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="64dp"
-    android:background="@drawable/bg_swipe_item_neutral">
+    android:layout_height="match_parent"
+    android:layout_marginTop="3dp"
+    android:background="#ffffff">
 
-    <RelativeLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="true"
-        tools:ignore="UselessParent">
-
-
-        <TextView
-            android:id="@+id/child_text"
+        <RelativeLayout
+            android:id="@+id/container"
+            android:animateLayoutChanges="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            tools:ignore="RtlHardcoded" />
-    </RelativeLayout>
+            android:descendantFocusability="blocksDescendants">
 
-</FrameLayout>
+
+            <CheckBox
+                android:id="@+id/add_to_favorites"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:button="@android:drawable/btn_star"
+                android:gravity="center"
+                android:focusable="false"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:visibility="visible"
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Log_title"
+                style="@style/CustomButton"
+                android:textSize="@dimen/log_expression_txt_size"
+                android:paddingTop="@dimen/padding_small"
+                android:textColor="@android:color/holo_blue_light"
+                android:gravity="left"
+                android:layout_toLeftOf="@id/add_to_favorites"
+                android:paddingLeft="@dimen/padding_small"
+                android:clickable="false"
+                android:focusable="false"
+
+
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/LOG_detail"
+                android:layout_below="@+id/Log_title"
+                style="@style/CustomButton"
+                android:textSize="@dimen/log_result_txt_size"
+                android:textColor="@android:color/darker_gray"
+                android:gravity="left"
+                android:paddingLeft="@dimen/padding_small"
+                android:layout_toLeftOf="@id/add_to_favorites"
+                android:focusable="false"
+
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/LOG_tag"
+                android:layout_below="@id/LOG_detail"
+                style="@style/CustomButton"
+                android:textSize="@dimen/log_result_txt_size"
+                android:textColor="@android:color/darker_gray"
+                android:gravity="left"
+                android:layout_toLeftOf="@id/add_to_favorites"
+                android:focusable="false"
+                />
+        </RelativeLayout>
+
+</LinearLayout>

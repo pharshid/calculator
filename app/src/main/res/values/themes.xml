@@ -2,7 +2,7 @@
 <resources>
     <!-- the theme applied to the application or activity -->
     <style name="CustomActionBarTheme"
-        parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="android:windowContentOverlay">@null</item>
 
@@ -18,7 +18,7 @@
 
 
 
-    <style name="app_theme" parent="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen">
+    <style name="app_theme" parent="@style/Theme.AppCompat.Light">
 
         <item name="vpiCirclePageIndicatorStyle">@style/CustomCirclePageIndicator</item>
     </style>

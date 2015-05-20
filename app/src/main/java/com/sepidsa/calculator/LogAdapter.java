@@ -1,19 +1,23 @@
 package com.sepidsa.calculator;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CursorAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +31,7 @@ public class LogAdapter extends CursorAdapter {
 
     private static final int VIEW_TYPE_COUNT = 1;
     private Context mContext;
+    private String m_Text;
 
 
     public LogAdapter(Context context, Cursor c, int flags) {
@@ -69,7 +74,7 @@ public class LogAdapter extends CursorAdapter {
 
 
         viewHolder.deleteButton.setOnClickListener(mDeleteButtonOnClickListener);
-        viewHolder.copyButton.setOnClickListener(mCopyButtonOnClickListener);
+        viewHolder.copyButton.setOnClickListener(mLabelButtonOnClickListener);
         viewHolder.shareButton.setOnClickListener(mShareButtonOnClickListener);
         viewHolder.useButton.setOnClickListener(mUseButtonOnClickListener);
 
@@ -111,7 +116,7 @@ public class LogAdapter extends CursorAdapter {
             checked = false;
 
             deleteButton = (Button) view.findViewById(R.id.deleteButton);
-            copyButton = (Button) view.findViewById(R.id.copyButton);
+            copyButton = (Button) view.findViewById(R.id.labelButton);
             shareButton = (Button) view.findViewById(R.id.shareButton);
             useButton = (Button) view.findViewById(R.id.useButton);
 
@@ -183,16 +188,77 @@ public class LogAdapter extends CursorAdapter {
     };
 
 
-    Button.OnClickListener mCopyButtonOnClickListener = new Button.OnClickListener() {
+    Button.OnClickListener mLabelButtonOnClickListener = new Button.OnClickListener() {
         @Override
         public void onClick(View view) {
             View parent = findParentRecursively(view);
             if (parent != null) {
                 ViewHolder viewHolder = (ViewHolder) parent.getTag();
-                ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText(LogContract.LogEntry.COLUMN_RESULT, viewHolder.resultView.getText());
-                clipboard.setPrimaryClip(clip);
-                showMessage(viewHolder.resultView.getText() + " has been copied to clipboard.");
+                final int position = viewHolder.position;
+//                viewHolder.checked = true;
+
+                final String selection = LogContract.LogEntry._ID + "=?";
+                final String[] selectionArgs = new String[]{String.valueOf(position)};
+                final Uri uri = LogContract.LogEntry.CONTENT_URI;
+
+                Cursor cursor = mContext.getContentResolver().query(
+                        uri,
+                        null,
+                        selection,
+                        selectionArgs,
+                        null
+                );
+                if (cursor.moveToFirst()) {
+                    cursor.moveToFirst();
+                    String currentLabel = cursor.getString(cursor.getColumnIndex(LogContract.LogEntry.COLUMN_TAG));
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    builder.setTitle("Enter a Label:");
+
+                    // Set up the input
+
+                    final EditText input = new EditText(mContext);
+                   final InputMethodManager inputMethodManager = (InputMethodManager)  mContext.getSystemService(Activity.INPUT_METHOD_SERVICE);
+
+                    // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+                    builder.setView(input);
+                    input.setText(currentLabel);
+                    input.requestFocus();
+                    inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                    // Set up the buttons
+
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String newLabel = input.getText().toString();
+                            ContentValues values = new ContentValues();
+                            values.put(LogContract.LogEntry.COLUMN_TAG, newLabel);
+                            mContext.getContentResolver().update(
+                                    uri,
+                                    values,
+                                    selection,
+                                    selectionArgs
+                            );
+                            inputMethodManager.hideSoftInputFromWindow(input.getWindowToken(), 0);
+
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            inputMethodManager.hideSoftInputFromWindow(input.getWindowToken(), 0);
+                            dialog.cancel();
+
+                        }
+                    });
+
+                    builder.show();
+
+                }
             }
         }
     };
