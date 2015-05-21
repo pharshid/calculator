@@ -61,7 +61,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
     protected int mSelectedColor;
     protected int mColumns;
     protected int mSize;
-    private int mSelectedKeypadColor;
+    private int mSelectedKeypadBackgroundColor;
 
     private ColorPickerPalette mPaletteMaintheme;
     private ColorPickerPalette mPalettekeypad;
@@ -115,7 +115,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
             mColors = savedInstanceState.getIntArray(KEY_COLORS);
             mColorsKeypad = savedInstanceState.getIntArray(KEY_COLORS_KEYPAD);
             mSelectedColor = (Integer) savedInstanceState.getSerializable(KEY_SELECTED_COLOR);
-            mSelectedKeypadColor = (Integer) savedInstanceState.getSerializable(KEY_SELECTED_COLOR_KEYPAD);
+            mSelectedKeypadBackgroundColor = (Integer) savedInstanceState.getSerializable(KEY_SELECTED_COLOR_KEYPAD);
             mColorContentDescriptions = savedInstanceState.getStringArray(
                     KEY_COLOR_CONTENT_DESCRIPTIONS);
         }
@@ -177,20 +177,16 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
                 mSelectedColor = color;
                 // Redraw palette to show checkmark on newly selected color before dismissing.
                 refreshPalette(mPaletteMaintheme, mColors, mSelectedColor, mColorContentDescriptions);
-                ((MainActivity)getActivity()).saveAccentColorCode(mSelectedColor);
-                ((MainActivity)getActivity()).  aButtonIsPressed("requestingAccentColorChange", mSelectedColor);
+                ((MainActivity)getActivity()).changeAccentColor(mSelectedColor);
                 //save accent color
                 //redraw theme
             }
         }else {
-            if (color != mSelectedKeypadColor) {
-                mSelectedKeypadColor = color;
+            if (color != mSelectedKeypadBackgroundColor) {
+                mSelectedKeypadBackgroundColor = color;
                 // Redraw palette to show checkmark on newly selected color before dismissing.
-                refreshPalette(mPalettekeypad, mColorsKeypad, mSelectedKeypadColor, mColorContentDescriptions);
-                ((MainActivity)getActivity()).changeTheme(mSelectedKeypadColor);
-                //save keypad color
-                //save keypad font color
-                //redraw theme
+                refreshPalette(mPalettekeypad, mColorsKeypad, mSelectedKeypadBackgroundColor, mColorContentDescriptions);
+                ((MainActivity)getActivity()).changeKeypadBackgroundColor(mSelectedKeypadBackgroundColor);
             }
         }
         dismiss();
@@ -208,10 +204,10 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
     }
 
     private void setKeypadColors(int[] colors, int selectedColor) {
-        if (mColorsKeypad != colors || mSelectedKeypadColor != selectedColor) {
+        if (mColorsKeypad != colors || mSelectedKeypadBackgroundColor != selectedColor) {
             mColorsKeypad = colors;
-            mSelectedKeypadColor = selectedColor;
-//            refreshPalette(mPalettekeypad,mColorsKeypad,mSelectedKeypadColor,mColorContentDescriptions);
+            mSelectedKeypadBackgroundColor = selectedColor;
+//            refreshPalette(mPalettekeypad,mColorsKeypad,mSelectedKeypadBackgroundColor,mColorContentDescriptions);
         }
     }
 
@@ -230,7 +226,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
         outState.putStringArray(KEY_COLOR_CONTENT_DESCRIPTIONS, mColorContentDescriptions);
 
         outState.putIntArray(KEY_COLORS_KEYPAD, mColorsKeypad);
-        outState.putSerializable(KEY_SELECTED_COLOR_KEYPAD, mSelectedKeypadColor);
+        outState.putSerializable(KEY_SELECTED_COLOR_KEYPAD, mSelectedKeypadBackgroundColor);
     }
 
     private void prepareThemeSegmentedControl(View view) {
@@ -267,7 +263,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
                     ((MainActivity) getActivity()).setRetrothemeSelected(false);
                     getActivity().recreate();
                 }
-//                ((MainActivity)getActivity()).changeTheme(mSelectedColor);
+//                ((MainActivity)getActivity()).changeKeypadBackgroundColor(mSelectedColor);
 
                 refreshPalette(mPaletteMaintheme,mColors,mSelectedColor,mColorContentDescriptions);
 
@@ -283,8 +279,8 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
 
                     getActivity().recreate();
                 }
-//                ((MainActivity)getActivity()). changeTheme(mSelectedKeypadColor);
-                refreshPalette(mPalettekeypad, mColorsKeypad, mSelectedKeypadColor, mColorContentDescriptions);
+//                ((MainActivity)getActivity()). changeKeypadBackgroundColor(mSelectedKeypadBackgroundColor);
+                refreshPalette(mPalettekeypad, mColorsKeypad, mSelectedKeypadBackgroundColor, mColorContentDescriptions);
                 if ( ((String)mViewSwitcher.getCurrentView().getTag()).equals("theme")){
                     mViewSwitcher.showNext();
                 }
@@ -298,7 +294,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
                     ((MainActivity)getActivity()).recreate();
 
                 }
-                ((MainActivity)getActivity()). changeTheme(-1);
+                ((MainActivity)getActivity()).changeKeypadBackgroundColor(-1);
 
                 break;
         }

@@ -22,6 +22,8 @@
 
     <string-array name="keypad_color_choice_values" translatable="false">
 
+        <item>#ffffff</item>
+        <item>#1c1c1c</item>
         <item>#FFCDD2</item>
         <item>#F8BBD0</item>
         <item>#E1BEE7</item>

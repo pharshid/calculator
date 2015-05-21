@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -25,7 +24,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -214,7 +212,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mListView = db.getListString(LOG_DATA_KEY);
         boolean isnull = false;
 
-        if (getCurrentThemePreference() == 2) {
+        if (getKeypadBackgroundColorCode() == 2) {
             mISRetroThemeOn = true;
         }else {
             mISRetroThemeOn = false;
@@ -430,8 +428,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         if (!mJustPressedExecuteButton) {
             mTranslationBox.setTypeface(mTranslationBoxTypeface);
         }
-
-        applyTheme(getCurrentThemePreference(),true);
+        redrawAccent();
+        redrawKeypadBackground();
 
 
 
@@ -719,90 +717,99 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
-    public int getCurrentThemePreference(){
+    public int getKeypadBackgroundColorCode(){
         //TODO set a cool default theme color
         //light theme is 0
         //dark theme is 1
         //retro theme is 2
         int  currentThemeNumber = 0;
-        SharedPreferences appPreferences =getApplicationContext().getSharedPreferences("themecolors",Context.MODE_PRIVATE);
-        currentThemeNumber = appPreferences.getInt("THEME_NUMBER",0);
+        SharedPreferences appPreferences =getApplicationContext().getSharedPreferences("THEME",Context.MODE_PRIVATE);
+        currentThemeNumber = appPreferences.getInt("KEYPAD_BACKGROUND_COLOR_CODE",Color.WHITE);
         return currentThemeNumber;
     }
 
 
-    public void changeTheme(int themeNumber, boolean whiteKeyad){
-        //TODO set a cool default theme color
-        //light theme is 0
-        //dark theme is 1
-        //retro theme is -1
-        saveKeypadColorCode(themeNumber);
-        applyTheme(themeNumber, whiteKeyad);
-    }
+
 
     // Saving the selected color theme to prefrence
     public void saveAccentColorCode(int colorCode){
-        SharedPreferences appPreferences =getApplicationContext().getSharedPreferences("themecolors",Context.MODE_PRIVATE);
+        SharedPreferences appPreferences =getApplicationContext().getSharedPreferences("THEME",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = appPreferences.edit();
-        editor.putInt("ACCENT_COLOR_CODE", colorCode);
+        editor.putInt("KEYPAD_FONT_COLOR_CODE", colorCode);
         editor.commit();
     }
 
 
-    private void saveKeypadColorCode(int themeNumber) {
-        SharedPreferences appPreferences =getApplicationContext().getSharedPreferences("themecolors", Context.MODE_PRIVATE);
+    private void saveKeypadBackgroundColorCode(int themeNumber) {
+        SharedPreferences appPreferences =getApplicationContext().getSharedPreferences("THEME", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = appPreferences.edit();
-        editor.putInt("KEYPAD_COLOR_CODE", themeNumber);
+        editor.putInt("KEYPAD_BACKGROUND_COLOR_CODE", themeNumber);
         editor.commit();
+    }
+    private void saveKeypadFontColorCode(int colorCode) {
+        SharedPreferences appPreferences =getApplicationContext().getSharedPreferences("THEME",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = appPreferences.edit();
+        editor.putInt("KEYPAD_FONT_COLOR_CODE", colorCode);
+        editor.commit();
+    }
+
+
+
+    public void changeAccentColor(int colorCode) {
+        saveAccentColorCode(colorCode);
+        redrawAccent();
     }
 
     void redrawAccent(){
 
         if(!mISRetroThemeOn) {
-
+            sendChangeAccentColorIntent();
+            setMViewPagerIndicatorColor();
+            resultTextView.setBackgroundColor(getThemeColorCode());
+            result_textView_holder.setBackgroundColor(getThemeColorCode());
+        }else {
+            resultTextView.setBackgroundColor(Color.TRANSPARENT);
+            result_textView_holder.setBackgroundColor(Color.TRANSPARENT);
         }
-
     }
-    private void applyTheme(int themeNumber, boolean whiteKeypad) {
+
+    public void changeKeypadBackgroundColor(int backgroundColorCode){
+        saveKeypadBackgroundColorCode(backgroundColorCode);
+        redrawKeypadBackground();
+        sendChangeKeypadFontColorIntent();
+    }
+    public int getKeypadFontColor() {
+        if (getKeypadBackgroundColorCode() != Color.WHITE){
+            return  Color.WHITE;
+        }else {
+            return  Color.GRAY;
+        }
+    }
+
+    private void redrawKeypadBackground() {
         View activityView = findViewById(R.id.activity_body);
-        // todo send intent to other fragments
-//        this.getWindow().getDecorView();
-        switch (themeNumber){
-//            case 0:
-//                // light theme
-////                activityView.setBackgroundColor(Color.WHITE);
-////                mTranslationBox.setBackgroundColor(Color.WHITE);
-////                resultTextView.setTextColor(Color.WHITE);
-//
-//            case 1:
-//                // dark theme #ff3a3a3a
-//                activityView.setBackgroundColor( Color.parseColor("#1c1c1c"));
-//                mTranslationBox.setBackgroundColor(Color.parseColor("#1c1c1c"));
-//                break;
-
-            case -1:
-                // dark theme #ff3a3a3a
+        if (isRetroThemeSelected()){
 //                activityView.setBackground(getDrawable(R.drawable.background_normal));
-                mTranslationBox.setBackgroundColor(Color.TRANSPARENT);
-                resultTextView.setBackgroundColor(Color.TRANSPARENT);
-                result_textView_holder.setBackgroundColor(Color.TRANSPARENT);
-                break;
+            mTranslationBox.setBackgroundColor(Color.TRANSPARENT);
 
-            default :
-                changeKeypadAccentColor(themeNumber, activityView,whiteKeypad);
-                break;
+        }else{
+            mTranslationBox.setBackgroundColor(getKeypadBackgroundColorCode());
+            mTranslationBox.setTextColor(getKeypadFontColor());
         }
-        sendChangeThemeIntent();
     }
 
-    void changeKeypadAccentColor(int themeNumber, View activityView,boolean whiteKeypad) {
-        activityView.setBackgroundColor(themeNumber);
-        resultTextView.setTextColor(Color.WHITE);
-        resultTextView.setBackgroundColor(getThemeColorCode());
-        mTranslationBox.setBackgroundColor(themeNumber);
-
+    //
+    private void sendChangeAccentColorIntent() {
+        Intent intent = new Intent("themeIntent");
+        intent.putExtra("message", "changeAccentColor");
+        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
     }
-
+    private void sendChangeKeypadFontColorIntent() {
+        Intent intent = new Intent("themeIntent");
+        intent.putExtra("message", "changeKeypadFontColor");
+        intent.putExtra("fontColor",getKeypadFontColor());
+        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+    }
 
     public void setMViewPagerIndicatorColor(){
         mViewPagerIndicator.setFillColor(getThemeColorCode());
@@ -1249,7 +1256,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             if(currentButtonValue != null) {
                 pushLastButton(currentButtonValue);
             }
-        mTemp = "error";
+            mTemp = "error";
             // Happens if it is devision by zero
             return 1;
         }
@@ -1280,7 +1287,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     void setRetrothemeSelected(boolean _isSelected){
-         mISRetroThemeOn = _isSelected;
+        mISRetroThemeOn = _isSelected;
     }
 
     private void displayTranslation() {
@@ -1429,12 +1436,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 }
                 break;
         }
-
-
-
     }
-
-
 
     public void setMJustPressedExecute(Boolean pressed){
 
@@ -1629,7 +1631,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 mSoundPoolLoaded = true;
             }
         });
-        switch (getCurrentThemePreference()) {
+        switch (getKeypadBackgroundColorCode()) {
             case 0:
             case 1:
                 numericButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.keypress, 1);
@@ -1765,18 +1767,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
     }
 
-    private void sendChangeThemeColorIntent() {
-        Intent intent = new Intent("colorIntent");
-        intent.putExtra("message", "requestThemeColorChange");
-        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
-    }
 
-    private void sendChangeThemeIntent() {
-        Intent intent = new Intent("theme_change_intent");
-        intent.putExtra("message", "requestThemeChange");
-        intent.putExtra("theme",getCurrentThemePreference());
-        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
-    }
 
     private boolean isNonDigit (String currentButtonValue){
 
@@ -1819,25 +1810,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         return false;
     }
 
-    public void aButtonIsPressed(String requestedAction, int colorCode ) {
-
-        if(requestedAction.equals( "requestingThemeColorChange" )){
-            saveAccentColorCode(colorCode);
-            sendChangeThemeColorIntent();
-            setMViewPagerIndicatorColor();
-            resultTextView.setBackgroundColor(getThemeColorCode());
-            result_textView_holder.setBackgroundColor(getThemeColorCode());
-
-        }
-    }
-
 
 
 
     Typeface get_Default_Dialpad_Button_typeface() {
 
         //if retro theme is selected we only need a default (roboto regular) font
-        if(getCurrentThemePreference() == 2){
+        if(getKeypadBackgroundColorCode() == 2){
             return mRobotoLight;
         }
         //else chose from users previous preference (Thin - Light - Regular)
@@ -1922,7 +1901,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             case R.id.add_to_favorites:
 
-                sendLogMessage(getMExpressionString().toString(), mTemp,true, String.valueOf(mTagHimself.getText()));
+                sendLogMessage(getMExpressionString().toString(), mTemp, true, String.valueOf(mTagHimself.getText()));
 
 
 
@@ -1959,10 +1938,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
 
-            case R.id.button8:
-
-
-
 
             case R.id.buttonColors:
 
@@ -1979,7 +1954,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     public void onColorSelected(int color) {
 
                         mSelectedColorCal0=color;
-//                        aButtonIsPressed("requestingThemeColorChange", color);
+//                        changeAccentColor("requestingThemeColorChange", color);
 
                     }
 

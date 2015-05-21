@@ -45,23 +45,24 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
     private Typeface mRobotoLight;
     private Typeface mRobotoRegular;
     boolean mIsRetroOn = false ;
+    private BroadcastReceiver mDialPadTypeFaceColorChangedReceiver;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mIsRetroOn = ((MainActivity)getActivity()).isRetroThemeSelected();
         if(mIsRetroOn) {
-           mView = inflater.inflate(R.layout.fragment_dialpad_retro, container, false);
-       }else {
-           mView = inflater.inflate(R.layout.fragment_dialpad_flat, container, false);
+            mView = inflater.inflate(R.layout.fragment_dialpad_retro, container, false);
+        }else {
+            mView = inflater.inflate(R.layout.fragment_dialpad_flat, container, false);
 
-       }
+        }
         // Set the listener for all the gray_buttons
         idList = getNumericButtonsID();
 
         defaultFont = ((MainActivity)getActivity()).get_Default_Dialpad_Button_typeface();
 
-    //If no retro theme is selected apply flat theme colors to keys
-        if(((MainActivity) getActivity()).getCurrentThemePreference() != 2){
+        //If no retro theme is selected apply flat theme colors to keys
+        if(((MainActivity) getActivity()).getKeypadBackgroundColorCode() != 2){
             setThemeColors(((MainActivity) getActivity()).getThemeColorCode());
         }
 
@@ -71,12 +72,37 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
             public void onReceive(Context context, Intent intent) {
                 // Extract data included in the Intent
                 String message = intent.getStringExtra("message");
-                if(message.equals("requestThemeColorChange")) {
-                    setThemeColors(((MainActivity) getActivity()).getThemeColorCode());
-                    setTextColorForOperators(getThemeColorStateList());
-                    setBackgroundColorForOperators();
+                switch (message) {
+                    case "changeAccentColor":
+                        setThemeColors(((MainActivity) getActivity()).getThemeColorCode());
+                        setTextColorForOperators(getThemeColorStateList());
+                        setBackgroundColorForOperators();
+                        break;
+
+                    case "changeKeypadFontColor":
+                        int   keypadFontColor = intent.getIntExtra("fontColor" , Color.GRAY);
+                        for (int id : idList) {
+                            View v = mView.findViewById(id);
+                            if (v != null && (v instanceof Button) && v.getTag()!="accent_button") {
+                                ((Button) v).setTextColor(keypadFontColor);
+                            }
+                        }
+                        break;
+
+                    case "changeDialpadFont":
+                        int font = intent.getIntExtra("dialpad_typeFace", DIALPAD_FONT_ROBOTO_THIN);
+                        defaultFont = ((MainActivity) getActivity()).change_DialPad_TypeFace(font);
+                        for (int id : idList) {
+                            View v = mView.findViewById(id);
+                            if (v != null && (v instanceof Button)) {
+                                ((Button) v).setTypeface(defaultFont);
+                            }
+                        }
+                        break;
+
                 }
             }
+
         };
 
 
@@ -93,6 +119,13 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
                         ((Button) v).setTypeface(defaultFont);
                     }
                 }
+
+            }
+        };
+        mDialPadTypeFaceColorChangedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // Extract data included in the Intent
 
             }
         };
@@ -198,7 +231,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         mRobotoLight = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "roboto_light.ttf");
         mRobotoRegular = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "roboto_regular.ttf");
         mRobotoThin = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "roboto_thin.ttf");
-        if(((MainActivity) getActivity()).getCurrentThemePreference() == 2){
+        if(((MainActivity) getActivity()).getKeypadBackgroundColorCode() == 2){
             mIsRetroOn = true;
         }
 
@@ -227,9 +260,8 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         super.onStart();
 
 
-        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mThemeChangedReciever, new IntentFilter("colorIntent"));
+        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mThemeChangedReciever, new IntentFilter("themeIntent"));
         LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mClearButtonChangedReceiver, new IntentFilter("clearIntent"));
-        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mDialPadTypeFaceChangedReceiver, new IntentFilter("typeFaceIntent"));
     }
 
 
@@ -253,8 +285,12 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
 
             default:
-                ((MainActivity)getActivity()).aButtonIsPressed(view.getTag().toString());
-        }
+                if(view.getTag().toString().equals( "trigonomic")){
+                    ((MainActivity) getActivity()).aButtonIsPressed(((Button)view).getText().toString()+"(");
+
+                }else {
+                    ((MainActivity) getActivity()).aButtonIsPressed(((Button)view).getText().toString());
+                }        }
 
     }
 
@@ -347,7 +383,6 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
     public void onPause() {
         LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).unregisterReceiver(mThemeChangedReciever);
         LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).unregisterReceiver(mClearButtonChangedReceiver);
-        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).unregisterReceiver(mDialPadTypeFaceChangedReceiver);
         super.onPause();
     }
 

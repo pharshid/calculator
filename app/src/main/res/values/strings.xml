@@ -141,8 +141,7 @@
 
     <string name="demo_parallax_description">Image of a cat</string>
     <string name="demo_parallax_plus">+</string>
-
-
+    <string name="accent_button">accent_button</string>
 
 
 </resources>
