@@ -235,7 +235,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
 
         SegmentedGroup themeSegment = (SegmentedGroup) view.findViewById(R.id.segmented);
         themeSegment.setOnCheckedChangeListener(this);
-        themeSegment.setTintColor(((MainActivity)getActivity()).getThemeColorCode());
+        themeSegment.setTintColor(((MainActivity)getActivity()).getAccentColorCode());
         switch ( 0) {
             case 0 : // light theme
 

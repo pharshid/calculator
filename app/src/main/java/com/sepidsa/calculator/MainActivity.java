@@ -1,5 +1,6 @@
 package com.sepidsa.calculator;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,8 +9,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -397,7 +400,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
         if(!mISRetroThemeOn) {
-            resultTextView.setBackgroundColor(getThemeColorCode());
+            resultTextView.setBackgroundColor(getAccentColorCode());
         }
         if(getAngleMode() == true){
             mScientificModeTextView.setText("DEG");
@@ -514,11 +517,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         if (mViewPagerIndicator  != null) {
             mViewPagerIndicator.setViewPager(mViewPager);
             mViewPagerIndicator.setCurrentItem(mDefaultPage);
-            mViewPagerIndicator.setFillColor(getThemeColorCode());
+            mViewPagerIndicator.setFillColor(getAccentColorCode());
 
             //  mViewPagerIndicator.setFades(false);
-//            mViewPagerIndicator.setSelectedColor(getThemeColorCode());
-//        mViewPagerIndicator.setFillColor(getThemeColorCode());
+//            mViewPagerIndicator.setSelectedColor(getAccentColorCode());
+//        mViewPagerIndicator.setFillColor(getAccentColorCode());
         }
     }
 
@@ -664,8 +667,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private void setResultTextBox(){
 
         if(!mISRetroThemeOn) {
-            resultTextView.setBackgroundColor(getThemeColorCode());
-            result_textView_holder.setBackgroundColor(getThemeColorCode());
+            resultTextView.setBackgroundColor(getAccentColorCode());
+            result_textView_holder.setBackgroundColor(getAccentColorCode());
             resultTextView.setTextColor(Color.WHITE);
             resultTextView.setTypeface(mEnglishTypeFace);
         }else {
@@ -679,10 +682,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         resultTextView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
     }
 
-    public int getThemeColorCode(){
+    public int getAccentColorCode(){
         //TODO set a cool default theme color
-        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("themecolors", MODE_PRIVATE);
-        return appPreferences.getInt("THEMECOLOR", Color.parseColor("#1abc9c"));
+        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("THEME", MODE_PRIVATE);
+        return appPreferences.getInt("ACCENT_COLOR_CODE", Color.parseColor("#1abc9c"));
     }
 
     public boolean watchedIntro(){
@@ -725,6 +728,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         int  currentThemeNumber = 0;
         SharedPreferences appPreferences =getApplicationContext().getSharedPreferences("THEME",Context.MODE_PRIVATE);
         currentThemeNumber = appPreferences.getInt("KEYPAD_BACKGROUND_COLOR_CODE",Color.WHITE);
+
         return currentThemeNumber;
     }
 
@@ -735,7 +739,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public void saveAccentColorCode(int colorCode){
         SharedPreferences appPreferences =getApplicationContext().getSharedPreferences("THEME",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = appPreferences.edit();
-        editor.putInt("KEYPAD_FONT_COLOR_CODE", colorCode);
+        editor.putInt("ACCENT_COLOR_CODE", colorCode);
         editor.commit();
     }
 
@@ -765,8 +769,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         if(!mISRetroThemeOn) {
             sendChangeAccentColorIntent();
             setMViewPagerIndicatorColor();
-            resultTextView.setBackgroundColor(getThemeColorCode());
-            result_textView_holder.setBackgroundColor(getThemeColorCode());
+            resultTextView.setBackgroundColor(getAccentColorCode());
+            result_textView_holder.setBackgroundColor(getAccentColorCode());
         }else {
             resultTextView.setBackgroundColor(Color.TRANSPARENT);
             result_textView_holder.setBackgroundColor(Color.TRANSPARENT);
@@ -780,9 +784,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
     public int getKeypadFontColor() {
         if (getKeypadBackgroundColorCode() != Color.WHITE){
-            return  Color.WHITE;
+            return  Color.parseColor("#757575");
         }else {
-            return  Color.GRAY;
+            return  Color.LTGRAY;
         }
     }
 
@@ -793,8 +797,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             mTranslationBox.setBackgroundColor(Color.TRANSPARENT);
 
         }else{
+            View fragmentContainer = findViewById(R.id.fragment_container);
+
+//            fragmentContainer.setBackground(key());
             mTranslationBox.setBackgroundColor(getKeypadBackgroundColorCode());
+            int testtt = getKeypadBackgroundColorCode();
             mTranslationBox.setTextColor(getKeypadFontColor());
+            fragmentContainer = findViewById(R.id.lower_half);
+            activityView.setBackgroundColor(getKeypadBackgroundColorCode());
+
         }
     }
 
@@ -812,8 +823,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     public void setMViewPagerIndicatorColor(){
-        mViewPagerIndicator.setFillColor(getThemeColorCode());
-//        mViewPagerIndicator.setPageColor(getThemeColorCode());
+        mViewPagerIndicator.setFillColor(getAccentColorCode());
+//        mViewPagerIndicator.setPageColor(getAccentColorCode());
 
     }
 
@@ -1622,8 +1633,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
     void prepareSoundStuff(){
-
-        mSoundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+           mSoundPool =  createNewSoundPool();
+        }else{
+           mSoundPool =  createOldSoundPool();
+        }
         mSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
             public void onLoadComplete(SoundPool soundPool, int sampleId,
@@ -1631,31 +1645,47 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 mSoundPoolLoaded = true;
             }
         });
-        switch (getKeypadBackgroundColorCode()) {
-            case 0:
-            case 1:
-                numericButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.keypress, 1);
-                executeButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.equal, 1);
-                clearAllButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.clear, 1);
-                backSpaceButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
-                operatorsButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.keypress, 1);
-                errorSoundID = mSoundPool.load(getApplicationContext(), R.raw.error, 1);
-                mHasVolumeSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
-                break;
-            case 2 :
+       if (mISRetroThemeOn) {
+           numericButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.button1, 1);
+           executeButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.button28, 1);
+           clearAllButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.clear_retro, 1);
+           backSpaceButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
+           operatorsButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.operator_retro, 1);
+           errorSoundID = mSoundPool.load(getApplicationContext(), R.raw.error_retro, 1);
+           mHasVolumeSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
 
-                numericButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.button1, 1);
-                executeButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.button28, 1);
-                clearAllButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.clear_retro, 1);
-                backSpaceButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
-                operatorsButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.operator_retro, 1);
-                errorSoundID = mSoundPool.load(getApplicationContext(), R.raw.error_retro, 1);
-                mHasVolumeSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
-                break;
 
+
+       }else{
+
+
+           numericButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.keypress, 1);
+           executeButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.equal, 1);
+           clearAllButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.clear, 1);
+           backSpaceButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
+           operatorsButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.keypress, 1);
+           errorSoundID = mSoundPool.load(getApplicationContext(), R.raw.error, 1);
+           mHasVolumeSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
         }
 
 
+    }
+
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    protected SoundPool createNewSoundPool(){
+        AudioAttributes attributes = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_GAME)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build();
+        SoundPool sounds = new SoundPool.Builder()
+                .setAudioAttributes(attributes)
+                .build();
+                return sounds;
+    }
+            @SuppressWarnings("deprecation")
+    protected SoundPool createOldSoundPool(){
+      SoundPool  sounds = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+                return sounds;
     }
 
     void prepareAnimationStuff(){
@@ -1952,10 +1982,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
                     @Override
                     public void onColorSelected(int color) {
-
                         mSelectedColorCal0=color;
-//                        changeAccentColor("requestingThemeColorChange", color);
-
                     }
 
                 });
@@ -2135,10 +2162,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         Log_Adapter mSummaryAdapter;
         Typeface defaultFont =  Typeface.createFromAsset( getAssets(), "roboto_light.ttf");
         if ( data != null) {
-            mSummaryAdapter = new Log_Adapter(getApplicationContext(), getThemeColorCode(),data,defaultFont,mListView);
+            mSummaryAdapter = new Log_Adapter(getApplicationContext(), getAccentColorCode(),data,defaultFont,mListView);
         }
         else   {
-            mSummaryAdapter = new Log_Adapter(getApplicationContext(), getThemeColorCode(),defaultFont,mListView);
+            mSummaryAdapter = new Log_Adapter(getApplicationContext(), getAccentColorCode(),defaultFont,mListView);
         }
         mListView.setAdapter(mSummaryAdapter);
 

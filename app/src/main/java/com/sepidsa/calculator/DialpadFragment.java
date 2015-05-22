@@ -62,8 +62,8 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         defaultFont = ((MainActivity)getActivity()).get_Default_Dialpad_Button_typeface();
 
         //If no retro theme is selected apply flat theme colors to keys
-        if(((MainActivity) getActivity()).getKeypadBackgroundColorCode() != 2){
-            setThemeColors(((MainActivity) getActivity()).getThemeColorCode());
+        if(((MainActivity) getActivity()).isRetroThemeSelected() != true){
+            redrawKeypad();
         }
 
 
@@ -74,19 +74,14 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
                 String message = intent.getStringExtra("message");
                 switch (message) {
                     case "changeAccentColor":
-                        setThemeColors(((MainActivity) getActivity()).getThemeColorCode());
-                        setTextColorForOperators(getThemeColorStateList());
-                        setBackgroundColorForOperators();
+                        redrawKeypad();
+//                        setTextColorState(getOperatorButtonsID(), getThemeColorStateList());
+//                        setBackgroundColorForOperators();
                         break;
 
                     case "changeKeypadFontColor":
-                        int   keypadFontColor = intent.getIntExtra("fontColor" , Color.GRAY);
-                        for (int id : idList) {
-                            View v = mView.findViewById(id);
-                            if (v != null && (v instanceof Button) && v.getTag()!="accent_button") {
-                                ((Button) v).setTextColor(keypadFontColor);
-                            }
-                        }
+
+                        setTextColorState(getNonAccentButtonsID(), getNonAccentColorStateList());
                         break;
 
                     case "changeDialpadFont":
@@ -107,28 +102,8 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
 
 
-        mDialPadTypeFaceChangedReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                // Extract data included in the Intent
-                int message = intent.getIntExtra("dialpad_typeFace",DIALPAD_FONT_ROBOTO_THIN);
-                defaultFont =     ((MainActivity)getActivity()).change_DialPad_TypeFace(message);
-                for(int id : idList) {
-                    View v = mView.findViewById(id);
-                    if (v != null && (v instanceof Button)) {
-                        ((Button) v).setTypeface(defaultFont);
-                    }
-                }
 
-            }
-        };
-        mDialPadTypeFaceColorChangedReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                // Extract data included in the Intent
 
-            }
-        };
 
         mClearButtonChangedReceiver = new BroadcastReceiver() {
             @Override
@@ -241,7 +216,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         }
         //else chose from users previous preference (Thin - Light - Regular)
         else {
-            setThemeColors(((MainActivity) getActivity()).getThemeColorCode());
+//            redrawKeypad();
             SharedPreferences appPreferences = getActivity().getSharedPreferences("typography", Context.MODE_PRIVATE);
             switch (appPreferences.getInt("DIALPAD_FONT",DIALPAD_FONT_ROBOTO_THIN)) {
                 case DIALPAD_FONT_ROBOTO_THIN :
@@ -311,48 +286,93 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         return buttonsPointerArray;
 
     }
+    int[] getOperatorButtonsID(){
+        int [] buttonsPointerArray;
 
-    void setThemeColors (int colorCode){
-
-        setTextColorForOperators(getThemeColorStateList());
-        setBackgroundColorForOperators();
+        buttonsPointerArray = new int[]{
+                R.id.buttonPlus, R.id.buttonMinus, R.id.buttonDevide, R.id.buttonTimes
+                , R.id.openParen, R.id.closeParen, R.id.buttonPercent
+        };
+        return buttonsPointerArray;
 
     }
 
-    private ColorStateList getThemeColorStateList() {
-        int[][] states = new int[][] {
+    int[] getNonAccentButtonsID(){
+        int [] buttonsPointerArray;
 
-                new int[] { android.R.attr.state_pressed} , // pressed
-                new int[] { -android.R.attr.state_pressed}  // pressed
+        buttonsPointerArray = new int[]{R.id.button9, R.id.button8, R.id.button7,
+                R.id.button6, R.id.button5, R.id.button4, R.id.button1, R.id.button2, R.id.button3, R.id.button0,
+                R.id.buttonPoint,
+
+                R.id.buttonSinus, R.id.buttonCosinus, R.id.buttonTan, R.id.buttonln, R.id.buttonlog, R.id.buttonlog,  R.id.buttonpie, R.id.buttone, R.id.buttonpower,
+                R.id.buttonrad , R.id.buttonCot
+
+
         };
+        return buttonsPointerArray;
 
+    }
+
+
+    void redrawKeypad(){
+
+        setTextColorState(getOperatorButtonsID(), getThemeColorStateList());
+        setTextColorState(getNonAccentButtonsID(), getNonAccentColorStateList());
+        setBackgroundColorForOperators();
+    }
+
+    private ColorStateList getThemeColorStateList() {
+        int[][] states = getStateAray();
         int[] colors = new int[] {
                 Color.WHITE,
-                ((MainActivity) getActivity()).getThemeColorCode()
+                ((MainActivity) getActivity()).getAccentColorCode()
         };
 
         return new ColorStateList(states, colors);
     }
 
-    private void setTextColorForOperators(ColorStateList operatorTextColor) {
-        ((Button) mView.findViewById(R.id.buttonTimes)).setTextColor(operatorTextColor);
-        ((Button)mView.findViewById(R.id.buttonDevide)).setTextColor(operatorTextColor);
-        ((Button) mView.findViewById(R.id.buttonPlus)).setTextColor(operatorTextColor);
-        ((Button)mView.findViewById(R.id.buttonMinus)).setTextColor(operatorTextColor);
-        ((Button) mView.findViewById(R.id.openParen)).setTextColor(operatorTextColor);
-        ((Button) mView.findViewById(R.id.closeParen)).setTextColor(operatorTextColor);
-        ((Button) mView.findViewById(R.id.buttonPercent)).setTextColor(operatorTextColor);
+    private ColorStateList getNonAccentColorStateList() {
+        int[][] states = getStateAray();
+        int[] colors;
+        if(((MainActivity) getActivity()).getKeypadFontColor() == Color.LTGRAY) {
+           colors = new int[]{
+                   ((MainActivity) getActivity()).getAccentColorCode(),Color.LTGRAY,
+
+           };
+        }else{
+             colors = new int[]{
+                     ((MainActivity) getActivity()).getAccentColorCode(),Color.parseColor("#BDBDBD")
+
+            };
+        }
+        return new ColorStateList(states, colors);
+    }
+
+    int[][] getStateAray (){
+        return new int[][] {
+
+                new int[] { android.R.attr.state_pressed} , // pressed
+                new int[] { -android.R.attr.state_pressed}  // pressed
+        };
+
+    }
+
+    private void setTextColorState(int[] buttonsIdArray, ColorStateList textColor) {
+        for(int buttonId:buttonsIdArray){
+            if((Button) mView.findViewById(buttonId)!= null)
+            ((Button) mView.findViewById(buttonId)).setTextColor(textColor);
+        }
     }
 
     private void setBackgroundColorForOperators() {
 
-        mView.findViewById(R.id.buttonTimes).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.SRC_ATOP);
-        mView.findViewById(R.id.buttonDevide).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.SRC_ATOP);
-        mView.findViewById(R.id.buttonPlus).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.SRC_ATOP);
-        mView.findViewById(R.id.buttonMinus).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.SRC_ATOP);
-        mView.findViewById(R.id.openParen).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.SRC_ATOP);
-        mView.findViewById(R.id.closeParen).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.SRC_ATOP);
-        mView.findViewById(R.id.buttonPercent).getBackground().setColorFilter(((MainActivity) getActivity()).getThemeColorCode(), PorterDuff.Mode.SRC_ATOP);
+        mView.findViewById(R.id.buttonTimes).getBackground().setColorFilter(((MainActivity) getActivity()).getAccentColorCode(), PorterDuff.Mode.SRC_ATOP);
+        mView.findViewById(R.id.buttonDevide).getBackground().setColorFilter(((MainActivity) getActivity()).getAccentColorCode(), PorterDuff.Mode.SRC_ATOP);
+        mView.findViewById(R.id.buttonPlus).getBackground().setColorFilter(((MainActivity) getActivity()).getAccentColorCode(), PorterDuff.Mode.SRC_ATOP);
+        mView.findViewById(R.id.buttonMinus).getBackground().setColorFilter(((MainActivity) getActivity()).getAccentColorCode(), PorterDuff.Mode.SRC_ATOP);
+        mView.findViewById(R.id.openParen).getBackground().setColorFilter(((MainActivity) getActivity()).getAccentColorCode(), PorterDuff.Mode.SRC_ATOP);
+        mView.findViewById(R.id.closeParen).getBackground().setColorFilter(((MainActivity) getActivity()).getAccentColorCode(), PorterDuff.Mode.SRC_ATOP);
+        mView.findViewById(R.id.buttonPercent).getBackground().setColorFilter(((MainActivity) getActivity()).getAccentColorCode(), PorterDuff.Mode.SRC_ATOP);
 
     }
 
