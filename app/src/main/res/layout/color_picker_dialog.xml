@@ -48,20 +48,20 @@
                 android:id="@+id/retro_theme_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Retro"
+                android:text="کلاسیک"
                 style="@style/RadioButton" />
             <RadioButton
                 android:id="@+id/keypad_theme_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Night"
+                android:text="کیبورد"
                 style="@style/RadioButton" />
 
             <RadioButton
                 android:id="@+id/accent_color_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Day"
+                android:text="رنگ بندی"
                 style="@style/RadioButton" />
 
         </info.hoang8f.android.segmented.SegmentedGroup>

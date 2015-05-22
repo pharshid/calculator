@@ -35,7 +35,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextSwitcher;
@@ -187,7 +186,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private Typeface mMitra;
     private Typeface mDastnevis;
     //    PopoverView popoverView;
-    ImageButton mFavoritesList;
+    Button mFavoritesList;
     private boolean mShowingBack = false;
     EditText mTagHimself;
 
@@ -203,7 +202,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             doubleBackToExitPressedOnce = false;
         }
     };
-    private ImageButton mAddToFavorites;
+    private Button mAddToFavorites;
+    private Button mAddLabel;
     private Typeface mPhalls,mDigital_7;
     private Typeface mRobotoThin;
 
@@ -253,12 +253,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         mScientificModeTextView = (TextView) findViewById(R.id.scientific_mode_textview);
         result_textView_holder = findViewById(R.id.MotherTop);
-        mFavoritesList = (ImageButton)findViewById(R.id.favorites_list);
-        mAddToFavorites = (ImageButton)findViewById(R.id.add_to_favorites);
+        mFavoritesList = (Button)findViewById(R.id.favorites_list);
+        mAddToFavorites = (Button)findViewById(R.id.add_to_favorites);
+        mAddLabel = (Button)findViewById(R.id.add_label);
         mTagHimself = (EditText)findViewById(R.id.tag_himself);
         mTagHimself.setOnEditorActionListener(this);
         mFavoritesList.setOnClickListener(this);
         mAddToFavorites.setOnClickListener(this);
+        mAddLabel.setOnClickListener(this);
 
         if(findViewById(R.id.switch_deg_rad) != null) {
             ((Switch) (findViewById(R.id.switch_deg_rad))).setChecked(getAngleMode());
@@ -456,12 +458,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         ( findViewById(R.id.buttonLanguage)).setOnClickListener(this);
 // todo show a settings dialog here
 
-        ( (Button)findViewById(R.id.buttonColors)).setTypeface(mIconFont);
-        ( (Button)findViewById(R.id.buttonColors)).setText("q");
+        ( (Button)findViewById(R.id.buttonColors)).setTypeface(mFlatIcon);
         ( findViewById(R.id.buttonColors)).setOnClickListener(this);
 
-        ( (Button)findViewById(R.id.buttonParallax)).setTypeface(mIconFont);
-        ( (Button)findViewById(R.id.buttonParallax)).setText("z");
+        ( (Button)findViewById(R.id.buttonParallax)).setTypeface(mFlatIcon);
         ( findViewById(R.id.buttonParallax)).setOnClickListener(this);
 
 
@@ -662,6 +662,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         }
 
+        //todo refactor code
+        mFavoritesList.setTypeface(mFlatIcon);
+        mFavoritesList.setText(getResources().getString(R.string.list));
+        mFavoritesList.setTextSize(30);
+        mFavoritesList.setTextColor(getAccentColorCode());
+
+        mAddLabel.setTypeface(mFlatIcon);
+        mAddToFavorites.setTypeface(mFlatIcon);
     }
 
     private void setResultTextBox(){

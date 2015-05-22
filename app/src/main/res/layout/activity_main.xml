@@ -20,16 +20,10 @@
 
         >
 
-
-
-
-
-
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="23"
+            android:layout_weight="30"
             android:id="@+id/MotherTop"
             android:focusable="false"
             >
@@ -81,17 +75,32 @@
 
                 />
 
-            <ImageButton
+            <Button
                 android:id="@+id/add_to_favorites"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
                 android:textColor="@android:color/white"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
                  android:layout_alignParentBottom="true"
-                android:src="@drawable/favourite4"
                 android:background="@android:color/transparent"
-                android:visibility="invisible"
+                android:visibility="visible"
+                android:text=""
+                android:textSize="21sp"
+                />
+            <Button
+                android:id="@+id/add_label"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:textColor="@android:color/white"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/add_to_favorites"
+                 android:layout_alignParentBottom="true"
+                android:background="@android:color/transparent"
+                android:visibility="visible"
+                android:text=""
+                android:textSize="19sp"
+
                 />
 
 
@@ -112,40 +121,45 @@
             />
 
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="20"
             android:background="@android:color/transparent"
             android:focusable="false"
+            android:orientation="horizontal"
             >
 
+            <Button
+                android:id="@+id/favorites_list"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="13"
+                android:background="@android:color/transparent"
+                android:layout_centerVertical="true"
+                android:visibility="visible"
+                android:layout_gravity="center"
+                android:gravity="center"
+
+
+                />
 
             <com.sepidsa.calculator.AutoResizeTextView
                 android:id="@+id/translationEditText"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="87"
                 style="@style/translation_box"
                 android:paddingRight="@dimen/padding_large"
                 android:scrollbars = "vertical"
                 android:background="@android:color/transparent"
                 android:focusable="false"
-                />
-
-            <ImageButton
-                android:id="@+id/favorites_list"
-                android:layout_width="50dp"
-                android:layout_height="52dp"
-                android:background="@android:color/transparent"
-                android:layout_marginLeft="16dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/favorite_list"
-                android:visibility="visible"
 
                 />
 
-        </RelativeLayout>
+
+
+        </LinearLayout>
 
 
 
@@ -231,9 +245,9 @@
                     android:id="@+id/buttonColors"
                     style="@style/icon_button.portrait"
                     android:layout_weight="1"
-                    android:text="q"
+                    android:text="@string/theme"
                     android:textColor="#DADFE1"
-                    android:tag="q"
+                    android:tag="@string/theme"
                     android:gravity="center_horizontal"
 
                     />
@@ -242,7 +256,7 @@
                     android:id="@+id/buttonParallax"
                     style="@style/icon_button.portrait"
                     android:layout_weight="1"
-                    android:text="p"
+                    android:text="@string/parallax"
                     android:textColor="#DADFE1"
                     android:tag="p"
                     android:gravity="center_horizontal"
