@@ -20,7 +20,6 @@ import com.sepidsa.calculator.data.LogContract;
  */
 public class FavoritesAdapter extends CursorAdapter {
 
-    private static final int VIEW_TYPE_COUNT = 1;
     private Context mContext;
 
 
@@ -29,11 +28,6 @@ public class FavoritesAdapter extends CursorAdapter {
         super(context, c, flags);
         mContext = context;
 
-    }
-
-    @Override
-    public int getViewTypeCount() {
-        return VIEW_TYPE_COUNT;
     }
 
 
@@ -140,8 +134,6 @@ public class FavoritesAdapter extends CursorAdapter {
     private void showMessage(String message) {
         Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
     }
-
-
 
 
 }

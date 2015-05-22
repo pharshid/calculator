@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sepidsa.calculator.data.LogContract;
@@ -59,6 +60,8 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
 
 
         mListView = (ListView) rootView.findViewById(R.id.listview_log);
+        TextView empty = (TextView) rootView.findViewById(R.id.empty_list);
+        mListView.setEmptyView(empty);
         mListView.setAdapter(mLogAdapter);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -30,7 +30,7 @@
             android:id="@+id/container"
             android:animateLayoutChanges="true"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:descendantFocusability="blocksDescendants">
 
 
@@ -92,5 +92,6 @@
                 android:focusable="false"
                 />
         </RelativeLayout>
+
 
 </LinearLayout>
