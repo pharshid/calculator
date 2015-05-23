@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sepidsa.calculator.data.LogContract;
@@ -57,7 +58,10 @@ public class FavoritesFragment  extends DialogFragment implements LoaderManager.
 
 
         mListView = (ListView) rootView.findViewById(R.id.listview_log);
+        TextView empty = (TextView) rootView.findViewById(R.id.empty_list);
+        mListView.setEmptyView(empty);
         mListView.setAdapter(mFavoritesAdapter);
+
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView adapterView, final View view, final int position, long l) {

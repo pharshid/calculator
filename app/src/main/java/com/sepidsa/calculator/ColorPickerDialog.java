@@ -178,6 +178,10 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
                 // Redraw palette to show checkmark on newly selected color before dismissing.
                 refreshPalette(mPaletteMaintheme, mColors, mSelectedColor, mColorContentDescriptions);
                 ((MainActivity)getActivity()).changeAccentColor(mSelectedColor);
+                if(((MainActivity)getActivity()).isRetroThemeSelected() == true){
+                    ((MainActivity) getActivity()).setRetrothemeSelected(false);
+                    getActivity().recreate();
+                }
                 //save accent color
                 //redraw theme
             }
@@ -187,6 +191,11 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
                 // Redraw palette to show checkmark on newly selected color before dismissing.
                 refreshPalette(mPalettekeypad, mColorsKeypad, mSelectedKeypadBackgroundColor, mColorContentDescriptions);
                 ((MainActivity)getActivity()).changeKeypadBackgroundColor(mSelectedKeypadBackgroundColor);
+                if(((MainActivity)getActivity()).isRetroThemeSelected() == true){
+                    ((MainActivity) getActivity()).setRetrothemeSelected(false);
+
+                    getActivity().recreate();
+                }
             }
         }
         dismiss();
@@ -259,11 +268,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
 
             case R.id.accent_color_button:
                 //change accent color
-                if(((MainActivity)getActivity()).isRetroThemeSelected() == true){
-                    ((MainActivity) getActivity()).setRetrothemeSelected(false);
-                    getActivity().recreate();
-                }
-//                ((MainActivity)getActivity()).changeKeypadBackgroundColor(mSelectedColor);
+
 
                 refreshPalette(mPaletteMaintheme,mColors,mSelectedColor,mColorContentDescriptions);
 
@@ -274,11 +279,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
 
             case R.id.keypad_theme_button:
                 //Dark Theme
-                if(((MainActivity)getActivity()).isRetroThemeSelected() == true){
-                    ((MainActivity) getActivity()).setRetrothemeSelected(false);
 
-                    getActivity().recreate();
-                }
 //                ((MainActivity)getActivity()). changeKeypadBackgroundColor(mSelectedKeypadBackgroundColor);
                 refreshPalette(mPalettekeypad, mColorsKeypad, mSelectedKeypadBackgroundColor, mColorContentDescriptions);
                 if ( ((String)mViewSwitcher.getCurrentView().getTag()).equals("theme")){
@@ -294,7 +295,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
                     ((MainActivity)getActivity()).recreate();
 
                 }
-                ((MainActivity)getActivity()).changeKeypadBackgroundColor(-1);
+//                ((MainActivity)getActivity()).changeKeypadBackgroundColor(-1);
 
                 break;
         }

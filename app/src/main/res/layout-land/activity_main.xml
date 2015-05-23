@@ -66,17 +66,31 @@
 
                 />
 
-            <ImageButton
+            <Button
                 android:id="@+id/add_to_favorites"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
                 android:textColor="@android:color/white"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
-                android:src="@drawable/favourite4"
                 android:background="@android:color/transparent"
-                android:visibility="invisible"
+                android:visibility="visible"
+                android:text=""
+                android:textSize="21sp"
+                />
+            <Button
+                android:id="@+id/add_label"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:textColor="@android:color/white"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/add_to_favorites"
+                android:layout_alignParentBottom="true"
+                android:background="@android:color/transparent"
+                android:visibility="visible"
+                android:text=""
+                android:textSize="19sp"
 
                 />
 
@@ -91,45 +105,41 @@
 
 
     </LinearLayout>
-    <EditText
-        android:id="@+id/tag_himself"
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:backgroundTint="@android:color/holo_green_light"
-        android:inputType="text"
-        android:layout_weight="1"
-        />
+
         <!--Dialpad Section -->
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="12.54"
         android:background="@android:color/transparent"
         android:orientation="horizontal"
         >
+        <Button
+            android:id="@+id/favorites_list"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:background="@android:color/transparent"
+            android:layout_centerVertical="true"
+            android:visibility="visible"
+            android:layout_gravity="center"
+            android:gravity="center"
+
+
+            />
 
         <com.sepidsa.calculator.AutoResizeTextView
             android:id="@+id/translationEditText"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="90"
             style="@style/translation_box"
 
             />
 
-    </FrameLayout>
+    </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/favorites_list"
-        android:layout_width="50dp"
-        android:layout_height="52dp"
-        android:background="@android:color/transparent"
-        android:layout_marginLeft="16dp"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:src="@drawable/favorite_list"
-        android:visibility="invisible"
 
-        />
 
 
 
@@ -173,7 +183,7 @@
                  android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="q"
+                android:text="@string/theme"
                 android:textColor="#DADFE1"
                 android:tag="q"
                 android:textSize="18sp"
@@ -181,19 +191,7 @@
                 />
 
 
-            <Button
-                android:id="@+id/buttonFlip"
-                style="@style/DIALPADBUTTON.LAND_NORMAL."
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="flip"
-                android:textColor="@android:color/black"
-                android:tag="flip"
-                android:textSize="18sp"
-                android:onClick="flipCard"
 
-                />
 
             <Button
                 android:id="@+id/buttonMute"
@@ -234,23 +232,23 @@
                 android:textColor="#DADFE1"
                 android:textSize="18sp"
                 />
+            <Button
+                android:id="@+id/buttonParallax"
+                style="@style/DIALPADBUTTON.LAND_NORMAL."
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/parallax"
+                android:textColor="#DADFE1"
+                android:tag="p"
+                android:gravity="center_horizontal"
+
+                />
 
 
 
         </LinearLayout>
 
 
-         <FrameLayout
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:id="@+id/log_container"
-            >
-
-
-
-
-
-            </FrameLayout>
 
 
         <android.support.v4.view.ViewPager

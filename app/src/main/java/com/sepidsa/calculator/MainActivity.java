@@ -23,18 +23,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextSwitcher;
@@ -62,7 +58,7 @@ import java.util.Stack;
 //import com.ibm.icu.util.ULocale;
 
 
-public class MainActivity extends FragmentActivity implements View.OnClickListener,  CompoundButton.OnCheckedChangeListener, PopoverView.PopoverViewDelegate, TextView.OnEditorActionListener {
+public class MainActivity extends FragmentActivity implements View.OnClickListener,  CompoundButton.OnCheckedChangeListener, PopoverView.PopoverViewDelegate {
 
     private static final String FRAGMENT_TAG_LOG_ = "log fragment";
     private static final byte LANGUAGE_ARABIC =3 ;
@@ -81,7 +77,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     ViewPager mViewPager;
     private static final byte TOTAL_PAGE_COUNT = 3;
     private byte mDefaultPage;
-    private boolean mISRetroThemeOn = false;
 
 //    private byte mDelta = -2;
      /*  Contstant for viewpager page selection
@@ -103,8 +98,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             COLOR_PICKER_FRAGMENT_PORTRAIT = 3 ,
             COLOR_PICKER_FRAGMENT_LANDSCAPE_PHONE = 2 ;
 
-    private byte mColorPage ;
-    int[] mColor ;
     int mSelectedColorCal0 = 0;
 
     private static final int DIALPAD_FONT_ROBOTO_THIN = 0;
@@ -188,7 +181,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     //    PopoverView popoverView;
     Button mFavoritesList;
     private boolean mShowingBack = false;
-    EditText mTagHimself;
+//    EditText mTagHimself;
 
 
 
@@ -213,61 +206,31 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         TinyDB db = new TinyDB(getApplicationContext());
         mListView = db.getListString(LOG_DATA_KEY);
-        boolean isnull = false;
 
-        if (getKeypadBackgroundColorCode() == 2) {
-            mISRetroThemeOn = true;
-        }else {
-            mISRetroThemeOn = false;
-        }
-
-        if(mISRetroThemeOn){
+        if(isRetroThemeSelected()){
             setContentView(R.layout.activity_main_retro);
         }else {
             setContentView(R.layout.activity_main);
         }
 
-
-
-
-//        ctx = this;
-        //Call the set overlay, you can put the logic of checking if overlay is already called with a simple sharedpreference
-//        showOverLay();
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (savedInstanceState == null) {
 
             mJustPressedExecuteButton = true;
-        } else {
-            //        Configuration Change (rotation) occurred so better load the savedinstancestate values
-            //        TODO
-//            mListView = savedInstanceState.getSerializable("mListView");
         }
-
         setMViewPager(fragmentManager);
         setMViewPagerIndicator();
+
         mMemoryVariableTextView =  (TextView) findViewById(R.id.m_vaiable_textview);
         resultTextView = (AutoResizeTextView) findViewById(R.id.result);
-//        resultTextView.setText("3\u20444");
-//        resultTextView.setText(Html.fromHtml("<sup>5</sup>/<sub>9</sub>"));
-
         mScientificModeTextView = (TextView) findViewById(R.id.scientific_mode_textview);
         result_textView_holder = findViewById(R.id.MotherTop);
         mFavoritesList = (Button)findViewById(R.id.favorites_list);
         mAddToFavorites = (Button)findViewById(R.id.add_to_favorites);
         mAddLabel = (Button)findViewById(R.id.add_label);
-        mTagHimself = (EditText)findViewById(R.id.tag_himself);
-        mTagHimself.setOnEditorActionListener(this);
         mFavoritesList.setOnClickListener(this);
         mAddToFavorites.setOnClickListener(this);
         mAddLabel.setOnClickListener(this);
-
-        if(findViewById(R.id.switch_deg_rad) != null) {
-            ((Switch) (findViewById(R.id.switch_deg_rad))).setChecked(getAngleMode());
-            ((Switch) (findViewById(R.id.switch_deg_rad))).setOnCheckedChangeListener(this);
-        }
-
-
 
         setTypeFaces();
 
@@ -302,8 +265,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         }
 
-
-
     }
 
 
@@ -323,12 +284,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         outState.putSerializable("mListView", mListView);
         outState.putString("mExpressionBuffer", mExpressionBuffer.toString());
         outState.putBoolean("mJustPressedExecuteButton", mJustPressedExecuteButton);
-        outState.putBoolean("mISRetroThemeOn", mISRetroThemeOn);
+        outState.putBoolean("mISRetroThemeOn", isRetroThemeSelected());
         outState.putSerializable("mMemoryVariable", mMemoryVariable);
         outState.putString("mTemp",mTemp);
         outState.putString("mDecimal_fraction", mDecimal_fraction);
-        Log.d("sinatra","here in save instance state retro is "+ mISRetroThemeOn);
-
     }
 
     @Override
@@ -340,8 +299,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             mTranslationBox = getMTranslationEditText();
             mTranslationBox.setText(savedInstanceState.getString("mTranslationText"));
             mJustPressedExecuteButton = savedInstanceState.getBoolean("mJustPressedExecuteButton");
-            mISRetroThemeOn =  savedInstanceState.getBoolean("mISRetroThemeOn");
-            Log.d("sinatra","here in restore instance state retro is "+ mISRetroThemeOn);
             mButtonsStack = new Stack<String>();
             mButtonsStack.addAll((Collection<String>) savedInstanceState.getSerializable("mButtonStack"));
 
@@ -401,7 +358,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
 
 
-        if(!mISRetroThemeOn) {
+        if(!isRetroThemeSelected()) {
             resultTextView.setBackgroundColor(getAccentColorCode());
         }
         if(getAngleMode() == true){
@@ -535,21 +492,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             if (((String) mViewPager.getTag()).equals("portrait_phone") == true) {
                 //getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT
                 // if in Portrait Phone
-                mColorPage = 3;
+//                mColorPage = 3;
                 mViewPager.setAdapter(null);
                 List<Fragment> fList = new ArrayList<Fragment>();
-
-                //fList.add(new LogFragment());
-
                 fList.add(new AnimatedLogFragment());
                 fList.add(new DialpadFragment());
                 fList.add(new ScientificFragment());
-//                fList.add(new ColorPickerFragment());
-
-
                 mViewPager.setAdapter(new PortraitPagerAdapter(fragmentManager, fList));
                 mLayoutState = PORTRAIT_BOTH;
-                mViewPager.setOffscreenPageLimit(0);
+                mViewPager.setOffscreenPageLimit(2);
 
                 // if todo signs viewed = false
                 // {make em visible and
@@ -560,33 +511,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 // mViewPager.setOnPageChangeListener(this);
             } else if (((String) mViewPager.getTag()).equals("landscape_phone") == true) {
                 // if in Landscape Phone
-//                mViewPager.removeAllViews();
-//                mViewPager.setAdapter(null);
-//                mViewPager = null;
-//                mViewPager = (ViewPager) findViewById(R.id.portrait_viewpager);
-//                lapd = new LandscapePhonePagerAdapter(fragmentManager);
-//            mViewPager = (ViewPager) findViewById(R.id.landscape_viewpager);
-//                mAdapter = ;
-
                 List<Fragment> fList = new ArrayList<Fragment>();
-
                 fList.add(new AnimatedLogFragment());
                 fList.add(new DialpadFragment());
-//                fList.add(new ColorPickerFragment());
-
-                mColorPage = 2;
+//                mColorPage = 2;
                 mViewPager.setAdapter(new PortraitPagerAdapter(fragmentManager, fList));
                 mLayoutState = LANDSCAPE_PHONE;
-                mViewPager.setOffscreenPageLimit(0);
+                mViewPager.setOffscreenPageLimit(2);
                 mViewPager.setCurrentItem(DIALPAD_FRAGMENT);
                 setmDefaultPage(DIALPAD_FRAGMENT);
 
-
-
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                ScientificFragment fragment = new ScientificFragment();
-                fragmentTransaction.add(R.id.log_container, fragment);
-                fragmentTransaction.commit();
 
             }
             else {
@@ -602,7 +536,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
                 // Landscape Tablet
                 mLayoutState = LANDSCAPE_TABLET;
-                mColorPage = 1;
+//                mColorPage = 1;
 
                 List<Fragment> fList = new ArrayList<Fragment>();
                 fList.add(new ScientificFragment());
@@ -615,25 +549,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
     }
 
-
-    private void setIntroButtonsVisibility(boolean isVisible) {
-        if (isVisible) {
-//          ((Button) findViewById(R.id.west_cost)).setEnabled(true);
-//          ((Button) findViewById(R.id.west_cost)).setVisibility(View.VISIBLE);
-//          ((Button) findViewById(R.id.east_cost)).setEnabled(true);
-//          ((Button) findViewById(R.id.east_cost)).setVisibility(View.VISIBLE);
-        }else {
-            ///   ((Button) findViewById(R.id.west_cost)).setEnabled(false);
-            //   ((Button) findViewById(R.id.west_cost)).setVisibility(View.GONE);
-//          ((Button) findViewById(R.id.west_cost)).setWidth(1);
-            //   ((Button) findViewById(R.id.east_cost)).setEnabled(false);
-
-            //    ((Button) findViewById(R.id.east_cost)).setVisibility(View.GONE);
-//          ((Button) findViewById(R.id.east_cost)).setWidth(1);
-
-        }
-
-    }
 
     private void setTypeFaces() {
 
@@ -650,7 +565,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mPhalls =  Typeface.createFromAsset(getApplicationContext().getAssets(), "jozoor.ttf");
         mDigital_7 =  Typeface.createFromAsset(getApplicationContext().getAssets(), "digital_7.ttf");
 
-        if(!mISRetroThemeOn){
+        if(!isRetroThemeSelected()){
             mEnglishTypeFace = mRobotoThin;
             mPersianTranslationTypeface = mMitra;
             mTranslationBoxTypeface = mRobotoLight;
@@ -674,7 +589,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private void setResultTextBox(){
 
-        if(!mISRetroThemeOn) {
+        if(!isRetroThemeSelected()) {
             resultTextView.setBackgroundColor(getAccentColorCode());
             result_textView_holder.setBackgroundColor(getAccentColorCode());
             resultTextView.setTextColor(Color.WHITE);
@@ -690,7 +605,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         resultTextView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
     }
 
-    public int getAccentColorCode(){
+
+public int getAccentColorCode(){
         //TODO set a cool default theme color
         SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("THEME", MODE_PRIVATE);
         return appPreferences.getInt("ACCENT_COLOR_CODE", Color.parseColor("#1abc9c"));
@@ -730,10 +646,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     public int getKeypadBackgroundColorCode(){
         //TODO set a cool default theme color
-        //light theme is 0
-        //dark theme is 1
-        //retro theme is 2
-        int  currentThemeNumber = 0;
+        int  currentThemeNumber = -1;
         SharedPreferences appPreferences =getApplicationContext().getSharedPreferences("THEME",Context.MODE_PRIVATE);
         currentThemeNumber = appPreferences.getInt("KEYPAD_BACKGROUND_COLOR_CODE",Color.WHITE);
 
@@ -774,7 +687,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     void redrawAccent(){
 
-        if(!mISRetroThemeOn) {
+        if(!isRetroThemeSelected()) {
             sendChangeAccentColorIntent();
             setMViewPagerIndicatorColor();
             resultTextView.setBackgroundColor(getAccentColorCode());
@@ -1002,8 +915,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             setMExpressionString(getMExpressionString().append(mMemoryVariable.toPlainString()).toString());
             Expression expression = new Expression(getMExpressionString().toString(),getAngleMode(),getApplicationContext());
             mTemp = evaluateResult(expression);
-            sendLogMessage(getMExpressionString().toString(), mTemp,false, String.valueOf(mTagHimself.getText()));
-
             mResultBeforeSignification = new BigDecimal(mTemp.replace(",",""));
 
 
@@ -1095,31 +1006,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
-
-
-//    private void switchToColorPicker() {
-//        int test = mViewPager.getCurrentItem();
-//        if (mViewPager.getCurrentItem()!= mColorPage) {
-//            switch (mLayoutState){
-//                case PORTRAIT_BOTH:
-//                    mColorPage = COLOR_PICKER_FRAGMENT_PORTRAIT;
-//                    break;
-//                case  LANDSCAPE_TABLET:
-//                    mColorPage = COLOR_PICKER_FRAGMENT_LANDSCAPE_TABLET;
-//                    break;
-//
-//                case LANDSCAPE_PHONE:
-//                    mColorPage = COLOR_PICKER_FRAGMENT_LANDSCAPE_PHONE;
-//                    break;
-//
-//            }
-//            mViewPager.setCurrentItem(mColorPage);
-//
-//        }else {
-//            mViewPager.setCurrentItem(mDefaultPage);
-//        }
-//    }
-
     private void performBackspace() {
 
         // First we cut the last button that we pressed
@@ -1183,18 +1069,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
         else{
             sendClearButtonMessage(getResources().getString(R.string.backSpace));
-
         }
     }
 
 
-
-    //            DecimalFormat df = new DecimalFormat("#");
-//            df.setMaximumFractionDigits(4);
-//              mDecimal_fraction =  df.format(mTemp).toString();
-
     private boolean updateUIExecute(boolean sendLogMessage) {
-//        Log.d("vivz", "Activity - update ui called");
 
         mDecimal_fraction = "";
         byte decimalIndex = (byte) mTemp.indexOf(".");
@@ -1215,7 +1094,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         if(sendLogMessage) {
             mLogAdded = false;
-            sendLogMessage(getMExpressionString().toString(), mTemp,false, String.valueOf(mTagHimself.getText()));
+//            sendLogMessage(getMExpressionString().toString(), mTemp,false, String.valueOf(mTagHimself.getText()));
         }
         setMExpressionString(resultTextView.getText().toString().replace(",",""));
         mButtonsStack.clear();
@@ -1302,11 +1181,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         return;
     }
     boolean isRetroThemeSelected(){
-        return mISRetroThemeOn;
+        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("THEME", MODE_PRIVATE);
+        return appPreferences.getBoolean("is_retro_theme_selected", false);
     }
 
-    void setRetrothemeSelected(boolean _isSelected){
-        mISRetroThemeOn = _isSelected;
+    void setRetrothemeSelected(boolean _isSelected) {
+        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("THEME", MODE_PRIVATE);
+        SharedPreferences.Editor editor = appPreferences.edit();
+        editor.putBoolean("is_retro_theme_selected", _isSelected);
+        editor.apply();
+
     }
 
     private void displayTranslation() {
@@ -1343,7 +1227,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
     private void printResultWithTranslation(String decimal_fraction, int Language) {
-//        String integerFraction = mResultBeforeSignification.longValue();
         String resultWithoutCommas = mTemp.replace(",","");
         int pointIndex = resultWithoutCommas.indexOf(".");
         String integerFraction = "";
@@ -1360,42 +1243,21 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         String partII;
 
 
-// todo for multilanguage google play
-//        NumberFormat formatter;
-
         switch (Language){
             case LANGUAGE_ENGLISH:
-
-
-                if(mResultBeforeSignification.longValue()== 42 && decimal_fraction.equals("")& !resultIsNegative) {
-                    mTranslationBox.setText("Google \"Answer to the Ultimate Question of Life, The Universe, and Everything\" ");
-                    return;
-                }
                 if(resultIsNegative){
                     mTranslationBox.setText("minus " + NumberConveterAmerican.convert(integerFraction.substring(0)));
                 }
-
                 else {
                     mTranslationBox.setText(NumberConveterAmerican.convert(integerFraction));
                 }
-
-
                 if (!decimal_fraction.equals("")) {
                     partII = NumberConveterAmericanPartII.convert(decimal_fraction);
-
                     mTranslationBox.append(partII);
                 }
-//                formatter = new RuleBasedNumberFormat(new ULocale("en_US"), RuleBasedNumberFormat.SPELLOUT);
-//                mTranslationBox.setText(formatter.format(new BigDecimal(resultWithoutCommas)));
                 break;
 
             case LANGUAGE_FRENCH:
-                if(mResultBeforeSignification.longValue()== 42 && decimal_fraction.equals("")& !resultIsNegative) {
-                    mTranslationBox.setText("google quelle est la réponse à la vie l'univers et tout");
-                    return;
-                }
-
-
                 if(resultIsNegative) {
                     mTranslationBox.setText("moins " + NumberConverterFrench.convert(integerFraction));
                 }
@@ -1408,18 +1270,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     mTranslationBox.append(partII);
                 }
 
-//                formatter = new RuleBasedNumberFormat(new ULocale("fr_FR"), RuleBasedNumberFormat.SPELLOUT);
-//                mTranslationBox.setText(formatter.format(new BigDecimal(resultWithoutCommas)));
                 break;
 
 
             case LANGUAGE_ARABIC:
-                if(mResultBeforeSignification.longValue()== 42 && decimal_fraction.equals("")& !resultIsNegative) {
-                    mTranslationBox.setText("google quelle est la réponse à la vie l'univers et tout");
-                    return;
-                }
-
-
                 if(resultIsNegative) {
                     NumberConverterArabic arabic = new NumberConverterArabic(mResultBeforeSignification.abs());
                     mTranslationBox.setText("ناقص " + arabic.ConvertToArabic());
@@ -1428,20 +1282,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     NumberConverterArabic arabic = new NumberConverterArabic(mResultBeforeSignification);
                     mTranslationBox.setText(arabic.ConvertToArabic());
                 }
-
                 break;
-
 
             case LANGUAGE_PERSIAN:
 
-                if(mResultBeforeSignification.longValue()== 42 && decimal_fraction.equals("")& !resultIsNegative) {
-                    mTranslationBox.setText("از گوگل بپرس what's the answer to life the universe and everything");
-                    return;
-                }
-
-
+//                if(mResultBeforeSignification.longValue()== 42 && decimal_fraction.equals("")& !resultIsNegative) {
+//                    mTranslationBox.setText("از گوگل بپرس what's the answer to life the universe and everything");
+//                    return;
+//                }
+//
                 mTranslationBox.setText(new NumberConveterPersianPartI().convert(integerFraction));
-
                 if (!decimal_fraction.equals("")) {
                     partII = NumberConverterPersianPartII.convert(decimal_fraction);
                     if (new BigDecimal(resultWithoutCommas).compareTo(BigDecimal.ONE) >= 0 ||new BigDecimal(resultWithoutCommas).compareTo(new BigDecimal(-1)) <= 0 ) {
@@ -1527,16 +1377,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 if (input == '−') {
                     return false;
                 }
-
-//            //TODO ok to delete ? 2*-
-//            if(getMExpressionString().length()>2)
-//                if (isOperator(input))
-//                if(isOperator(getMExpressionString().charAt(lastIndex)))
-//                    if(isOperator(getMExpressionString().charAt(lastIndex - 1)))
-//                    {
-//                        return true;
-//                    }
-
 
             // deny 2++
             if (isOperator(input))
@@ -1653,7 +1493,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 mSoundPoolLoaded = true;
             }
         });
-       if (mISRetroThemeOn) {
+       if (isRetroThemeSelected()) {
            numericButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.button1, 1);
            executeButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.button28, 1);
            clearAllButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.clear_retro, 1);
@@ -1925,13 +1765,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             case R.id.favorites_list:
 
-
-//                ViewGroup rootView = (ViewGroup)findViewById(R.id.activity_body);
-//                PopoverView popoverView = new PopoverView(this, R.layout.popover_showed_view);
-//                popoverView.setContentSizeForViewInPopover(new Point(600, 600));
-//                popoverView.setDelegate(this);
-//                popoverView.showPopoverFromRectInViewGroup(rootView, PopoverView.getFrameForView(v), PopoverView.PopoverArrowDirectionAny, true);
-
                 FragmentManager fm = getSupportFragmentManager();
                 FavoritesFragment favoritesDialog = new FavoritesFragment();
                 favoritesDialog.show(fm, "fragment_favorites");
@@ -1939,8 +1772,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             case R.id.add_to_favorites:
 
-                sendLogMessage(getMExpressionString().toString(), mTemp, true, String.valueOf(mTagHimself.getText()));
-
+//                sendLogMessage(getMExpressionString().toString(), mTemp, true, String.valueOf(mTagHimself.getText()));
+            break;
 
 
 
@@ -1949,11 +1782,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             case R.id.buttonSettings:
                 CustomDialogClass cdc = new CustomDialogClass(this , android.R.style.Theme_Holo_Light_Dialog_MinWidth);
                 cdc.show();
-                setIntroButtonsVisibility(false);
                 break;
-//            case R.id.buttonPreferences2:
-//                Intent intent = new Intent(getApplicationContext(),prefs.class);
-//                startActivity(intent);
+
             case R.id.buttonLanguage:
                 mButton = (Button)findViewById(R.id.buttonLanguage);
                 showSpinner();
@@ -2008,7 +1838,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         switch (typographyPreferences.getInt("PERSIAN_TRANSLATION_TYPEFACE",PERSIAN_TRANSLATION_FONT_MITRA)){
             case PERSIAN_TRANSLATION_FONT_MITRA :
-                if(!mISRetroThemeOn) {
+                if(!isRetroThemeSelected()) {
                     mPersianTranslationTypeface = mMitra;
                 }else {
                     mPersianTranslationTypeface = mPhalls;
@@ -2031,7 +1861,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         AlertDialog.Builder b = new AlertDialog.Builder(this);
 // todo google play edition
-//        String[] options = {"Arabic","Deutch","English","French","Italian","Persian"};
         String[] options = {"Arabic","English","French","Persian"};
         b.setTitle("Language" );
         b.setSingleChoiceItems(options, -1,new DialogInterface.OnClickListener() {
@@ -2065,48 +1894,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
                         }
 
-
-
-                        // todo Google play edition
-//                        switch (which) {
-//                            case 0: {
-//
-//                                editor.putInt("LANGUAGE", 3);
-//                                // french is 1
-//                                break;
-//                            }
-//                            case 1: {
-//                                editor.putInt("LANGUAGE", 4);
-//                                // english is 2
-//
-//                                break;
-//                            }
-//                            case 2: {
-//                                editor.putInt("LANGUAGE", 2);
-//                                // arabic is 3
-//
-//                                break;
-//                            }
-//                            case 3: {
-//                                editor.putInt("LANGUAGE", 1);
-//                                // deuth is 4
-//
-//                                break;
-//                            }
-//                            case 4: {
-//                                editor.putInt("LANGUAGE", 5);
-//                                // italian is 5
-//                                break;
-//                            }
-//                            case 5: {
-//                                editor.putInt("LANGUAGE", 0);
-//                                //persian is 0
-//                                break;
-//                            }
-//
-//                        }
-
-
                         editor.commit();
                         if (mDecimal_fraction != null) {
                             if (mJustPressedExecuteButton) {
@@ -2126,13 +1913,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
 
-
-    /**
-     * Called when the checked state of a compound button has changed.
-     *
-     * @param buttonView The compound button view whose state has changed.
-     * @param isChecked  The new checked state of buttonView.
-     */
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         boolean on = ((Switch) buttonView).isChecked();
@@ -2158,11 +1938,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
-    /**
-     * Called when the popover did show
-     *
-     * @param view The whole popover view
-     */
     @Override
     public void popoverViewDidShow(PopoverView view) {
         ListView mListView = (ListView)view.findViewById(R.id.listView1);
@@ -2179,132 +1954,17 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
-    /**
-     * Called when the popover is going to be dismissed
-     *
-     * @param view The whole popover view
-     */
     @Override
     public void popoverViewWillDismiss(PopoverView view) {
 
     }
 
-    /**
-     * Called when the popover was dismissed
-     *
-     * @param view The whole popover view
-     */
     @Override
     public void popoverViewDidDismiss(PopoverView view) {
 
     }
 
-
-    public void flipCard(View view) {
-        if (mShowingBack) {
-
-            mShowingBack = false;
-
-
-            getSupportFragmentManager()
-                    .beginTransaction()
-
-                            // Replace the default fragment animations with animator resources representing
-                            // rotations when switching to the back of the card, as well as animator
-                            // resources representing rotations when flipping back to the front (e.g. when
-                            // the system Back button is pressed).
-                    .setCustomAnimations(
-                            android.R.anim.slide_in_left,    android.R.anim.slide_in_left,
-                            android.R.anim.slide_in_left,    android.R.anim.slide_in_left)
-
-                            // Replace any fragments currently in the container view with a fragment
-                            // representing the next page (indicated by the just-incremented currentPage
-                            // variable).
-                    .replace(R.id.log_container, new AnimatedLogFragment())
-
-                            // Add this transaction to the back stack, allowing users to press Back
-                            // to get to the front of the card.
-                    .addToBackStack(null)
-
-                            // Commit the transaction.
-                    .commit();
-
-
-
-            return;
-        }
-
-        // Flip to the back.
-
-        mShowingBack = true;
-
-        // Create and commit a new fragment transaction that adds the fragment for the back of
-        // the card, uses custom animations, and is part of the fragment manager's back stack.
-
-        getSupportFragmentManager()
-                .beginTransaction()
-
-                        // Replace the default fragment animations with animator resources representing
-                        // rotations when switching to the back of the card, as well as animator
-                        // resources representing rotations when flipping back to the front (e.g. when
-                        // the system Back button is pressed).
-                .setCustomAnimations(
-                        android.R.anim.slide_out_right,    android.R.anim.slide_out_right,
-                        android.R.anim.slide_out_right,    android.R.anim.slide_out_right)
-
-                        // Replace any fragments currently in the container view with a fragment
-                        // representing the next page (indicated by the just-incremented currentPage
-                        // variable).
-                .replace(R.id.log_container, new ScientificFragment())
-
-                        // Add this transaction to the back stack, allowing users to press Back
-                        // to get to the front of the card.
-                .addToBackStack(null)
-
-                        // Commit the transaction.
-                .commit();
-    }
-
-
-    private void hideKeyboard() {
-        // Check if no view has focus:
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }
-    }
-
-
-    @Override
-    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-        if(i==EditorInfo.IME_ACTION_DONE){
-            //todo test she
-
-            sendLogMessage(getMExpressionString().toString(), mTemp,true, String.valueOf(mTagHimself.getText()));
-
-//
-//
-//            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//            imm.hideSoftInputFromWindow(mTagHimself.getWindowToken(), 0);
-
-//            getWindow().setSoftInputMode(
-//                    WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
-//            );
-            mTagHimself.setText("");
-            mTagHimself.clearFocus();
-
-            hideKeyboard();
-            //add label and star to current number on adapter
-        }
-        return false;
-    }
-
-
 }
-
-
-
 
 //----------------------------------------------------------
 class PortraitPagerAdapter extends FragmentStatePagerAdapter {

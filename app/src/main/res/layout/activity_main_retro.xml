@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_weight="35"
+        android:layout_weight="30"
         android:id="@+id/MotherTop">
 
 
@@ -70,48 +70,7 @@
 
                     />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="5"
-                    android:orientation="horizontal"
-                    >
 
-
-                    <ImageButton
-                        android:id="@+id/add_to_favorites"
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
-                        android:textColor="@android:color/white"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentBottom="true"
-                        android:src="@drawable/favourite4"
-                        android:background="@android:color/transparent"
-                        />
-
-                    <ImageButton
-                        android:id="@+id/favorites_list"
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
-                        android:background="@android:color/transparent"
-                        android:layout_marginLeft="16dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/favorite_list"
-                        />
-
-                    <EditText
-                        android:id="@+id/tag_himself"
-                        android:layout_width="match_parent"
-                        android:layout_height="32dp"
-                        android:backgroundTint="@android:color/holo_green_light"
-                        android:inputType="text"
-                        android:layout_weight="1"
-                        />
-
-
-                </LinearLayout>
 
 
             </LinearLayout>
@@ -145,12 +104,41 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"/>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="32"
+                android:layout_weight="40"
 
                 >
+                <Button
+                    android:id="@+id/add_to_favorites"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:textColor="@android:color/white"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentBottom="true"
+                    android:background="@android:color/transparent"
+                    android:visibility="visible"
+                    android:text=""
+                    android:textSize="21sp"
+                    />
+                <Button
+                    android:id="@+id/add_label"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:textColor="@android:color/white"
+                    android:layout_centerVertical="true"
+                    android:layout_above="@id/add_to_favorites"
+                    android:layout_alignParentLeft="true"
+                    android:background="@android:color/transparent"
+                    android:visibility="visible"
+                    android:text=""
+                    android:textSize="19sp"
+
+                    />
+
+
                 <com.sepidsa.calculator.AutoResizeTextView
                     android:id="@+id/result"
                     android:layout_width="match_parent"
@@ -167,8 +155,22 @@
                     android:singleLine="false"
                     />
 
+                <Button
+                    android:id="@+id/favorites_list"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:textColor="@android:color/white"
+                    android:layout_centerVertical="true"
+                    android:layout_above="@id/add_to_favorites"
+                    android:layout_alignParentLeft="true"
+                    android:background="@android:color/transparent"
+                    android:visibility="gone"
+android:layout_toRightOf="@id/result"
+                    android:layout_alignParentBottom="true"
+                    android:text="dd"
+                    />
 
-            </LinearLayout>
+            </RelativeLayout>
 
 
 
@@ -194,7 +196,7 @@
             android:id="@+id/view_pager_indicator"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3"
+            android:layout_weight="6"
             android:layout_gravity="center"
             android:paddingTop="2dp"
 
@@ -205,7 +207,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
 
-            android:layout_weight="95"
+            android:layout_weight="89"
             style="@style/viewpager"
             android:tag="portrait_phone"
 
@@ -216,10 +218,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3"
             android:orientation="horizontal"
             android:background="@android:color/transparent"
-
+            android:layout_weight="8"
             >
 
             <Button
@@ -229,10 +230,7 @@
                 android:text="@string/settings"
                 android:tag="feedback"
                 android:gravity="center_horizontal"
-
-
                 android:textColor="#DADFE1"
-
                 />
 
             <Button
@@ -246,8 +244,6 @@
 
                 />
 
-
-
             <Button
                 android:id="@+id/buttonMute"
                 style="@style/icon_button.portrait"
@@ -257,20 +253,29 @@
                 android:gravity="center_horizontal"
                 android:textColor="#DADFE1"
 
-
                 />
 
             <Button
                 android:id="@+id/buttonColors"
                 style="@style/icon_button.portrait"
                 android:layout_weight="1"
-                android:text="q"
+                android:text="@string/theme"
                 android:textColor="#DADFE1"
                 android:tag="q"
                 android:gravity="center_horizontal"
 
                 />
 
+            <Button
+                android:id="@+id/buttonParallax"
+                style="@style/icon_button.portrait"
+                android:layout_weight="1"
+                android:text="@string/parallax"
+                android:textColor="#DADFE1"
+                android:tag="p"
+                android:gravity="center_horizontal"
+
+                />
 
         </LinearLayout>
 

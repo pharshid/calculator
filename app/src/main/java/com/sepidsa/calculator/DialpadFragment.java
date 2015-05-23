@@ -21,7 +21,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.Switch;
+import android.widget.ToggleButton;
 
 
 /**
@@ -32,6 +32,8 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
     private static final int DIALPAD_FONT_ROBOTO_THIN = 0;
     private static final int DIALPAD_FONT_ROBOTO_LIGHT = 1;
     private static final int DIALPAD_FONT_ROBOTO_REGULAR = 2;
+    private boolean arcIsOn = false;
+
     View mView;
     private Typeface defaultFont;
 
@@ -126,8 +128,8 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         }
 
         if(mView.findViewById(R.id.switch_deg_rad) != null) {
-            ((Switch) (mView.findViewById(R.id.switch_deg_rad))).setChecked(((MainActivity) getActivity()).getAngleMode());
-            ((Switch) (mView.findViewById(R.id.switch_deg_rad))).setOnCheckedChangeListener(this);
+            ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setChecked(((MainActivity) getActivity()).getAngleMode());
+            ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setOnCheckedChangeListener(this);
             mView.findViewById(R.id.switch_deg_rad).setOnClickListener(this);
 
 
@@ -197,9 +199,89 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
             setClearButtonText(getResources().getString(R.string.backSpace));
 
         }
-        return mView;
+        if(mView.findViewById(R.id.switch_deg_rad) != null) {
+            ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setChecked(((MainActivity) getActivity()).getAngleMode());
+            ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setOnCheckedChangeListener(this);
+            ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setOnClickListener(this);
+        }
+
+            return mView;
     }
 
+
+    private void applyArc(boolean isArc) {
+        if(isArc) {
+            ((Button) mView.findViewById(R.id.buttonSinus)).setText("a"+ ((Button) mView.findViewById(R.id.buttonSinus)).getText());
+            ((Button) mView.findViewById(R.id.buttonCosinus)).setText("a"+ ((Button) mView.findViewById(R.id.buttonCosinus)).getText());
+            ((Button) mView.findViewById(R.id.buttonTan)).setText("a"+ ((Button) mView.findViewById(R.id.buttonTan)).getText());
+            ((Button) mView.findViewById(R.id.buttonCot)).setText("a"+ ((Button) mView.findViewById(R.id.buttonCot)).getText());
+
+            ((Button) mView.findViewById(R.id.buttonSinusH)).setText("a"+ ((Button) mView.findViewById(R.id.buttonSinusH)).getText());
+            ((Button) mView.findViewById(R.id.buttonCosinusH)).setText("a"+ ((Button) mView.findViewById(R.id.buttonCosinusH)).getText());
+            ((Button) mView.findViewById(R.id.buttonTanH)).setText("a"+ ((Button) mView.findViewById(R.id.buttonTanH)).getText());
+            ((Button) mView.findViewById(R.id.buttonCotH)).setText("a"+ ((Button) mView.findViewById(R.id.buttonCotH)).getText());
+        }else {
+            ((Button) mView.findViewById(R.id.buttonSinus)).setText(((Button) mView.findViewById(R.id.buttonSinus)).getText().toString().substring(1));
+            ((Button) mView.findViewById(R.id.buttonCosinus)).setText(((Button) mView.findViewById(R.id.buttonCosinus)).getText().toString().substring(1));
+            ((Button) mView.findViewById(R.id.buttonTan)).setText(((Button) mView.findViewById(R.id.buttonTan)).getText().toString().substring(1));
+            ((Button) mView.findViewById(R.id.buttonCot)).setText(((Button) mView.findViewById(R.id.buttonCot)).getText().toString().substring(1));
+
+            ((Button) mView.findViewById(R.id.buttonSinusH)).setText(((Button) mView.findViewById(R.id.buttonSinusH)).getText().toString().substring(1));
+            ((Button) mView.findViewById(R.id.buttonCosinusH)).setText(((Button) mView.findViewById(R.id.buttonCosinusH)).getText().toString().substring(1));
+            ((Button) mView.findViewById(R.id.buttonTanH)).setText(((Button) mView.findViewById(R.id.buttonTanH)).getText().toString().substring(1));
+            ((Button) mView.findViewById(R.id.buttonCotH)).setText(((Button) mView.findViewById(R.id.buttonCotH)).getText().toString().substring(1));
+        }
+    }
+
+    private void applyInverse(boolean isOn) {
+        if(arcIsOn) {
+            if (isOn) {
+                ((Button) mView.findViewById(R.id.buttonSinus)).setText("a"+ getResources().getString(R.string.csc));
+                ((Button) mView.findViewById(R.id.buttonCosinus)).setText("a"+ getResources().getString(R.string.sec));
+                ((Button) mView.findViewById(R.id.buttonTan)).setText("a"+ getResources().getString(R.string.taninverse));
+                ((Button) mView.findViewById(R.id.buttonCot)).setText("a"+ getResources().getString(R.string.cotinverse));
+
+                ((Button) mView.findViewById(R.id.buttonSinusH)).setText("a"+ getResources().getString(R.string.csch));
+                ((Button) mView.findViewById(R.id.buttonCosinusH)).setText("a"+ getResources().getString(R.string.sech));
+                ((Button) mView.findViewById(R.id.buttonTanH)).setText("a"+ getResources().getString(R.string.coth));
+                ((Button) mView.findViewById(R.id.buttonCotH)).setText("a"+ getResources().getString(R.string.tanh));
+            } else {
+                ((Button) mView.findViewById(R.id.buttonSinus)).setText("a"+ getResources().getString(R.string.sin));
+                ((Button) mView.findViewById(R.id.buttonCosinus)).setText("a"+ getResources().getString(R.string.cos));
+                ((Button) mView.findViewById(R.id.buttonTan)).setText("a"+ getResources().getString(R.string.tan));
+                ((Button) mView.findViewById(R.id.buttonCot)).setText("a"+ getResources().getString(R.string.cot));
+
+                ((Button) mView.findViewById(R.id.buttonSinusH)).setText("a"+ getResources().getString(R.string.sinh));
+                ((Button) mView.findViewById(R.id.buttonCosinusH)).setText("a"+ getResources().getString(R.string.cosh));
+                ((Button) mView.findViewById(R.id.buttonTanH)).setText("a"+ getResources().getString(R.string.tanh));
+                ((Button) mView.findViewById(R.id.buttonCotH)).setText("a"+ getResources().getString(R.string.coth));
+            }
+        }else {
+
+            if (isOn) {
+                ((Button) mView.findViewById(R.id.buttonSinus)).setText(getResources().getString(R.string.csc));
+                ((Button) mView.findViewById(R.id.buttonCosinus)).setText(getResources().getString(R.string.sec));
+                ((Button) mView.findViewById(R.id.buttonTan)).setText(getResources().getString(R.string.taninverse));
+                ((Button) mView.findViewById(R.id.buttonCot)).setText(getResources().getString(R.string.cotinverse));
+
+                ((Button) mView.findViewById(R.id.buttonSinusH)).setText(getResources().getString(R.string.csch));
+                ((Button) mView.findViewById(R.id.buttonCosinusH)).setText(getResources().getString(R.string.sech));
+                ((Button) mView.findViewById(R.id.buttonTanH)).setText(getResources().getString(R.string.coth));
+                ((Button) mView.findViewById(R.id.buttonCotH)).setText(getResources().getString(R.string.tanh));
+            } else {
+                ((Button) mView.findViewById(R.id.buttonSinus)).setText(getResources().getString(R.string.sin));
+                ((Button) mView.findViewById(R.id.buttonCosinus)).setText(getResources().getString(R.string.cos));
+                ((Button) mView.findViewById(R.id.buttonTan)).setText(getResources().getString(R.string.tan));
+                ((Button) mView.findViewById(R.id.buttonCot)).setText(getResources().getString(R.string.cot));
+
+                ((Button) mView.findViewById(R.id.buttonSinusH)).setText(getResources().getString(R.string.sinh));
+                ((Button) mView.findViewById(R.id.buttonCosinusH)).setText(getResources().getString(R.string.cosh));
+                ((Button) mView.findViewById(R.id.buttonTanH)).setText(getResources().getString(R.string.tanh));
+                ((Button) mView.findViewById(R.id.buttonCotH)).setText(getResources().getString(R.string.coth));
+            }
+
+        }
+    }
 
 
     Typeface prepare_Default_typeface() {
@@ -242,10 +324,25 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
     public void onClick(View view) {
 
-        switch (view.getId()) {
-            case R.id.switch_deg_rad:
 
-                boolean on = ((Switch) view).isChecked();
+
+
+        switch (view.getId()) {
+
+        case R.id.buttonInverse:
+            if(   ((ToggleButton)view).isChecked() == true){
+                applyInverse(true);
+            }else {
+                applyInverse(false);
+
+            }
+
+            break;
+
+
+        case R.id.switch_deg_rad:
+
+                boolean on = ((ToggleButton) view).isChecked();
 
                 if (on) {
                     //result in Degree
@@ -257,6 +354,16 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
                 }
                 break;
 
+        case R.id.buttonARC:
+            if(   ((ToggleButton)view).isChecked() == true){
+                arcIsOn = true;
+                applyArc(true);
+            }else {
+                arcIsOn = false;
+                applyArc(false);
+
+            }
+            break;
 
 
             default:
@@ -264,7 +371,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
                     ((MainActivity) getActivity()).aButtonIsPressed(((Button)view).getText().toString()+"(");
 
                 }else {
-                    ((MainActivity) getActivity()).aButtonIsPressed(((Button)view).getText().toString());
+                    ((MainActivity) getActivity()).aButtonIsPressed(((Button)view).getTag().toString());
                 }        }
 
     }
@@ -279,7 +386,8 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
                 R.id.buttonPlus, R.id.buttonMinus, R.id.buttonDevide, R.id.buttonTimes, R.id.buttonEquals, R.id.buttonClear, R.id.buttonPoint
                 , R.id.openParen, R.id.closeParen, R.id.buttonPercent,
                 R.id.buttonSinus, R.id.buttonCosinus, R.id.buttonTan, R.id.buttonln, R.id.buttonlog, R.id.buttonlog,  R.id.buttonpie, R.id.buttone, R.id.buttonpower,
-                R.id.buttonrad , R.id.buttonCot  , R.id.switch_deg_rad
+                R.id.buttonrad , R.id.buttonCot  , R.id.switch_deg_rad, R.id.buttonPow2 , R.id.buttonPow3 ,R.id.buttonInverse , R.id.buttonSinusH , R.id.buttonCosinusH , R.id.buttonTanH , R.id.buttonCotH
+                , R.id.buttonConstant , R.id.buttonARC
 
 
         };
@@ -305,7 +413,10 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
                 R.id.buttonPoint,
 
                 R.id.buttonSinus, R.id.buttonCosinus, R.id.buttonTan, R.id.buttonln, R.id.buttonlog, R.id.buttonlog,  R.id.buttonpie, R.id.buttone, R.id.buttonpower,
-                R.id.buttonrad , R.id.buttonCot
+                R.id.buttonrad , R.id.buttonCot,
+                R.id.buttonSinus, R.id.buttonCosinus, R.id.buttonTan, R.id.buttonln, R.id.buttonlog, R.id.buttonlog,  R.id.buttonpie, R.id.buttone, R.id.buttonpower,
+                R.id.buttonrad , R.id.buttonCot  , R.id.switch_deg_rad, R.id.buttonPow2 , R.id.buttonPow3 ,R.id.buttonInverse , R.id.buttonSinusH , R.id.buttonCosinusH , R.id.buttonTanH , R.id.buttonCotH
+                , R.id.buttonConstant , R.id.buttonARC
 
 
         };
@@ -409,7 +520,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        boolean on = ((Switch) buttonView).isChecked();
+        boolean on = ((ToggleButton) buttonView).isChecked();
 
 
         if (on) {
@@ -421,4 +532,10 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
         }
     }
+
+
+
+
+
+
 }

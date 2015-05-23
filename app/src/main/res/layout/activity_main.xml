@@ -42,6 +42,7 @@
                 android:gravity="center_vertical|right"
                 android:maxLines="1"
                 android:paddingRight="@dimen/padding_large"
+                android:paddingLeft="@dimen/padding_large"
                 app:minTextSize="3sp"
 
 
@@ -94,8 +95,8 @@
                 android:layout_height="42dp"
                 android:textColor="@android:color/white"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/add_to_favorites"
-                 android:layout_alignParentBottom="true"
+                android:layout_above="@id/add_to_favorites"
+                android:layout_alignParentLeft="true"
                 android:background="@android:color/transparent"
                 android:visibility="visible"
                 android:text=""
@@ -110,15 +111,6 @@
 
 
 
-        <EditText
-            android:id="@+id/tag_himself"
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:backgroundTint="@android:color/holo_green_light"
-            android:inputType="text"
-            android:layout_weight="1"
-            android:visibility="gone"
-            />
 
 
         <LinearLayout

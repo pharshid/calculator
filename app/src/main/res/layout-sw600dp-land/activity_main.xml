@@ -21,7 +21,7 @@
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="com.sepidsa.calculator.LogFragment"
+            android:name="com.sepidsa.calculator.AnimatedLogFragment"
             android:tag="jake"
             tools:layout="@layout/fragment_log"
 
@@ -96,6 +96,33 @@
 
                         />
 
+                    <Button
+                        android:id="@+id/add_to_favorites"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:textColor="@android:color/white"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentBottom="true"
+                        android:background="@android:color/transparent"
+                        android:visibility="visible"
+                        android:text=""
+                        android:textSize="21sp"
+                        />
+                    <Button
+                        android:id="@+id/add_label"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:textColor="@android:color/white"
+                        android:layout_centerVertical="true"
+                        android:layout_above="@id/add_to_favorites"
+                        android:layout_alignParentLeft="true"
+                        android:background="@android:color/transparent"
+                        android:visibility="visible"
+                        android:text=""
+                        android:textSize="19sp"
+
+                        />
 
 
 
@@ -108,7 +135,7 @@
             </LinearLayout>
 
 
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="12"
@@ -117,17 +144,30 @@
                 >
 
 
+                <Button
+                    android:id="@+id/favorites_list"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="8"
+                    android:background="@android:color/transparent"
+                    android:layout_centerVertical="true"
+                    android:visibility="visible"
+                    android:layout_gravity="center"
+                    android:gravity="center"
 
+
+                    />
 
                 <com.sepidsa.calculator.AutoResizeTextView
                     android:id="@+id/translationEditText"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="92"
                     style="@style/translation_box"
                     />
 
 
-            </FrameLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/fragment_container"
@@ -151,9 +191,9 @@
                         android:layout_height="fill_parent"
                         android:layout_weight="1"
                         style="@style/CustomButton.icon_button."
-                        android:text="q"
+                        android:text="@string/theme"
                         android:gravity="center_horizontal|center_vertical"
-                        android:tag="q"
+                        android:tag="@string/theme"
                         android:textColor="#DADFE1"
 
 
@@ -180,7 +220,7 @@
                         android:layout_weight="1"
                         style="@style/CustomButton.icon_button."
                         android:tag="@string/volume_high"
-                        android:text=""
+                        android:text="@string/volume_high"
                         android:gravity="center_horizontal|center_vertical"
                         android:textColor="#DADFE1"
 
@@ -204,21 +244,7 @@
                         />
 
 
-                      <RelativeLayout
-                   android:layout_width="wrap_content"
-                   android:layout_height="fill_parent"
-                   android:layout_weight="1">
 
-                   <Switch
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:id="@+id/switch_deg_rad"
-                       android:layout_centerInParent="true"
-                       android:textOff="DEG"
-                       android:textOn="RAD"
-                       android:checked="true"
-                       />
-               </RelativeLayout>
 
 
 
@@ -228,30 +254,14 @@
                 </LinearLayout>
 
 
-                <LinearLayout
+                <fragment
+                    android:id="@+id/left_frame"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
-
-
-                    <android.support.v4.view.ViewPager
-                        android:id="@+id/portrait_viewpager"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="99.5"
-                        android:tag="landscape_tablet"
-                        />
-                    <com.viewpagerindicator.CirclePageIndicator
-                        android:id="@+id/view_pager_indicator"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="2"
-                        android:paddingTop="1dp"/>
-
-
-
-                </LinearLayout>
+                    android:name="com.sepidsa.calculator.ScientificFragment"
+                    tools:layout="@layout/fragment_scientific_flat"
+                    />
 
 
                 <fragment
@@ -260,7 +270,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:name="com.sepidsa.calculator.DialpadFragment"
-                    tools:layout="@layout/deprecated_fragment_dialpad_flat" />
+                    tools:layout="@layout/fragment_dialpad_flat" />
 
 
             </LinearLayout>

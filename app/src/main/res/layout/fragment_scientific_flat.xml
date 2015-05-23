@@ -184,20 +184,6 @@
 
 
 
-
-
-
-        <!--android:track="@drawable/rectangle"-->
-
-
-        <!--<Button-->
-        <!--android:id="@+id/buttonDolla"-->
-        <!--style="@style/scientific_button_port"-->
-        <!--android:layout_weight="1"-->
-        <!--android:text="$"-->
-        <!--/>-->
-
-
     </LinearLayout>
 
 

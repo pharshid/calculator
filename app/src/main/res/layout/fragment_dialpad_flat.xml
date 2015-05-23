@@ -32,7 +32,7 @@
 
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:tag="@string/accent_button"
+            android:tag="@string/clear"
             android:text= "@string/clear"
 
             android:textColor="@color/red_buttons_text_color"
@@ -118,7 +118,7 @@
             android:id="@+id/openParen"
             android:layout_weight="1"
             android:text="@string/parenthesis_open"
-            android:tag="@string/accent_button"
+            android:tag="@string/parenthesis_open"
             style="@style/CustomButton.DIGIT"
 
             />
@@ -200,7 +200,7 @@
             android:id="@+id/closeParen"
             android:layout_weight="1"
             android:text="@string/parenthesis_closed"
-            android:tag="@string/accent_button"
+            android:tag="@string/parenthesis_closed"
             style="@style/CustomButton.DIGIT"
 
 
@@ -238,7 +238,7 @@
             android:id="@+id/buttonPercent"
             android:layout_weight="1"
             android:text="@string/percentage"
-            android:tag="@string/accent_button"
+            android:tag="@string/percentage"
             style="@style/CustomButton.DIGIT"
             />
 
@@ -261,7 +261,7 @@
         <Button
             android:id="@+id/buttonDevide"
             android:layout_weight="1"
-            android:tag="@string/accent_button"
+            android:tag="@string/devide"
             android:text="@string/devide"
             style="@style/CustomButton.DIGIT"
 
@@ -271,7 +271,7 @@
             android:id="@+id/buttonTimes"
             style="@style/CustomButton.DIGIT"
             android:layout_weight="1"
-            android:tag="@string/accent_button"
+            android:tag="@string/multiply"
             android:text="@string/multiply"
             />
 
@@ -281,14 +281,14 @@
             style="@style/CustomButton.DIGIT"
             android:layout_weight="1"
             android:text="@string/subtract"
-            android:tag="@string/accent_button"
+            android:tag="@string/subtract"
             />
 
         <Button
             android:id="@+id/buttonPlus"
             style="@style/CustomButton.DIGIT"
             android:text="@string/add"
-            android:tag="@string/accent_button"
+            android:tag="@string/add"
             android:layout_weight="1"
             />
 
@@ -297,7 +297,7 @@
             style="@style/CustomButton.DIGIT"
             android:layout_weight="1"
             android:text="@string/equals"
-            android:tag="@string/accent_button"
+            android:tag="@string/equals"
             android:textColor="@color/orange_buttons_text_color"
             android:background="@drawable/selector_for_btn_equal"
             />
