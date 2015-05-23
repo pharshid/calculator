@@ -6,6 +6,7 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
+import android.widget.TextView;
 
 /**
  * This animation class is animating the expanding and reducing the size of a view.
@@ -21,6 +22,7 @@ public class ExpandAnimation extends Animation {
     private int mMarginStart, mMarginEnd;
     private boolean mIsVisibleAfter = false;
     private boolean mWasEndedAlready = false;
+    private TextView mArrow;
 
     /**
      * Initialize the animation
@@ -40,6 +42,8 @@ public class ExpandAnimation extends Animation {
 
         mMarginStart = mViewLayoutParams.bottomMargin;
         mMarginEnd = (mMarginStart == 0 ? (0- view.getHeight()) : 0);
+
+        mArrow = (TextView) parent.findViewById(R.id.arrow);
 
         view.setVisibility(View.VISIBLE);
     }
@@ -65,8 +69,13 @@ public class ExpandAnimation extends Animation {
                     mListView.requestChildRectangleOnScreen(mParentView,
                             rect, false);
                 }
-            });
 
+            });
+            if (mMarginStart != 0) {
+                mArrow.setRotation(180 * interpolatedTime);
+            } else {
+                mArrow.setRotation(180 * (1 - interpolatedTime));
+                            }
             // Making sure we didn't run the ending before (it happens!)
         } else if (!mWasEndedAlready) {
             mViewLayoutParams.bottomMargin = mMarginEnd;

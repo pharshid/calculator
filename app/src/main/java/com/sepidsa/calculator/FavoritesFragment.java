@@ -54,7 +54,7 @@ public class FavoritesFragment  extends DialogFragment implements LoaderManager.
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         mFavoritesAdapter = new FavoritesAdapter(getActivity(), null, 0);
-        View rootView = inflater.inflate(R.layout.fragment_log, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_favorite, container, false);
 
 
         mListView = (ListView) rootView.findViewById(R.id.listview_log);

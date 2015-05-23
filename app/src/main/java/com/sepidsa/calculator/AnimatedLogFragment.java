@@ -1,16 +1,24 @@
 package com.sepidsa.calculator;
 
+import android.content.ContentValues;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +34,8 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
     private LogAdapter mLogAdapter;
 
     private ListView mListView;
+    private Button mClearButton;
+    private Button mExpandButton;
     private int mPosition = ListView.INVALID_POSITION;
 
     private static final String SELECTED_KEY = "selected_position";
@@ -60,6 +70,9 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
 
 
         mListView = (ListView) rootView.findViewById(R.id.listview_log);
+        mClearButton = (Button) rootView.findViewById(R.id.button_clear_log);
+        mExpandButton = (Button) rootView.findViewById(R.id.button_export_log);
+
         TextView empty = (TextView) rootView.findViewById(R.id.empty_list);
         mListView.setEmptyView(empty);
         mListView.setAdapter(mLogAdapter);
@@ -81,6 +94,105 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
                         "item " + position + " clicked", Toast.LENGTH_SHORT).show();
             }
 
+        });
+
+        mClearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Cursor cursor = getActivity().getContentResolver().query(
+                        LogContract.LogEntry.CONTENT_URI,
+                        null,
+                        null,
+                        null,
+                        null
+                );
+
+                if(cursor.moveToNext()) {
+                    View checkBoxView = View.inflate(getActivity(), R.layout.checkbox, null);
+                    final CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.checkbox);
+
+                    checkBox.setText("Also clear starred items.");
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                    builder.setTitle("CLEAR LOG");
+                    builder.setMessage("Do you really want to clear log?")
+                            .setView(checkBoxView)
+                            .setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    if (checkBox.isChecked()) {
+                                        getActivity().getContentResolver().delete(LogContract.LogEntry.CONTENT_URI, null, null);
+
+                                    } else {
+                                        getActivity().getContentResolver().delete(
+                                                LogContract.LogEntry.CONTENT_URI,
+                                                LogContract.LogEntry.COLUMN_STARRED + "!=?",
+                                                new String[]{"1"}
+                                        );
+                                    }
+
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            }).show();
+                } else {
+                    Toast.makeText(getActivity(), "The list is empty.", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        mExpandButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String shareText = "";
+                Cursor cursor = getActivity().getContentResolver().query(
+                        LogContract.LogEntry.CONTENT_URI,
+                        null,
+                        null,
+                        null,
+                        null
+                );
+                String result;
+                String operation;
+                String tag;
+                Boolean starred;
+
+                while(cursor.moveToNext()) {
+                    result = cursor.getString(cursor.getColumnIndex(LogContract.LogEntry.COLUMN_RESULT));
+                    operation = cursor.getString(cursor.getColumnIndex(LogContract.LogEntry.COLUMN_OPERATION));
+                    tag = cursor.getString(cursor.getColumnIndex(LogContract.LogEntry.COLUMN_TAG));
+                    starred = cursor.getInt(cursor.getColumnIndex(LogContract.LogEntry.COLUMN_STARRED)) != 0;
+
+                    if(!tag.equals("")) tag += " :\n";
+                    String starString = "";
+                    if(starred) starString = " (*)";
+
+                    shareText += tag + operation + " = " + result + starString + "\n\n";
+                }
+
+
+                if(!shareText.equals("")) {
+                    Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                    sharingIntent.setType("text/plain");
+                    String subject = "42 Calculations";
+                    shareText += "\nGenerated by 42 calculator.";
+
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareText);
+
+                    getActivity().startActivity(Intent.createChooser(sharingIntent, "Share"));
+                } else {
+                    Toast.makeText(getActivity(), "There is nothing to share.", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
         });
 
         return rootView;
