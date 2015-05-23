@@ -87,6 +87,7 @@ public class LogAdapter extends CursorAdapter {
             viewHolder.toolbar.setVisibility(View.VISIBLE);
             viewHolder.checked=false;
         }
+        viewHolder.arrow.setRotation(0);
 
     }
 
@@ -96,6 +97,7 @@ public class LogAdapter extends CursorAdapter {
         public final TextView tagView;
         public final CheckBox starredButton;
         public final View toolbar;
+        public final TextView arrow;
 
         public int position;
         public boolean checked;
@@ -112,6 +114,7 @@ public class LogAdapter extends CursorAdapter {
             tagView = (TextView) view.findViewById(R.id.LOG_tag);
             starredButton = (CheckBox) view.findViewById(R.id.add_to_favorites);
             toolbar = view.findViewById(R.id.toolbar);
+            arrow = (TextView) view.findViewById(R.id.arrow);
 
             checked = false;
 
@@ -119,6 +122,9 @@ public class LogAdapter extends CursorAdapter {
             copyButton = (Button) view.findViewById(R.id.labelButton);
             shareButton = (Button) view.findViewById(R.id.shareButton);
             useButton = (Button) view.findViewById(R.id.useButton);
+
+
+            //TODO Change typeface of arrow head.
 
 
         }

@@ -45,7 +45,7 @@
             <CheckBox
                 android:id="@+id/add_to_favorites"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:button="@android:drawable/btn_star"
                 android:gravity="center"
                 android:focusable="false"
@@ -53,6 +53,21 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 />
+
+            <TextView
+                android:id="@+id/arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="&#x2C5;"
+                android:gravity="center_horizontal|bottom"
+
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignStart="@id/add_to_favorites"
+                android:layout_alignLeft="@id/add_to_favorites"
+                android:layout_below="@id/add_to_favorites"
+                android:layout_alignParentBottom="true"
+                android:textSize="30sp" />
 
 
             <TextView
