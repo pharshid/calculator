@@ -8,12 +8,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="?android:attr/buttonBarStyle"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/button_clear_log"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="?android:attr/borderlessButtonStyle"
 
             android:text="CLEAR"/>
 
@@ -21,6 +23,7 @@
             android:id="@+id/button_export_log"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="?android:attr/borderlessButtonStyle"
 
             android:text="EXPORT"/>
 

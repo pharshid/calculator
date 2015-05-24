@@ -123,31 +123,40 @@
             android:visibility="gone"
             android:gravity="center"
             android:descendantFocusability="blocksDescendants"
+            style="?android:attr/buttonBarStyle"
             android:layout_width="fill_parent">
+
             <Button android:id="@+id/deleteButton"
                 android:layout_height="50dip"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:layout_width="wrap_content"
-                android:text="DELETE"/>
+                style="?android:attr/borderlessButtonStyle"
+            android:text="DELETE"/>
+
             <Button android:id="@+id/labelButton"
                 android:layout_height="50dip"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:layout_width="wrap_content"
+                style="?android:attr/borderlessButtonStyle"
                 android:text="LABEL"/>
+
             <Button android:id="@+id/shareButton"
                 android:layout_height="50dip"
                 android:layout_width="wrap_content"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
+                style="?android:attr/borderlessButtonStyle"
                 android:text="SHARE"/>
+
             <Button android:id="@+id/useButton"
                 android:layout_height="50dip"
                 android:layout_width="wrap_content"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:visibility="invisible"
+                android:visibility="visible"
+                style="?android:attr/borderlessButtonStyle"
                 android:text="USE"/>
 
         </LinearLayout>
