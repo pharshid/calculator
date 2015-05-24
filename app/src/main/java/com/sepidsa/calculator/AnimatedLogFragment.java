@@ -85,7 +85,7 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
 
                 // Creating the expand animation for the item
 
-                ExpandAnimation expandAni = new ExpandAnimation(mListView, view, toolbar, 500);
+                ExpandAnimation expandAni = new ExpandAnimation(mListView, view, toolbar, 250);
 
                 // Start the animation on the toolbar
 

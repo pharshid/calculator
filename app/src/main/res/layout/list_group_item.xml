@@ -47,11 +47,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@android:drawable/btn_star"
-                android:gravity="center"
+                android:gravity="center_horizontal|top"
                 android:focusable="false"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
+                android:layout_centerVertical="false"
+                android:layout_marginTop="@dimen/padding_large"
                 />
 
             <TextView
@@ -146,6 +147,7 @@
                 android:layout_width="wrap_content"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
+                android:visibility="invisible"
                 android:text="USE"/>
 
         </LinearLayout>

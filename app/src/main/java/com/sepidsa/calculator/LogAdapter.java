@@ -88,6 +88,7 @@ public class LogAdapter extends CursorAdapter {
             viewHolder.checked=false;
         }
         viewHolder.arrow.setRotation(0);
+        viewHolder.arrow.setTranslationY(0);
 
     }
 
@@ -258,6 +259,14 @@ public class LogAdapter extends CursorAdapter {
                         public void onClick(DialogInterface dialog, int which) {
                             inputMethodManager.hideSoftInputFromWindow(input.getWindowToken(), 0);
                             dialog.cancel();
+
+                        }
+                    });
+
+                    builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            inputMethodManager.hideSoftInputFromWindow(input.getWindowToken(), 0);
 
                         }
                     });
