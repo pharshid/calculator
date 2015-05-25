@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,10 +111,10 @@ public class LogAdapter extends CursorAdapter {
 
         public ViewHolder(View view) {
 
-            resultView = (TextView) view.findViewById(R.id.Log_title);
-            operationView = (TextView) view.findViewById(R.id.LOG_detail);
+            resultView = (TextView) view.findViewById(R.id.constant_name);
+            operationView = (TextView) view.findViewById(R.id.constant_number);
             tagView = (TextView) view.findViewById(R.id.LOG_tag);
-            starredButton = (CheckBox) view.findViewById(R.id.add_to_favorites);
+            starredButton = (CheckBox) view.findViewById(R.id.constant_selected);
             toolbar = view.findViewById(R.id.toolbar);
             arrow = (TextView) view.findViewById(R.id.arrow);
 
@@ -225,12 +226,13 @@ public class LogAdapter extends CursorAdapter {
                     // Set up the input
 
                     final EditText input = new EditText(mContext);
-                   final InputMethodManager inputMethodManager = (InputMethodManager)  mContext.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    final InputMethodManager inputMethodManager = (InputMethodManager)  mContext.getSystemService(Activity.INPUT_METHOD_SERVICE);
 
                     // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
 
                     input.setInputType(InputType.TYPE_CLASS_TEXT);
                     builder.setView(input);
+                    builder.setCancelable(false);
                     input.setText(currentLabel);
                     input.requestFocus();
                     inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
@@ -263,15 +265,24 @@ public class LogAdapter extends CursorAdapter {
                         }
                     });
 
-                    builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            inputMethodManager.hideSoftInputFromWindow(input.getWindowToken(), 0);
-
+                    final AlertDialog dialog = builder.create();
+                    dialog.show();
+                    EditText.OnKeyListener keyListener = new EditText.OnKeyListener() {
+                        public boolean onKey(View v, int keyCode, KeyEvent event) {
+                            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                                switch (keyCode) {
+                                    case KeyEvent.KEYCODE_DPAD_CENTER:
+                                    case KeyEvent.KEYCODE_ENTER:
+                                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick();
+                                        return true;
+                                    default:
+                                        break;
+                                }
+                            }
+                            return false;
                         }
-                    });
-
-                    builder.show();
+                    };
+                    input.setOnKeyListener(keyListener);
 
                 }
             }

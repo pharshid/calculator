@@ -28,6 +28,7 @@ import android.support.v4.view.ViewPager;
 import android.text.InputType;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -235,7 +236,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mScientificModeTextView = (TextView) findViewById(R.id.scientific_mode_textview);
         result_textView_holder = findViewById(R.id.MotherTop);
         mFavoritesList = (Button)findViewById(R.id.favorites_list);
-        mAddToFavorites = (Button)findViewById(R.id.add_to_favorites);
+        mAddToFavorites = (Button)findViewById(R.id.constant_selected);
         mAddLabel = (Button)findViewById(R.id.add_label);
         mFavoritesList.setOnClickListener(this);
         mAddToFavorites.setOnClickListener(this);
@@ -1796,7 +1797,7 @@ public int getAccentColorCode(){
                 favoritesDialog.show(fm, "fragment_favorites");
                 break;
 
-            case R.id.add_to_favorites: {
+            case R.id.constant_selected: {
 
 
                 String selection = LogContract.LogEntry._ID + "=?";
@@ -1840,6 +1841,7 @@ public int getAccentColorCode(){
 
                         input.setInputType(InputType.TYPE_CLASS_TEXT);
                         builder.setView(input);
+                        builder.setCancelable(false);
                         input.setText(currentLabel);
                         input.requestFocus();
                         inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
@@ -1871,11 +1873,24 @@ public int getAccentColorCode(){
 
                             }
                         });
-                        builder.show();
-
-
-
-
+                    final android.support.v7.app.AlertDialog dialog = builder.create();
+                    dialog.show();
+                    EditText.OnKeyListener keyListener = new EditText.OnKeyListener() {
+                        public boolean onKey(View v, int keyCode, KeyEvent event) {
+                            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                                switch (keyCode) {
+                                    case KeyEvent.KEYCODE_DPAD_CENTER:
+                                    case KeyEvent.KEYCODE_ENTER:
+                                        dialog.getButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE).performClick();
+                                        return true;
+                                    default:
+                                        break;
+                                }
+                            }
+                            return false;
+                        }
+                    };
+                    input.setOnKeyListener(keyListener);
 
                 }
 

@@ -67,7 +67,7 @@
                 />
 
             <Button
-                android:id="@+id/add_to_favorites"
+                android:id="@+id/constant_selected"
                 android:layout_width="42dp"
                 android:layout_height="42dp"
                 android:textColor="@android:color/black"
@@ -85,7 +85,7 @@
                 android:layout_height="42dp"
                 android:textColor="@android:color/white"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/add_to_favorites"
+                android:layout_toRightOf="@id/constant_selected"
                 android:layout_alignParentBottom="true"
                 android:background="@android:color/transparent"
                 android:visibility="gone"

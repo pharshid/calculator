@@ -52,6 +52,13 @@
             android:exported="false"
             android:syncable="true"/>
 
+        <provider
+            android:authorities="com.sepidsa.calculator.constants"
+            android:name=".data.ConstantProvider"
+            android:exported="false"
+            android:syncable="true"
+            />
+
     </application>
 
 </manifest>

@@ -70,10 +70,10 @@ public class FavoritesAdapter extends CursorAdapter {
         public int position;
 
         public ViewHolder(View view) {
-            resultView = (TextView) view.findViewById(R.id.Log_title);
-            operationView = (TextView) view.findViewById(R.id.LOG_detail);
+            resultView = (TextView) view.findViewById(R.id.constant_name);
+            operationView = (TextView) view.findViewById(R.id.constant_number);
             tagView = (TextView) view.findViewById(R.id.LOG_tag);
-            starredButton = (CheckBox) view.findViewById(R.id.add_to_favorites);
+            starredButton = (CheckBox) view.findViewById(R.id.constant_selected);
 
         }
     }

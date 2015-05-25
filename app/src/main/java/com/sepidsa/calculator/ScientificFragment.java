@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -128,6 +129,15 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
                     ((MainActivity)getActivity()). setAngleMode(false);
 
                 }
+                break;
+
+            case R.id.buttonConstant: {
+
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                ConstantUseFragment constantUseDialog = new ConstantUseFragment();
+                constantUseDialog.show(fm, "fragment_constant_use");
+
+            }
                 break;
 
             default:
