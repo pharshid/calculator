@@ -25,7 +25,7 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
     private static final int DIALPAD_FONT_ROBOTO_THIN = 0 ;
     View mView;
     public static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
-    private BroadcastReceiver mScientificTypeFaceChangedReceiver;
+    private BroadcastReceiver mThemeChangedReciever;
     private Typeface defaultFont;
     int idList[];
     private boolean inversed = false;
@@ -54,7 +54,7 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
         }        // Set the listener for all the gray_buttons
 //        this.setRetainInstance(false);
         idList =getScientificButtonsID();
-        defaultFont = ((MainActivity)getActivity()).get_Default_Dialpad_Button_typeface();
+        defaultFont = ((MainActivity)getActivity()).getFontForComponent("DIALPAD_FONT");
         for(int id : idList) {
             View v = mView.findViewById(id);
             if (v != null) {
@@ -68,21 +68,27 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
         if(mView.findViewById(R.id.switch_deg_rad) != null) {
             ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setChecked(((MainActivity) getActivity()).getAngleMode());
             ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setOnCheckedChangeListener(this);
-            ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setOnClickListener(this);
+            mView.findViewById(R.id.switch_deg_rad).setOnClickListener(this);
 
 
         }
-        mScientificTypeFaceChangedReceiver = new BroadcastReceiver() {
+        mThemeChangedReciever = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 // Extract data included in the Intent
-                int message = intent.getIntExtra("dialpad_typeFace",DIALPAD_FONT_ROBOTO_THIN);
-                defaultFont =     ((MainActivity)getActivity()).change_DialPad_TypeFace(message);
-                for(int id : idList) {
-                    View v = mView.findViewById(id);
-                    if (v != null && (v instanceof Button)) {
-                        ((Button) v).setTypeface(defaultFont);
-                    }
+                String message = intent.getStringExtra("message");
+                switch (message) {
+                    case "changeDialpadFont":
+                        if(!((MainActivity) getActivity()).isRetroThemeSelected()) {
+                            defaultFont = ((MainActivity) getActivity()).getFontForComponent("DIALPAD_FONT");
+                            for (int id : idList) {
+                                View v = mView.findViewById(id);
+                                if (v != null && (v instanceof Button)) {
+                                    ((Button) v).setTypeface(defaultFont);
+                                }
+                            }
+                            break;
+                        }
                 }
             }
         };
@@ -223,14 +229,14 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
     @Override
     public void onStart() {
         super.onStart();
-        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mScientificTypeFaceChangedReceiver, new IntentFilter("typeFaceIntent"));
+        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mThemeChangedReciever, new IntentFilter("themeIntent"));
 
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).unregisterReceiver(mScientificTypeFaceChangedReceiver);
+        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).unregisterReceiver(mThemeChangedReciever);
 
     }
 

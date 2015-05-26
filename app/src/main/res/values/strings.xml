@@ -148,5 +148,9 @@
     <string name="demo_parallax_plus">+</string>
     <string name="accent_button">accent_button</string>
 
+    <string name="title_activity_help">HelpActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
 
 </resources>

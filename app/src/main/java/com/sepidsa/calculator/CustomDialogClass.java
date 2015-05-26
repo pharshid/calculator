@@ -27,14 +27,13 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
     Typeface  mRobotoThin ;
     Typeface mDastnevis ;
     Typeface mMitra ;
-    Typeface mIconFont ;
     private EditText feedbackEditText;
     private Button dialpad_textSize_Button ;
     private static final int DIALPAD_FONT_ROBOTO_THIN = 0;
     private static final int DIALPAD_FONT_ROBOTO_LIGHT = 1;
     private static final int DIALPAD_FONT_ROBOTO_REGULAR = 2;
-    private static final int PERSIAN_TRANSLATION_FONT_MITRA = 0;
-    private static final int PERSIAN_TRANSLATION_FONT_DASTNEVIS = 1;
+    private static final int PERSIAN_TRANSLATION_FONT_MITRA = 5;
+    private static final int PERSIAN_TRANSLATION_FONT_DASTNEVIS = 6;
     private AutoResizeTextView fortyTwoSample, fortyTwoSampleTranslation;
 
 
@@ -54,7 +53,6 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
         mRobotoThin = Typeface.createFromAsset(context.getAssets(), "roboto_thin.ttf");
         mRobotoLight = Typeface.createFromAsset(context.getAssets(), "roboto_light.ttf");
         mRobotoRegular =  Typeface.createFromAsset(context.getAssets(), "roboto_regular.ttf");
-        mIconFont = Typeface.createFromAsset(context.getAssets(), "icon_font.ttf");
         mDastnevis = Typeface.createFromAsset(context.getAssets(), "dastnevis.otf");
         mMitra = Typeface.createFromAsset(context.getAssets(), "mitra.ttf");
         mshekari = Typeface.createFromAsset(context.getAssets(), "shekari.ttf");
@@ -85,6 +83,7 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
         fortyTwoSampleTranslation.setTypeface(getDefaultPersianTranslationFont());
         set_dialpad_textSize_Button_typeface();
         set_persian_translation_Button_typeface();
+        fortyTwoSampleTranslation.setTypeface(getDefaultPersianTranslationFont());
         Button tips = (Button) findViewById(R.id.tips) ;
         tips.setOnClickListener(this);
         tips.setTypeface(mDastnevis);
@@ -111,25 +110,28 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
 
     private void set_persian_translation_Button_typeface() {
         SharedPreferences appPreferences = mContext.getSharedPreferences("typography", Context.MODE_PRIVATE);
-        switch (appPreferences.getInt("PERSIAN_TRANSLATION_TYPEFACE",PERSIAN_TRANSLATION_FONT_MITRA)) {
+        switch (appPreferences.getInt("PERSIAN_FONT_PREFERENCE",PERSIAN_TRANSLATION_FONT_MITRA)) {
             case 0 :
                 fortyTwoSampleTranslation.setTypeface(mMitra);
                 break;
             case 1 :
                 fortyTwoSampleTranslation.setTypeface(mDastnevis);
                 break;
-            case 2 :
+            default:
                 fortyTwoSampleTranslation.setTypeface(mMitra);
                 break;
         }
+
     }
 
 
     // Send an Intent with an action named "my-event".
     void sendChangeDialpadTypefaceMessage(int font) {
-        Intent intent = new Intent("typeFaceIntent");
+        Intent intent = new Intent("themeIntent");
+       ((MainActivity) mContext).setFontForComponent("DIALPAD_FONT",font);
+
         // add data
-        intent.putExtra("dialpad_typeFace", font);
+        intent.putExtra("message", "changeDialpadFont");
         //   intent.putExtra("detail",getMTranslationEditText().toString());
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
 
@@ -194,25 +196,27 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
                 SharedPreferences.Editor fontSizeeditor = fontSizePreference.edit();
                 switch (fontSizePreference.getInt("DIALPAD_FONT", DIALPAD_FONT_ROBOTO_THIN)) {
                     case 0:
-                        fortyTwoSample.setTypeface(mRobotoLight);
-                        fontSizeeditor.putInt("DIALPAD_FONT", DIALPAD_FONT_ROBOTO_LIGHT);
-                        fontSizeeditor.commit();
-                        sendChangeDialpadTypefaceMessage(1);
-                        break;
-
-                    case 1:
-                        fortyTwoSample.setTypeface(mRobotoRegular);
-                        fontSizeeditor.putInt("DIALPAD_FONT", DIALPAD_FONT_ROBOTO_REGULAR);
-                        fontSizeeditor.commit();
-                        sendChangeDialpadTypefaceMessage(2);
-                        break;
-
-                    case 2:
                         fontSizeeditor.putInt("DIALPAD_FONT", DIALPAD_FONT_ROBOTO_THIN);
-                        fontSizeeditor.commit();
+                        fontSizeeditor.apply();
                         fortyTwoSample.setTypeface(mRobotoThin);
                         sendChangeDialpadTypefaceMessage(0);
                         break;
+
+                    case 1:
+                        fortyTwoSample.setTypeface(mRobotoLight);
+                        fontSizeeditor.putInt("DIALPAD_FONT", DIALPAD_FONT_ROBOTO_LIGHT);
+                        fontSizeeditor.apply();
+                        sendChangeDialpadTypefaceMessage(1);
+                        break;
+
+                    case 2:
+                        fortyTwoSample.setTypeface(mRobotoRegular);
+                        fontSizeeditor.putInt("DIALPAD_FONT", DIALPAD_FONT_ROBOTO_REGULAR);
+                        fontSizeeditor.apply();
+                        sendChangeDialpadTypefaceMessage(2);
+                        break;
+
+
 
                 }
 
@@ -223,27 +227,36 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
 
                 SharedPreferences typographyPreferences = mContext.getSharedPreferences("typography", Context.MODE_PRIVATE);
                 SharedPreferences.Editor typographyeditor = typographyPreferences.edit();
-                switch (typographyPreferences.getInt("PERSIAN_TRANSLATION_TYPEFACE", PERSIAN_TRANSLATION_FONT_MITRA)) {
-                    case 0:
+                switch (typographyPreferences.getInt("PERSIAN_FONT_PREFERENCE", PERSIAN_TRANSLATION_FONT_MITRA)) {
+                    case 5:
                         fortyTwoSampleTranslation.setTypeface(mDastnevis);
-                        typographyeditor.putInt("PERSIAN_TRANSLATION_TYPEFACE", PERSIAN_TRANSLATION_FONT_DASTNEVIS);
-                        typographyeditor.commit();
+                        typographyeditor.putInt("PERSIAN_FONT_PREFERENCE",PERSIAN_TRANSLATION_FONT_DASTNEVIS );
+                        typographyeditor.apply();
+                        if(!((MainActivity) mContext).isRetroThemeSelected()){
+                            ((MainActivity) mContext).setFontForComponent("TRANSLATION_LITERAL_FONT",PERSIAN_TRANSLATION_FONT_DASTNEVIS);
+                        }
                         break;
 
-                    case 1:
+                    case 6:
                         fortyTwoSampleTranslation.setTypeface(mMitra);
-                        typographyeditor.putInt("PERSIAN_TRANSLATION_TYPEFACE", PERSIAN_TRANSLATION_FONT_MITRA);
-                        typographyeditor.commit();
+                        typographyeditor.putInt("PERSIAN_FONT_PREFERENCE",PERSIAN_TRANSLATION_FONT_MITRA );
+                        typographyeditor.apply();
+                        if(!((MainActivity) mContext).isRetroThemeSelected()){
+                            ((MainActivity) mContext).setFontForComponent("TRANSLATION_LITERAL_FONT",PERSIAN_TRANSLATION_FONT_MITRA);
+                        }
                         break;
 
                     default:
                         fortyTwoSampleTranslation.setTypeface(mDastnevis);
-                        typographyeditor.putInt("PERSIAN_TRANSLATION_TYPEFACE", PERSIAN_TRANSLATION_FONT_DASTNEVIS);
-                        typographyeditor.commit();
-
+                        typographyeditor.putInt("PERSIAN_FONT_PREFERENCE", PERSIAN_TRANSLATION_FONT_DASTNEVIS);
+                        typographyeditor.apply();
+                        if(!((MainActivity) mContext).isRetroThemeSelected()){
+                            ((MainActivity) mContext).setFontForComponent("TRANSLATION_LITERAL_FONT",PERSIAN_TRANSLATION_FONT_DASTNEVIS);
+                        }
+                        break;
                 }
-
-                ((MainActivity) mContext).PersianTranslationTypefaceChanged();
+//                set_persian_translation_Button_typeface();
+                ((MainActivity) mContext).refreshFonts();
 
 
                 // todo send email to info@sepidsa.com
@@ -267,8 +280,8 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
 
         Typeface getDefaultPersianTranslationFont(){
 
-            SharedPreferences typographyPreferences = mContext.getSharedPreferences("typography", Context.MODE_PRIVATE);
-            int PersianTranslationFont = typographyPreferences.getInt("PERSIAN_TRANSLATION_TYPEFACE",PERSIAN_TRANSLATION_FONT_MITRA);
+
+            int PersianTranslationFont = ((MainActivity) mContext).getPersianFontPreference();
             switch (PersianTranslationFont){
                 case PERSIAN_TRANSLATION_FONT_MITRA:
                     return Typeface.createFromAsset(mContext.getAssets(), "mitra.ttf");

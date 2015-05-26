@@ -38,4 +38,6 @@
     <color name="bg_swipe_group_item_right">#ff295db3</color>
 
     <color name="snackbar_action_color_done">#ffccccff</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

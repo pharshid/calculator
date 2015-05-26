@@ -31,7 +31,6 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
@@ -52,19 +51,17 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Stack;
 
-// todo for google play
-//import com.ibm.icu.text.NumberFormat;
-//import com.ibm.icu.text.RuleBasedNumberFormat;
-//import com.ibm.icu.util.ULocale;
 
 
-public class MainActivity extends FragmentActivity implements View.OnClickListener,  CompoundButton.OnCheckedChangeListener, PopoverView.PopoverViewDelegate {
+public class MainActivity extends FragmentActivity implements View.OnClickListener,  CompoundButton.OnCheckedChangeListener{
 
     private static final String FRAGMENT_TAG_LOG_ = "log fragment";
-    private static final byte LANGUAGE_ARABIC =3 ;
-    private static final byte LANGUAGE_GERMAN =4 ;
-    private static final byte LANGUAGE_ITALIAN =5 ;
+    private static final byte LANGUAGE_ARABIC =0 ;
+
     private static final String LOG_DATA_KEY = "log data";
+    private static final int FONT_DIGITAL_7 = 3;
+    private static final int FONT_YEKAN = 4;
+    private static final int FONT_MAJALLA = 7;
     Log_Adapter mLogAdapter;
     Serializable mListView ;
     //TextSwitcher mResultTextSwitcher = null;
@@ -100,11 +97,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     int mSelectedColorCal0 = 0;
 
-    private static final int DIALPAD_FONT_ROBOTO_THIN = 0;
-    private static final int DIALPAD_FONT_ROBOTO_LIGHT = 1;
-    private static final int DIALPAD_FONT_ROBOTO_REGULAR = 2;
-    private static final int PERSIAN_TRANSLATION_FONT_MITRA = 0;
-    private static final int PERSIAN_TRANSLATION_FONT_DASTNEVIS = 1;
+    private static final int FONT_ROBOTO_THIN = 0;
+    private static final int FONT_ROBOTO_LIGHT = 1;
+    private static final int FONT_ROBOTO_REGULAR = 2;
+    private static final int FONT_MITRA = 5;
+    private static final int FONT_DASTNEVIS = 6;
     private Typeface mRobotoLight;
     private Typeface mRobotoRegular;
 
@@ -136,14 +133,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     because A) it's the latest version included in Android L which has numerous refinements one digits and letters and spacing'
     B) I have a unified vision of how the typeface looks like on various android versions.95% of app uses this typeface
     */
-    Typeface mEnglishTypeFace = null;
-    Typeface mTranslationBoxTypeface = null;
+    Typeface mTranslationBoxNumericFont = null;
     //    this typeface will be used for translation box
-    private Typeface mPersianTranslationTypeface = null;
+    private Typeface mTranslationBoxLetterFont = null;
     // Languages supported for "number to word" translation . will use theme Later for Localization
-    static final byte LANGUAGE_PERSIAN = 0
-            , LANGUAGE_ENGLISH = 2
-            , LANGUAGE_FRENCH = 1;
+    static final byte LANGUAGE_PERSIAN = 3
+            , LANGUAGE_ENGLISH = 1
+            , LANGUAGE_FRENCH = 2;
     private static final byte DEFAULT_LANGUAGE = LANGUAGE_PERSIAN;
 
 
@@ -170,12 +166,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             , backSpaceButtonSoundID ;
 
     Animation  out_anim,in_anim;
-    private Typeface mIconFont;
     private Typeface mFlatIcon;
     private String mDecimal_fraction = "";
     private TextView mScientificModeTextView;
     private Typeface mshekari;
-    private Typeface mArabicTypeFace;
+    private Typeface mMajalla;
     private Typeface mMitra;
     private Typeface mDastnevis;
     //    PopoverView popoverView;
@@ -222,6 +217,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         setMViewPagerIndicator();
 
         mMemoryVariableTextView =  (TextView) findViewById(R.id.m_vaiable_textview);
+        mTranslationBox = (AutoResizeTextView) findViewById(R.id.translationEditText);
         resultTextView = (AutoResizeTextView) findViewById(R.id.result);
         mScientificModeTextView = (TextView) findViewById(R.id.scientific_mode_textview);
         result_textView_holder = findViewById(R.id.MotherTop);
@@ -264,7 +260,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             button1.setTypeface(mshekari);
 
         }
-
+    refreshFonts();
     }
 
 
@@ -293,7 +289,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         // super.onRestoreInstanceState(savedInstanceState);
-
+    // todo mtranslationbox restore
 
         if(savedInstanceState!= null) {
             mTranslationBox = getMTranslationEditText();
@@ -326,7 +322,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 calculateResult(null);
                 updateUIExecute(false);
             } else {
-                mTranslationBox.setTypeface(mTranslationBoxTypeface);
+                mTranslationBox.setTypeface(mTranslationBoxNumericFont);
 //
                 resultTextView.setText(savedInstanceState.getString("mResultText"));
 //            mTranslationBox.setText(savedInstanceState.getString("mTranslationText"));
@@ -350,13 +346,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         switch (getTranslationLanguage()) {
             case LANGUAGE_PERSIAN:
-                getMTranslationEditText().setTypeface(mPersianTranslationTypeface);
+                getMTranslationEditText().setTypeface(mTranslationBoxLetterFont);
                 break;
 
             default:
-                getMTranslationEditText().setTypeface(mEnglishTypeFace);
+                getMTranslationEditText().setTypeface(getFontForComponent("RESULT_FONT"));
         }
-
 
         if(!isRetroThemeSelected()) {
             resultTextView.setBackgroundColor(getAccentColorCode());
@@ -388,7 +383,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
         if (!mJustPressedExecuteButton) {
-            mTranslationBox.setTypeface(mTranslationBoxTypeface);
+            mTranslationBox.setTypeface(mTranslationBoxNumericFont);
         }
         redrawAccent();
         redrawKeypadBackground();
@@ -556,26 +551,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mRobotoRegular = Typeface.createFromAsset(getApplicationContext().getAssets(), "roboto_regular.ttf");
         mRobotoThin = Typeface.createFromAsset(getApplicationContext().getAssets(), "roboto_thin.ttf");
 
-        mArabicTypeFace = Typeface.createFromAsset(getApplicationContext().getAssets(), "majalla.ttf");
-        mIconFont = Typeface.createFromAsset(getApplicationContext().getAssets(), "icon_font.ttf");
+        mMajalla = Typeface.createFromAsset(getApplicationContext().getAssets(), "majalla.ttf");
         mFlatIcon = Typeface.createFromAsset(getApplicationContext().getAssets(), "flaticon.ttf");
         mshekari = Typeface.createFromAsset(getApplicationContext().getAssets(), "shekari.ttf");
         mDastnevis = Typeface.createFromAsset(getApplicationContext().getAssets(), "dastnevis.otf");
         mMitra = Typeface.createFromAsset(getApplicationContext().getAssets(), "mitra.ttf");
-        mPhalls =  Typeface.createFromAsset(getApplicationContext().getAssets(), "jozoor.ttf");
+        mPhalls =  Typeface.createFromAsset(getApplicationContext().getAssets(), "yekan.ttf");
         mDigital_7 =  Typeface.createFromAsset(getApplicationContext().getAssets(), "digital_7.ttf");
 
-        if(!isRetroThemeSelected()){
-            mEnglishTypeFace = mRobotoThin;
-            mPersianTranslationTypeface = mMitra;
-            mTranslationBoxTypeface = mRobotoLight;
-            resultTextView.setTypeface(mRobotoLight);
-        }else {
-            mEnglishTypeFace = mPhalls;
-            mPersianTranslationTypeface = mPhalls;
-            mTranslationBoxTypeface = mPhalls;
 
-        }
 
         //todo refactor code
         mFavoritesList.setTypeface(mFlatIcon);
@@ -593,20 +577,18 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             resultTextView.setBackgroundColor(getAccentColorCode());
             result_textView_holder.setBackgroundColor(getAccentColorCode());
             resultTextView.setTextColor(Color.WHITE);
-            resultTextView.setTypeface(mEnglishTypeFace);
         }else {
             resultTextView.setBackgroundColor(Color.BLACK);
             resultTextView.setTextColor(Color.BLACK);
-            resultTextView.setTypeface(mDigital_7);
 
         }
-        resultTextView.setSingleLine();
+        resultTextView.setLines(2);
         resultTextView.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
         resultTextView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
     }
 
 
-public int getAccentColorCode(){
+    public int getAccentColorCode(){
         //TODO set a cool default theme color
         SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("THEME", MODE_PRIVATE);
         return appPreferences.getInt("ACCENT_COLOR_CODE", Color.parseColor("#1abc9c"));
@@ -810,7 +792,7 @@ public int getAccentColorCode(){
 
 
         boolean shouldPrevent ;
-        if  ( getMJustPressedExecute())
+        if  ( mJustPressedExecuteButton)
             if ( Character.isDigit(currentButtonValue.charAt(0))
                     || currentButtonValue.equals(getResources().getString(R.string.Pi))
                     || currentButtonValue.equals(getResources().getString(R.string.e))) {
@@ -818,7 +800,7 @@ public int getAccentColorCode(){
                 mButtonsStack.clear();
             }
 
-        setMJustPressedExecute(false);
+        mJustPressedExecuteButton = false;
         shouldPrevent = preventCommonErrors(currentButtonValue.charAt(0));
         if(shouldPrevent) {
             playSound(errorSoundID);
@@ -830,7 +812,7 @@ public int getAccentColorCode(){
         if( currentButtonValue.equals("=") ) {
             if(getMExpressionString().length() > 0){
                 if (calculateResult(null) == 0) {
-                    setMJustPressedExecute(true);
+                    mJustPressedExecuteButton = true;
                     updateUIExecute(true);
                 }
             }
@@ -960,6 +942,7 @@ public int getAccentColorCode(){
         if (getVolumeFromPreference()) {
 
             setVolumeInPreference(false);
+            //  sendVolumeMessage(false);
             //  sendVolumeMessage(false);
             return false;
 
@@ -1114,7 +1097,7 @@ public int getAccentColorCode(){
             //Also mResult With Value of mExp
             resultTextView.setText(mTemp);
             String gg = getMExpressionString().toString().replaceAll("(?<!\\.\\d{0,6})\\d+?(?=(?:\\d{3})+(?:\\D|$))", "$0,");
-            mTranslationBox.setTypeface(mEnglishTypeFace);
+            mTranslationBox.setTypeface(mTranslationBoxNumericFont);
             mTranslationBox.setText(gg);
 
         }
@@ -1164,7 +1147,7 @@ public int getAccentColorCode(){
         catch (Exception e) {
             e.printStackTrace();
             playSound(errorSoundID);
-            setMJustPressedExecute(false);
+            mJustPressedExecuteButton = false;
             //TODO decide the fate of clear button ?
             // Happens for generals exceptions
 
@@ -1176,7 +1159,7 @@ public int getAccentColorCode(){
 
     private void updateUIOperator() {
         String gg = getMExpressionString().toString().replaceAll("(?<!\\.\\d{0,6})\\d+?(?=(?:\\d{3})+(?:\\D|$))", "$0,");
-        mTranslationBox.setTypeface(mEnglishTypeFace);
+        mTranslationBox.setTypeface(mTranslationBoxNumericFont);
         mTranslationBox.setText(gg);
         return;
     }
@@ -1196,34 +1179,11 @@ public int getAccentColorCode(){
     private void displayTranslation() {
 
 
-        refreshLanguagefontsBeforeTranslation();
+        mTranslationBox.setTypeface(mTranslationBoxLetterFont);
         printResultWithTranslation(mDecimal_fraction, getTranslationLanguage());
         mTranslationBox.startAnimation(mBlink);
     }
 
-    private void refreshLanguagefontsBeforeTranslation() {
-
-
-        switch (getTranslationLanguage()) {
-            //FOR PERSIAN   **************
-            case LANGUAGE_PERSIAN:
-                getMTranslationEditText().setTypeface(mPersianTranslationTypeface);
-                mTranslationBoxTypeface = mPersianTranslationTypeface;
-                break;
-            case LANGUAGE_ARABIC:
-                getMTranslationEditText().setTypeface(mArabicTypeFace);
-                mTranslationBoxTypeface = mArabicTypeFace;
-                break;
-
-            case LANGUAGE_ENGLISH:
-            case LANGUAGE_FRENCH:
-            case LANGUAGE_GERMAN:
-            case LANGUAGE_ITALIAN:
-                getMTranslationEditText().setTypeface(mRobotoLight);
-                mTranslationBoxTypeface = mRobotoLight;
-                break;
-        }
-    }
 
 
     private void printResultWithTranslation(String decimal_fraction, int Language) {
@@ -1286,11 +1246,6 @@ public int getAccentColorCode(){
 
             case LANGUAGE_PERSIAN:
 
-//                if(mResultBeforeSignification.longValue()== 42 && decimal_fraction.equals("")& !resultIsNegative) {
-//                    mTranslationBox.setText("از گوگل بپرس what's the answer to life the universe and everything");
-//                    return;
-//                }
-//
                 mTranslationBox.setText(new NumberConveterPersianPartI().convert(integerFraction));
                 if (!decimal_fraction.equals("")) {
                     partII = NumberConverterPersianPartII.convert(decimal_fraction);
@@ -1307,15 +1262,6 @@ public int getAccentColorCode(){
         }
     }
 
-    public void setMJustPressedExecute(Boolean pressed){
-
-        mJustPressedExecuteButton = pressed;
-    }
-    public Boolean getMJustPressedExecute(){
-
-        return mJustPressedExecuteButton;
-
-    }
     private Boolean isOperator(Character inputChar){
         switch (inputChar) {
             case '+':
@@ -1418,8 +1364,8 @@ public int getAccentColorCode(){
 
         String result ="";
         mResultBeforeSignification = exp.evaluate();
-
         DecimalFormat df = new DecimalFormat();
+
         df.setGroupingUsed(true);
         df.setGroupingSize(3);
         df.setRoundingMode(RoundingMode.HALF_EVEN);
@@ -1431,40 +1377,14 @@ public int getAccentColorCode(){
 
         return result;
 
-        // }else{
-        //result = String.format(Locale.US, "%.4f", mResultBeforeSignification);
-        //  result = Double.toString(mResultBeforeSignification);
-        // result = String.format("%."+ DECIMAL_FRACTION_LENGTH +"f",(float) mResultBeforeSignification);
-        // }
-        //String formatted = df.format(mResultBeforeSignification);
-
-//        result = String.format(Locale.US, "%.6f", result);
-//        result = mResultBeforeSignification.toPlainString();
     }
-
-/*    private  String fixRedundantZeroesofFloatNumbers(String input){
-        int floatPointPosition ;
-        int  counter = input.length()-1;
-        floatPointPosition = input.lastIndexOf(".");
-        while((counter >floatPointPosition) && (input.charAt(counter)=='0')){
-            input = input.substring(0,counter);
-            counter--;
-        }
-        if(input.charAt(input.length()-1)=='.')
-            return input.substring(0,input.length()-1);
-
-        return input;
-    }*/
 
 
     public void playSound(int id) {
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        float actualVolume = (float) audioManager
-                .getStreamVolume(AudioManager.STREAM_MUSIC);
         float maxVolume = (float) audioManager
                 .getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         float volume;
-        // = actualVolume / maxVolume;
 
 
         if (getVolumeFromPreference() == true) {
@@ -1477,14 +1397,12 @@ public int getAccentColorCode(){
         if (mSoundPoolLoaded) {
             mSoundPool.play(id, volume, volume, 1, 0, 1f);
         }
-
-
     }
     void prepareSoundStuff(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-           mSoundPool =  createNewSoundPool();
+            mSoundPool =  createNewSoundPool();
         }else{
-           mSoundPool =  createOldSoundPool();
+            mSoundPool =  createOldSoundPool();
         }
         mSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
@@ -1493,33 +1411,28 @@ public int getAccentColorCode(){
                 mSoundPoolLoaded = true;
             }
         });
-       if (isRetroThemeSelected()) {
-           numericButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.button1, 1);
-           executeButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.button28, 1);
-           clearAllButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.clear_retro, 1);
-           backSpaceButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
-           operatorsButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.operator_retro, 1);
-           errorSoundID = mSoundPool.load(getApplicationContext(), R.raw.error_retro, 1);
-           mHasVolumeSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
-
-
-
-       }else{
-
-
-           numericButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.keypress, 1);
-           executeButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.equal, 1);
-           clearAllButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.clear, 1);
-           backSpaceButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
-           operatorsButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.keypress, 1);
-           errorSoundID = mSoundPool.load(getApplicationContext(), R.raw.error, 1);
-           mHasVolumeSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
+        if (isRetroThemeSelected()) {
+            numericButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.button1, 1);
+            executeButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.button28, 1);
+            clearAllButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.clear_retro, 1);
+            backSpaceButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
+            operatorsButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.operator_retro, 1);
+            errorSoundID = mSoundPool.load(getApplicationContext(), R.raw.error_retro, 1);
+            mHasVolumeSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
+        }else{
+            numericButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.keypress, 1);
+            executeButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.equal, 1);
+            clearAllButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.clear, 1);
+            backSpaceButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
+            operatorsButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.keypress, 1);
+            errorSoundID = mSoundPool.load(getApplicationContext(), R.raw.error, 1);
+            mHasVolumeSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
         }
 
 
     }
 
-            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     protected SoundPool createNewSoundPool(){
         AudioAttributes attributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
@@ -1528,12 +1441,13 @@ public int getAccentColorCode(){
         SoundPool sounds = new SoundPool.Builder()
                 .setAudioAttributes(attributes)
                 .build();
-                return sounds;
+        return sounds;
     }
-            @SuppressWarnings("deprecation")
+
+    @SuppressWarnings("deprecation")
     protected SoundPool createOldSoundPool(){
-      SoundPool  sounds = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
-                return sounds;
+        SoundPool  sounds = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+        return sounds;
     }
 
     void prepareAnimationStuff(){
@@ -1565,7 +1479,6 @@ public int getAccentColorCode(){
 
         mErrorBlink = new AlphaAnimation(0.0f, 1.0f);
         mErrorBlink.setDuration(100); //You can manage the time of the blink with this parameter
-        // mErrorBlink.setStartOffset(20);
         mErrorBlink.setRepeatMode(Animation.REVERSE);
         mErrorBlink.setRepeatCount(4);
 
@@ -1574,21 +1487,10 @@ public int getAccentColorCode(){
 
         mBlink = new AlphaAnimation(0.0f, 1.0f);
         mBlink.setDuration(100); //You can manage the time of the blink with this parameter
-        //  mBlink.setStartOffset(20);
         mBlink.setRepeatMode(Animation.REVERSE);
         mBlink.setRepeatCount(0);
 
     }
-   /* void prepareFadeAnimation(){
-
-        mFadeIn =  AnimationUtils.loadAnimation(this, android.R.anim.fadein);;
-        mBlink.setDuration(100); //You can manage the time of the blink with this parameter
-        //  mBlink.setStartOffset(20);
-        mBlink.setRepeatMode(Animation.REVERSE);
-        mBlink.setRepeatCount(0);
-
-    }
-*/
 
 
     public void setMExpressionString(String input){
@@ -1625,15 +1527,6 @@ public int getAccentColorCode(){
         cv.put(LogContract.LogEntry.COLUMN_STARRED, 0);
 
         getContentResolver().insert(LogContract.LogEntry.CONTENT_URI,cv);
-
-
-//        if(mActivityLogAdapter != null ) {
-//            mActivityLogAdapter.notifyDataSetChanged();
-//        }
-//
-//        if(mActivtyLogListView != null ) {
-//            mActivtyLogListView.invalidate();
-//        }
 
     }
 
@@ -1689,45 +1582,53 @@ public int getAccentColorCode(){
     }
 
 
+    void setFontForComponent(String key, int value) {
 
-
-    Typeface get_Default_Dialpad_Button_typeface() {
-
-        //if retro theme is selected we only need a default (roboto regular) font
-        if(getKeypadBackgroundColorCode() == 2){
-            return mRobotoLight;
-        }
-        //else chose from users previous preference (Thin - Light - Regular)
-        else {
-            SharedPreferences appPreferences =getSharedPreferences("typography", Context.MODE_PRIVATE);
-            switch (appPreferences.getInt("DIALPAD_FONT",DIALPAD_FONT_ROBOTO_THIN)) {
-                case DIALPAD_FONT_ROBOTO_THIN :
-                    return mRobotoThin;
-                case DIALPAD_FONT_ROBOTO_LIGHT :
-                    return mRobotoLight;
-                case DIALPAD_FONT_ROBOTO_REGULAR :
-                    return mRobotoRegular;
-            }
-        }
-        return mRobotoThin;
-
-
+        SharedPreferences appPreferences = getSharedPreferences("typography", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = appPreferences.edit();
+        editor.putInt(key,value);
+        editor.apply();
     }
+    Typeface getFontForComponent(String key) {
 
+        SharedPreferences appPreferences =getSharedPreferences("typography", Context.MODE_PRIVATE);
+        int outputFont = 0 ;
 
-    Typeface change_DialPad_TypeFace(int message) {
+            switch (key) {
+                case "DIALPAD_FONT":
+                    outputFont = appPreferences.getInt(key, FONT_ROBOTO_THIN);
+                    break;
+                case "RESULT_FONT":
+                    outputFont = appPreferences.getInt(key, FONT_ROBOTO_THIN);
+                    break;
+                case "TRANSLATION_NUMERIC_FONT":
+                    outputFont = appPreferences.getInt(key, FONT_ROBOTO_THIN);
+                    break;
+                case "TRANSLATION_LITERAL_FONT":
+                    outputFont = appPreferences.getInt(key, FONT_MITRA);
+                    break;
 
-        switch (message) {
-            case DIALPAD_FONT_ROBOTO_THIN :
+            }
+
+        switch (outputFont) {
+            case FONT_ROBOTO_THIN:
                 return mRobotoThin;
-
-            case DIALPAD_FONT_ROBOTO_LIGHT :
+            case FONT_ROBOTO_LIGHT:
                 return mRobotoLight;
-
-            case DIALPAD_FONT_ROBOTO_REGULAR :
+            case FONT_ROBOTO_REGULAR:
                 return mRobotoRegular;
-
+            case FONT_DIGITAL_7:
+                return mDigital_7;
+            case FONT_YEKAN:
+                return mPhalls;
+            case FONT_MITRA:
+                return mMitra;
+            case FONT_DASTNEVIS:
+                return mDastnevis;
+            case FONT_MAJALLA:
+                return mMajalla;
         }
+
         return mRobotoThin;
     }
 
@@ -1737,13 +1638,43 @@ public int getAccentColorCode(){
     }
 
 
-    public void setMListView(Serializable _listView) {
-        mListView = _listView;
+    public void switchTheme() {
+//        SharedPreferences appPreferences = getSharedPreferences("typography", Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = appPreferences.edit();
+
+        //switching from modern theme to clasic theme
+        if (isRetroThemeSelected()) {
+            switch (getTranslationLanguage()) {
+                case LANGUAGE_PERSIAN:
+                case LANGUAGE_ARABIC:
+
+                    setFontForComponent("TRANSLATION_LITERAL_FONT", FONT_YEKAN);
+                    break;
+                default:
+                    setFontForComponent("TRANSLATION_LITERAL_FONT", FONT_DIGITAL_7);
+            }
+
+            setFontForComponent("TRANSLATION_NUMERIC_FONT", FONT_DIGITAL_7);
+            setFontForComponent("RESULT_FONT", FONT_DIGITAL_7);
+            setFontForComponent("DIALPAD_FONT", FONT_ROBOTO_LIGHT);
+
+        } else {
+            switch (getTranslationLanguage()) {
+                case LANGUAGE_PERSIAN:
+                    setFontForComponent("TRANSLATION_LITERAL_FONT", getPersianFontPreference());
+                    break;
+                case LANGUAGE_ARABIC:
+                    setFontForComponent("TRANSLATION_LITERAL_FONT", FONT_MAJALLA);
+                    break;
+                default:
+                    setFontForComponent("TRANSLATION_LITERAL_FONT", FONT_ROBOTO_THIN);
+            }
+            setFontForComponent("TRANSLATION_NUMERIC_FONT", FONT_ROBOTO_THIN);
+            setFontForComponent("RESULT_FONT", FONT_ROBOTO_THIN);
+            setFontForComponent("DIALPAD_FONT", FONT_ROBOTO_THIN);
+        }
     }
 
-    public Serializable getmListView() {
-        return mListView;
-    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -1773,7 +1704,7 @@ public int getAccentColorCode(){
             case R.id.add_to_favorites:
 
 //                sendLogMessage(getMExpressionString().toString(), mTemp, true, String.valueOf(mTagHimself.getText()));
-            break;
+                break;
 
 
 
@@ -1789,10 +1720,10 @@ public int getAccentColorCode(){
                 showSpinner();
                 break;
 
-            case R.id.buttonParallax:
-                Intent myIntent = new Intent(MainActivity.this, ParallaxActivity.class);
-                MainActivity.this.startActivity(myIntent);
-                break;
+//            case R.id.buttonParallax:
+//                Intent myIntent = new Intent(MainActivity.this, ParallaxActivity.class);
+//                MainActivity.this.startActivity(myIntent);
+//                break;
 
 
             case R.id.buttonMute:
@@ -1831,32 +1762,6 @@ public int getAccentColorCode(){
         return;
     }
 
-
-
-    void PersianTranslationTypefaceChanged(){
-        SharedPreferences typographyPreferences = getSharedPreferences("typography", Context.MODE_PRIVATE);
-
-        switch (typographyPreferences.getInt("PERSIAN_TRANSLATION_TYPEFACE",PERSIAN_TRANSLATION_FONT_MITRA)){
-            case PERSIAN_TRANSLATION_FONT_MITRA :
-                if(!isRetroThemeSelected()) {
-                    mPersianTranslationTypeface = mMitra;
-                }else {
-                    mPersianTranslationTypeface = mPhalls;
-                }
-                break;
-            case PERSIAN_TRANSLATION_FONT_DASTNEVIS :
-                mPersianTranslationTypeface = mDastnevis;
-                break;
-
-            default:
-                mPersianTranslationTypeface = mMitra;
-                break;
-        }
-        getMTranslationEditText().setTypeface(mPersianTranslationTypeface);
-
-    }
-
-
     private void showSpinner() {
 
         AlertDialog.Builder b = new AlertDialog.Builder(this);
@@ -1872,38 +1777,51 @@ public int getAccentColorCode(){
                         switch (which) {
 
                             case 0: {
-                                editor.putInt("LANGUAGE", 3);
-
+                                editor.putInt("LANGUAGE", LANGUAGE_ARABIC);
+                                setFontForComponent("TRANSLATION_LITERAL_FONT",FONT_MAJALLA);
                                 break;
                             }
                             case 1: {
-                                editor.putInt("LANGUAGE", 2);
+                                editor.putInt("LANGUAGE", LANGUAGE_ENGLISH);
+                                if(isRetroThemeSelected()){
+                                    setFontForComponent("TRANSLATION_LITERAL_FONT", FONT_DIGITAL_7);
 
+                                }else {
+                                    setFontForComponent("TRANSLATION_LITERAL_FONT", FONT_ROBOTO_THIN);
+                                }
                                 break;
                             }
 
                             case 2: {
-                                editor.putInt("LANGUAGE", 1);
+                                editor.putInt("LANGUAGE", LANGUAGE_FRENCH);
+                                if(isRetroThemeSelected()){
+                                    setFontForComponent("TRANSLATION_LITERAL_FONT", FONT_DIGITAL_7);
+
+                                }else {
+                                    setFontForComponent("TRANSLATION_LITERAL_FONT", FONT_ROBOTO_THIN);
+                                }
                                 break;
                             }
                             case 3: {
-                                editor.putInt("LANGUAGE", 0);
-
+                                editor.putInt("LANGUAGE", LANGUAGE_PERSIAN);
+                                if(isRetroThemeSelected()){
+                                    setFontForComponent("TRANSLATION_LITERAL_FONT", FONT_YEKAN);
+                                }else {
+                                    setFontForComponent("TRANSLATION_LITERAL_FONT", getPersianFontPreference());
+                                }
                                 break;
                             }
 
                         }
 
                         editor.commit();
+                        refreshFonts();
                         if (mDecimal_fraction != null) {
                             if (mJustPressedExecuteButton) {
                                 displayTranslation();
                             } else {
-                                refreshLanguagefontsBeforeTranslation();
                                 mTranslationBox.startAnimation(mBlink);
-
                             }
-
                         }
 
                     }
@@ -1911,6 +1829,7 @@ public int getAccentColorCode(){
         );
         b.show();
     }
+
 
 
     @Override
@@ -1927,43 +1846,22 @@ public int getAccentColorCode(){
         }
     }
 
+    public void refreshFonts(){
 
-    /**
-     * Called when the popover is going to show
-     *
-     * @param view The whole popover view
-     */
-    @Override
-    public void popoverViewWillShow(PopoverView view) {
-
-    }
-
-    @Override
-    public void popoverViewDidShow(PopoverView view) {
-        ListView mListView = (ListView)view.findViewById(R.id.listView1);
-        List <Item> data =(List<Item>) getmListView();
-        Log_Adapter mSummaryAdapter;
-        Typeface defaultFont =  Typeface.createFromAsset( getAssets(), "roboto_light.ttf");
-        if ( data != null) {
-            mSummaryAdapter = new Log_Adapter(getApplicationContext(), getAccentColorCode(),data,defaultFont,mListView);
+        resultTextView.setTypeface(getFontForComponent("RESULT_FONT"));
+        mTranslationBoxLetterFont = getFontForComponent("TRANSLATION_LITERAL_FONT");
+        mTranslationBoxNumericFont = getFontForComponent("TRANSLATION_NUMERIC_FONT");
+        if(mJustPressedExecuteButton){
+            mTranslationBox.setTypeface(mTranslationBoxLetterFont);
+        }else{
+            mTranslationBox.setTypeface(mTranslationBoxNumericFont);
         }
-        else   {
-            mSummaryAdapter = new Log_Adapter(getApplicationContext(), getAccentColorCode(),defaultFont,mListView);
-        }
-        mListView.setAdapter(mSummaryAdapter);
-
     }
 
-    @Override
-    public void popoverViewWillDismiss(PopoverView view) {
-
+    int getPersianFontPreference(){
+        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("typography", MODE_PRIVATE);
+        return appPreferences.getInt("PERSIAN_FONT_PREFERENCE",FONT_MITRA);
     }
-
-    @Override
-    public void popoverViewDidDismiss(PopoverView view) {
-
-    }
-
 }
 
 //----------------------------------------------------------

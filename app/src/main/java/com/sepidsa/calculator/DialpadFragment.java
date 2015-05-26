@@ -61,7 +61,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         // Set the listener for all the gray_buttons
         idList = getNumericButtonsID();
 
-        defaultFont = ((MainActivity)getActivity()).get_Default_Dialpad_Button_typeface();
+        defaultFont = ((MainActivity)getActivity()).getFontForComponent("DIALPAD_FONT");
 
         //If no retro theme is selected apply flat theme colors to keys
         if(((MainActivity) getActivity()).isRetroThemeSelected() != true){
@@ -74,29 +74,29 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
             public void onReceive(Context context, Intent intent) {
                 // Extract data included in the Intent
                 String message = intent.getStringExtra("message");
-                switch (message) {
-                    case "changeAccentColor":
-                        redrawKeypad();
-//                        setTextColorState(getOperatorButtonsID(), getThemeColorStateList());
-//                        setBackgroundColorForOperators();
-                        break;
+                if (!((MainActivity) getActivity()).isRetroThemeSelected()) {
 
-                    case "changeKeypadFontColor":
+                    switch (message) {
+                        case "changeAccentColor":
+                            redrawKeypad();
+                            break;
 
-                        setTextColorState(getNonAccentButtonsID(), getNonAccentColorStateList());
-                        break;
+                        case "changeKeypadFontColor":
 
-                    case "changeDialpadFont":
-                        int font = intent.getIntExtra("dialpad_typeFace", DIALPAD_FONT_ROBOTO_THIN);
-                        defaultFont = ((MainActivity) getActivity()).change_DialPad_TypeFace(font);
-                        for (int id : idList) {
-                            View v = mView.findViewById(id);
-                            if (v != null && (v instanceof Button)) {
-                                ((Button) v).setTypeface(defaultFont);
+                            setTextColorState(getNonAccentButtonsID(), getNonAccentColorStateList());
+                            break;
+
+                        case "changeDialpadFont":
+                            defaultFont = ((MainActivity) getActivity()).getFontForComponent("DIALPAD_FONT");
+                            for (int id : idList) {
+                                View v = mView.findViewById(id);
+                                if (v != null && (v instanceof Button)) {
+                                    ((Button) v).setTypeface(defaultFont);
+                                }
                             }
-                        }
-                        break;
+                            break;
 
+                    }
                 }
             }
 

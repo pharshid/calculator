@@ -180,6 +180,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
                 ((MainActivity)getActivity()).changeAccentColor(mSelectedColor);
                 if(((MainActivity)getActivity()).isRetroThemeSelected() == true){
                     ((MainActivity) getActivity()).setRetrothemeSelected(false);
+                    ((MainActivity) getActivity()).switchTheme();
                     getActivity().recreate();
                 }
                 //save accent color
@@ -193,7 +194,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
                 ((MainActivity)getActivity()).changeKeypadBackgroundColor(mSelectedKeypadBackgroundColor);
                 if(((MainActivity)getActivity()).isRetroThemeSelected() == true){
                     ((MainActivity) getActivity()).setRetrothemeSelected(false);
-
+                    ((MainActivity) getActivity()).switchTheme();
                     getActivity().recreate();
                 }
             }
@@ -291,7 +292,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
             case R.id.retro_theme_button :
                 if(((MainActivity)getActivity()).isRetroThemeSelected() == false){
                     ((MainActivity) getActivity()).setRetrothemeSelected(true);
-
+                    ((MainActivity) getActivity()).switchTheme();
                     ((MainActivity)getActivity()).recreate();
 
                 }
