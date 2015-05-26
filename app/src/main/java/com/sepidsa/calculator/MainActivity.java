@@ -19,7 +19,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.text.method.ScrollingMovementMethod;
@@ -62,14 +61,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private static final int FONT_DIGITAL_7 = 3;
     private static final int FONT_YEKAN = 4;
     private static final int FONT_MAJALLA = 7;
-    Log_Adapter mLogAdapter;
     Serializable mListView ;
     //TextSwitcher mResultTextSwitcher = null;
     //the reason it's an editText and not a TextView is solely for supporting the scrolling function
     private AutoResizeTextView mTranslationBox;
 
     Button mButton ;
-    FragmentStatePagerAdapter mAdapter;
 
     ViewPager mViewPager;
     private static final byte TOTAL_PAGE_COUNT = 3;
@@ -438,10 +435,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         //TODO check if it works for tablet landscape
         // if we're in default page prompt for exit else switch to default page TODO set default page here
 
-        if ((mViewPager.getCurrentItem() == DIALPAD_FRAGMENT && (mLayoutState != LANDSCAPE_TABLET )) ||
-                (mLayoutState == LANDSCAPE_TABLET )) {
-
-
+        if ((mLayoutState == LANDSCAPE_TABLET )||
+                (mViewPager.getCurrentItem() == DIALPAD_FRAGMENT )) {
             if (doubleBackToExitPressedOnce) {
                 super.onBackPressed();
                 return;
@@ -454,7 +449,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             mHandler.postDelayed(mRunnable, 2000);
 
         } else  {
-
             mViewPager.setCurrentItem(DIALPAD_FRAGMENT);
 
         }
@@ -480,7 +474,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     //    if we're in portrait mode there are 5 pages in the indicator but in tablet mode there are 2 tabs only
     private void setMViewPager(FragmentManager fragmentManager) {
         // This view is only present in the portrait xml file. I use it as measure for portrait/landscape judgement!
-        mViewPager = (ViewPager) findViewById(R.id.portrait_viewpager);
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
         if (mViewPager != null) {
 
 
@@ -518,30 +512,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
             }
-            else {
-                // mviewpager tag is equal landscape_tablet
-
-
-                if(fragmentManager.findFragmentByTag("jake") != null){
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    AnimatedLogFragment fragment = new AnimatedLogFragment();
-                    fragmentTransaction.replace(R.id.container, fragment);
-                    fragmentTransaction.commit();
-                }
-
-                // Landscape Tablet
-                mLayoutState = LANDSCAPE_TABLET;
-//                mColorPage = 1;
-
-                List<Fragment> fList = new ArrayList<Fragment>();
-                fList.add(new ScientificFragment());
-//                fList.add(new ColorPickerFragment());
-
-                mViewPager.setAdapter(new PortraitPagerAdapter(fragmentManager,fList));
-                mViewPager.setCurrentItem(SCIENTIFIC_FRAGMENT_LANDSCAPE_TABLET);
-                setmDefaultPage(SCIENTIFIC_FRAGMENT_LANDSCAPE_TABLET);
-            }
         }
+            else {
+
+                mLayoutState = LANDSCAPE_TABLET;
+            }
+
     }
 
 
@@ -726,6 +702,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     public void setMViewPagerIndicatorColor(){
+        if(mViewPagerIndicator!= null)
         mViewPagerIndicator.setFillColor(getAccentColorCode());
 //        mViewPagerIndicator.setPageColor(getAccentColorCode());
 
@@ -754,7 +731,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         // currentButtonValue is tag element of Buttons
         // ordering of this if matters!! don't move it down bellow
         //todo mdelta goes here
-        if  (( mViewPager.getCurrentItem()) != this.mDefaultPage) {
+
+        if  (mViewPager!=null && mViewPager.getCurrentItem() != this.mDefaultPage) {
             switchToMainFragment();
         }
 
@@ -1079,7 +1057,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             mLogAdded = false;
 //            sendLogMessage(getMExpressionString().toString(), mTemp,false, String.valueOf(mTagHimself.getText()));
         }
-        setMExpressionString(resultTextView.getText().toString().replace(",",""));
+        setMExpressionString(resultTextView.getText().toString().replace(",", ""));
         mButtonsStack.clear();
 
         mButtonsStack.push(resultTextView.getText().toString().replace(",",""));
@@ -1187,7 +1165,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
     private void printResultWithTranslation(String decimal_fraction, int Language) {
-        String resultWithoutCommas = mTemp.replace(",","");
+        String resultWithoutCommas = mTemp.replace(",", "");
         int pointIndex = resultWithoutCommas.indexOf(".");
         String integerFraction = "";
         boolean resultIsNegative = mResultBeforeSignification.compareTo(new BigDecimal(-0.0000009)) < 0;
@@ -1291,7 +1269,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
         if ((currentChar) == '.') {
-            hasError3 = fixDoublePoints( currentChar);
+            hasError3 = fixDoublePoints(currentChar);
         }
         return (hasError1 || hasError2 || hasError3);
     }
@@ -1586,7 +1564,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         SharedPreferences appPreferences = getSharedPreferences("typography", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = appPreferences.edit();
-        editor.putInt(key,value);
+        editor.putInt(key, value);
         editor.apply();
     }
     Typeface getFontForComponent(String key) {

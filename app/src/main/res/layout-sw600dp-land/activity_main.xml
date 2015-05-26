@@ -196,7 +196,6 @@
                         android:tag="@string/theme"
                         android:textColor="#DADFE1"
 
-
                         />
 
                     <Button
@@ -240,9 +239,19 @@
                         style="@style/CustomButton.icon_button."
                         android:gravity="center_horizontal|center_vertical"
                         android:textColor="#DADFE1"
-
                         />
 
+                    <Button
+                        android:id="@+id/buttonParallax"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:text="@string/parallax"
+                        android:textColor="#DADFE1"
+                        android:tag="p"
+                        style="@style/CustomButton.icon_button."
+                        android:gravity="center_horizontal|center_vertical"
+                        />
 
 
 
