@@ -35,7 +35,7 @@
 
 
             <CheckBox
-                android:id="@+id/add_to_favorites"
+                android:id="@+id/constant_selected"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:button="@android:drawable/btn_star"
@@ -51,13 +51,13 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/Log_title"
+                android:id="@+id/constant_name"
                 style="@style/CustomButton"
                 android:textSize="@dimen/log_expression_txt_size"
                 android:paddingTop="@dimen/padding_small"
                 android:textColor="@android:color/holo_blue_light"
                 android:gravity="left"
-                android:layout_toLeftOf="@id/add_to_favorites"
+                android:layout_toLeftOf="@id/constant_selected"
                 android:paddingLeft="@dimen/padding_small"
                 android:clickable="false"
                 android:focusable="false"
@@ -68,14 +68,14 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/LOG_detail"
-                android:layout_below="@+id/Log_title"
+                android:id="@+id/constant_number"
+                android:layout_below="@+id/constant_name"
                 style="@style/CustomButton"
                 android:textSize="@dimen/log_result_txt_size"
                 android:textColor="@android:color/darker_gray"
                 android:gravity="left"
                 android:paddingLeft="@dimen/padding_small"
-                android:layout_toLeftOf="@id/add_to_favorites"
+                android:layout_toLeftOf="@id/constant_selected"
                 android:focusable="false"
 
                 />
@@ -83,12 +83,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/LOG_tag"
-                android:layout_below="@id/LOG_detail"
+                android:layout_below="@id/constant_number"
                 style="@style/CustomButton"
                 android:textSize="@dimen/log_result_txt_size"
                 android:textColor="@android:color/darker_gray"
                 android:gravity="left"
-                android:layout_toLeftOf="@id/add_to_favorites"
+                android:layout_toLeftOf="@id/constant_selected"
                 android:focusable="false"
                 />
         </RelativeLayout>

@@ -1,12 +1,15 @@
 package com.sepidsa.calculator;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.AudioAttributes;
@@ -21,13 +24,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
+import android.text.InputType;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -61,6 +69,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private static final int FONT_DIGITAL_7 = 3;
     private static final int FONT_YEKAN = 4;
     private static final int FONT_MAJALLA = 7;
+    private long mLatestInsertedId;
+    Log_Adapter mLogAdapter;
     Serializable mListView ;
     //TextSwitcher mResultTextSwitcher = null;
     //the reason it's an editText and not a TextView is solely for supporting the scrolling function
@@ -219,7 +229,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mScientificModeTextView = (TextView) findViewById(R.id.scientific_mode_textview);
         result_textView_holder = findViewById(R.id.MotherTop);
         mFavoritesList = (Button)findViewById(R.id.favorites_list);
-        mAddToFavorites = (Button)findViewById(R.id.add_to_favorites);
+        mAddToFavorites = (Button)findViewById(R.id.constant_selected);
         mAddLabel = (Button)findViewById(R.id.add_label);
         mFavoritesList.setOnClickListener(this);
         mAddToFavorites.setOnClickListener(this);
@@ -1046,6 +1056,18 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             resultTextView.setText(mTemp);
             displayTranslation();
+            sendLogMessage(getMExpressionString().toString(), mTemp, false, "");
+            mAddToFavorites.setAlpha(1);
+            mAddToFavorites.setRotation(0);
+            mAddToFavorites.setTextColor(Color.BLACK);
+            mAddToFavorites.setScaleX(1);
+            mAddToFavorites.setScaleY(1);
+            mAddToFavorites.setTranslationY(0);
+
+            mAddToFavorites.setVisibility(View.VISIBLE);
+
+
+            mAddLabel.setVisibility(View.VISIBLE);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1077,6 +1099,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             String gg = getMExpressionString().toString().replaceAll("(?<!\\.\\d{0,6})\\d+?(?=(?:\\d{3})+(?:\\D|$))", "$0,");
             mTranslationBox.setTypeface(mTranslationBoxNumericFont);
             mTranslationBox.setText(gg);
+
+            mAddToFavorites.setVisibility(View.GONE);
+            mAddLabel.setVisibility(View.GONE);
 
         }
     }
@@ -1139,6 +1164,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         String gg = getMExpressionString().toString().replaceAll("(?<!\\.\\d{0,6})\\d+?(?=(?:\\d{3})+(?:\\D|$))", "$0,");
         mTranslationBox.setTypeface(mTranslationBoxNumericFont);
         mTranslationBox.setText(gg);
+        mAddToFavorites.setVisibility(View.GONE);
+        mAddLabel.setVisibility(View.GONE);
         return;
     }
     boolean isRetroThemeSelected(){
@@ -1504,7 +1531,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         cv.put(LogContract.LogEntry.COLUMN_TAG,tagText);
         cv.put(LogContract.LogEntry.COLUMN_STARRED, 0);
 
-        getContentResolver().insert(LogContract.LogEntry.CONTENT_URI,cv);
+        mLatestInsertedId = ContentUris.parseId(getContentResolver().insert(LogContract.LogEntry.CONTENT_URI,cv));
 
     }
 
@@ -1679,9 +1706,109 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 favoritesDialog.show(fm, "fragment_favorites");
                 break;
 
-            case R.id.add_to_favorites:
+            case R.id.constant_selected: {
 
-//                sendLogMessage(getMExpressionString().toString(), mTemp, true, String.valueOf(mTagHimself.getText()));
+
+                String selection = LogContract.LogEntry._ID + "=?";
+                Cursor cursor = getContentResolver().query(LogContract.LogEntry.CONTENT_URI, null, selection, new String[]{Long.toString(mLatestInsertedId)}, null);
+                if (cursor.moveToFirst()) {
+                    int currentStarredStatus = cursor.getInt(cursor.getColumnIndex(LogContract.LogEntry.COLUMN_STARRED));
+                    if (currentStarredStatus == 0) {
+                        ContentValues values = new ContentValues();
+                        values.put(LogContract.LogEntry.COLUMN_STARRED, 1);
+                        getContentResolver().update(LogContract.LogEntry.CONTENT_URI, values, selection, new String[]{Long.toString(mLatestInsertedId)});
+                    }
+                }
+                cursor.close();
+                setClipView(mAddToFavorites, false);
+                mAddToFavorites.setTextColor(Color.YELLOW);
+                mAddToFavorites.animate()
+                        .translationY(200)
+                        .scaleX(0.5f)
+                        .scaleY(0.5f)
+                        .alpha(0)
+                        .rotation(180)
+                        .setDuration(1000);
+            }
+
+            break;
+
+            case R.id.add_label: {
+                final String  selection = LogContract.LogEntry._ID + "=?";
+                Cursor cursor = getContentResolver().query(LogContract.LogEntry.CONTENT_URI, null, selection, new String[]{Long.toString(mLatestInsertedId)}, null);
+                if (cursor.moveToFirst()) {
+                        String currentLabel = cursor.getString(cursor.getColumnIndex(LogContract.LogEntry.COLUMN_TAG));
+                        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
+                        builder.setTitle("Enter a Label:");
+
+                        // Set up the input
+
+                        final EditText input = new EditText(this);
+                        final InputMethodManager inputMethodManager = (InputMethodManager)  getSystemService(Activity.INPUT_METHOD_SERVICE);
+
+                        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+
+                        input.setInputType(InputType.TYPE_CLASS_TEXT);
+                        builder.setView(input);
+                        builder.setCancelable(false);
+                        input.setText(currentLabel);
+                        input.requestFocus();
+                        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                        // Set up the buttons
+
+                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String newLabel = input.getText().toString();
+                                ContentValues values = new ContentValues();
+                                values.put(LogContract.LogEntry.COLUMN_TAG, newLabel);
+                                getContentResolver().update(
+                                        LogContract.LogEntry.CONTENT_URI,
+                                        values,
+                                        selection,
+                                        new String[]{Long.toString(mLatestInsertedId)}
+                                );
+                                inputMethodManager.hideSoftInputFromWindow(input.getWindowToken(), 0);
+
+                            }
+                        });
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                inputMethodManager.hideSoftInputFromWindow(input.getWindowToken(), 0);
+                                dialog.cancel();
+
+                            }
+                        });
+                    final android.support.v7.app.AlertDialog dialog = builder.create();
+                    dialog.show();
+                    EditText.OnKeyListener keyListener = new EditText.OnKeyListener() {
+                        public boolean onKey(View v, int keyCode, KeyEvent event) {
+                            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                                switch (keyCode) {
+                                    case KeyEvent.KEYCODE_DPAD_CENTER:
+                                    case KeyEvent.KEYCODE_ENTER:
+                                        dialog.getButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE).performClick();
+                                        return true;
+                                    default:
+                                        break;
+                                }
+                            }
+                            return false;
+                        }
+                    };
+                    input.setOnKeyListener(keyListener);
+
+                }
+
+                cursor.close();
+
+
+
+            }
+
                 break;
 
 
@@ -1739,6 +1866,44 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
         return;
     }
+
+    public static void setClipView(View view, boolean clip) {
+        if (view != null) {
+            ViewParent parent = view.getParent();
+            if(parent instanceof ViewGroup) {
+                ViewGroup viewGroup = (ViewGroup) view.getParent();
+                viewGroup.setClipChildren(clip);
+                viewGroup.setClipToPadding(clip);
+                setClipView(viewGroup, clip);
+
+            }
+        }
+    }
+
+
+    void PersianTranslationTypefaceChanged(){
+        SharedPreferences typographyPreferences = getSharedPreferences("typography", Context.MODE_PRIVATE);
+
+        switch (typographyPreferences.getInt("PERSIAN_TRANSLATION_TYPEFACE",PERSIAN_TRANSLATION_FONT_MITRA)){
+            case PERSIAN_TRANSLATION_FONT_MITRA :
+                if(!isRetroThemeSelected()) {
+                    mPersianTranslationTypeface = mMitra;
+                }else {
+                    mPersianTranslationTypeface = mPhalls;
+                }
+                break;
+            case PERSIAN_TRANSLATION_FONT_DASTNEVIS :
+                mPersianTranslationTypeface = mDastnevis;
+                break;
+
+            default:
+                mPersianTranslationTypeface = mMitra;
+                break;
+        }
+        getMTranslationEditText().setTypeface(mPersianTranslationTypeface);
+
+    }
+
 
     private void showSpinner() {
 

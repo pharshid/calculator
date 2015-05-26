@@ -12,24 +12,17 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button_clear_log"
+            android:id="@+id/button_add_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="?android:attr/borderlessButtonStyle"
 
-            android:text="CLEAR"/>
+            android:text="ADD"/>
 
-        <Button
-            android:id="@+id/button_export_log"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="?android:attr/borderlessButtonStyle"
-
-            android:text="EXPORT"/>
 
     </LinearLayout>
 
-    <ListView android:id="@+id/listview_log"
+    <ListView android:id="@+id/listview_constant"
         android:layout_height="fill_parent"
         android:layout_width="fill_parent">
     </ListView>

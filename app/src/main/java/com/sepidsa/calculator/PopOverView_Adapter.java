@@ -113,12 +113,12 @@ public class PopOverView_Adapter extends Log_Adapter implements Serializable {
 
 
 
-             TextView view = (TextView) itemLayout.findViewById(R.id.LOG_detail);
+             TextView view = (TextView) itemLayout.findViewById(R.id.constant_number);
              view.setText("اعداد ستاره دار");
              view.setTypeface(mSummaryFont);
 
 
-            view = (TextView) itemLayout.findViewById(R.id.Log_title);
+            view = (TextView) itemLayout.findViewById(R.id.constant_name);
             view.setText(" ");
             view.setTypeface(mDefaultFont);
             view.setTextColor(mThemeColor);
@@ -133,12 +133,12 @@ public class PopOverView_Adapter extends Log_Adapter implements Serializable {
 
 
 
-             view = (TextView) itemLayout.findViewById(R.id.Log_title);
+             view = (TextView) itemLayout.findViewById(R.id.constant_name);
              view.setText(title);
              view.setTypeface(mDefaultFont);
              view.setTextColor(mThemeColor);
 
-             view = (TextView) itemLayout.findViewById(R.id.LOG_detail);
+             view = (TextView) itemLayout.findViewById(R.id.constant_number);
              view.setText(detail);
              view.setTypeface(mDefaultFont);
 

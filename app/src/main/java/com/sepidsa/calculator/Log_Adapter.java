@@ -154,16 +154,16 @@ class Log_Adapter extends BaseAdapter implements Serializable, CompoundButton.On
 
 
 
-        view = (TextView) itemLayout.findViewById(R.id.Log_title);
+        view = (TextView) itemLayout.findViewById(R.id.constant_name);
         view.setText(Operation);
         view.setTypeface(mDefaultFont);
         view.setTextColor(mThemeColor);
 
-        view = (TextView) itemLayout.findViewById(R.id.LOG_detail);
+        view = (TextView) itemLayout.findViewById(R.id.constant_number);
         view.setText(Result);
         view.setTypeface(mDefaultFont);
 
-        CheckBox starred = (CheckBox) itemLayout.findViewById(R.id.add_to_favorites);
+        CheckBox starred = (CheckBox) itemLayout.findViewById(R.id.constant_selected);
         starred.setOnCheckedChangeListener(null);
         starred.setChecked(item.Starred);
         starred.setOnCheckedChangeListener(this);
