@@ -43,11 +43,11 @@ repositories {
 
 
 dependencies {
-    compile 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.6.2'
-    compile 'com.android.support:support-v4:21.+'
     compile(name: 'library-2.4.1', ext: 'aar')
-    compile 'info.hoang8f:android-segmented:1.0.4'
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.6.2'
+    compile 'com.android.support:support-v4:22.1.1'
+    compile 'info.hoang8f:android-segmented:1.0.4'
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'com.nispok:snackbar:2.9.1'
     compile 'com.xgc1986.android:parallaxpagertransformer:1.0.3'
