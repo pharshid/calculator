@@ -417,7 +417,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
         buttonsPointerArray = new int[]{
 
-                R.id.buttonClear, R.id.buttonPlus, R.id.buttonMinus, R.id.buttonDevide, R.id.buttonTimes,
+                R.id.buttonClear, R.id.buttonPlus, R.id.buttonMinus, R.id.buttonDevide, R.id.buttonTimes, R.id.buttonEquals,
                 R.id.openParen, R.id.closeParen, R.id.buttonPercent,
                 R.id.button9, R.id.button8, R.id.button7,
                 R.id.button6, R.id.button5, R.id.button4, R.id.button1, R.id.button2, R.id.button3, R.id.button0,
