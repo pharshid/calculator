@@ -55,7 +55,7 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
         }        // Set the listener for all the gray_buttons
 //        this.setRetainInstance(false);
         idList =getScientificButtonsID();
-        defaultFont = ((MainActivity)getActivity()).getFontForComponent("DIALPAD_FONT");
+        defaultFont = ((MainActivity)getActivity()).getFontForComponent("SCIENTIFIC_FONT");
         for(int id : idList) {
             View v = mView.findViewById(id);
             if (v != null) {

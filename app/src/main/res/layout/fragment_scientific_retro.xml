@@ -17,7 +17,7 @@
 
         <ToggleButton
             android:id="@+id/buttonInverse"
-            style="@style/CustomButton.RETRO.black.scientific"
+            style="@style/CustomButton.RETRO.grey.scientific"
 
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -32,14 +32,14 @@
 
         <Button
             android:id="@+id/buttonConstant"
-            style="@style/CustomButton.RETRO.black.scientific"
+            style="@style/CustomButton.RETRO.grey.scientific"
             android:layout_weight="1"
             android:text="@string/constant"
             android:tag="@string/constant"
             />
 
         <ToggleButton
-            style="@style/CustomButton.RETRO.black.scientific"
+            style="@style/CustomButton.RETRO.grey.scientific"
 
             android:id="@+id/buttonARC"
             android:layout_width="0dp"
@@ -57,7 +57,7 @@
             <ToggleButton
 
 
-                style="@style/CustomButton.RETRO.black.scientific"
+                style="@style/CustomButton.RETRO.grey.scientific"
 
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

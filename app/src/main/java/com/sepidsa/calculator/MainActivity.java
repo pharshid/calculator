@@ -38,6 +38,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
@@ -1603,6 +1604,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 case "DIALPAD_FONT":
                     outputFont = appPreferences.getInt(key, FONT_ROBOTO_THIN);
                     break;
+                case "SCIENTIFIC_FONT":
+                    outputFont = appPreferences.getInt(key, FONT_ROBOTO_LIGHT);
+                    break;
                 case "RESULT_FONT":
                     outputFont = appPreferences.getInt(key, FONT_ROBOTO_THIN);
                     break;
@@ -1678,6 +1682,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             setFontForComponent("RESULT_FONT", FONT_ROBOTO_THIN);
             setFontForComponent("DIALPAD_FONT", FONT_ROBOTO_THIN);
         }
+        setFontForComponent("SCIENTIFIC_FONT", FONT_ROBOTO_LIGHT);
+
     }
 
     @Override
@@ -1731,7 +1737,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                         .setDuration(1000);
             }
 
-            break;
+//                sendLogMessage(getMExpressionString().toString(), mTemp, true, String.valueOf(mTagHimself.getText()));
+                break;
 
             case R.id.add_label: {
                 final String  selection = LogContract.LogEntry._ID + "=?";
@@ -1881,28 +1888,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
 
-    void PersianTranslationTypefaceChanged(){
-        SharedPreferences typographyPreferences = getSharedPreferences("typography", Context.MODE_PRIVATE);
-
-        switch (typographyPreferences.getInt("PERSIAN_TRANSLATION_TYPEFACE",PERSIAN_TRANSLATION_FONT_MITRA)){
-            case PERSIAN_TRANSLATION_FONT_MITRA :
-                if(!isRetroThemeSelected()) {
-                    mPersianTranslationTypeface = mMitra;
-                }else {
-                    mPersianTranslationTypeface = mPhalls;
-                }
-                break;
-            case PERSIAN_TRANSLATION_FONT_DASTNEVIS :
-                mPersianTranslationTypeface = mDastnevis;
-                break;
-
-            default:
-                mPersianTranslationTypeface = mMitra;
-                break;
-        }
-        getMTranslationEditText().setTypeface(mPersianTranslationTypeface);
-
-    }
 
 
     private void showSpinner() {

@@ -195,31 +195,28 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
                 SharedPreferences fontSizePreference = mContext.getSharedPreferences("typography", Context.MODE_PRIVATE);
                 SharedPreferences.Editor fontSizeeditor = fontSizePreference.edit();
                 switch (fontSizePreference.getInt("DIALPAD_FONT", DIALPAD_FONT_ROBOTO_THIN)) {
-                    case 0:
+                    case 2:
                         fontSizeeditor.putInt("DIALPAD_FONT", DIALPAD_FONT_ROBOTO_THIN);
                         fontSizeeditor.apply();
                         fortyTwoSample.setTypeface(mRobotoThin);
                         sendChangeDialpadTypefaceMessage(0);
                         break;
 
-                    case 1:
+                    case 0:
                         fortyTwoSample.setTypeface(mRobotoLight);
                         fontSizeeditor.putInt("DIALPAD_FONT", DIALPAD_FONT_ROBOTO_LIGHT);
                         fontSizeeditor.apply();
                         sendChangeDialpadTypefaceMessage(1);
                         break;
 
-                    case 2:
+                    case 1:
                         fortyTwoSample.setTypeface(mRobotoRegular);
                         fontSizeeditor.putInt("DIALPAD_FONT", DIALPAD_FONT_ROBOTO_REGULAR);
                         fontSizeeditor.apply();
                         sendChangeDialpadTypefaceMessage(2);
                         break;
-
-
-
                 }
-
+                set_dialpad_textSize_Button_typeface();
                 break;
 
 

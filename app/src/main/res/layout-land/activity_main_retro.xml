@@ -1,0 +1,304 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:id="@+id/activity_body"
+    >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="30"
+        android:id="@+id/MotherTop">
+
+
+
+
+        <LinearLayout
+            android:id="@+id/Top"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/display_normal"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="10"
+                android:orientation="horizontal"
+                >
+
+
+                <TextView
+                    android:id="@+id/scientific_mode_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:background="@android:color/transparent"
+                    android:textColor="@android:color/black"
+                    android:paddingLeft="@dimen/padding_small"
+                    android:text="RAD"
+                    />
+
+                <TextView
+                    android:id="@+id/m_vaiable_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@id/scientific_mode_textview"
+                    android:background="@android:color/transparent"
+                    android:textColor="@android:color/black"
+                    android:paddingLeft="@dimen/padding_small"
+                    android:text=" M = 0"
+                    android:inputType="textMultiLine|textNoSuggestions"
+
+                    />
+
+
+
+
+            </LinearLayout>
+
+
+
+
+
+
+            <com.sepidsa.calculator.AutoResizeTextView
+                android:id="@+id/translationEditText"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="35"
+                android:textColor="@android:color/black"
+                android:paddingTop="4dp"
+                android:gravity="right|center_vertical"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:textSize="30sp"
+                android:paddingRight="@dimen/padding_large"
+                android:scrollbars = "vertical"
+                android:background="@android:color/transparent"
+
+                />
+
+            <View android:layout_height="2dp"
+                android:layout_width="match_parent"
+
+                android:background="?android:attr/listDivider"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="40"
+
+                >
+                <Button
+                    android:id="@+id/constant_selected"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:textColor="@android:color/white"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentBottom="true"
+                    android:background="@android:color/transparent"
+                    android:visibility="visible"
+                    android:text=""
+                    android:textSize="21sp"
+                    />
+                <Button
+                    android:id="@+id/add_label"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:textColor="@android:color/white"
+                    android:layout_centerVertical="true"
+                    android:layout_above="@id/constant_selected"
+                    android:layout_alignParentLeft="true"
+                    android:background="@android:color/transparent"
+                    android:visibility="visible"
+                    android:text=""
+                    android:textSize="19sp"
+
+                    />
+
+
+                <com.sepidsa.calculator.AutoResizeTextView
+                    android:id="@+id/result"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textIsSelectable="true"
+                    android:background="@null"
+                    android:focusable="false"
+                    style="@style/text_switcher"
+                    android:textSize="@dimen/digital_lcd_text_size"
+                    android:text="0"
+                    android:gravity="center_vertical|right"
+                    android:paddingRight="@dimen/padding_large"
+                    android:textColor="@android:color/black"
+                    android:scrollbars = "vertical"
+                    android:singleLine="false"
+                    />
+
+                <Button
+                    android:id="@+id/favorites_list"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:textColor="@android:color/white"
+                    android:layout_centerVertical="true"
+                    android:layout_above="@id/constant_selected"
+                    android:layout_alignParentLeft="true"
+                    android:background="@android:color/transparent"
+                    android:visibility="gone"
+                    android:layout_toRightOf="@id/result"
+                    android:layout_alignParentBottom="true"
+                    android:text="dd"
+                    />
+
+            </RelativeLayout>
+
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+    <LinearLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="65"
+        android:orientation="horizontal"
+        android:background="@android:color/transparent">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:orientation="vertical"
+            >
+
+            <Button
+                android:id="@+id/buttonColors"
+                style="@style/DIALPADBUTTON.LAND_NORMAL."
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/theme"
+                android:textColor="#DADFE1"
+                android:tag="q"
+                android:textSize="18sp"
+
+                />
+
+
+
+
+            <Button
+                android:id="@+id/buttonMute"
+                style="@style/DIALPADBUTTON.LAND_NORMAL."
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/volume_high"
+                android:textColor="#DADFE1"
+                android:tag="@string/volume_high"
+                android:textSize="18sp"
+
+                />
+
+
+
+            <Button
+                android:id="@+id/buttonLanguage"
+                android:text="@string/language"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                style="@style/DIALPADBUTTON.LAND_NORMAL."
+                android:textSize="18sp"
+                android:textColor="#DADFE1"
+
+                />
+
+
+            <Button
+                android:id="@+id/buttonSettings"
+                style="@style/DIALPADBUTTON.LAND_NORMAL."
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/settings"
+                android:tag="feedback"
+                android:textColor="#DADFE1"
+                android:textSize="18sp"
+                />
+            <Button
+                android:id="@+id/buttonParallax"
+                style="@style/DIALPADBUTTON.LAND_NORMAL."
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/parallax"
+                android:textColor="#DADFE1"
+                android:tag="p"
+                android:gravity="center_horizontal"
+
+                />
+
+
+
+        </LinearLayout>
+
+
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="85"
+            style="@style/viewpager"
+            android:tag="landscape_phone"
+            android:layout_gravity="left"
+            />
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/view_pager_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:layout_gravity="center_vertical"
+        android:paddingTop="0.5dp"
+
+
+        />
+
+
+</LinearLayout>

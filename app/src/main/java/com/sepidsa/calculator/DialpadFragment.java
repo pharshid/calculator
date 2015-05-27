@@ -7,7 +7,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -43,11 +42,9 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
 
     private int[] idList;
-    private Typeface mRobotoThin;
-    private Typeface mRobotoLight;
-    private Typeface mRobotoRegular;
     boolean mIsRetroOn = false ;
     private BroadcastReceiver mDialPadTypeFaceColorChangedReceiver;
+    private Typeface scientificFont;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,12 +56,13 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
         }
         // Set the listener for all the gray_buttons
-        idList = getNumericButtonsID();
+        idList = getAllButtonsID();
 
         defaultFont = ((MainActivity)getActivity()).getFontForComponent("DIALPAD_FONT");
+        scientificFont = ((MainActivity)getActivity()).getFontForComponent("SCIENTIFIC_FONT");
 
         //If no retro theme is selected apply flat theme colors to keys
-        if(((MainActivity) getActivity()).isRetroThemeSelected() != true){
+        if(!((MainActivity) getActivity()).isRetroThemeSelected()){
             redrawKeypad();
         }
 
@@ -117,12 +115,22 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         };
 
 
-        for(int id : idList) {
+        for(int id : getDialpadButtonsID()) {
             View v = mView.findViewById(id);
             if (v != null) {
                 v.setOnClickListener(this);
                 if( v instanceof Button){
                     ((Button) v).setTypeface(defaultFont);
+                }
+            }
+        }
+
+        for(int id : getScientificButtonsID()) {
+            View v = mView.findViewById(id);
+            if (v != null) {
+                v.setOnClickListener(this);
+                if( v instanceof Button){
+                    ((Button) v).setTypeface(scientificFont);
                 }
             }
         }
@@ -205,7 +213,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
             ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setOnClickListener(this);
         }
 
-            return mView;
+        return mView;
     }
 
 
@@ -284,63 +292,29 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
     }
 
 
-    Typeface prepare_Default_typeface() {
-        mRobotoLight = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "roboto_light.ttf");
-        mRobotoRegular = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "roboto_regular.ttf");
-        mRobotoThin = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "roboto_thin.ttf");
-        if(((MainActivity) getActivity()).getKeypadBackgroundColorCode() == 2){
-            mIsRetroOn = true;
-        }
-
-        //if retro theme is selected we only need a default (roboto regular) font
-        if(mIsRetroOn){
-            return mRobotoLight;
-        }
-        //else chose from users previous preference (Thin - Light - Regular)
-        else {
-//            redrawKeypad();
-            SharedPreferences appPreferences = getActivity().getSharedPreferences("typography", Context.MODE_PRIVATE);
-            switch (appPreferences.getInt("DIALPAD_FONT",DIALPAD_FONT_ROBOTO_THIN)) {
-                case DIALPAD_FONT_ROBOTO_THIN :
-                    return mRobotoThin;
-                case DIALPAD_FONT_ROBOTO_LIGHT :
-                    return mRobotoLight;
-                case DIALPAD_FONT_ROBOTO_REGULAR :
-                    return mRobotoRegular;
-            }
-        }
-        return mRobotoThin;
-    }
-
     @Override
     public void onStart() {
         super.onStart();
-
-
         LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mThemeChangedReciever, new IntentFilter("themeIntent"));
         LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mClearButtonChangedReceiver, new IntentFilter("clearIntent"));
     }
 
 
     public void onClick(View view) {
-
-
-
-
         switch (view.getId()) {
 
-        case R.id.buttonInverse:
-            if(   ((ToggleButton)view).isChecked() == true){
-                applyInverse(true);
-            }else {
-                applyInverse(false);
+            case R.id.buttonInverse:
+                if(   ((ToggleButton)view).isChecked() == true){
+                    applyInverse(true);
+                }else {
+                    applyInverse(false);
 
-            }
+                }
 
-            break;
+                break;
 
 
-        case R.id.switch_deg_rad:
+            case R.id.switch_deg_rad:
 
                 boolean on = ((ToggleButton) view).isChecked();
 
@@ -354,16 +328,16 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
                 }
                 break;
 
-        case R.id.buttonARC:
-            if(   ((ToggleButton)view).isChecked() == true){
-                arcIsOn = true;
-                applyArc(true);
-            }else {
-                arcIsOn = false;
-                applyArc(false);
+            case R.id.buttonARC:
+                if(   ((ToggleButton)view).isChecked() == true){
+                    arcIsOn = true;
+                    applyArc(true);
+                }else {
+                    arcIsOn = false;
+                    applyArc(false);
 
-            }
-            break;
+                }
+                break;
 
 
             default:
@@ -378,7 +352,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
 
 
-    int[] getNumericButtonsID(){
+    int[] getAllButtonsID(){
         int [] buttonsPointerArray;
 
         buttonsPointerArray = new int[]{R.id.button9, R.id.button8, R.id.button7,
@@ -391,6 +365,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
 
         };
+
         return buttonsPointerArray;
 
     }
@@ -412,8 +387,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
                 R.id.button6, R.id.button5, R.id.button4, R.id.button1, R.id.button2, R.id.button3, R.id.button0,
                 R.id.buttonPoint,
 
-                R.id.buttonSinus, R.id.buttonCosinus, R.id.buttonTan, R.id.buttonln, R.id.buttonlog, R.id.buttonlog,  R.id.buttonpie, R.id.buttone, R.id.buttonpower,
-                R.id.buttonrad , R.id.buttonCot,
+
                 R.id.buttonSinus, R.id.buttonCosinus, R.id.buttonTan, R.id.buttonln, R.id.buttonlog, R.id.buttonlog,  R.id.buttonpie, R.id.buttone, R.id.buttonpower,
                 R.id.buttonrad , R.id.buttonCot  , R.id.switch_deg_rad, R.id.buttonPow2 , R.id.buttonPow3 ,R.id.buttonInverse , R.id.buttonSinusH , R.id.buttonCosinusH , R.id.buttonTanH , R.id.buttonCotH
                 , R.id.buttonConstant , R.id.buttonARC
@@ -421,10 +395,36 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
         };
         return buttonsPointerArray;
-
     }
 
+    int[] getScientificButtonsID(){
+        int [] buttonsPointerArray;
 
+        buttonsPointerArray = new int[]{
+
+
+                R.id.buttonSinus, R.id.buttonCosinus, R.id.buttonTan, R.id.buttonln, R.id.buttonlog, R.id.buttonlog,  R.id.buttonpie, R.id.buttone, R.id.buttonpower,
+                R.id.buttonrad , R.id.buttonCot  , R.id.switch_deg_rad, R.id.buttonPow2 , R.id.buttonPow3 ,R.id.buttonInverse , R.id.buttonSinusH , R.id.buttonCosinusH , R.id.buttonTanH , R.id.buttonCotH
+                , R.id.buttonConstant , R.id.buttonARC
+
+
+        };
+        return buttonsPointerArray;
+    }
+
+    int[] getDialpadButtonsID(){
+        int [] buttonsPointerArray;
+
+        buttonsPointerArray = new int[]{
+
+                R.id.buttonClear, R.id.buttonPlus, R.id.buttonMinus, R.id.buttonDevide, R.id.buttonTimes,
+                R.id.openParen, R.id.closeParen, R.id.buttonPercent,
+                R.id.button9, R.id.button8, R.id.button7,
+                R.id.button6, R.id.button5, R.id.button4, R.id.button1, R.id.button2, R.id.button3, R.id.button0,
+                R.id.buttonPoint,
+        };
+        return buttonsPointerArray;
+    }
     void redrawKeypad(){
 
         setTextColorState(getOperatorButtonsID(), getThemeColorStateList());
@@ -446,13 +446,13 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         int[][] states = getStateAray();
         int[] colors;
         if(((MainActivity) getActivity()).getKeypadFontColor() == Color.LTGRAY) {
-           colors = new int[]{
-                   ((MainActivity) getActivity()).getAccentColorCode(),Color.LTGRAY,
+            colors = new int[]{
+                    ((MainActivity) getActivity()).getAccentColorCode(),Color.LTGRAY,
 
-           };
+            };
         }else{
-             colors = new int[]{
-                     ((MainActivity) getActivity()).getAccentColorCode(),Color.parseColor("#BDBDBD")
+            colors = new int[]{
+                    ((MainActivity) getActivity()).getAccentColorCode(),Color.parseColor("#BDBDBD")
 
             };
         }
@@ -471,7 +471,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
     private void setTextColorState(int[] buttonsIdArray, ColorStateList textColor) {
         for(int buttonId:buttonsIdArray){
             if((Button) mView.findViewById(buttonId)!= null)
-            ((Button) mView.findViewById(buttonId)).setTextColor(textColor);
+                ((Button) mView.findViewById(buttonId)).setTextColor(textColor);
         }
     }
 
@@ -498,7 +498,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         }
         if(input.equals("C"))
         {
-            ((Button) mView.findViewById(R.id.buttonClear)).setTypeface(defaultFont);
+            //Change Clear Button's Text to C
             ((Button) mView.findViewById(R.id.buttonClear)).setText("C");
             mView.findViewById(R.id.buttonClear).setTag("C");
 
