@@ -10,7 +10,7 @@
     <dimen name="padding_text">16.0dp</dimen>
     <dimen name="btn_height_about">70.0dip</dimen>
     <dimen name="margin_scroller_stack">13.0dp</dimen>
-    <dimen name="viewpager_margin_sideways">25dp</dimen>
+    <dimen name="viewpager_margin_sideways">15dp</dimen>
     <dimen name="translation_text_size">33sp</dimen>
 
     <dimen name="color_pallette_right_padding">0dp</dimen>

@@ -206,9 +206,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         TinyDB db = new TinyDB(getApplicationContext());
         mListView = db.getListString(LOG_DATA_KEY);
+        setTypeFaces();
 
         if(isRetroThemeSelected()){
             setContentView(R.layout.activity_main_retro);
@@ -236,7 +238,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mAddToFavorites.setOnClickListener(this);
         mAddLabel.setOnClickListener(this);
 
-        setTypeFaces();
 
 //        If it's a new instance of application i.e. Not because of rotation or configuration changes =================
         prepareBottomIcons();
@@ -269,6 +270,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         }
     refreshFonts();
+        setIconButtons();
+
     }
 
 
@@ -404,6 +407,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private void prepareBottomIcons() {
 
         ( (Button)findViewById(R.id.buttonMute)).setTypeface(mFlatIcon);
+        ( (Button)findViewById(R.id.buttonMute)).setTextColor(Color.LTGRAY);
         findViewById(R.id.buttonMute).setOnClickListener(this);
         if(getVolumeFromPreference()) {
             ((Button) findViewById(R.id.buttonMute)).setText(getResources().getText(R.string.volume_high));
@@ -412,16 +416,20 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
 
         ( (Button)findViewById(R.id.buttonSettings)).setTypeface(mFlatIcon);
+        ( (Button)findViewById(R.id.buttonSettings)).setTextColor(Color.LTGRAY);
         ( findViewById(R.id.buttonSettings)).setOnClickListener(this);
 
         ( (Button)findViewById(R.id.buttonLanguage)).setTypeface(mFlatIcon);
+        ( (Button)findViewById(R.id.buttonLanguage)).setTextColor(Color.LTGRAY);
         ( findViewById(R.id.buttonLanguage)).setOnClickListener(this);
 // todo show a settings dialog here
 
         ( (Button)findViewById(R.id.buttonColors)).setTypeface(mFlatIcon);
+        ( (Button)findViewById(R.id.buttonColors)).setTextColor(Color.LTGRAY);
         ( findViewById(R.id.buttonColors)).setOnClickListener(this);
 
         ( (Button)findViewById(R.id.buttonParallax)).setTypeface(mFlatIcon);
+        ( (Button)findViewById(R.id.buttonParallax)).setTextColor(Color.LTGRAY);
         ( findViewById(R.id.buttonParallax)).setOnClickListener(this);
 
 
@@ -454,7 +462,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             }
 
             this.doubleBackToExitPressedOnce = true;
-            Toast.makeText(this, "یه بار دیگه جهت خروج کامل", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "جهت خروج یه بار دیگه لطفا", Toast.LENGTH_SHORT).show();
 
             mHandler = new Handler();
             mHandler.postDelayed(mRunnable, 2000);
@@ -547,7 +555,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mDigital_7 =  Typeface.createFromAsset(getApplicationContext().getAssets(), "digital_7.ttf");
 
 
+    }
 
+    private void setIconButtons() {
         //todo refactor code
         mFavoritesList.setTypeface(mFlatIcon);
         mFavoritesList.setText(getResources().getString(R.string.list));
@@ -661,6 +671,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             setMViewPagerIndicatorColor();
             resultTextView.setBackgroundColor(getAccentColorCode());
             result_textView_holder.setBackgroundColor(getAccentColorCode());
+            mFavoritesList.setTextColor(getAccentColorCode());
         }else {
             resultTextView.setBackgroundColor(Color.TRANSPARENT);
             result_textView_holder.setBackgroundColor(Color.TRANSPARENT);
@@ -672,11 +683,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         redrawKeypadBackground();
         sendChangeKeypadFontColorIntent();
     }
-    public int getKeypadFontColor() {
+    public int getDialpadFontColor() {
         if (getKeypadBackgroundColorCode() != Color.WHITE){
+//            return  Color.LTGRAY;
             return  Color.parseColor("#757575");
         }else {
             return  Color.LTGRAY;
+//            return  Color.parseColor("#757575");
         }
     }
 
@@ -692,7 +705,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 //            fragmentContainer.setBackground(key());
             mTranslationBox.setBackgroundColor(getKeypadBackgroundColorCode());
             int testtt = getKeypadBackgroundColorCode();
-            mTranslationBox.setTextColor(getKeypadFontColor());
+            mTranslationBox.setTextColor(getDialpadFontColor());
             fragmentContainer = findViewById(R.id.lower_half);
             activityView.setBackgroundColor(getKeypadBackgroundColorCode());
 
@@ -708,7 +721,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private void sendChangeKeypadFontColorIntent() {
         Intent intent = new Intent("themeIntent");
         intent.putExtra("message", "changeKeypadFontColor");
-        intent.putExtra("fontColor",getKeypadFontColor());
+        intent.putExtra("fontColor", getDialpadFontColor());
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
     }
 

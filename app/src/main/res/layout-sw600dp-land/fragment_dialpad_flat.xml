@@ -45,7 +45,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
 
-            android:fontFamily="sans-serif-thin"
             android:layout_weight="1"
             android:text="@string/seven"
             android:tag="@string/seven"

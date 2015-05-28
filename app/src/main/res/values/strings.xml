@@ -8,6 +8,9 @@
     <string name ="night1"></string>
     <string name ="day2"></string>
     <string name="star">\u2606</string>
+    <string name="star_icon"></string>
+    <string name="add_label"></string>
+
     <string name="powertwo">x²</string>
     <string name="powertwoTag">²</string>
     <string name="powerthree">x³</string>
@@ -87,7 +90,7 @@
     <string name="log">log</string>
     <string name="log_tag">log(</string>
     <string name="inverse">inv</string>
-    <string name="arc">arc</string>
+    <string name="ARC">ARC</string>
 
     <string name="not">!</string>
     <string name="Pi">π</string>
@@ -107,7 +110,7 @@
     <string name="list"></string>
     <string name="settings"></string>
     <string name="volume_high"></string>
-    <string name="volume_off"></string>
+    <string name="volume_off"></string>
     <string name="language"></string>
     <string name="parallax"></string>
     <string name="theme"></string>
@@ -134,7 +137,7 @@
     <string name="color_swatch_description" msgid="2883438431173736180">"رنگ <xliff:g id="COLOR_INDEX">%1$d</xliff:g>"</string>
     <string name="color_swatch_description_selected" msgid="5020921249944943124">"رنگ <xliff:g id="COLOR_INDEX">%1$d</xliff:g> انتخاب شد"</string>
     <string name="Invert" />
-    <string name="constant">cnst</string>
+    <string name="constant">ثابت</string>
     <string name="mode_deg">Deg</string>
 
     <string-array name="languages_array">

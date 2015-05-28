@@ -8,5 +8,6 @@
              />
     <item
         android:state_pressed="false"
-        android:color="@android:color/darker_gray"        />
+        android:color="@android:color/darker_gray"
+       />
 </selector>

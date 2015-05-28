@@ -28,6 +28,7 @@
             android:layout_weight="1"
             android:text="@string/constant"
             android:tag="@string/constant"
+            android:textStyle="bold"
             />
 
         <Button
@@ -36,6 +37,7 @@
             android:layout_weight="1"
             android:text="@string/sqrt"
             android:tag="@string/sqrt"
+
             />
 
 
@@ -129,16 +131,24 @@
         android:orientation="horizontal">
 
 
+
         <ToggleButton
-            android:id="@+id/buttonARC"
+            android:id="@+id/buttonInverse"
+
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/arc"
-            android:textOff="@string/arc"
-            android:textOn="@string/arc"
-            android:tag="@string/arc"
+            android:hint="@string/inverse"
+            android:text="@string/inverse"
+            android:tag="@string/inverse"
+            android:textOn="INV"
+            android:textOff="INV"
+            android:background="@android:color/transparent"
+            android:textStyle="bold"
             />
+
+
+
 
 
 
@@ -274,22 +284,19 @@
 
 
 
+
         <ToggleButton
-
-
-
+            android:id="@+id/buttonARC"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:id="@+id/switch_deg_rad"
-            android:layout_centerInParent="true"
-            android:textOff="Rad"
-            android:textOn="DEG"
-            android:checked="true"
-
-
-            android:textStyle="bold" />
-
+            android:text="@string/ARC"
+            android:textOff="@string/ARC"
+            android:textOn="@string/ARC"
+            android:tag="@string/ARC"
+            android:background="@android:color/transparent"
+            android:textStyle="bold"
+            />
 
 
 
@@ -390,17 +397,19 @@
 
 
         <ToggleButton
-            android:id="@+id/buttonInverse"
+
+
 
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:hint="@string/inverse"
-            android:text="@string/inverse"
-            android:tag="@string/inverse"
-            android:textOn="INV"
-            android:textOff="INV"
-            />
+            android:id="@+id/switch_deg_rad"
+            android:layout_centerInParent="true"
+            android:textOff="Rad"
+            android:textOn="DEG"
+            android:checked="true"
+            android:background="@android:color/transparent"
+            android:textStyle="bold" />
 
 
         <Button

@@ -63,6 +63,7 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
                 if( v instanceof Button){
 
                     ((Button) v).setTypeface(defaultFont);
+                    ((Button) v).setTextColor(((MainActivity) getActivity()).getDialpadFontColor());
                 }
             }
         }

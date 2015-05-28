@@ -45,10 +45,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/arc"
-            android:textOff="@string/arc"
-            android:textOn="@string/arc"
-            android:tag="@string/arc"
+            android:text="@string/ARC"
+            android:textOff="@string/ARC"
+            android:textOn="@string/ARC"
+            android:tag="@string/ARC"
             />
 
 

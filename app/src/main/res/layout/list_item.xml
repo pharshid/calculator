@@ -24,14 +24,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="3dp"
-    android:background="#ffffff">
+    android:background="@android:color/transparent"
+    android:cacheColorHint="@android:color/transparent"
+    >
 
         <RelativeLayout
             android:id="@+id/container"
             android:animateLayoutChanges="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:descendantFocusability="blocksDescendants">
+            android:descendantFocusability="blocksDescendants"
+            android:background="@android:color/transparent"
+            >
 
 
             <CheckBox
@@ -45,6 +49,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:visibility="visible"
+                android:background="@android:color/transparent"
+
                 />
 
 
@@ -61,6 +67,8 @@
                 android:paddingLeft="@dimen/padding_small"
                 android:clickable="false"
                 android:focusable="false"
+                android:background="@android:color/transparent"
+
 
 
                 />
@@ -77,6 +85,8 @@
                 android:paddingLeft="@dimen/padding_small"
                 android:layout_toLeftOf="@id/constant_selected"
                 android:focusable="false"
+                android:background="@android:color/transparent"
+
 
                 />
             <TextView
@@ -90,6 +100,7 @@
                 android:gravity="left"
                 android:layout_toLeftOf="@id/constant_selected"
                 android:focusable="false"
+                android:background="@android:color/transparent"
                 />
         </RelativeLayout>
 

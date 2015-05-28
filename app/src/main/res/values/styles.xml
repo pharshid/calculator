@@ -164,8 +164,6 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?android:attr/dividerHeight</item>
         <item name="android:background">?android:attr/dividerHorizontal</item>
-        <item name="android:layout_marginBottom">@dimen/viewpager_margin_sideways</item>
-
 
     </style>
 
@@ -204,7 +202,8 @@
 
     <style name="viewpager" >
 
-        <item name="android:layout_marginBottom">@dimen/padding_medium</item>
+        <item name="android:layout_marginRight">@dimen/viewpager_margin_sideways</item>
+        <item name="android:layout_marginLeft">@dimen/viewpager_margin_sideways</item>
 
 
     </style>

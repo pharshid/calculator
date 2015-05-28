@@ -15,6 +15,19 @@
         android:orientation="horizontal"
         android:gravity="center">
 
+        <Button
+            android:id="@+id/buttonConstant"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/constant"
+            android:tag="@string/constant"
+            android:textStyle="bold"
+            android:background="@android:color/transparent"
+
+            />
+
+
         <ToggleButton
             android:id="@+id/buttonInverse"
 
@@ -26,26 +39,23 @@
             android:tag="@string/inverse"
             android:textOn="INV"
             android:textOff="INV"
+             android:background="@android:color/transparent"
+            android:textStyle="bold"
             />
 
 
-        <Button
-            android:id="@+id/buttonConstant"
-            style="@style/CustomButton.SCIENTIFIC"
-            android:layout_weight="1"
-            android:text="@string/constant"
-            android:tag="@string/constant"
-            />
 
         <ToggleButton
             android:id="@+id/buttonARC"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/arc"
-            android:textOff="@string/arc"
-            android:textOn="@string/arc"
-            android:tag="@string/arc"
+            android:text="@string/ARC"
+            android:textOff="@string/ARC"
+            android:textOn="@string/ARC"
+            android:tag="@string/ARC"
+            android:background="@android:color/transparent"
+            android:textStyle="bold"
             />
 
 
@@ -60,18 +70,25 @@
                 android:layout_weight="1"
                 android:id="@+id/switch_deg_rad"
                 android:layout_centerInParent="true"
-                android:textOff="Rad"
+                android:textOff="RAD"
                 android:textOn="DEG"
                 android:checked="true"
+                android:textStyle="bold"
+                android:background="@android:color/transparent"
 
-
-                android:textStyle="bold" />
+                />
 
 
 
     </LinearLayout>
 
 
+    <View android:layout_height="2dp"
+        android:layout_width="match_parent"
+
+        android:background="?android:attr/listDivider"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"/>
 
 
     <LinearLayout
