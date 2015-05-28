@@ -22,9 +22,8 @@
             android:layout_weight="1"
             android:text="@string/constant"
             android:tag="@string/constant"
-            android:textStyle="bold"
             android:background="@android:color/transparent"
-
+            style="?android:attr/borderlessButtonStyle"
             />
 
 
@@ -40,7 +39,7 @@
             android:textOn="INV"
             android:textOff="INV"
              android:background="@android:color/transparent"
-            android:textStyle="bold"
+            style="?android:attr/borderlessButtonStyle"
             />
 
 
@@ -55,7 +54,7 @@
             android:textOn="@string/ARC"
             android:tag="@string/ARC"
             android:background="@android:color/transparent"
-            android:textStyle="bold"
+            style="?android:attr/borderlessButtonStyle"
             />
 
 
@@ -73,9 +72,8 @@
                 android:textOff="RAD"
                 android:textOn="DEG"
                 android:checked="true"
-                android:textStyle="bold"
                 android:background="@android:color/transparent"
-
+                style="?android:attr/borderlessButtonStyle"
                 />
 
 

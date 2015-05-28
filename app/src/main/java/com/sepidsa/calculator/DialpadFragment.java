@@ -115,6 +115,25 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         };
 
 
+        for(int id : getDialpadButtonsID()) {
+            View v = mView.findViewById(id);
+            if (v != null) {
+                v.setOnClickListener(this);
+                if( v instanceof Button){
+                    ((Button) v).setTypeface(defaultFont);
+                }
+            }
+        }
+
+        for(int id : getScientificButtonsID()) {
+            View v = mView.findViewById(id);
+            if (v != null) {
+                v.setOnClickListener(this);
+                if( v instanceof Button){
+                    ((Button) v).setTypeface(scientificFont);
+                }
+            }
+        }
 
         if(mView.findViewById(R.id.switch_deg_rad) != null) {
             ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setChecked(((MainActivity) getActivity()).getAngleMode());
@@ -278,27 +297,6 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         super.onStart();
         LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mThemeChangedReciever, new IntentFilter("themeIntent"));
         LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mClearButtonChangedReceiver, new IntentFilter("clearIntent"));
-
-        for(int id : getDialpadButtonsID()) {
-            View v = mView.findViewById(id);
-            if (v != null) {
-                v.setOnClickListener(this);
-                if( v instanceof Button){
-                    ((Button) v).setTypeface(defaultFont);
-                }
-            }
-        }
-
-        for(int id : getScientificButtonsID()) {
-            View v = mView.findViewById(id);
-            if (v != null) {
-                v.setOnClickListener(this);
-                if( v instanceof Button){
-                    ((Button) v).setTypeface(scientificFont);
-                }
-            }
-        }
-
         redrawKeypad();
     }
 

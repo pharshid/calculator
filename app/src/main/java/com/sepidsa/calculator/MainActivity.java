@@ -246,27 +246,53 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         if(!watchedIntro()){
 
-            AlertDialog dialog =   new AlertDialog.Builder(MainActivity.this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("").setMessage(""+
-                            "جدید در این نسخه\n" +
-                            "• تم تیره اضافه شده\n" +
-                            "• امکان انتخاب فونت فارسی\n" +
-                            "• رنگ بندی جدید\n" +
-                            "• صداگذاری جدید\n" +
-                            "• برای استفاده از حافظه قسمت نکات رو یه نگاهی بنداز\n"
-            ) .setPositiveButton(
-                    "باشه", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            setWatcheIntroPreference(true);
-                            dialog.dismiss();
-                        }
-                    }).show();
-
-            TextView textView = (TextView) dialog.findViewById(android.R.id.message);
-            textView.setTypeface(mshekari);
 
 
-            Button button1 = (Button) dialog.findViewById(android.R.id.button1);
-            button1.setTypeface(mshekari);
+//            AlertDialog.Builder adb = new AlertDialog.Builder(this);
+//            Dialog d = adb.setView(new View(this)).create();
+//            // (That new View is just there to have something inside the dialog that can grow big enough to cover the whole screen.)
+//
+//            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//            lp.copyFrom(d.getWindow().getAttributes());
+//            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+//            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+//            d.show();
+//            d.getWindow().setAttributes(lp);
+
+
+//            String mytext = Html.fromHtml("<h2>Title</h2><br><p>Description here</p>");
+
+
+            WhatsNewDialogClass cdc = new WhatsNewDialogClass(this , android.R.style.Theme_Holo_Light_Dialog_MinWidth);
+            cdc.show();
+
+//
+//            AlertDialog dialog =   new AlertDialog.Builder(MainActivity.this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("در نسخه جدید ").setMessage(
+//
+//
+//            getResources().getString(R.string.str1)
+//
+//            ) .setPositiveButton(
+//                    "باشه", new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            setWatcheIntroPreference(true);
+//                            dialog.dismiss();
+//                        }
+//                    }).create();
+//            DisplayMetrics displaymetrics = new DisplayMetrics();
+//            getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+//            float height = displaymetrics.density;
+//            float width = displaymetrics.density;
+//
+//
+//            dialog.getWindow().setLayout((int)width, (int)height/2);
+//            dialog.show();
+//            TextView textView = (TextView) dialog.findViewById(android.R.id.message);
+//            textView.setTypeface(mMitra);
+//
+//
+//            Button button1 = (Button) dialog.findViewById(android.R.id.button1);
+//            button1.setTypeface(mMitra);
 
         }
     refreshFonts();

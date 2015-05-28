@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.ColorStateList;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -91,13 +92,43 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
                             }
                             break;
                         }
+
+                    case "changeKeypadFontColor":
+
+                        setTextColorState(idList, getNonAccentColorStateList());
+                        break;
                 }
             }
         };
 
         return  mView;
     }
+    private void setTextColorState(int[] buttonsIdArray, ColorStateList textColor) {
+        for(int buttonId:buttonsIdArray){
+            if((Button) mView.findViewById(buttonId)!= null)
+                ((Button) mView.findViewById(buttonId)).setTextColor(textColor);
+        }
+    }
 
+    private ColorStateList getNonAccentColorStateList() {
+        int[][] states = getStateAray();
+        int[] colors;
+        colors = new int[]{
+                ((MainActivity) getActivity()).getAccentColorCode(), ((MainActivity) getActivity()).getDialpadFontColor(),
+
+        };
+
+        return new ColorStateList(states, colors);
+    }
+
+    int[][] getStateAray (){
+        return new int[][] {
+
+                new int[] { android.R.attr.state_pressed} , // pressed
+                new int[] { -android.R.attr.state_pressed}  // pressed
+        };
+
+    }
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -263,8 +294,8 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
         int [] buttonsPointerArray;
 
         buttonsPointerArray = new int[]{ R.id.buttonSinus , R.id.buttonCosinus , R.id.buttonTan , R.id.buttonln , R.id.buttonlog , R.id.buttonlog , R.id.buttonpie , R.id.buttone, R.id.buttonpower ,
-                R.id.buttonrad , R.id.buttonCot , R.id.switch_deg_rad , R.id.buttonPow2 , R.id.buttonPow3 ,R.id.buttonInverse , R.id.buttonSinusH , R.id.buttonCosinusH , R.id.buttonTanH , R.id.buttonCotH
-                , R.id.buttonConstant , R.id.buttonARC
+                R.id.buttonrad , R.id.buttonCot ,  R.id.buttonPow2 , R.id.buttonPow3 , R.id.buttonSinusH , R.id.buttonCosinusH , R.id.buttonTanH , R.id.buttonCotH
+                , R.id.buttonConstant , R.id.buttonARC , R.id.switch_deg_rad ,R.id.buttonInverse
 
         };
         return buttonsPointerArray;
