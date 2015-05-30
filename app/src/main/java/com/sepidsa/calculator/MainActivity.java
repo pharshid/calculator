@@ -26,6 +26,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.text.InputType;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -45,6 +46,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sepidsa.calculator.data.LogContract;
+import com.sepidsa.calculator.util.IabHelper;
+import com.sepidsa.calculator.util.IabResult;
+import com.sepidsa.calculator.util.Inventory;
+import com.sepidsa.calculator.util.Purchase;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.io.Serializable;
@@ -61,7 +66,7 @@ import java.util.Stack;
 
 
 
-public class MainActivity extends FragmentActivity implements View.OnClickListener,  CompoundButton.OnCheckedChangeListener{
+public class MainActivity extends FragmentActivity implements View.OnClickListener,  CompoundButton.OnCheckedChangeListener, IabHelper.OnIabSetupFinishedListener , IabHelper.OnIabPurchaseFinishedListener, IabHelper.QueryInventoryFinishedListener{
 
     private static final String FRAGMENT_TAG_LOG_ = "log fragment";
     private static final byte LANGUAGE_ARABIC =0 ;
@@ -203,12 +208,46 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private Typeface mPhalls,mDigital_7;
     private Typeface mRobotoThin;
 
+    // SKUs for our products: the premium upgrade (non-consumable)
+    static final String SKU_PREMIUM = "golden_upgrade";
+    static final String SKU_CLASSIC_THEME = "classic_theme_upgrade";
 
+    // Does the user have the premium upgrade?
+    boolean mIsPremium = false;
+    boolean mHasPuyrchasedClassicTheme = false;
+
+    // (arbitrary) request code for the purchase flow
+    static final int RC_REQUEST = 2;
+    static final String TAG = "";
+
+    // The helper object
+    com.sepidsa.calculator.util.IabHelper mHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         TinyDB db = new TinyDB(getApplicationContext());
+// Debug tag, for logging
+
+        String base64EncodedPublicKey = "";
+// You can find it in your Bazaar console, in the Dealers section.
+// It is recommended to add more security than just pasting it in your source code;
+        mHelper = new IabHelper(this, base64EncodedPublicKey);
+
+        Log.d(TAG, "Starting setup.");
+        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            public void onIabSetupFinished(IabResult result) {
+                Log.d(TAG, "Setup finished.");
+
+                if (!result.isSuccess()) {
+                    // Oh noes, there was a problem.
+                    Log.d(TAG, "Problem setting up In-app Billing: " + result);
+                }
+                // Hooray, IAB is fully set up!
+                mHelper.queryInventoryAsync(getInventoryFinishedListener());
+            }
+        });
+
         mListView = db.getListString(LOG_DATA_KEY);
         setTypeFaces();
 
@@ -263,8 +302,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 //            String mytext = Html.fromHtml("<h2>Title</h2><br><p>Description here</p>");
 
 
-            WhatsNewDialogClass cdc = new WhatsNewDialogClass(this , android.R.style.Theme_Holo_Light_Dialog_MinWidth);
-            cdc.show();
+//            WhatsNewDialogClass cdc = new WhatsNewDialogClass(this , android.R.style.Theme_Holo_Light_Dialog_MinWidth);
+//            cdc.show();
 
 //
 //            AlertDialog dialog =   new AlertDialog.Builder(MainActivity.this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("در نسخه جدید ").setMessage(
@@ -295,12 +334,36 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 //            button1.setTypeface(mMitra);
 
         }
-    refreshFonts();
+        refreshFonts();
         setIconButtons();
 
     }
 
 
+
+    com.sepidsa.calculator.util.IabHelper.QueryInventoryFinishedListener getInventoryFinishedListener(){
+        IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
+            public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
+                Log.d(TAG, "Query inventory finished.");
+                if (result.isFailure()) {
+                    Log.d(TAG, "Failed to query inventory: " + result);
+                    return;
+                }
+                else {
+                    Log.d(TAG, "Query inventory was successful.");
+                    // does the user have the premium upgrade?
+                    mIsPremium = inventory.hasPurchase(SKU_PREMIUM);
+
+                    // update UI accordingly
+
+                    Log.d(TAG, "User is " + (mIsPremium ? "PREMIUM" : "NOT PREMIUM"));
+                }
+
+                Log.d(TAG, "Initial inventory query finished; enabling main UI.");
+            }
+        };
+        return mGotInventoryListener;
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -326,7 +389,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         // super.onRestoreInstanceState(savedInstanceState);
-    // todo mtranslationbox restore
+        // todo mtranslationbox restore
 
         if(savedInstanceState!= null) {
             mTranslationBox = getMTranslationEditText();
@@ -470,7 +533,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        if (mHelper != null) mHelper.dispose();
+        mHelper = null;
         if (mHandler != null) { mHandler.removeCallbacks(mRunnable); }
     }
 
@@ -558,10 +622,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             }
         }
-            else {
+        else {
 
-                mLayoutState = LANDSCAPE_TABLET;
-            }
+            mLayoutState = LANDSCAPE_TABLET;
+        }
 
     }
 
@@ -753,7 +817,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     public void setMViewPagerIndicatorColor(){
         if(mViewPagerIndicator!= null)
-        mViewPagerIndicator.setFillColor(getAccentColorCode());
+            mViewPagerIndicator.setFillColor(getAccentColorCode());
 //        mViewPagerIndicator.setPageColor(getAccentColorCode());
 
     }
@@ -888,7 +952,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         checkCLRButtonSendIntent();
         mMemoryVariableTextView.setText(" M = " + result);
 
-        Toast.makeText(getApplicationContext(),"M-",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "M-",Toast.LENGTH_SHORT).show();
     }
 
     private void performMPlus() {
@@ -951,7 +1015,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         displayTranslation();
         playSound(clearAllButtonSoundID);
         checkCLRButtonSendIntent();
-        Toast.makeText(getApplicationContext(),"MR",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "MR",Toast.LENGTH_SHORT).show();
 
     }
 
@@ -986,7 +1050,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
 
-    private void setVolumeInPreference(boolean hasVolume){
+    private void setVolumeInPreference(boolean hasVolume) {
         SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("volumeState", MODE_PRIVATE);
         SharedPreferences.Editor editor = appPreferences.edit();
         if (hasVolume) {
@@ -1495,7 +1559,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         return sounds;
     }
 
-    void prepareAnimationStuff(){
+    void prepareAnimationStuff() {
         in_anim = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
         out_anim  = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
         out_anim.setAnimationListener(new Animation.AnimationListener() {
@@ -1639,24 +1703,24 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         SharedPreferences appPreferences =getSharedPreferences("typography", Context.MODE_PRIVATE);
         int outputFont = 0 ;
 
-            switch (key) {
-                case "DIALPAD_FONT":
-                    outputFont = appPreferences.getInt(key, FONT_ROBOTO_THIN);
-                    break;
-                case "SCIENTIFIC_FONT":
-                    outputFont = appPreferences.getInt(key, FONT_ROBOTO_LIGHT);
-                    break;
-                case "RESULT_FONT":
-                    outputFont = appPreferences.getInt(key, FONT_ROBOTO_THIN);
-                    break;
-                case "TRANSLATION_NUMERIC_FONT":
-                    outputFont = appPreferences.getInt(key, FONT_ROBOTO_THIN);
-                    break;
-                case "TRANSLATION_LITERAL_FONT":
-                    outputFont = appPreferences.getInt(key, FONT_MITRA);
-                    break;
+        switch (key) {
+            case "DIALPAD_FONT":
+                outputFont = appPreferences.getInt(key, FONT_ROBOTO_THIN);
+                break;
+            case "SCIENTIFIC_FONT":
+                outputFont = appPreferences.getInt(key, FONT_ROBOTO_LIGHT);
+                break;
+            case "RESULT_FONT":
+                outputFont = appPreferences.getInt(key, FONT_ROBOTO_THIN);
+                break;
+            case "TRANSLATION_NUMERIC_FONT":
+                outputFont = appPreferences.getInt(key, FONT_ROBOTO_THIN);
+                break;
+            case "TRANSLATION_LITERAL_FONT":
+                outputFont = appPreferences.getInt(key, FONT_MITRA);
+                break;
 
-            }
+        }
 
         switch (outputFont) {
             case FONT_ROBOTO_THIN:
@@ -1777,57 +1841,57 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             }
 
 //                sendLogMessage(getMExpressionString().toString(), mTemp, true, String.valueOf(mTagHimself.getText()));
-                break;
+            break;
 
             case R.id.add_label: {
                 final String  selection = LogContract.LogEntry._ID + "=?";
                 Cursor cursor = getContentResolver().query(LogContract.LogEntry.CONTENT_URI, null, selection, new String[]{Long.toString(mLatestInsertedId)}, null);
                 if (cursor.moveToFirst()) {
-                        String currentLabel = cursor.getString(cursor.getColumnIndex(LogContract.LogEntry.COLUMN_TAG));
-                        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
-                        builder.setTitle("Enter a Label:");
+                    String currentLabel = cursor.getString(cursor.getColumnIndex(LogContract.LogEntry.COLUMN_TAG));
+                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
+                    builder.setTitle("Enter a Label:");
 
-                        // Set up the input
+                    // Set up the input
 
-                        final EditText input = new EditText(this);
-                        final InputMethodManager inputMethodManager = (InputMethodManager)  getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    final EditText input = new EditText(this);
+                    final InputMethodManager inputMethodManager = (InputMethodManager)  getSystemService(Activity.INPUT_METHOD_SERVICE);
 
-                        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                    // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
 
-                        input.setInputType(InputType.TYPE_CLASS_TEXT);
-                        builder.setView(input);
-                        builder.setCancelable(false);
-                        input.setText(currentLabel);
-                        input.requestFocus();
-                        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-                        // Set up the buttons
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+                    builder.setView(input);
+                    builder.setCancelable(false);
+                    input.setText(currentLabel);
+                    input.requestFocus();
+                    inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                    // Set up the buttons
 
-                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
 
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                String newLabel = input.getText().toString();
-                                ContentValues values = new ContentValues();
-                                values.put(LogContract.LogEntry.COLUMN_TAG, newLabel);
-                                getContentResolver().update(
-                                        LogContract.LogEntry.CONTENT_URI,
-                                        values,
-                                        selection,
-                                        new String[]{Long.toString(mLatestInsertedId)}
-                                );
-                                inputMethodManager.hideSoftInputFromWindow(input.getWindowToken(), 0);
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String newLabel = input.getText().toString();
+                            ContentValues values = new ContentValues();
+                            values.put(LogContract.LogEntry.COLUMN_TAG, newLabel);
+                            getContentResolver().update(
+                                    LogContract.LogEntry.CONTENT_URI,
+                                    values,
+                                    selection,
+                                    new String[]{Long.toString(mLatestInsertedId)}
+                            );
+                            inputMethodManager.hideSoftInputFromWindow(input.getWindowToken(), 0);
 
-                            }
-                        });
-                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                inputMethodManager.hideSoftInputFromWindow(input.getWindowToken(), 0);
-                                dialog.cancel();
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            inputMethodManager.hideSoftInputFromWindow(input.getWindowToken(), 0);
+                            dialog.cancel();
 
-                            }
-                        });
+                        }
+                    });
                     final android.support.v7.app.AlertDialog dialog = builder.create();
                     dialog.show();
                     EditText.OnKeyListener keyListener = new EditText.OnKeyListener() {
@@ -1855,7 +1919,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             }
 
-                break;
+            break;
 
 
 
@@ -1871,10 +1935,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 showSpinner();
                 break;
 
-//            case R.id.buttonParallax:
-//                Intent myIntent = new Intent(MainActivity.this, ParallaxActivity.class);
-//                MainActivity.this.startActivity(myIntent);
-//                break;
+            case R.id.buttonParallax:
+                Intent myIntent = new Intent(MainActivity.this, HelpActivity.class);
+                MainActivity.this.startActivity(myIntent);
+                break;
 
 
             case R.id.buttonMute:
@@ -2013,7 +2077,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
     }
 
-    public void refreshFonts(){
+    public void refreshFonts() {
 
         resultTextView.setTypeface(getFontForComponent("RESULT_FONT"));
         mTranslationBoxLetterFont = getFontForComponent("TRANSLATION_LITERAL_FONT");
@@ -2025,9 +2089,65 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
     }
 
-    int getPersianFontPreference(){
+    int getPersianFontPreference() {
         SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("typography", MODE_PRIVATE);
         return appPreferences.getInt("PERSIAN_FONT_PREFERENCE",FONT_MITRA);
+    }
+
+    void buyIap(String sku){
+
+        mHelper.launchPurchaseFlow(this, sku, RC_REQUEST, this, "payload-string");
+
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Log.d(TAG, "onActivityResult(" + requestCode + "," + resultCode + "," + data);
+
+        // Pass on the activity result to the helper for handling
+        if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
+            super.onActivityResult(requestCode, resultCode, data);
+        } else {
+            Log.d(TAG, "onActivityResult handled by IABUtil.");
+        }
+    }
+
+    @Override
+    public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+        if (result.isFailure()) {
+            Log.d(TAG, "Error purchasing: " + result);
+            return;
+        }
+        else if (purchase.getSku().equals(SKU_PREMIUM)) {
+            // give user access to premium content and update the UI
+        }
+    }
+
+
+    @Override
+    public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
+        Log.d(TAG, "Query inventory finished.");
+        if (result.isFailure()) {
+            Log.d(TAG, "Failed to query inventory: " + result);
+            return;
+        }
+        else {
+            Log.d(TAG, "Query inventory was successful.");
+            // does the user have the premium upgrade?
+            mIsPremium = inventory.hasPurchase(SKU_PREMIUM);
+
+            // update UI accordingly
+
+            Log.d(TAG, "User is " + (mIsPremium ? "PREMIUM" : "NOT PREMIUM"));
+        }
+
+        Log.d(TAG, "Initial inventory query finished; enabling main UI.");
+    }
+
+    @Override
+    public void onIabSetupFinished(IabResult result) {
+
     }
 }
 

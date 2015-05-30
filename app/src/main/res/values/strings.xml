@@ -133,12 +133,14 @@
     <string name="day"></string>
     <string name="night"></string>
     <string name="list"></string>
-    <string name="settings"></string>
-    <string name="volume_high"></string>
-    <string name="volume_off"></string>
-    <string name="language"></string>
-    <string name="parallax"></string>
-    <string name="theme"></string>
+    <string name="settings">\uE036</string>
+    <string name="volume_high">\uE03E</string>
+    <string name="volume_off">\uE021</string>
+    <string name="language">\uE016</string>
+    <string name="help">\uE035</string>
+    <string name="theme">\uE027</string>
+    <string name="next_page">\uE003</string>
+    <string name="previous_page">\uE004</string>
     <!--COLOR Codes -->
 
 
@@ -179,6 +181,10 @@
     <string name="title_activity_help">HelpActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
 
 
 </resources>

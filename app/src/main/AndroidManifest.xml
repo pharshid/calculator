@@ -7,59 +7,57 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="21" />
+    <uses-permission android:name="com.farsitel.bazaar.permission.PAY_THROUGH_BAZAAR"/>
 
+    <uses-permission
+
+    android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+    uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-
-        >
-
-
-
-
-
+        android:label="@string/app_name" >
         <activity
-            android:screenOrientation="user"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="user"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:windowSoftInputMode="stateHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+        <provider
+            android:name=".data.LogProvider"
+            android:authorities="com.sepidsa.calculator"
+            android:exported="false"
+            android:syncable="true" />
+        <provider
+            android:name=".data.ConstantProvider"
+            android:authorities="com.sepidsa.calculator.constants"
+            android:exported="false"
+            android:syncable="true" />
+
+        <activity
+            android:name=".HelpActivity"
+            android:label="@string/title_activity_help"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
 
             >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.sepidsa.calculator.MainActivity" />
         </activity>
-
-        <activity android:name=".ParallaxActivity"
-            android:label="parallaxactivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <provider
-            android:authorities="com.sepidsa.calculator"
-            android:name=".data.LogProvider"
-            android:exported="false"
-            android:syncable="true"/>
-
-        <provider
-            android:authorities="com.sepidsa.calculator.constants"
-            android:name=".data.ConstantProvider"
-            android:exported="false"
-            android:syncable="true"
-            />
-
     </application>
 
 </manifest>
-
