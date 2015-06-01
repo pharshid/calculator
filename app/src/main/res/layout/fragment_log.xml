@@ -12,21 +12,39 @@
         style="?android:attr/buttonBarStyle"
         android:orientation="horizontal">
 
+        <SearchView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:iconifiedByDefault="true"
+            android:id="@+id/log_search_view"
+            android:layout_gravity="start"
+            android:gravity="start"
+            />
+
         <Button
             android:id="@+id/button_clear_log"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
             style="?android:attr/borderlessButtonStyle"
 
             android:text="CLEAR"/>
 
         <Button
             android:id="@+id/button_export_log"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
             style="?android:attr/borderlessButtonStyle"
 
             android:text="EXPORT"/>
+
+
+
+
 
     </LinearLayout>
 
