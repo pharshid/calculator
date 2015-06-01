@@ -78,6 +78,8 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
         TextView empty = (TextView) rootView.findViewById(R.id.empty_list);
         mListView.setEmptyView(empty);
         mListView.setAdapter(mLogAdapter);
+        getLoaderManager().restartLoader(0, null, (android.support.v4.app.LoaderManager.LoaderCallbacks) mLogFragment);
+
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
