@@ -10,6 +10,8 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
+import android.widget.SearchView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,11 +31,12 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
     private final String LOG_TAG_ = AnimatedLogFragment.class.getSimpleName();
 
     private LogAdapter mLogAdapter;
-
     private ListView mListView;
     private Button mClearButton;
     private Button mExpandButton;
+    private SearchView mSearchView;
     private int mPosition = ListView.INVALID_POSITION;
+    private Fragment mLogFragment;
 
     private static final String SELECTED_KEY = "selected_position";
 
@@ -48,6 +51,7 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
     };
 
     public AnimatedLogFragment() {
+        mLogFragment = this;
     }
 
 
@@ -69,10 +73,37 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
         mListView = (ListView) rootView.findViewById(R.id.listview_log);
         mClearButton = (Button) rootView.findViewById(R.id.button_clear_log);
         mExpandButton = (Button) rootView.findViewById(R.id.button_export_log);
+        mSearchView = (SearchView) rootView.findViewById(R.id.log_search_view);
 
         TextView empty = (TextView) rootView.findViewById(R.id.empty_list);
         mListView.setEmptyView(empty);
         mListView.setAdapter(mLogAdapter);
+        getLoaderManager().restartLoader(0, null, (android.support.v4.app.LoaderManager.LoaderCallbacks) mLogFragment);
+
+
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String newText) {
+                mSearchView.clearFocus();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (TextUtils.isEmpty(newText)) {
+                    getLoaderManager().restartLoader(0, null, (android.support.v4.app.LoaderManager.LoaderCallbacks) mLogFragment);
+                } else {
+                    Bundle filter = new Bundle();
+                    filter.putString("filter", newText);
+                    getLoaderManager().restartLoader(0, filter, (android.support.v4.app.LoaderManager.LoaderCallbacks) mLogFragment);
+
+
+                }
+
+                return true;
+            }
+        });
+
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView adapterView, final View view, final int position, long l) {
@@ -221,12 +252,24 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(getActivity(),
-                LogContract.LogEntry.CONTENT_URI,
-                LOG_COLUMNS,
-                null,
-                null,
-                null);
+        if(args == null) {
+            return new CursorLoader(getActivity(),
+                    LogContract.LogEntry.CONTENT_URI,
+                    LOG_COLUMNS,
+                    null,
+                    null,
+                    null);
+        } else {
+            String filter = args.getString("filter");
+            return new CursorLoader(getActivity(),
+                    LogContract.LogEntry.CONTENT_URI,
+                    LOG_COLUMNS,
+                    LogContract.LogEntry.COLUMN_TAG + " like ?" + " or " + LogContract.LogEntry.COLUMN_RESULT + " like ?" + " or " + LogContract.LogEntry.COLUMN_OPERATION + " like ?",
+                    new String[]{"%" + filter + "%", "%" + filter + "%", "%" + filter + "%"},
+                    null);
+        }
     }
+
+
 
 }
