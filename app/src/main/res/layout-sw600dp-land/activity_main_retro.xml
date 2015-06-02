@@ -21,7 +21,7 @@
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="com.sepidsa.calculator.AnimatedLogFragment"
+            android:name="com.sepidsa.fortytwocalculator.AnimatedLogFragment"
             android:tag="jake"
             tools:layout="@layout/fragment_log"
 
@@ -106,7 +106,7 @@
 
 
 
-                <com.sepidsa.calculator.AutoResizeTextView
+                <com.sepidsa.fortytwocalculator.AutoResizeTextView
                     android:id="@+id/translationEditText"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -165,7 +165,7 @@
                         />
 
 
-                    <com.sepidsa.calculator.AutoResizeTextView
+                    <com.sepidsa.fortytwocalculator.AutoResizeTextView
                         android:id="@+id/result"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -307,7 +307,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:name="com.sepidsa.calculator.ScientificFragment"
+                android:name="com.sepidsa.fortytwocalculator.ScientificFragment"
                 tools:layout="@layout/fragment_scientific_flat"
                 />
 
@@ -317,7 +317,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:name="com.sepidsa.calculator.DialpadFragment"
+                android:name="com.sepidsa.fortytwocalculator.DialpadFragment"
                 tools:layout="@layout/fragment_dialpad_flat" />
 
 

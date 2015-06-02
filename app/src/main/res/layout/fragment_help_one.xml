@@ -4,90 +4,70 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_bright"
+    android:background="@android:color/white"
     android:clickable="true"
     android:id="@+id/whats_new_scrollview"
     android:scrollbarAlwaysDrawVerticalTrack="true"
+
     >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:orientation="vertical"
-        android:background="@android:color/holo_blue_bright"
         android:layout_gravity="center_vertical"
         >
 
-        <TextView
+
+        <ImageView
             android:id="@+id/page_logo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:text=""
-            android:textColor="@android:color/white"
-            android:paddingLeft="@dimen/padding_large"
-            android:layout_alignParentLeft="true"
-            android:gravity="center"
-            android:textSize="26sp"
-            android:visibility="gone"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_centerHorizontal="true"
+            android:visibility="visible"
+            android:src="@drawable/percentage_icon"
 
+            android:textColor="@android:color/white"
+            android:textSize="40sp"
             />
+
+
 
         <TextView
-            android:id="@+id/page_description"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:text="استفاده از درصد"
-            android:textColor="@android:color/white"
-            android:paddingLeft="@dimen/padding_large"
-            android:layout_alignParentRight="true"
+            android:id="@+id/passage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/padding_large"
+            android:textColor="@android:color/black"
+            android:layout_below="@id/page_logo"
+            android:text="کار با درصد"
             android:gravity="center"
-            android:textSize="28sp"
-            android:visibility="gone"
+            android:textSize="30sp"
 
             />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_below="@id/page_description"
-            android:layout_marginTop="60dp"
-            android:layout_centerVertical="true"
-            android:layout_centerInParent="true"
-
-            >
-
-            <TextView
-                android:id="@+id/passage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/padding_large"
-                android:textColor="#FFFF00"
-
-                android:text="کار با درصد"
-                android:gravity="center"
-                android:textSize="30sp"
-                />
-
-            <TextView
-
-                android:id="@+id/highlight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/passage"
-                android:textColor="@android:color/white"
-                android:textSize="26sp"
-                android:text="1200 + 12.5% "
-                android:layout_marginTop="40dp"
-                android:fontFamily="sans-serif-light"
-                android:gravity="center"
-                android:layout_centerHorizontal="true"
-
-                />
 
 
-        </RelativeLayout>
+
+        <TextView
+
+            android:id="@+id/highlight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/passage"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="26sp"
+            android:text="1200 + 12.5% "
+            android:layout_marginTop="40dp"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+
+            />
+
 
     </RelativeLayout>
+
 
 
 </ScrollView>

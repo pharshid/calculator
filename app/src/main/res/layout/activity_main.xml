@@ -54,7 +54,7 @@
 
 
 
-            <com.sepidsa.calculator.AutoResizeTextView
+            <com.sepidsa.fortytwocalculator.AutoResizeTextView
                 android:id="@+id/result"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
@@ -151,7 +151,7 @@
 
                 />
 
-            <com.sepidsa.calculator.AutoResizeTextView
+            <com.sepidsa.fortytwocalculator.AutoResizeTextView
                 android:id="@+id/translationEditText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -272,6 +272,17 @@
 
                     />
 
+
+                <Button
+                    android:id="@+id/buttonPurchase"
+                    style="@style/icon_button.portrait"
+                    android:layout_weight="1"
+                    android:text="@string/help"
+                    android:textColor="#DADFE1"
+                    android:tag="p"
+                    android:gravity="center_horizontal"
+
+                    />
 
             </LinearLayout>
 

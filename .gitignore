@@ -42,3 +42,11 @@ _sandbox
 
 .gradle/2.2.1/taskArtifacts/cache.properties.lock
 .gradle/2.2.1/taskArtifacts/fileHashes.bin
+
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+
