@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.sepidsa.calculator"
-    android:versionCode="24"
-    android:versionName="1.71" >
+    package="com.sepidsa.fortytwocalculator"
+    android:versionCode="25"
+    android:versionName="1.72" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -13,7 +13,7 @@
 
     android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" />
-    uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" />
@@ -38,12 +38,12 @@
 
         <provider
             android:name=".data.LogProvider"
-            android:authorities="com.sepidsa.calculator"
+            android:authorities="com.sepidsa.fortytwocalculator"
             android:exported="false"
             android:syncable="true" />
         <provider
             android:name=".data.ConstantProvider"
-            android:authorities="com.sepidsa.calculator.constants"
+            android:authorities="com.sepidsa.fortytwocalculator.constants"
             android:exported="false"
             android:syncable="true" />
 
@@ -54,9 +54,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
 
             >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.sepidsa.calculator.MainActivity" />
+
         </activity>
     </application>
 
