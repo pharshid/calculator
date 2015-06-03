@@ -51,4 +51,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'com.nispok:snackbar:2.9.1'
     compile 'com.xgc1986.android:parallaxpagertransformer:1.0.3'
+    compile project(':library')
+    compile('com.mikepenz:aboutlibraries:5.0.1@aar') {
+        transitive = true
+    }
 }

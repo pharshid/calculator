@@ -25,6 +25,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.text.InputType;
+import android.text.Layout;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Gravity;
@@ -37,6 +38,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -45,6 +47,17 @@ import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
+import com.mikepenz.materialdrawer.accountswitcher.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.adapter.DrawerAdapter;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.sepidsa.calculator.data.LogContract;
 import com.sepidsa.calculator.util.IabHelper;
 import com.sepidsa.calculator.util.IabResult;
@@ -336,6 +349,46 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
         refreshFonts();
         setIconButtons();
+
+
+        // Create the AccountHeader
+        AccountHeader headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(R.drawable.header)
+                .addProfiles(
+                        new ProfileDrawerItem().withName("ماشین حساب 42")
+                                .withIcon(getResources().getDrawable(R.mipmap.ic_launcher))
+                )
+                .withCompactStyle(true)
+                .withAlternativeProfileHeaderSwitching(false)
+                .withProfileImagesClickable(false)
+//                .withSelectionFistLineShown(false)
+                .withSelectionListEnabled(false)
+//                .withTranslucentStatusBar(false)
+                .build();
+
+
+
+        Drawer result = new DrawerBuilder()
+                .withActivity(this)
+                .withDrawerGravity(Gravity.RIGHT)
+                .withFullscreen(true)
+                .withAccountHeader(headerResult)
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withName("هی احسان احسان").withIcon(getResources().getDrawable(R.drawable.ic_launcher)),
+                        new DividerDrawerItem(),
+                        new SecondaryDrawerItem().withName("لت دم کام!")
+                )
+                .withSelectedItem(-1)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
+                        // do something with the clicked item :D
+                        Toast.makeText(getApplicationContext(),"Position " + position + " pressed",Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                })
+                .build();
 
     }
 
