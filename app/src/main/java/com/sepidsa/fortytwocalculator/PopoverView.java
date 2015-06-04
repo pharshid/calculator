@@ -615,12 +615,12 @@ public class PopoverView extends RelativeLayout implements OnTouchListener{
 	}
 
 	/**
-	 * Sets the content size for the view in a popover, if point is (0,0) the popover will full the screen
+	 * Sets the tour_description size for the view in a popover, if point is (0,0) the popover will full the screen
 	 * @param contentSizeForViewInPopover
 	 */
 	public void setContentSizeForViewInPopover(Point contentSizeForViewInPopover) {
 		this.contentSizeForViewInPopover = contentSizeForViewInPopover;
-		//Save the real content size
+		//Save the real tour_description size
 		realContentSize = new Point(contentSizeForViewInPopover);
 		realContentSize.x += popoverView.getPaddingLeft()+popoverView.getPaddingRight();
 		realContentSize.y += popoverView.getPaddingTop()+popoverView.getPaddingBottom();

@@ -197,18 +197,6 @@
 
 
 
-            <Button
-                android:id="@+id/buttonLanguage"
-                android:text="@string/language"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                style="@style/DIALPADBUTTON.LAND_NORMAL."
-                android:textSize="18sp"
-                android:textColor="#DADFE1"
-
-                />
-
 
             <Button
                 android:id="@+id/buttonSettings"

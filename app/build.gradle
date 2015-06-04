@@ -43,6 +43,7 @@ repositories {
 
 
 dependencies {
+
     compile(name: 'library-2.4.1', ext: 'aar')
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.6.2'
@@ -55,4 +56,5 @@ dependencies {
     compile('com.mikepenz:aboutlibraries:5.0.1@aar') {
         transitive = true
     }
+
 }

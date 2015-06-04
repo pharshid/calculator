@@ -29,12 +29,12 @@
     </string>
 
 
-    <string name="backSpace">←</string>
+    <string name="backSpace"></string>
     <string name ="night1"></string>
     <string name ="day2"></string>
-    <string name="star">\u2606</string>
-    <string name="star_icon"></string>
-    <string name="add_label"></string>
+    <string name="star"></string>
+    <string name="star_icon"></string>
+    <string name="add_label"></string>
 
     <string name="powertwo">x²</string>
     <string name="powertwoTag">²</string>
@@ -127,20 +127,26 @@
     <string name="sqrt">√</string>
 
     <string name="check_mark"></string>
-    <string name="hamburger_menu">≡ ☰</string>
+
 
     <string name="prompt">Language</string>
     <string name="day"></string>
     <string name="night"></string>
-    <string name="list"></string>
-    <string name="settings">\uE036</string>
-    <string name="volume_high">\uE03E</string>
-    <string name="volume_off">\uE021</string>
+    <string name="list"></string>
+    <string name="settings"></string>
+    <string name="volume_high"></string>
+    <string name="volume_off"></string>
     <string name="language">\uE016</string>
     <string name="help">\uE035</string>
-    <string name="theme">\uE027</string>
+    <string name="theme"></string>
     <string name="next_page">\uE003</string>
     <string name="previous_page">\uE004</string>
+  <string name="hamburger_menu"></string>
+  <string name="hamburger_menu_big">☰</string>
+  <string name="chevron"></string>
+  <string name="delete_item"></string>
+  <string name="use_item"></string>
+  <string name="share_item"></string>
     <!--COLOR Codes -->
 
 
@@ -186,6 +192,9 @@
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
     <string name="skip">بی خیال</string>
+    <string name="star_outline"></string>
+  <string name="parallax_activity_name">parallax_activity</string>
+  <string name="premium_parallax_activity_name">premium_parallax</string>
 
 
 </resources>

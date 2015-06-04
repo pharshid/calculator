@@ -40,4 +40,7 @@
     <color name="snackbar_action_color_done">#ffccccff</color>
 
     <color name="black_overlay">#66000000</color>
+
+    <color name="tutorial_background_opaque">#FFFFFFFF</color>
+    <color name="tutorial_button">#FFFFFFFF</color>
 </resources>

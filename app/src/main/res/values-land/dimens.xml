@@ -25,8 +25,8 @@
     <dimen name="color_pallette_left_padding">50dp</dimen>
     <dimen name="language_menu_text_size">10sp</dimen>
 
-    <dimen name="log_expression_txt_size">30sp</dimen>
-    <dimen name="log_result_txt_size">34sp</dimen>
+    <dimen name="log_title_txt_size">40sp</dimen>
+    <dimen name="log_detail_txt_size">34sp</dimen>
     <dimen name="result_text_size">65sp</dimen>
     <dimen name="digital_lcd_text_size">40sp</dimen>
 

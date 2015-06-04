@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
@@ -68,6 +69,7 @@ public class LogAdapter extends CursorAdapter {
         viewHolder.position = cursor.getInt((cursor.getColumnIndex(LogContract.LogEntry._ID)));
 
         viewHolder.resultView.setText(result);
+        viewHolder.resultView.setTextColor(((MainActivity) context).getAccentColorCode());
         viewHolder.operationView.setText(operation);
         viewHolder.tagView.setText(tag);
         viewHolder.starredButton.setChecked(starred);
@@ -75,9 +77,15 @@ public class LogAdapter extends CursorAdapter {
 
 
         viewHolder.deleteButton.setOnClickListener(mDeleteButtonOnClickListener);
+        viewHolder.deleteButton.setTypeface(Typeface.createFromAsset(context.getAssets(), "flaticon.ttf"));
         viewHolder.copyButton.setOnClickListener(mLabelButtonOnClickListener);
+        viewHolder.copyButton.setTypeface(Typeface.createFromAsset(context.getAssets(), "flaticon.ttf"));
         viewHolder.shareButton.setOnClickListener(mShareButtonOnClickListener);
+        viewHolder.shareButton.setTypeface(Typeface.createFromAsset(context.getAssets(), "flaticon.ttf"));
         viewHolder.useButton.setOnClickListener(mUseButtonOnClickListener);
+        viewHolder.useButton.setTypeface(Typeface.createFromAsset(context.getAssets(), "flaticon.ttf"));
+
+
 
 
         if((viewHolder.toolbar.getVisibility() == View.VISIBLE) && !viewHolder.checked) {
@@ -88,8 +96,10 @@ public class LogAdapter extends CursorAdapter {
             viewHolder.toolbar.setVisibility(View.VISIBLE);
             viewHolder.checked=false;
         }
+        viewHolder.arrow.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "flaticon.ttf"));
         viewHolder.arrow.setRotation(0);
         viewHolder.arrow.setTranslationY(0);
+
 
     }
 
@@ -117,6 +127,7 @@ public class LogAdapter extends CursorAdapter {
             starredButton = (CheckBox) view.findViewById(R.id.constant_selected);
             toolbar = view.findViewById(R.id.toolbar);
             arrow = (TextView) view.findViewById(R.id.arrow);
+
 
             checked = false;
 

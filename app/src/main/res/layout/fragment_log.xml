@@ -14,7 +14,7 @@
 
         <SearchView
             android:layout_width="0dp"
-            android:layout_weight="2"
+            android:layout_weight="6"
             android:layout_height="wrap_content"
             android:iconifiedByDefault="true"
             android:id="@+id/log_search_view"
@@ -29,8 +29,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             style="?android:attr/borderlessButtonStyle"
+            android:textSize="19sp"
 
-            android:text="CLEAR"/>
+            android:text="@string/delete_item"/>
 
         <Button
             android:id="@+id/button_export_log"
@@ -39,8 +40,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             style="?android:attr/borderlessButtonStyle"
+            android:textSize="19sp"
 
-            android:text="EXPORT"/>
+            android:text="@string/share_item"/>
 
 
 
@@ -53,6 +55,8 @@
         android:layout_width="fill_parent"
         android:background="@android:color/transparent"
         android:cacheColorHint="@android:color/transparent"
+        android:layout_marginLeft="@dimen/padding_large"
+        android:layout_marginRight="@dimen/padding_large"
         >
     </ListView>
 
@@ -62,7 +66,7 @@
         android:layout_height="match_parent"
         android:id="@+id/empty_list"
         style="@style/CustomButton"
-        android:textSize="@dimen/log_result_txt_size"
+        android:textSize="@dimen/log_detail_txt_size"
         android:textColor="@android:color/darker_gray"
         android:gravity="center"
         android:text="List is empty, go get some cannoli."

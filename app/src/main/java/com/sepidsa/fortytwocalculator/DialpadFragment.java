@@ -92,6 +92,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
                                     ((Button) v).setTypeface(defaultFont);
                                 }
                             }
+                            refreshCButtonTypeface();
                             break;
 
                     }
@@ -484,19 +485,22 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
     void setClearButtonText(String input){
 
-        if(input.equals("\u2190"))
+        mView.findViewById(R.id.buttonClear).setTag(input);
+        ((Button) mView.findViewById(R.id.buttonClear)).setText(input);
+
+        refreshCButtonTypeface();
+
+    }
+
+    private void refreshCButtonTypeface() {
+        if( ((Button) mView.findViewById(R.id.buttonClear)).getText().equals(getResources().getString(R.string.backSpace)))
         {
-            //TODO
-            //Change Clear Button's Text to Backspace
-            ((Button) mView.findViewById(R.id.buttonClear)).setText("\u2190");
-            mView.findViewById(R.id.buttonClear).setTag("\u2190");
+            ((Button) mView.findViewById(R.id.buttonClear)).setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "flaticon.ttf"));
         }
-        if(input.equals("C"))
+        if( ((Button) mView.findViewById(R.id.buttonClear)).getText().equals("C"))
         {
             //Change Clear Button's Text to C
-            ((Button) mView.findViewById(R.id.buttonClear)).setText("C");
-            mView.findViewById(R.id.buttonClear).setTag("C");
-
+            ((Button) mView.findViewById(R.id.buttonClear)).setTypeface(defaultFont);
         }
     }
 

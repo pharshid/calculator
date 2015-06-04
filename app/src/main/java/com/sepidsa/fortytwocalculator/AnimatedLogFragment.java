@@ -3,6 +3,7 @@ package com.sepidsa.fortytwocalculator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -75,6 +76,11 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
         mExpandButton = (Button) rootView.findViewById(R.id.button_export_log);
         mSearchView = (SearchView) rootView.findViewById(R.id.log_search_view);
 
+        //setting icon typefaces for these 2 buttons
+
+        mClearButton.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "flaticon.ttf"));
+        mExpandButton.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "flaticon.ttf"));
+
         TextView empty = (TextView) rootView.findViewById(R.id.empty_list);
         mListView.setEmptyView(empty);
         mListView.setAdapter(mLogAdapter);
@@ -113,7 +119,7 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
 
                 // Creating the expand animation for the item
 
-                ExpandAnimation expandAni = new ExpandAnimation(mListView, view, toolbar, 250);
+                ExpandAnimation expandAni = new ExpandAnimation(getActivity(), mListView, view, toolbar, 250);
 
                 // Start the animation on the toolbar
 

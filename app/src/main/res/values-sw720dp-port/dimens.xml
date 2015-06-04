@@ -28,8 +28,8 @@
     <dimen name="viewpager_margin_sideways">50dp</dimen>
     <dimen name="translation_text_size">38sp</dimen>
 
-    <dimen name="log_expression_txt_size">37sp</dimen>
-    <dimen name="log_result_txt_size">40sp</dimen>
+    <dimen name="log_title_txt_size">43sp</dimen>
+    <dimen name="log_detail_txt_size">35sp</dimen>
     <dimen name="icon_button_padding_top">6dp</dimen>
     <dimen name="spinner_text_size">33sp</dimen>
     <dimen name="icon_button_size">34sp</dimen>

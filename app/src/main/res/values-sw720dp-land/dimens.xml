@@ -30,7 +30,7 @@
 
     <dimen name="viewpager_margin_sideways">50dp</dimen>
 
-    <dimen name="log_expression_txt_size">26sp</dimen>
-    <dimen name="log_result_txt_size">32sp</dimen>
+    <dimen name="log_title_txt_size">35sp</dimen>
+    <dimen name="log_detail_txt_size">27sp</dimen>
      <dimen name="language_spinner_padding_left">35dp</dimen>
 </resources>

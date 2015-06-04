@@ -3,18 +3,22 @@ package com.sepidsa.fortytwocalculator;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,7 +29,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.text.InputType;
-import android.text.Layout;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Gravity;
@@ -47,32 +50,21 @@ import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
 
-<<<<<<< HEAD:app/src/main/java/com/sepidsa/calculator/MainActivity.java
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeaderBuilder;
-import com.mikepenz.materialdrawer.adapter.DrawerAdapter;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-import com.sepidsa.calculator.data.LogContract;
-import com.sepidsa.calculator.util.IabHelper;
-import com.sepidsa.calculator.util.IabResult;
-import com.sepidsa.calculator.util.Inventory;
-import com.sepidsa.calculator.util.Purchase;
-=======
 import com.sepidsa.fortytwocalculator.data.LogContract;
 import com.sepidsa.fortytwocalculator.util.IabHelper;
 import com.sepidsa.fortytwocalculator.util.IabResult;
 import com.sepidsa.fortytwocalculator.util.Inventory;
 import com.sepidsa.fortytwocalculator.util.Purchase;
->>>>>>> 9e0b3d8ea1357e20645769116e300183213dbbb6:app/src/main/java/com/sepidsa/fortytwocalculator/MainActivity.java
 import com.viewpagerindicator.CirclePageIndicator;
 
+import java.io.File;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -97,6 +89,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private static final int FONT_YEKAN = 4;
     private static final int FONT_MAJALLA = 7;
     private long mLatestInsertedId;
+    private Drawer mDrawer;
     Log_Adapter mLogAdapter;
     Serializable mListView ;
     //TextSwitcher mResultTextSwitcher = null;
@@ -361,7 +354,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
         refreshFonts();
         setIconButtons();
+        buildNavigationDrawer();
 
+
+    }
+
+    private void buildNavigationDrawer() {
+        // Navigation Drawer Codes //
 
         // Create the AccountHeader
         AccountHeader headerResult = new AccountHeaderBuilder()
@@ -371,7 +370,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                         new ProfileDrawerItem().withName("ماشین حساب 42")
                                 .withIcon(getResources().getDrawable(R.mipmap.ic_launcher))
                 )
-                .withCompactStyle(true)
+//                .withCompactStyle(true)
                 .withAlternativeProfileHeaderSwitching(false)
                 .withProfileImagesClickable(false)
 //                .withSelectionFistLineShown(false)
@@ -380,29 +379,203 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 .build();
 
 
-
         Drawer result = new DrawerBuilder()
                 .withActivity(this)
                 .withDrawerGravity(Gravity.RIGHT)
                 .withFullscreen(true)
                 .withAccountHeader(headerResult)
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName("هی احسان احسان").withIcon(getResources().getDrawable(R.drawable.ic_launcher)),
-                        new DividerDrawerItem(),
-                        new SecondaryDrawerItem().withName("لت دم کام!")
+                        new PrimaryDrawerItem().withName("راهنما").withIcon(getResources().getDrawable(R.drawable.ic_launcher)),
+                        new PrimaryDrawerItem().withName("درباره").withIcon(getResources().getDrawable(R.drawable.ic_launcher)),
+                        new PrimaryDrawerItem().withName("تماس با ما").withIcon(getResources().getDrawable(R.drawable.ic_launcher)),
+//                        new DividerDrawerItem(),
+                        new PrimaryDrawerItem().withName("ارتقا به نسخه طلایی").withIcon(getResources().getDrawable(R.drawable.ic_launcher)),
+                        new PrimaryDrawerItem().withName("بازیابی خرید").withIcon(getResources().getDrawable(R.drawable.ic_launcher))
+
                 )
-                .withSelectedItem(-1)
+        .withSelectedItem(-1)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
                         // do something with the clicked item :D
-                        Toast.makeText(getApplicationContext(),"Position " + position + " pressed",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Position " + position + " pressed", Toast.LENGTH_SHORT).show();
+                        switch (position) {
+                            case 0:
+                                displayHelp();
+                                break;
+                            case 1:
+                                displayAbout();
+                                break;
+                            case 2:
+                                displayContactUs();
+                                break;
+                            case 3:
+                                displayUpgradeToPremium(0);
+                                break;
+                            case 4:
+                                restorePurchases();
+                                break;
+                            default:
+                        }
                         return true;
                     }
                 })
                 .build();
+        mDrawer = result;
+    }
+
+    private void restorePurchases() {
+        //TODO check with bazaar, show dialog.
+        Intent myIntent = new Intent(MainActivity.this, ParallaxPagerActivity.class);
+        MainActivity.this.startActivity(myIntent);
 
     }
+
+    private void displayUpgradeToPremium(int i) {
+        Intent myIntent = new Intent(MainActivity.this, PremiumShowcasePagerActivity.class);
+        MainActivity.this.startActivity(myIntent);
+
+    }
+
+    private void displayContactUs() {
+        // todo send email to info@sepidsa.com
+        sendEmail(this, "راجع به ۴۲", "", null);
+
+    }
+
+    public static void sendEmail(final Context p_context, final String p_subject, final String p_body, final ArrayList<String> p_attachments)
+    {
+        try
+        {
+            PackageManager pm = p_context.getPackageManager();
+            ResolveInfo selectedEmailActivity = null;
+
+            Intent emailDummyIntent = new Intent(Intent.ACTION_SENDTO);
+            emailDummyIntent.setData(Uri.parse("mailto:feedback@sepidsa.com"));
+
+            List<ResolveInfo> emailActivities = pm.queryIntentActivities(emailDummyIntent, 0);
+
+            if (null == emailActivities || emailActivities.size() == 0)
+            {
+                Intent emailDummyIntentRFC822 = new Intent(Intent.ACTION_SEND_MULTIPLE);
+                emailDummyIntentRFC822.setType("message/rfc822");
+
+                emailActivities = pm.queryIntentActivities(emailDummyIntentRFC822, 0);
+            }
+
+            if (null != emailActivities)
+            {
+                if (emailActivities.size() == 1)
+                {
+                    selectedEmailActivity = emailActivities.get(0);
+                }
+                else
+                {
+                    for (ResolveInfo currAvailableEmailActivity : emailActivities)
+                    {
+                        if (true == currAvailableEmailActivity.isDefault)
+                        {
+                            selectedEmailActivity = currAvailableEmailActivity;
+                        }
+                    }
+                }
+
+                if (null != selectedEmailActivity)
+                {
+                    // Send email using the only/default email activity
+                    sendEmailUsingSelectedEmailApp(p_context, p_subject, p_body, p_attachments, selectedEmailActivity);
+                }
+                else
+                {
+                    final List<ResolveInfo> emailActivitiesForDialog = emailActivities;
+
+                    String[] availableEmailAppsName = new String[emailActivitiesForDialog.size()];
+                    for (int i = 0; i < emailActivitiesForDialog.size(); i++)
+                    {
+                        availableEmailAppsName[i] = emailActivitiesForDialog.get(i).activityInfo.applicationInfo.loadLabel(pm).toString();
+                    }
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(p_context);
+                    builder.setTitle("Choose your Email app");
+                    builder.setItems(availableEmailAppsName, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            sendEmailUsingSelectedEmailApp(p_context, p_subject, p_body, p_attachments, emailActivitiesForDialog.get(which));
+                        }
+                    });
+
+                    builder.create().show();
+                }
+            }
+            else
+            {
+                sendEmailUsingSelectedEmailApp(p_context, p_subject, p_body, p_attachments, null);
+            }
+        }
+        catch (Exception ex)
+        {
+            Log.e(TAG, "Can't send email", ex);
+        }
+    }
+
+    protected static void sendEmailUsingSelectedEmailApp(Context p_context, String p_subject, String p_body, ArrayList<String> p_attachments, ResolveInfo p_selectedEmailApp)
+    {
+        try
+        {
+            Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+
+            String aEmailList[] = { "some@emaildomain.com"};
+
+            emailIntent.putExtra(Intent.EXTRA_EMAIL, aEmailList);
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, null != p_subject ? p_subject : "");
+            emailIntent.putExtra(Intent.EXTRA_TEXT, null != p_body ? p_body : "");
+
+            if (null != p_attachments && p_attachments.size() > 0)
+            {
+                ArrayList<Uri> attachmentsUris = new ArrayList<Uri>();
+
+                // Convert from paths to Android friendly Parcelable Uri's
+                for (String currAttachemntPath : p_attachments)
+                {
+                    File fileIn = new File(currAttachemntPath);
+                    Uri currAttachemntUri = Uri.fromFile(fileIn);
+                    attachmentsUris.add(currAttachemntUri);
+                }
+                emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, attachmentsUris);
+            }
+
+            if (null != p_selectedEmailApp)
+            {
+                Log.d(TAG, "Sending email using " + p_selectedEmailApp);
+                emailIntent.setComponent(new ComponentName(p_selectedEmailApp.activityInfo.packageName, p_selectedEmailApp.activityInfo.name));
+
+                p_context.startActivity(emailIntent);
+            }
+            else
+            {
+                Intent emailAppChooser = Intent.createChooser(emailIntent, "Select Email app");
+
+                p_context.startActivity(emailAppChooser);
+            }
+        }
+        catch (Exception ex)
+        {
+            Log.e(TAG, "Error sending email", ex);
+        }
+    }
+
+    private void displayAbout() {
+        Intent myIntent = new Intent(MainActivity.this, HelpActivityOld.class);
+        MainActivity.this.startActivity(myIntent);
+
+    }
+
+    private void displayHelp() {
+        Intent myIntent = new Intent(MainActivity.this, HelpActivity.class);
+        MainActivity.this.startActivity(myIntent);
+
+    }
+
 
     private String getTheCannoli() {
         return null;
@@ -621,22 +794,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         ( (Button)findViewById(R.id.buttonSettings)).setTextColor(Color.LTGRAY);
         ( findViewById(R.id.buttonSettings)).setOnClickListener(this);
 
-        ( (Button)findViewById(R.id.buttonLanguage)).setTypeface(mFlatIcon);
-        ( (Button)findViewById(R.id.buttonLanguage)).setTextColor(Color.LTGRAY);
-        ( findViewById(R.id.buttonLanguage)).setOnClickListener(this);
-// todo show a settings dialog here
 
         ( (Button)findViewById(R.id.buttonColors)).setTypeface(mFlatIcon);
         ( (Button)findViewById(R.id.buttonColors)).setTextColor(Color.LTGRAY);
         ( findViewById(R.id.buttonColors)).setOnClickListener(this);
 
-        ( (Button)findViewById(R.id.buttonParallax)).setTypeface(mFlatIcon);
-        ( (Button)findViewById(R.id.buttonParallax)).setTextColor(Color.LTGRAY);
-        ( findViewById(R.id.buttonParallax)).setOnClickListener(this);
 
-        ( (Button)findViewById(R.id.buttonPurchase)).setTypeface(mFlatIcon);
-        ( (Button)findViewById(R.id.buttonPurchase)).setTextColor(Color.LTGRAY);
-        ( findViewById(R.id.buttonPurchase)).setOnClickListener(this);
+
+        ( (Button)findViewById(R.id.buttonHamburgerMenu)).setTypeface(mFlatIcon);
+        ( (Button)findViewById(R.id.buttonHamburgerMenu)).setTextColor(Color.LTGRAY);
+        ( findViewById(R.id.buttonHamburgerMenu)).setOnClickListener(this);
 
 
     }
@@ -713,7 +880,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 fList.add(new AnimatedLogFragment());
                 fList.add(new DialpadFragment());
                 fList.add(new ScientificFragment());
-                mViewPager.setAdapter(new PortraitPagerAdapter(fragmentManager, fList));
+                mViewPager.setAdapter(new ViewPagerAdapter(fragmentManager, fList));
                 mLayoutState = PORTRAIT_BOTH;
                 mViewPager.setOffscreenPageLimit(2);
 
@@ -730,7 +897,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 fList.add(new AnimatedLogFragment());
                 fList.add(new DialpadFragment());
 //                mColorPage = 2;
-                mViewPager.setAdapter(new PortraitPagerAdapter(fragmentManager, fList));
+                mViewPager.setAdapter(new ViewPagerAdapter(fragmentManager, fList));
                 mLayoutState = LANDSCAPE_PHONE;
                 mViewPager.setOffscreenPageLimit(2);
                 mViewPager.setCurrentItem(DIALPAD_FRAGMENT);
@@ -969,6 +1136,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         if (currentButtonValue.equals(getResources().getString(R.string.clear))) {
             performClearResult();
+
             return;
         }
 
@@ -993,7 +1161,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             return;
         }
 
-        if (currentButtonValue.equals("\u2190")) {
+        if (currentButtonValue.equals(getResources().getString(R.string.backSpace))) {
             performBackspace();
             return;
         }
@@ -1247,6 +1415,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         mButtonsStack.clear();
         playSound(clearAllButtonSoundID);
+        mAddToFavorites.setVisibility(View.GONE);
+        mAddLabel.setVisibility(View.GONE);
     }
 
     int stackSize(){
@@ -1280,7 +1450,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             sendLogMessage(getMExpressionString().toString(), mTemp, false, "");
             mAddToFavorites.setAlpha(1);
             mAddToFavorites.setRotation(0);
-            mAddToFavorites.setTextColor(Color.BLACK);
+            mAddToFavorites.setText(getResources().getString(R.string.star));
+            mAddToFavorites.setTextColor(Color.WHITE);
             mAddToFavorites.setScaleX(1);
             mAddToFavorites.setScaleY(1);
             mAddToFavorites.setTranslationY(0);
@@ -1947,6 +2118,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 }
                 cursor.close();
                 setClipView(mAddToFavorites, false);
+                mAddToFavorites.setText(getResources().getString(R.string.star_outline));
                 mAddToFavorites.setTextColor(Color.YELLOW);
                 mAddToFavorites.animate()
                         .translationY(200)
@@ -2047,22 +2219,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 cdc.show();
                 break;
 
-            case R.id.buttonLanguage:
-                mButton = (Button)findViewById(R.id.buttonLanguage);
-                showSpinner();
-                break;
-
-            case R.id.buttonParallax:
-                Intent myIntent = new Intent(MainActivity.this, HelpActivity.class);
-                MainActivity.this.startActivity(myIntent);
-                break;
-
-
-
-            case R.id.buttonPurchase:
-                PurchaseDialog myDialog = new PurchaseDialog();
-                myDialog.show(getSupportFragmentManager(),"PurchaseDialog");
-//                myDialog.show(getFragmentManager(), "PurchaseDialog");
+            case R.id.buttonHamburgerMenu:
+            mDrawer.openDrawer();
                 break;
 
 
@@ -2119,7 +2277,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
 
-    private void showSpinner() {
+    public void showSpinner() {
 
         AlertDialog.Builder b = new AlertDialog.Builder(this);
 // todo google play edition
@@ -2278,10 +2436,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 }
 
 //----------------------------------------------------------
-class PortraitPagerAdapter extends FragmentStatePagerAdapter {
+class ViewPagerAdapter extends FragmentStatePagerAdapter {
     private List<Fragment> fragments;
 
-    public PortraitPagerAdapter(FragmentManager fm ,List<Fragment> fragments ) {
+    public ViewPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
         super(fm);
         this.fragments = fragments;
 

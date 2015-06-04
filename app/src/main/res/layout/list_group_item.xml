@@ -24,7 +24,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="3dp"
-    android:background="@android:color/transparent">
+    android:background="@android:color/transparent"
+    >
 
 
     <LinearLayout
@@ -32,7 +33,8 @@
         android:orientation="vertical"
         android:animateLayoutChanges="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <RelativeLayout
             android:id="@+id/container"
@@ -46,20 +48,21 @@
                 android:id="@+id/constant_selected"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:button="@android:drawable/btn_star"
+                android:button="@drawable/custom_star"
                 android:gravity="center_horizontal|top"
                 android:focusable="false"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="false"
                 android:layout_marginTop="@dimen/padding_large"
+                android:layout_marginRight="@dimen/padding_large"
                 />
 
             <TextView
                 android:id="@+id/arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="&#x2C5;"
+                android:text="@string/chevron"
                 android:gravity="center"
 
                 android:layout_alignParentRight="true"
@@ -68,7 +71,9 @@
                 android:layout_alignLeft="@id/constant_selected"
                 android:layout_below="@id/constant_selected"
                 android:layout_alignParentBottom="true"
-                android:textSize="30sp" />
+                android:paddingBottom="@dimen/padding_small"
+                android:layout_marginRight="@dimen/padding_large"
+                android:textSize="15sp" />
 
 
             <TextView
@@ -76,16 +81,13 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/constant_name"
                 style="@style/CustomButton"
-                android:textSize="@dimen/log_expression_txt_size"
+                android:textSize="@dimen/log_title_txt_size"
                 android:paddingTop="@dimen/padding_small"
-                android:textColor="@android:color/holo_blue_light"
+                android:textColor="@android:color/black"
                 android:gravity="left"
                 android:layout_toLeftOf="@id/constant_selected"
-                android:paddingLeft="@dimen/padding_small"
                 android:clickable="false"
                 android:focusable="false"
-
-
                 />
 
             <TextView
@@ -94,10 +96,9 @@
                 android:id="@+id/constant_number"
                 android:layout_below="@+id/constant_name"
                 style="@style/CustomButton"
-                android:textSize="@dimen/log_result_txt_size"
+                android:textSize="@dimen/log_detail_txt_size"
                 android:textColor="@android:color/darker_gray"
                 android:gravity="left"
-                android:paddingLeft="@dimen/padding_small"
                 android:layout_toLeftOf="@id/constant_selected"
                 android:focusable="false"
 
@@ -108,7 +109,7 @@
                 android:id="@+id/LOG_tag"
                 android:layout_below="@id/constant_number"
                 style="@style/CustomButton"
-                android:textSize="@dimen/log_result_txt_size"
+                android:textSize="@dimen/log_detail_txt_size"
                 android:textColor="@android:color/darker_gray"
                 android:gravity="left"
                 android:layout_toLeftOf="@id/constant_selected"
@@ -132,7 +133,7 @@
                 android:focusableInTouchMode="false"
                 android:layout_width="wrap_content"
                 style="?android:attr/borderlessButtonStyle"
-            android:text="DELETE"/>
+            android:text="@string/delete_item"/>
 
             <Button android:id="@+id/labelButton"
                 android:layout_height="50dip"
@@ -140,7 +141,7 @@
                 android:focusableInTouchMode="false"
                 android:layout_width="wrap_content"
                 style="?android:attr/borderlessButtonStyle"
-                android:text="LABEL"/>
+                android:text="@string/add_label"/>
 
             <Button android:id="@+id/shareButton"
                 android:layout_height="50dip"
@@ -148,7 +149,7 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 style="?android:attr/borderlessButtonStyle"
-                android:text="SHARE"/>
+                android:text="@string/share_item"/>
 
             <Button android:id="@+id/useButton"
                 android:layout_height="50dip"
@@ -157,7 +158,7 @@
                 android:focusableInTouchMode="false"
                 android:visibility="visible"
                 style="?android:attr/borderlessButtonStyle"
-                android:text="USE"/>
+                android:text="@string/use_item"/>
 
         </LinearLayout>
     </LinearLayout>

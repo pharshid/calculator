@@ -107,8 +107,8 @@
             android:id="@+id/btn_CHANGE_TRANSLATION_FONT"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="50"
-            android:text="فونت فارسی"
+            android:layout_weight="40"
+            android:text="فونت"
             android:background="#8b9dc3"
             android:textSize="22sp"
             android:fontFamily="sans-serif-light"
@@ -124,25 +124,8 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/tips"
-            android:layout_weight="50"
-            android:text="نکات"
-            android:background="#8b9dc3"
-            android:textSize="22sp"
-            android:fontFamily="sans-serif-light"
-            android:textColor="@android:color/white"
-            android:paddingTop="25dp"
-            android:paddingBottom="25dp"
-            android:layout_marginLeft="0.5dp"
-            android:layout_marginBottom="0.5dp"
-            android:gravity="center"/>
-
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="50"
-            android:text="سایز دکمه ها"
+            android:layout_weight="60"
+            android:text="ضخامت دکمه ها"
             android:textSize="22sp"
             android:fontFamily="sans-serif-thin"
             android:background="#8b9dc3"
@@ -156,6 +139,26 @@
             android:id="@+id/dialpad_text_size"
 
             />
+
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/tips"
+            android:layout_weight="40"
+            android:text="زبان"
+            android:background="#8b9dc3"
+            android:textSize="22sp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@android:color/white"
+            android:paddingTop="25dp"
+            android:paddingBottom="25dp"
+            android:layout_marginLeft="0.5dp"
+            android:layout_marginBottom="0.5dp"
+            android:gravity="center"/>
+
+
+
     </LinearLayout>
 
 

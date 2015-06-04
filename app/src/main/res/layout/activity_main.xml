@@ -141,7 +141,7 @@
                 android:id="@+id/favorites_list"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="12"
+                android:layout_weight="13"
                 android:background="@android:color/transparent"
                 android:layout_centerVertical="true"
                 android:visibility="visible"
@@ -178,7 +178,6 @@
         android:orientation="vertical"
         android:clipChildren="false"
         android:clipToPadding="false"
-        style="@style/viewpager"
 
         >
 
@@ -225,16 +224,7 @@
 
                     />
 
-                <Button
-                    android:id="@+id/buttonLanguage"
-                    android:layout_weight="1"
-                    android:text="@string/language"
-                    android:tag="@string/language"
-                    android:gravity="center_horizontal"
-                    style="@style/icon_button.portrait"
-                    android:textColor="#DADFE1"
 
-                    />
 
 
 
@@ -261,23 +251,13 @@
 
                     />
 
-                <Button
-                    android:id="@+id/buttonParallax"
-                    style="@style/icon_button.portrait"
-                    android:layout_weight="1"
-                    android:text="@string/help"
-                    android:textColor="#DADFE1"
-                    android:tag="p"
-                    android:gravity="center_horizontal"
-
-                    />
 
 
                 <Button
-                    android:id="@+id/buttonPurchase"
+                    android:id="@+id/buttonHamburgerMenu"
                     style="@style/icon_button.portrait"
                     android:layout_weight="1"
-                    android:text="@string/help"
+                    android:text="@string/hamburger_menu"
                     android:textColor="#DADFE1"
                     android:tag="p"
                     android:gravity="center_horizontal"

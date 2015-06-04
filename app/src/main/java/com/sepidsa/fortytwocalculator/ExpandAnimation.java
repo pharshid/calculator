@@ -1,6 +1,8 @@
 package com.sepidsa.fortytwocalculator;
 
+import android.content.Context;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -31,7 +33,7 @@ public class ExpandAnimation extends Animation {
      * @param view The layout we want to animate
      * @param duration The duration of the animation, in ms
      */
-    public ExpandAnimation(ListView listView, View parent, View view, int duration) {
+    public ExpandAnimation(Context context, ListView listView, View parent, View view, int duration) {
 
         setDuration(duration);
         mAnimatedView = view;
@@ -46,6 +48,7 @@ public class ExpandAnimation extends Animation {
         mMarginEnd = (mMarginStart == 0 ? (0- view.getHeight()) : 0);
 
         mArrow = (TextView) parent.findViewById(R.id.arrow);
+
 //        setClipView(mArrow, false);
 //        setClipView(parent, false);
         setClipView(view, false);
@@ -91,9 +94,11 @@ public class ExpandAnimation extends Animation {
             if (mMarginStart != 0) {
                 mArrow.setRotation(180 * interpolatedTime);
                 mArrow.setTranslationY(150 * interpolatedTime);
+                mArrow.setAlpha(1 - interpolatedTime);
             } else {
                 mArrow.setRotation(180 * (1 - interpolatedTime));
                 mArrow.setTranslationY(150 * (1 - interpolatedTime));
+                mArrow.setAlpha(interpolatedTime);
                             }
             // Making sure we didn't run the ending before (it happens!)
         } else if (!mWasEndedAlready) {

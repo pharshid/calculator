@@ -127,12 +127,9 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
 
     // Send an Intent with an action named "my-event".
     void sendChangeDialpadTypefaceMessage(int font) {
+        ((MainActivity) mContext).setFontForComponent("DIALPAD_FONT",font);
         Intent intent = new Intent("themeIntent");
-       ((MainActivity) mContext).setFontForComponent("DIALPAD_FONT",font);
-
-        // add data
         intent.putExtra("message", "changeDialpadFont");
-        //   intent.putExtra("detail",getMTranslationEditText().toString());
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
 
 
@@ -153,42 +150,42 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
                 break;
 
             case R.id.tips:
-
-
-                AlertDialog dialog = new AlertDialog.Builder(mContext).setIcon(android.R.drawable.ic_dialog_alert).setTitle("").setMessage("- جهت پاک کردن کل عبارت دکمه C  را نگه دارید\n" +
-                                "- جهت پاک کردن خلاصه محاسبات در ابتدای لیست انگشت تون رو به پایین بکشید\n" +
-
-                                "- درصد اینطوری کار می کنه\n" +
-                                "50%200  = 100\n" +
-                                "50% * 200  = 100\n" +
-                                "200 * 50%  = 100\n\n" +
-
-                                "100 + 20% = 120\n" +
-                                "100 - 20% = 80\n" +
-                                "100 ÷ 20% = 500" + "\n\n" +
-
-                                " حافظه ماشین حساب یه چیز خیلی بدرد بخوره که به خاطر پیچیدگیش معمولا ازش کمتر استفاده می شه" +
-                                "\nما سعی کردیم کار با حافظه رو آسون تر کنیم" + "\n\n" +
-                                " فرض کن قراره هزینه خرید ۴ تا لامپ ۲۰ تومنی و ۵ کیلو گوجه ۷ تومنی رو حساب کنی" + "\n" +
-                                " حافظه در ابتدا صفر هست  " + "\n" +
-                                "اول ۴ ضربدر ۲۰ رو می نویسی و دکمه جمع رو نگه می داری. این مقدار به حافظه اضافه شد" + "\n" +
-                                "حالا ۵ رو ضربدر ۷ کن و باز دوباره دکمه ی جمع رو نگه دار" + "\n" +
-                                "محاسبه تمام شد.اگر بخوای مقدار حافظه رو واضح ببینی یا باهاش کار کنی دکمه مساوی رو نگه می داری" + "\n" +
-                                "برای  خالی کردن حافظه دکمه ضرب رو نگه دار تا مقدارش صفر شه" + "\n" +
-                                "ساده بود نه ؟"
-
-                ).setPositiveButton(
-                        "باشه", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        }).show();
-                TextView textView = (TextView) dialog.findViewById(android.R.id.message);
-                textView.setTypeface(mshekari);
-
-
-                Button button1 = (Button) dialog.findViewById(android.R.id.button1);
-                button1.setTypeface(mshekari);
+                ((MainActivity)mContext).showSpinner();
+ //
+//                AlertDialog dialog = new AlertDialog.Builder(mContext).setIcon(android.R.drawable.ic_dialog_alert).setTitle("").setMessage("- جهت پاک کردن کل عبارت دکمه C  را نگه دارید\n" +
+//                                "- جهت پاک کردن خلاصه محاسبات در ابتدای لیست انگشت تون رو به پایین بکشید\n" +
+//
+//                                "- درصد اینطوری کار می کنه\n" +
+//                                "50%200  = 100\n" +
+//                                "50% * 200  = 100\n" +
+//                                "200 * 50%  = 100\n\n" +
+//
+//                                "100 + 20% = 120\n" +
+//                                "100 - 20% = 80\n" +
+//                                "100 ÷ 20% = 500" + "\n\n" +
+//
+//                                " حافظه ماشین حساب یه چیز خیلی بدرد بخوره که به خاطر پیچیدگیش معمولا ازش کمتر استفاده می شه" +
+//                                "\nما سعی کردیم کار با حافظه رو آسون تر کنیم" + "\n\n" +
+//                                " فرض کن قراره هزینه خرید ۴ تا لامپ ۲۰ تومنی و ۵ کیلو گوجه ۷ تومنی رو حساب کنی" + "\n" +
+//                                " حافظه در ابتدا صفر هست  " + "\n" +
+//                                "اول ۴ ضربدر ۲۰ رو می نویسی و دکمه جمع رو نگه می داری. این مقدار به حافظه اضافه شد" + "\n" +
+//                                "حالا ۵ رو ضربدر ۷ کن و باز دوباره دکمه ی جمع رو نگه دار" + "\n" +
+//                                "محاسبه تمام شد.اگر بخوای مقدار حافظه رو واضح ببینی یا باهاش کار کنی دکمه مساوی رو نگه می داری" + "\n" +
+//                                "برای  خالی کردن حافظه دکمه ضرب رو نگه دار تا مقدارش صفر شه" + "\n" +
+//                                "ساده بود نه ؟"
+//
+//                ).setPositiveButton(
+//                        "باشه", new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                            }
+//                        }).show();
+//                TextView textView = (TextView) dialog.findViewById(android.R.id.message);
+//                textView.setTypeface(mshekari);
+//
+//
+//                Button button1 = (Button) dialog.findViewById(android.R.id.button1);
+//                button1.setTypeface(mshekari);
                 break;
 
             case R.id.dialpad_text_size:
@@ -256,19 +253,6 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
                 ((MainActivity) mContext).refreshFonts();
 
 
-                // todo send email to info@sepidsa.com
-//                Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-//                emailIntent.setType("message/rfc822");
-////                emailIntent.setData(Uri.parse("mailto:" + "recipient@example.com"));
-//                String aEmailList[] = { "settings@sepidsa.com"};
-//
-//                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, aEmailList);
-//                emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "راجع به ۴۲");
-//                try {
-//                    mContext.startActivity(Intent.createChooser(emailIntent, "Choose your Email app"));
-//                } catch (android.content.ActivityNotFoundException ex) {
-//                    Toast.makeText(mContext, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
-//                }
                 break;
 
         }
