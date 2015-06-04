@@ -7,9 +7,19 @@
     android:orientation="vertical"
     >
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Unlock Premium"
+        android:background="@drawable/button_border"
+        android:padding="@dimen/padding_large"
+        android:layout_marginTop="@dimen/abc_control_padding_material"
+        android:textColor="@android:color/white"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="320dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center_vertical"
         android:layout_centerInParent="true"

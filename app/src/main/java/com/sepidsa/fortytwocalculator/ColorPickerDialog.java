@@ -54,7 +54,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
     protected static final String KEY_SIZE = "size";
 
     protected int mTitleResId = R.string.color_picker_default_title;
-    protected int[] mColors = null;
+    protected int[] mAccentColors = null;
     protected int[] mColorsKeypad = null;
 
     protected String[] mColorContentDescriptions = null;
@@ -112,7 +112,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
         }
 
         if (savedInstanceState != null) {
-            mColors = savedInstanceState.getIntArray(KEY_COLORS);
+            mAccentColors = savedInstanceState.getIntArray(KEY_COLORS);
             mColorsKeypad = savedInstanceState.getIntArray(KEY_COLORS_KEYPAD);
             mSelectedColor = (Integer) savedInstanceState.getSerializable(KEY_SELECTED_COLOR);
             mSelectedKeypadBackgroundColor = (Integer) savedInstanceState.getSerializable(KEY_SELECTED_COLOR_KEYPAD);
@@ -147,8 +147,8 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
 
         //        mColorsKeypad = Utils.ColorUtils.colorChoiceForKeypad(getActivity().getApplicationContext());
 
-        if (mColors != null) {
-//            refreshPalette(mPaletteMaintheme,mColors,mSelectedColor,mColorContentDescriptions);
+        if (mAccentColors != null) {
+//            refreshPalette(mPaletteMaintheme,mAccentColors,mSelectedColor,mColorContentDescriptions);
 
             prepareThemeSegmentedControl(view);
         }
@@ -173,11 +173,11 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
                     (ColorPickerSwatch.OnColorSelectedListener) getTargetFragment();
             listener.onColorSelected(color);
         }
-        if(mViewSwitcher.getCurrentView().getTag().equals("theme")) {
+        if(mViewSwitcher.getCurrentView().getTag().equals("accent_color")) {
             if (color != mSelectedColor) {
                 mSelectedColor = color;
                 // Redraw palette to show checkmark on newly selected color before dismissing.
-                refreshPalette(mPaletteMaintheme, mColors, mSelectedColor, mColorContentDescriptions);
+                refreshPalette(mPaletteMaintheme, mAccentColors, mSelectedColor, mColorContentDescriptions);
                 ((MainActivity)getActivity()).changeAccentColor(mSelectedColor);
                 if(((MainActivity)getActivity()).isRetroThemeSelected() == true){
                     ((MainActivity) getActivity()).setRetrothemeSelected(false);
@@ -207,10 +207,10 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
 
 
     public void setColors(int[] colors, int selectedColor) {
-        if (mColors != colors || mSelectedColor != selectedColor) {
-            mColors = colors;
+        if (mAccentColors != colors || mSelectedColor != selectedColor) {
+            mAccentColors = colors;
             mSelectedColor = selectedColor;
-//            refreshPalette(mPaletteMaintheme,mColors,mSelectedColor,mColorContentDescriptions);
+//            refreshPalette(mPaletteMaintheme,mAccentColors,mSelectedColor,mColorContentDescriptions);
         }
     }
 
@@ -232,7 +232,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putIntArray(KEY_COLORS, mColors);
+        outState.putIntArray(KEY_COLORS, mAccentColors);
         outState.putSerializable(KEY_SELECTED_COLOR, mSelectedColor);
         outState.putStringArray(KEY_COLOR_CONTENT_DESCRIPTIONS, mColorContentDescriptions);
 
@@ -241,8 +241,8 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
     }
 
     private void prepareThemeSegmentedControl(View view) {
-        RadioButton buttonLightTheme = (RadioButton) view.findViewById(R.id.accent_color_button);
-        RadioButton buttonDarkTheme = (RadioButton) view.findViewById(R.id.keypad_theme_button);
+        RadioButton buttonChangeAccentTheme = (RadioButton) view.findViewById(R.id.accent_color_button);
+        RadioButton buttonChangeKeypadTheme = (RadioButton) view.findViewById(R.id.keypad_theme_button);
 
         SegmentedGroup themeSegment = (SegmentedGroup) view.findViewById(R.id.segmented);
         themeSegment.setOnCheckedChangeListener(this);
@@ -250,13 +250,13 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
         switch ( 0) {
             case 0 : // light theme
 
-                buttonLightTheme.setChecked(true);
-                buttonDarkTheme.setChecked(false);
+                buttonChangeAccentTheme.setChecked(true);
+                buttonChangeKeypadTheme.setChecked(false);
                 break;
 
             case 1 : // dark theme
-                buttonLightTheme.setChecked(false);
-                buttonDarkTheme.setChecked(true);
+                buttonChangeAccentTheme.setChecked(false);
+                buttonChangeKeypadTheme.setChecked(true);
                 break;
         }
 
@@ -272,9 +272,9 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
                 //change accent color
 
 
-                refreshPalette(mPaletteMaintheme,mColors,mSelectedColor,mColorContentDescriptions);
+                refreshPalette(mPaletteMaintheme, mAccentColors,mSelectedColor,mColorContentDescriptions);
 
-                if ( mViewSwitcher.getCurrentView().getTag().equals("keypad")){
+                if ( mViewSwitcher.getCurrentView().getTag().equals("keypad_color")){
                     mViewSwitcher.showNext();
                 }
                 break;
@@ -284,7 +284,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
 
 //                ((MainActivity)getActivity()). changeKeypadBackgroundColor(mSelectedKeypadBackgroundColor);
                 refreshPalette(mPalettekeypad, mColorsKeypad, mSelectedKeypadBackgroundColor, mColorContentDescriptions);
-                if ( ((String)mViewSwitcher.getCurrentView().getTag()).equals("theme")){
+                if ( ((String)mViewSwitcher.getCurrentView().getTag()).equals("accent_color")){
                     mViewSwitcher.showNext();
                 }
 

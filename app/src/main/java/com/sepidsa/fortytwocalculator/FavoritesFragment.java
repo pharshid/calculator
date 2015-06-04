@@ -64,9 +64,12 @@ public class FavoritesFragment  extends DialogFragment implements LoaderManager.
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView adapterView, final View view, final int position, long l) {
-                //TODO Implement number use
-                Toast.makeText(getActivity(),
-                        "item " + position + " clicked , IMPLEMENT ME.", Toast.LENGTH_SHORT).show();
+                TextView resultView = (TextView) view.findViewById(R.id.result);
+                String result = resultView.getText().toString();
+                ((MainActivity) getActivity()).addNumberToCalculation(result);
+                ((MainActivity) getActivity()).switchToMainFragment();
+                dismiss();
+
             }
 
         });

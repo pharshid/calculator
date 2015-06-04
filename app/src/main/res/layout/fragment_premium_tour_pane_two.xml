@@ -10,16 +10,17 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ارتقاء به نسخه طلایی"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp"
-    android:background="@android:color/holo_blue_light"
-android:textColor="@android:color/white"        />
+        android:text="Unlock Premium"
+        android:background="@drawable/button_border"
+        android:padding="@dimen/padding_large"
+        android:layout_marginTop="@dimen/abc_control_padding_material"
+        android:textColor="@android:color/white"/>
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="320dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center_vertical"
         android:layout_centerInParent="true"
@@ -29,7 +30,7 @@ android:textColor="@android:color/white"        />
             android:layout_width="128dp"
             android:layout_height="128dp"
             android:id="@+id/tour_descriptive_icon"
-            android:src="@drawable/ic_label"
+            android:src="@drawable/ic_unlimited_summary"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/tour_screenshot"
             android:layout_margin="@dimen/padding_large"

@@ -22,7 +22,6 @@ import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sepidsa.fortytwocalculator.data.LogContract;
 
@@ -121,10 +120,10 @@ public class LogAdapter extends CursorAdapter {
 
         public ViewHolder(View view) {
 
-            resultView = (TextView) view.findViewById(R.id.constant_name);
-            operationView = (TextView) view.findViewById(R.id.constant_number);
+            resultView = (TextView) view.findViewById(R.id.result);
+            operationView = (TextView) view.findViewById(R.id.operation);
             tagView = (TextView) view.findViewById(R.id.LOG_tag);
-            starredButton = (CheckBox) view.findViewById(R.id.constant_selected);
+            starredButton = (CheckBox) view.findViewById(R.id.log_checkbox);
             toolbar = view.findViewById(R.id.toolbar);
             arrow = (TextView) view.findViewById(R.id.arrow);
 
@@ -177,7 +176,6 @@ public class LogAdapter extends CursorAdapter {
                             selectionArgs
                     );
 
-                    showMessage(Integer.toString(position) + isCheckedInteger);
 
 
                 }
@@ -192,7 +190,6 @@ public class LogAdapter extends CursorAdapter {
             if (parent != null) {
                 ViewHolder viewHolder = (ViewHolder) parent.getTag();
                 final int position = viewHolder.position;
-                showMessage("delete " + position);
                 String selection = LogContract.LogEntry._ID + "=?";
                 String[] selectionArgs = new String[]{String.valueOf(position)};
                 Uri uri = LogContract.LogEntry.CONTENT_URI;
@@ -331,8 +328,9 @@ public class LogAdapter extends CursorAdapter {
             View parent = findParentRecursively(view);
             if (parent != null) {
                 ViewHolder viewHolder = (ViewHolder) parent.getTag();
-                final int position = viewHolder.position;
-                showMessage("use " + position);
+                ((MainActivity) mContext).addNumberToCalculation(viewHolder.resultView.getText().toString());
+                ((MainActivity) mContext).switchToMainFragment();
+
             }
         }
     };
@@ -349,9 +347,7 @@ public class LogAdapter extends CursorAdapter {
         return findParentRecursively(parent);
     }
 
-    private void showMessage(String message) {
-        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-    }
+
 
 
 //    public View findParentById(View view, int targetId) {

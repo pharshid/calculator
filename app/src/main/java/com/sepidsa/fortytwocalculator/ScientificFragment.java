@@ -286,7 +286,7 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
     private void sendClearButtonIntent() {
         Intent intent = new Intent("clearIntent");
         // add data
-        intent.putExtra("buttonValue", "Check");
+        intent.putExtra("buttonValue", getResources().getString(R.string.backSpace));
         LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).sendBroadcast(intent);
     }
 
