@@ -5,7 +5,10 @@
 
     android:orientation="horizontal"
     tools:context=".MainActivity"
-    android:id="@+id/activity_body">
+    android:id="@+id/activity_body"
+    android:elevation="0.2dp"
+
+    >
 
 
 

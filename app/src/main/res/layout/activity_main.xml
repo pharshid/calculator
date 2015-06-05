@@ -32,6 +32,8 @@
             android:focusable="false"
             android:clipChildren="false"
             android:clipToPadding="false"
+            android:elevation="4dp"
+
             >
 
 

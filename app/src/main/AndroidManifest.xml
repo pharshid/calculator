@@ -73,11 +73,9 @@
             android:name=".ColorPickerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_color_picker"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/FullscreenTheme" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.sepidsa.fortytwocalculator.MainActivity" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            >
+
         </activity>
     </application>
 

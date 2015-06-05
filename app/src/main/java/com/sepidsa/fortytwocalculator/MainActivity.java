@@ -2410,24 +2410,31 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             case R.id.buttonColors:
 
-                final ColorPickerDialog colorcalendar = ColorPickerDialog.newInstance(
-                        R.string.color_picker_default_title,
-                        mSelectedColorCal0, Utils.ColorUtils.colorChoice(getApplicationContext()),Utils.ColorUtils.colorChoiceForKeypad(getApplicationContext()),
-                        mSelectedColorCal0, Utils.isTablet(this)? ColorPickerDialog.SIZE_LARGE : ColorPickerDialog.SIZE_SMALL, 5
-                );
+//                final ColorPickerDialog colorcalendar = ColorPickerDialog.newInstance(
+//                        R.string.color_picker_default_title,
+//                        mSelectedColorCal0, Utils.ColorUtils.colorChoice(getApplicationContext()),Utils.ColorUtils.colorChoiceForKeypad(getApplicationContext()),
+//                        mSelectedColorCal0, Utils.isTablet(this)? ColorPickerDialog.SIZE_LARGE : ColorPickerDialog.SIZE_SMALL, 5
+//                );
+//
+//                //Implement listener to get selected color value
+//                colorcalendar.setOnColorSelectedListener(new ColorPickerSwatch.OnColorSelectedListener(){
+//
+//                    @Override
+//                    public void onColorSelected(int color) {
+//                        mSelectedColorCal0=color;
+//                    }
+//
+//                });
+//
+//                colorcalendar.show(getFragmentManager(),"cal");
 
-                //Implement listener to get selected color value
-                colorcalendar.setOnColorSelectedListener(new ColorPickerSwatch.OnColorSelectedListener(){
+                Intent myIntent = new Intent(MainActivity.this, ColorPickerActivity.class);
+                myIntent.putExtra("isPremium",getPremiumPreference());
+                myIntent.putExtra("isRetroTheme",isRetroThemeSelected());
+                myIntent.putExtra("accentColor",getAccentColorCode());
+                myIntent.putExtra("keyPadColor",getKeypadBackgroundColorCode());
 
-                    @Override
-                    public void onColorSelected(int color) {
-                        mSelectedColorCal0=color;
-                    }
-
-                });
-
-                colorcalendar.show(getFragmentManager(),"cal");
-
+                MainActivity.this.startActivity(myIntent);
         }
         return;
     }
