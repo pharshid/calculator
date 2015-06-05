@@ -7,11 +7,10 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="21" />
-    <uses-permission android:name="com.farsitel.bazaar.permission.PAY_THROUGH_BAZAAR"/>
 
+    <uses-permission android:name="com.farsitel.bazaar.permission.PAY_THROUGH_BAZAAR" />
     <uses-permission
-
-    android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission
@@ -35,7 +34,6 @@
             </intent-filter>
         </activity>
 
-
         <provider
             android:name=".data.LogProvider"
             android:authorities="com.sepidsa.fortytwocalculator"
@@ -51,38 +49,36 @@
             android:name=".HelpActivityOld"
             android:label="@string/title_activity_help"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light"
-
-            >
-
+            android:theme="@style/Theme.AppCompat.Light" >
         </activity>
-
         <activity
             android:name=".HelpActivity"
             android:label="@string/title_activity_help"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
-
-            >
-
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" >
         </activity>
-
         <activity
             android:name=".ParallaxPagerActivity"
             android:label="@string/parallax_activity_name"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
-
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" >
         </activity>
-
         <activity
             android:name=".PremiumShowcasePagerActivity"
             android:label="@string/premium_parallax_activity_name"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
-
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" >
         </activity>
-
+        <activity
+            android:name=".ColorPickerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_color_picker"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/FullscreenTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.sepidsa.fortytwocalculator.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

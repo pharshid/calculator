@@ -196,5 +196,7 @@
   <string name="parallax_activity_name">parallax_activity</string>
   <string name="premium_parallax_activity_name">premium_parallax</string>
 
+    <string name="title_activity_color_picker">ColorPickerActivity</string>
+
 
 </resources>
