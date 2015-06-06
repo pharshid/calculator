@@ -81,7 +81,8 @@ import java.util.Stack;
 
 
 
-public class MainActivity extends FragmentActivity implements View.OnClickListener,  CompoundButton.OnCheckedChangeListener{
+public class MainActivity extends FragmentActivity implements View.OnClickListener,  CompoundButton.OnCheckedChangeListener {
+    OnHeadlineSelectedListener mCallback;
 
     private static final String FRAGMENT_TAG_LOG_ = "log fragment";
     private static final byte LANGUAGE_ARABIC =0 ;
@@ -245,6 +246,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     public String base64EncodedPublicKey;
 
+    // Container Activity must implement this interface
+    public interface OnHeadlineSelectedListener {
+        public void onArticleSelected(int position);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG_recreate, "Activity oncreate");
@@ -314,66 +319,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 //        If it's a new instance of application i.e. Not because of rotation or configuration changes =================
         prepareBottomIcons();
-
-
-
-        if(!watchedIntro()){
-
-
-
-//            AlertDialog.Builder adb = new AlertDialog.Builder(this);
-//            Dialog d = adb.setView(new View(this)).create();
-//            // (That new View is just there to have something inside the dialog that can grow big enough to cover the whole screen.)
-//
-//            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-//            lp.copyFrom(d.getWindow().getAttributes());
-//            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-//            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-//            d.show();
-//            d.getWindow().setAttributes(lp);
-
-
-//            String mytext = Html.fromHtml("<h2>Title</h2><br><p>Description here</p>");
-
-
-//            WhatsNewDialogClass cdc = new WhatsNewDialogClass(this , android.R.style.Theme_Holo_Light_Dialog_MinWidth);
-//            cdc.show();
-
-//
-//            AlertDialog dialog =   new AlertDialog.Builder(MainActivity.this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("در نسخه جدید ").setMessage(
-//
-//
-//            getResources().getString(R.string.str1)
-//
-//            ) .setPositiveButton(
-//                    "باشه", new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            setWatcheIntroPreference(true);
-//                            dialog.dismiss();
-//                        }
-//                    }).create();
-//            DisplayMetrics displaymetrics = new DisplayMetrics();
-//            getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-//            float height = displaymetrics.density;
-//            float width = displaymetrics.density;
-//
-//
-//            dialog.getWindow().setLayout((int)width, (int)height/2);
-//            dialog.show();
-//            TextView textView = (TextView) dialog.findViewById(android.R.id.message);
-//            textView.setTypeface(mMitra);
-//
-//
-//            Button button1 = (Button) dialog.findViewById(android.R.id.button1);
-//            button1.setTypeface(mMitra);
-
-        }
         refreshFonts();
         setIconButtons();
         buildNavigationDrawer();
         CurrencySyncAdapter.initializeSyncAdapter(this);
 
 
+        showAppTour();
     }
 
     // Listener that's called when we finish querying the items and subscriptions we own
@@ -411,25 +363,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
     };
 
-    private void prepareinAppHelper(String base64EncodedPublicKey) {
-        mHelper = new IabHelper(this, base64EncodedPublicKey);
-        //setting up inab helper
-        Log.d(TAG, "Starting setup.");
 
-        setInventoryFinishedListener();
-        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-            public void onIabSetupFinished(IabResult result) {
-                Log.d(TAG, "Setup finished.");
-
-                if (!result.isSuccess()) {
-                    // Oh noes, there was a problem.
-                    Log.d(TAG, "Problem setting up In-app Billing: " + result);
-                }
-                // Hooray, IAB is fully set up!
-                mHelper.queryInventoryAsync(mGotInventoryListener);
-            }
-        });
-    }
 
     private void buildNavigationDrawer() {
         // Navigation Drawer Codes //
@@ -470,7 +404,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     @Override
                     public boolean onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
                         // do something with the clicked item :D
-                        Toast.makeText(getApplicationContext(), "Position " + position + " pressed", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), "Position " + position + " pressed", Toast.LENGTH_SHORT).show();
                         switch (position) {
                             case 0:
                                 displayHelp();
@@ -498,8 +432,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private void restorePurchases() {
         //TODO check with bazaar, show dialog.
-        Intent myIntent = new Intent(MainActivity.this, ParallaxPagerActivity.class);
-        MainActivity.this.startActivity(myIntent);
+     mHelper.queryInventoryAsync(mGotInventoryListener);
+        Toast.makeText(getApplicationContext(), "خریدهای درون برنامه ای به روز شد :)",
+                Toast.LENGTH_LONG).show();
 
     }
 
@@ -745,7 +680,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     protected void onSaveInstanceState(Bundle outState) {
 
 
-
         outState.putSerializable("buttonStack", mButtonsStack);
         outState.putString("mResultText", resultTextView.getText().toString());
         outState.putString("mScientificModeTextView", mScientificModeTextView.getText().toString());
@@ -759,16 +693,21 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         outState.putSerializable("mMemoryVariable", mMemoryVariable);
         outState.putString("mTempResult", mTempResult);
         outState.putString("mDecimal_fraction", mDecimal_fraction);
-        super.onSaveInstanceState(outState);
-        Log.d(TAG_recreate, "Activity onSaveInstanceState and is "+ outState);
+//        super.onSaveInstanceState(outState);
+        Log.d(TAG_recreate, "Activity onSaveInstanceState ");
 
 
 
     }
 
+    public String getVersion() throws PackageManager.NameNotFoundException {
+        return  getApplicationContext().getPackageManager()
+                .getPackageInfo(getPackageName(), 0).versionName;
+    }
+
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-         super.onRestoreInstanceState(savedInstanceState);
+//         super.onRestoreInstanceState(savedInstanceState);
         Log.d(TAG_recreate, "Activity onRestoreInstanceState and is "+ savedInstanceState);
 
         // todo mtranslationbox restore
@@ -807,11 +746,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 mTranslationBox.setTypeface(mTranslationBoxNumericFont);
 //
                 resultTextView.setText(savedInstanceState.getString("mResultText"));
-//            mTranslationBox.setText(savedInstanceState.getString("mTranslationText"));
-//            updateUIExecute(false);
+
 
             }
-            checkCLRButtonSendIntent();
         }
     }
 
@@ -852,18 +789,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         Thread mythread = new Thread(runnable);
         mythread.start();
 
-        /*if (mJustPressedExecuteButton) {
-            updateUIExecute(false);
-        }*/
 
 
     }
 
     @Override
     protected void onResume() {
-        checkCLRButtonSendIntent();
-
-
         if (!mJustPressedExecuteButton) {
             mTranslationBox.setTypeface(mTranslationBoxNumericFont);
         }
@@ -939,27 +870,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG_recreate, "Activity onstop");
-
-//         // very important:
-
-
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG_recreate, "Activity ondestroy");
 
         if (isFinishing()) {
-
             // todo clear database if user if non-premium
-
         } else {
             //It's an orientation change.
-
             if (mHandler != null) {
                 mHandler.removeCallbacks(mRunnable);
             }
@@ -1009,9 +927,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             mViewPagerIndicator.setCurrentItem(mDefaultPage);
             mViewPagerIndicator.setFillColor(getAccentColorCode());
 
-            //  mViewPagerIndicator.setFades(false);
-//            mViewPagerIndicator.setSelectedColor(getAccentColorCode());
-//        mViewPagerIndicator.setFillColor(getAccentColorCode());
         }
     }
 
@@ -1034,14 +949,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 mViewPager.setAdapter(new ViewPagerAdapter(fragmentManager, fList));
                 mLayoutState = PORTRAIT_BOTH;
                 mViewPager.setOffscreenPageLimit(2);
-
-                // if todo signs viewed = false
-                // {make em visible and
-                //   if(!watchedIntro()) {
-                //  setIntroButtonsVisibility(true);
                 mViewPager.setCurrentItem(DIALPAD_FRAGMENT);
                 setmDefaultPage(DIALPAD_FRAGMENT);
-                // mViewPager.setOnPageChangeListener(this);
             } else if (((String) mViewPager.getTag()).equals("landscape_phone") == true) {
                 // if in Landscape Phone
                 List<Fragment> fList = new ArrayList<Fragment>();
@@ -1109,19 +1018,42 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         resultTextView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
     }
 
-
+    public int getLastSavedAppVersion(){
+        //TODO set a cool default theme color
+        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
+        return Integer.parseInt(appPreferences.getString("appVersion","2.00"));
+    }
     public int getAccentColorCode(){
         //TODO set a cool default theme color
         SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("THEME", MODE_PRIVATE);
         return appPreferences.getInt("ACCENT_COLOR_CODE", Color.parseColor("#1abc9c"));
     }
 
-    public boolean watchedIntro(){
-        //TODO set a cool default theme color
-        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("watchedIntro", MODE_PRIVATE);
-        return appPreferences.getBoolean("hasWatched_v1.71", false);
+    public void showAppTour(){
+        if(hasWatchedAppTour()){
+            return;
+        }else{
+            setWatchedAppTour();
+            Intent myIntent = new Intent(MainActivity.this, ParallaxPagerActivity.class);
+            MainActivity.this.startActivity(myIntent);
+        }
     }
 
+
+
+    public boolean hasWatchedAppTour(){
+
+//        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
+//        return appPreferences.getBoolean("has_watched_app_tour_v2.00", false);
+        return false;
+    }
+
+    private void setWatchedAppTour(){
+        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
+        SharedPreferences.Editor editor = appPreferences.edit();
+        editor.putBoolean("has_watched_app_tour_v2.00", true);
+        editor.commit();
+    }
 
     public boolean getAngleMode(){
         //TODO set a cool default theme color
@@ -1133,15 +1065,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("angleMode", MODE_PRIVATE);
         SharedPreferences.Editor editor = appPreferences.edit();
         if(isDeg){
-
             editor.putBoolean("isDeg", true);
             mScientificModeTextView.setText("DEG");
 
         }else{
-
             editor.putBoolean("isDeg", false);
             mScientificModeTextView.setText("RAD");
-
         }
         editor.apply();
 
@@ -1528,19 +1457,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
-    private void setWatcheIntroPreference(boolean hasWatched){
-        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("watchedIntro", MODE_PRIVATE);
-        SharedPreferences.Editor editor = appPreferences.edit();
 
-        if (hasWatched) {
-            editor.putBoolean("hasWatched_v1.71", true);
-        } else {
-            editor.putBoolean("hasWatched_v1.71", false);
-        }
-        editor.commit();
-
-
-    }
 
     private void performBackspace() {
 
@@ -1606,6 +1523,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             sendClearButtonMessage(getResources().getString(R.string.clear));
         }
         else{
+            Log.d(TAG_recreate, "Activity Right before sendng message");
             sendClearButtonMessage(getResources().getString(R.string.backSpace));
         }
     }
@@ -2104,11 +2022,17 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
 
-    private void sendClearButtonMessage(String value) {
-        Intent intent = new Intent("clearIntent");
-        // add data
-        intent.putExtra("buttonValue", value);
-        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+    public void sendClearButtonMessage(String value) {
+//        Intent intent = new Intent("clearIntent");
+//        // add data
+//        intent.putExtra("buttonValue", value);
+//        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+        if(mViewPager!= null) {
+            ViewPagerAdapter adapter = (ViewPagerAdapter) mViewPager.getAdapter();
+            DialpadFragment dialpadFragment = (DialpadFragment)adapter.getItem(1);
+            dialpadFragment.setClearButtonText(value);
+        }
+
     }
 
 
