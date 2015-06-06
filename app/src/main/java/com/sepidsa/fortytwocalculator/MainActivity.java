@@ -57,7 +57,9 @@ import com.mikepenz.materialdrawer.accountswitcher.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.sepidsa.fortytwocalculator.data.CurrencyContract;
 import com.sepidsa.fortytwocalculator.data.LogContract;
+import com.sepidsa.fortytwocalculator.sync.CurrencySyncAdapter;
 import com.sepidsa.fortytwocalculator.util.IabHelper;
 import com.sepidsa.fortytwocalculator.util.IabResult;
 import com.sepidsa.fortytwocalculator.util.Inventory;
@@ -369,6 +371,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         refreshFonts();
         setIconButtons();
         buildNavigationDrawer();
+        CurrencySyncAdapter.initializeSyncAdapter(this);
 
 
     }
@@ -2271,10 +2274,19 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             case R.id.favorites_list:
 
+//                FragmentManager fm = getSupportFragmentManager();
+//                FavoritesFragment favoritesDialog = new FavoritesFragment();
+//                favoritesDialog.show(fm, "fragment_favorites");
+//                break;
+
                 FragmentManager fm = getSupportFragmentManager();
-                FavoritesFragment favoritesDialog = new FavoritesFragment();
-                favoritesDialog.show(fm, "fragment_favorites");
+                CurrencyUseFragment currencyDialog = new CurrencyUseFragment();
+                currencyDialog.show(fm, "fragment_currency_use");
+
                 break;
+
+
+
 
             case R.id.constant_selected: {
 

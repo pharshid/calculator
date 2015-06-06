@@ -64,58 +64,6 @@ public class ConstantUseAdapter extends CursorAdapter {
     }
 
 
-//    private CompoundButton.OnClickListener mStarOnClickListener = new CompoundButton.OnClickListener() {
-//        @Override
-//        public void onClick(View view) {
-//            View parent = findParentRecursively(view);
-//            if (parent != null) {
-//                ViewHolder viewHolder = (ViewHolder) parent.getTag();
-//                final int position = viewHolder.position;
-//
-//                String selection = LogContract.LogEntry._ID + "=?";
-//                String[] selectionArgs = new String[]{String.valueOf(position)};
-//                Uri uri = LogContract.LogEntry.CONTENT_URI;
-//
-//                Cursor cursor = mContext.getContentResolver().query(
-//                        uri,
-//                        null,
-//                        selection,
-//                        selectionArgs,
-//                        null
-//                );
-//                if (cursor.moveToFirst()) {
-//                    cursor.moveToFirst();
-//                    int isCheckedInteger = cursor.getInt(cursor.getColumnIndex(LogContract.LogEntry.COLUMN_STARRED));
-//                    isCheckedInteger = 1 - isCheckedInteger;
-//                    ContentValues values = new ContentValues();
-//                    values.put(LogContract.LogEntry.COLUMN_STARRED, isCheckedInteger);
-//                    mContext.getContentResolver().update(
-//                            uri,
-//                            values,
-//                            selection,
-//                            selectionArgs
-//                    );
-//
-//                    showMessage(Integer.toString(position) + isCheckedInteger);
-//
-//
-//                }
-//            }
-//        }
-//    };
-//
-//    public View findParentRecursively(View view) {
-//        if (view.getTag() != null) {
-//            return view;
-//        }
-//        View parent = (View) view.getParent();
-//        if (parent == null) {
-//            return null;
-//        }
-//        return findParentRecursively(parent);
-//    }
-
-
     private void showMessage(String message) {
         Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
     }

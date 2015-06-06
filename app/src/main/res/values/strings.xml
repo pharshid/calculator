@@ -197,6 +197,22 @@
   <string name="premium_parallax_activity_name">premium_parallax</string>
 
     <string name="title_activity_color_picker">ColorPickerActivity</string>
+  <string name="content_authority_currency">com.sepidsa.fortytwocalculator.currency</string>
+  <string name="sync_account_type">fortytwocalculator.sepidsa.com</string>
+  <string name="farsi_dollar">دلار</string>
+  <string name="farsi_eur">یورو</string>
+  <string name="farsi_gbp">پوند</string>
+  <string name="farsi_try">لیر ترکیه</string>
+  <string name="farsi_aed">درهم امارات</string>
+  <string name="farsi_cad">دلار کانادا</string>
+  <string name="farsi_cny">یوان چین</string>
+  <string name="farsi_dkk">کرون دانمارک</string>
+  <string name="farsi_hkd">دلار هنگ کنگ</string>
+  <string name="farsi_myr">رینگیت مالری</string>
+  <string name="farsi_nok">کرون نروژ</string>
+  <string name="farsi_pkr">روپیه پاکستان</string>
+  <string name="farsi_rub">روبل روسیه</string>
+  <string name="farsi_sar">ریال عربستان</string>
 
 
 </resources>
