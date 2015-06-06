@@ -74,7 +74,12 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_color_picker"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:parentActivityName=".MainActivity"
             >
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
 
         </activity>
     </application>

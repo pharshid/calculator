@@ -221,7 +221,7 @@ android:layout_toRightOf="@id/result"
             android:layout_height="0dp"
             android:orientation="horizontal"
             android:background="@android:color/transparent"
-            android:layout_weight="5"
+            android:layout_weight="10"
             >
 
             <Button
@@ -231,19 +231,15 @@ android:layout_toRightOf="@id/result"
                 android:text="@string/settings"
                 android:tag="feedback"
                 android:gravity="center_horizontal"
-                android:textColor="#DADFE1"
-                />
 
-            <Button
-                android:id="@+id/buttonLanguage"
-                android:layout_weight="1"
-                android:text="@string/language"
-                android:tag="@string/language"
-                android:gravity="center_horizontal"
-                style="@style/icon_button.portrait"
+
                 android:textColor="#DADFE1"
 
                 />
+
+
+
+
 
             <Button
                 android:id="@+id/buttonMute"
@@ -254,24 +250,37 @@ android:layout_toRightOf="@id/result"
                 android:gravity="center_horizontal"
                 android:textColor="#DADFE1"
 
-                />
 
+                />
+            <Button
+                android:id="@+id/buttonPremium"
+                style="@style/icon_button.portrait"
+                android:layout_weight="1"
+                android:text="BUY"
+                android:tag="@string/volume_high"
+                android:gravity="center_horizontal"
+                android:textColor="#DADFE1"
+
+
+                />
             <Button
                 android:id="@+id/buttonColors"
                 style="@style/icon_button.portrait"
                 android:layout_weight="1"
                 android:text="@string/theme"
                 android:textColor="#DADFE1"
-                android:tag="q"
+                android:tag="@string/theme"
                 android:gravity="center_horizontal"
 
                 />
 
+
+
             <Button
-                android:id="@+id/buttonParallax"
+                android:id="@+id/buttonHamburgerMenu"
                 style="@style/icon_button.portrait"
                 android:layout_weight="1"
-                android:text="@string/help"
+                android:text="@string/hamburger_menu"
                 android:textColor="#DADFE1"
                 android:tag="p"
                 android:gravity="center_horizontal"

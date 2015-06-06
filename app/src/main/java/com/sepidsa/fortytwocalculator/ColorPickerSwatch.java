@@ -55,6 +55,7 @@ public class ColorPickerSwatch extends FrameLayout implements View.OnClickListen
         LayoutInflater.from(context).inflate(R.layout.color_picker_swatch, this);
         mSwatchImage = (ImageView) findViewById(R.id.color_picker_swatch);
         mCheckmarkImage = (ImageView) findViewById(R.id.color_picker_checkmark);
+
         setColor(color);
         setChecked(checked);
         setOnClickListener(this);

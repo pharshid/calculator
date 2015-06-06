@@ -51,7 +51,7 @@
             android:focusable="false"
             android:tag="keypad_color"
             android:layout_below="@+id/textview_accent"
-            android:layout_margin="20dp"
+            android:layout_centerHorizontal="true"
 
             />
 
@@ -75,7 +75,7 @@
 
 
         <TextView
-
+            android:id="@+id/textView_keypad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -85,7 +85,6 @@
             android:textSize="25sp"
             android:textColor="@android:color/white"
             android:layout_margin="20dp"
-            android:id="@+id/textView_keypad"
             android:textStyle="bold"
             />
 
@@ -98,7 +97,7 @@
             android:focusable="false"
             android:tag="keypad_color"
             android:layout_below="@+id/textView_keypad"
-            android:layout_margin="20dp"
+            android:layout_centerHorizontal="true"
             />
 
 
@@ -116,7 +115,7 @@
 
 
         <TextView
-            android:id="@+id/use_classic_tv"
+            android:id="@+id/textview_use_classic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -129,11 +128,12 @@
             />
 
         <Switch
+            android:id="@+id/switch_classic_theme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignBaseline="@id/use_classic_tv"
+            android:layout_alignBaseline="@id/textview_use_classic"
             android:layout_marginLeft="10dp"
             />
 

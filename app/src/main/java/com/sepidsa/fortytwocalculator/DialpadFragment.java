@@ -14,6 +14,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,7 +33,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
     private static final int DIALPAD_FONT_ROBOTO_LIGHT = 1;
     private static final int DIALPAD_FONT_ROBOTO_REGULAR = 2;
     private boolean arcIsOn = false;
-
+          String TAG = "recreate";
     View mView;
     private Typeface defaultFont;
 
@@ -46,8 +47,11 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
     private BroadcastReceiver mDialPadTypeFaceColorChangedReceiver;
     private Typeface scientificFont;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        Log.d(TAG,"Fragment OnCreateView and activity null state is "+getActivity());
         mIsRetroOn = ((MainActivity)getActivity()).isRetroThemeSelected();
         if(mIsRetroOn) {
             mView = inflater.inflate(R.layout.fragment_dialpad_retro, container, false);
@@ -67,53 +71,6 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         }
 
 
-        mThemeChangedReciever = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                // Extract data included in the Intent
-                String message = intent.getStringExtra("message");
-                if (!((MainActivity) getActivity()).isRetroThemeSelected()) {
-
-                    switch (message) {
-                        case "changeAccentColor":
-                            redrawKeypad();
-                            break;
-
-                        case "changeKeypadFontColor":
-
-                            setTextColorState(getNonAccentButtonsID(), getNonAccentColorStateList());
-                            break;
-
-                        case "changeDialpadFont":
-                            defaultFont = ((MainActivity) getActivity()).getFontForComponent("DIALPAD_FONT");
-                            for (int id : idList) {
-                                View v = mView.findViewById(id);
-                                if (v != null && (v instanceof Button)) {
-                                    ((Button) v).setTypeface(defaultFont);
-                                }
-                            }
-                            refreshCButtonTypeface();
-                            break;
-
-                    }
-                }
-            }
-
-        };
-
-
-
-
-
-
-        mClearButtonChangedReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                // Extract data included in the Intent
-                String message = intent.getStringExtra("buttonValue");
-                setClearButtonText(message);
-            }
-        };
 
 
         for(int id : getDialpadButtonsID()) {
@@ -292,15 +249,85 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         }
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Log.d(TAG, "Fragment onCreate and activity null state is " + getActivity());
+
+        mThemeChangedReciever = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+//                if (isAdded()) {
+                // Extract data included in the Intent
+                String message = intent.getStringExtra("message");
+                if (!((MainActivity) getActivity()).isRetroThemeSelected()) {
+
+                    switch (message) {
+                        case "changeAccentColor":
+                            redrawKeypad();
+                            break;
+
+                        case "changeKeypadFontColor":
+
+                            setTextColorState(getNonAccentButtonsID(), getNonAccentColorStateList());
+                            break;
+
+                        case "changeDialpadFont":
+                            defaultFont = ((MainActivity) getActivity()).getFontForComponent("DIALPAD_FONT");
+                            for (int id : idList) {
+                                View v = mView.findViewById(id);
+                                if (v != null && (v instanceof Button)) {
+                                    ((Button) v).setTypeface(defaultFont);
+                                }
+                            }
+                            refreshCButtonTypeface();
+                            break;
+
+                    }
+                }
+            }
+//            }
+        };
+
+
+        mClearButtonChangedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+//                if(isAdded()) {
+                // Extract data included in the Intent
+                String message = intent.getStringExtra("buttonValue");
+                setClearButtonText(message);
+//                }
+            }
+        };
+
+
+
+    }
 
     @Override
     public void onStart() {
         super.onStart();
-        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mThemeChangedReciever, new IntentFilter("themeIntent"));
-        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mClearButtonChangedReceiver, new IntentFilter("clearIntent"));
-        redrawKeypad();
+
+        Log.d(TAG, "Fragment onStart and activity null state is " + getActivity());
+
+
+        if (!((MainActivity) getActivity()).isRetroThemeSelected())
+            redrawKeypad();
+
     }
 
+    @Override
+    public void onResume() {
+        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mThemeChangedReciever, new IntentFilter("themeIntent"));
+        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mClearButtonChangedReceiver, new IntentFilter("clearIntent"));
+        super.onResume();
+        Log.d(TAG, "Fragment onResume and activity null state is " + getActivity());
+
+
+
+    }
 
     public void onClick(View view) {
         switch (view.getId()) {
@@ -506,6 +533,8 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        Log.d(TAG,"Fragment onSaveInstanceState and  null state is "+outState);
+
 
     }
 

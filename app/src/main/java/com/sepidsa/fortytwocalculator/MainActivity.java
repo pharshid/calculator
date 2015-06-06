@@ -233,6 +233,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     // (arbitrary) request code for the purchase flow
     static final int RC_REQUEST = 10001;
     static final String TAG = "in_app_billing";
+    static final String TAG_recreate = "recreate";
 
     IabHelper.QueryInventoryFinishedListener
             mQueryFinishedListener;
@@ -244,8 +245,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        Log.d(TAG_recreate, "Activity oncreate");
         super.onCreate(savedInstanceState);
+
         TinyDB db = new TinyDB(getApplicationContext());
 
          base64EncodedPublicKey = "MIHNMA0GCSqGSIb3DQEBAQUAA4G7ADCBtwKBrwCgNUrs2KdQY911EkU3jcroP73iRap4P48t6pK3O3+NHum0/GYibcC5WAdw7YSIcirAlKr8niYErlVmbx9pkAAACMepMF11xQABddFvkgKMOLa+MGt/V2TAACeoA7DvLN8YyG8U6HwC1juu+honao7IW0mxbmOT34Xv4ff9wHajVB/Cm1S00Un7Ro0DBZQ3VBwShSbmqxVMOHx6e5ObuzE0gTqDdsNcgGab4lFf4wkCAwEAAQ==";
@@ -739,7 +741,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     protected void onSaveInstanceState(Bundle outState) {
 
-//        super.onSaveInstanceState(outState);
 
 
         outState.putSerializable("buttonStack", mButtonsStack);
@@ -755,11 +756,18 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         outState.putSerializable("mMemoryVariable", mMemoryVariable);
         outState.putString("mTempResult", mTempResult);
         outState.putString("mDecimal_fraction", mDecimal_fraction);
+        super.onSaveInstanceState(outState);
+        Log.d(TAG_recreate, "Activity onSaveInstanceState and is "+ outState);
+
+
+
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        // super.onRestoreInstanceState(savedInstanceState);
+         super.onRestoreInstanceState(savedInstanceState);
+        Log.d(TAG_recreate, "Activity onRestoreInstanceState and is "+ savedInstanceState);
+
         // todo mtranslationbox restore
 
         if(savedInstanceState!= null) {
@@ -930,6 +938,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     protected void onStop() {
         super.onStop();
+        Log.d(TAG_recreate, "Activity onstop");
+
 //         // very important:
 
 
@@ -938,6 +948,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.d(TAG_recreate, "Activity ondestroy");
+
         if (isFinishing()) {
 
             // todo clear database if user if non-premium
@@ -1195,10 +1207,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
     public int getDialpadFontColor() {
         if (getKeypadBackgroundColorCode() != Color.WHITE){
-//            return  Color.LTGRAY;
-            return  Color.parseColor("#757575");
+//            return  Color.DKGRAY;
+            return  Color.parseColor("#9E9E9E");
         }else {
-            return  Color.LTGRAY;
+            return  Color.parseColor("#a9a9a9");
+//            return  Color.parseColor("#9E9E9E");
+
+//            return  Color.LTGRAY;
 //            return  Color.parseColor("#757575");
         }
     }
@@ -2410,31 +2425,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             case R.id.buttonColors:
 
-//                final ColorPickerDialog colorcalendar = ColorPickerDialog.newInstance(
-//                        R.string.color_picker_default_title,
-//                        mSelectedColorCal0, Utils.ColorUtils.colorChoice(getApplicationContext()),Utils.ColorUtils.colorChoiceForKeypad(getApplicationContext()),
-//                        mSelectedColorCal0, Utils.isTablet(this)? ColorPickerDialog.SIZE_LARGE : ColorPickerDialog.SIZE_SMALL, 5
-//                );
-//
-//                //Implement listener to get selected color value
-//                colorcalendar.setOnColorSelectedListener(new ColorPickerSwatch.OnColorSelectedListener(){
-//
-//                    @Override
-//                    public void onColorSelected(int color) {
-//                        mSelectedColorCal0=color;
-//                    }
-//
-//                });
-//
-//                colorcalendar.show(getFragmentManager(),"cal");
-
                 Intent myIntent = new Intent(MainActivity.this, ColorPickerActivity.class);
                 myIntent.putExtra("isPremium",getPremiumPreference());
                 myIntent.putExtra("isRetroTheme",isRetroThemeSelected());
                 myIntent.putExtra("accentColor",getAccentColorCode());
                 myIntent.putExtra("keyPadColor",getKeypadBackgroundColorCode());
 
-                MainActivity.this.startActivity(myIntent);
+                MainActivity.this.startActivityForResult(myIntent, 2);
         }
         return;
     }
@@ -2560,18 +2557,29 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(TAG, "onActivityResult(" + requestCode + "," + resultCode + "," + data);
-        if (mHelper == null) return;
+        if(requestCode == 2 && resultCode == 2){
+            if(data.getBooleanExtra("switchTheme",true)){
+                switchTheme();
+//                Intent i = getBaseContext().getPackageManager()
+//                        .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+//                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(i);
+                Log.d(TAG_recreate, "Acrivity Right before recreate");
+                         recreate();
+            }
+        } else {
+            Log.d(TAG, "onActivityResult(" + requestCode + "," + resultCode + "," + data);
+            if (mHelper == null) return;
 
-        // Pass on the activity result to the helper for handling
-        if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
-            // not handled, so handle it ourselves (here's where you'd
-            // perform any handling of activity results not related to in-app
-            // billing...
-            super.onActivityResult(requestCode, resultCode, data);
-        }
-        else {
-            Log.d(TAG, "onActivityResult handled by IABUtil.");
+            // Pass on the activity result to the helper for handling
+            if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
+                // not handled, so handle it ourselves (here's where you'd
+                // perform any handling of activity results not related to in-app
+                // billing...
+                super.onActivityResult(requestCode, resultCode, data);
+            } else {
+                Log.d(TAG, "onActivityResult handled by IABUtil.");
+            }
         }
     }
 

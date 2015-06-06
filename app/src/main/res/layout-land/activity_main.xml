@@ -172,6 +172,20 @@
             android:orientation="vertical"
             >
 
+
+            <Button
+                android:id="@+id/buttonHamburgerMenu"
+                style="@style/DIALPADBUTTON.LAND_NORMAL."
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/hamburger_menu"
+                android:textColor="#DADFE1"
+                android:tag="p"
+                android:textSize="18sp"
+
+                />
+
          <Button
                 android:id="@+id/buttonColors"
                 style="@style/DIALPADBUTTON.LAND_NORMAL."
@@ -182,6 +196,20 @@
                 android:textColor="#DADFE1"
                 android:tag="q"
                 android:textSize="18sp"
+                />
+
+            <Button
+                android:id="@+id/buttonPremium"
+                style="@style/DIALPADBUTTON.LAND_NORMAL."
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="BUY"
+                android:tag="@string/volume_high"
+                android:gravity="center_horizontal"
+                android:textColor="#DADFE1"
+                android:textSize="18sp"
+
                 />
 
             <Button
@@ -208,23 +236,12 @@
                 android:layout_weight="1"
                 android:text="@string/settings"
                 android:tag="feedback"
+                android:gravity="center_horizontal"
                 android:textColor="#DADFE1"
                 android:textSize="18sp"
                 />
 
-            <Button
-                android:id="@+id/buttonParallax"
-                style="@style/DIALPADBUTTON.LAND_NORMAL."
-                android:layout_width="match_parent"
 
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="@string/help"
-                android:textColor="#DADFE1"
-                android:tag="p"
-                android:gravity="center_horizontal"
-
-                />
 
 
 

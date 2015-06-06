@@ -220,8 +220,6 @@
                     android:text="@string/settings"
                     android:tag="feedback"
                     android:gravity="center_horizontal"
-
-
                     android:textColor="#DADFE1"
 
                     />
