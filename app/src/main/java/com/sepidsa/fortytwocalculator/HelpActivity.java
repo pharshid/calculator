@@ -1,13 +1,13 @@
 package com.sepidsa.fortytwocalculator;
 
 
-import java.util.ArrayList;
-
 import android.app.ExpandableListActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.widget.ExpandableListView;
+
+import java.util.ArrayList;
 
 public class HelpActivity extends ExpandableListActivity{
 
@@ -39,44 +39,52 @@ public class HelpActivity extends ExpandableListActivity{
     }
 
     public void setGroupParents() {
-        parentItems.add("Android");
-        parentItems.add("Core Java");
-        parentItems.add("Desktop Java");
-        parentItems.add("Enterprise Java");
+        String [] helpTopicsArray = getResources().getStringArray(R.array.help_topics);
+        for (int index = 0; index < helpTopicsArray.length;index ++){
+           parentItems.add(helpTopicsArray[index]);
+        }
     }
 
     public void setChildData() {
 
         // Android
-        ArrayList<String> child = new ArrayList<String>();
-        child.add("Core");
-        child.add("Games");
-        childItems.add(child);
+        ArrayList<String> child;
 
-        // Core Java
-        child = new ArrayList<String>();
-        child.add("Apache");
-        child.add("Applet");
-        child.add("AspectJ");
-        child.add("Beans");
-        child.add("Crypto");
-        childItems.add(child);
+        String [] helpSubTopicsArray = getResources().getStringArray(R.array.help_sub_topics);
+        for (int index = 0; index < helpSubTopicsArray.length;index ++){
+            child = new ArrayList<String>();
+            child.add(helpSubTopicsArray[index]);
 
-        // Desktop Java
-        child = new ArrayList<String>();
-        child.add("Accessibility");
-        child.add("AWT");
-        child.add("ImageIO");
-        child.add("Print");
-        childItems.add(child);
-
-        // Enterprise Java
-        child = new ArrayList<String>();
-        child.add("EJB3");
-        child.add("GWT");
-        child.add("Hibernate");
-        child.add("JSP");
-        childItems.add(child);
+            childItems.add(child);
+        }
+//        child.add("Core");
+//        child.add("Games");
+//        childItems.add(child);
+//
+//        // Core Java
+//        child = new ArrayList<String>();
+//        child.add("Apache");
+//        child.add("Applet");
+//        child.add("AspectJ");
+//        child.add("Beans");
+//        child.add("Crypto");
+//        childItems.add(child);
+//
+//        // Desktop Java
+//        child = new ArrayList<String>();
+//        child.add("Accessibility");
+//        child.add("AWT");
+//        child.add("ImageIO");
+//        child.add("Print");
+//        childItems.add(child);
+//
+//        // Enterprise Java
+//        child = new ArrayList<String>();
+//        child.add("EJB3");
+//        child.add("GWT");
+//        child.add("Hibernate");
+//        child.add("JSP");
+//        childItems.add(child);
     }
 
 }
