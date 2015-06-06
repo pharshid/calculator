@@ -16,10 +16,12 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.sepidsa.fortytwocalculator.data.CurrencyContract;
 import com.sepidsa.fortytwocalculator.CurrencyUseAdapter;
+import com.sepidsa.fortytwocalculator.sync.CurrencySyncAdapter;
 
 /**
  * Created by Farshid on 5/20/2015.
@@ -28,16 +30,17 @@ public class CurrencyUseFragment  extends DialogFragment implements LoaderManage
 
     private CurrencyUseAdapter mCurrencyUseAdapter;
     private ListView mListView;
-    private Button mGotoSelect;
     private int mPosition = ListView.INVALID_POSITION;
     private static final String SELECTED_KEY = "selected_position";
     private static final int CURRENCY_LOADER = 0;
+    private ProgressBar mProgress;
+    private ProgressBar mProgress2;
 
-    private static final String[] CURRENCY_COLUMNS = {
-            CurrencyContract.CurrencyEntry.TABLE_NAME + "." + CurrencyContract.CurrencyEntry._ID,
-            CurrencyContract.CurrencyEntry.COLUMN_KEY,
-            CurrencyContract.CurrencyEntry.COLUMN_VALUE,
-    };
+//    private static final String[] CURRENCY_COLUMNS = {
+//            CurrencyContract.CurrencyEntry.TABLE_NAME + "." + CurrencyContract.CurrencyEntry._ID,
+//            CurrencyContract.CurrencyEntry.COLUMN_KEY,
+//            CurrencyContract.CurrencyEntry.COLUMN_VALUE,
+//    };
 
     public CurrencyUseFragment() {
     }
@@ -58,10 +61,17 @@ public class CurrencyUseFragment  extends DialogFragment implements LoaderManage
 
 
         mListView = (ListView) rootView.findViewById(R.id.listview_currency);
-        mGotoSelect = (Button) rootView.findViewById(R.id.button_goto_select);
         TextView empty = (TextView) rootView.findViewById(R.id.empty_list);
         mListView.setEmptyView(empty);
         mListView.setAdapter(mCurrencyUseAdapter);
+        mProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
+        mProgress.setVisibility(View.GONE);
+        mProgress.setIndeterminate(true);
+        mProgress2 = (ProgressBar) rootView.findViewById(R.id.progressBar2);
+        mProgress2.setVisibility(View.GONE);
+        mProgress2.setIndeterminate(false);
+        mProgress2.setMax(24);
+        mProgress2.setProgress(0);
 
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -77,15 +87,6 @@ public class CurrencyUseFragment  extends DialogFragment implements LoaderManage
 
         });
 
-        mGotoSelect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                FragmentManager fm = getActivity().getSupportFragmentManager();
-//                ConstantSelectFragment constantSelectDialog = new ConstantSelectFragment();
-//                constantSelectDialog.show(fm, "fragment_constant_select");
-
-            }
-        });
 
         return rootView;
     }
@@ -106,6 +107,15 @@ public class CurrencyUseFragment  extends DialogFragment implements LoaderManage
         if (mPosition != ListView.INVALID_POSITION) {
             mListView.smoothScrollToPosition(mPosition);
         }
+        if(mCurrencyUseAdapter.getCount() != 24) {
+            mProgress.setVisibility(View.VISIBLE);
+            mProgress2.setVisibility(View.VISIBLE);
+            mProgress2.setProgress(mCurrencyUseAdapter.getCount());
+        } else {
+            mProgress.setVisibility(View.GONE);
+            mProgress2.setVisibility(View.GONE);
+            mProgress2.setProgress(24);
+                    }
     }
 
     @Override
@@ -127,10 +137,10 @@ public class CurrencyUseFragment  extends DialogFragment implements LoaderManage
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(getActivity(),
                 CurrencyContract.CurrencyEntry.CONTENT_URI,
-                CURRENCY_COLUMNS,
                 null,
                 null,
-                CurrencyContract.CurrencyEntry.COLUMN_PRIORITY);
+                null,
+                CurrencyContract.CurrencyEntry.COLUMN_PRIORITY + " ASC");
     }
 
 }

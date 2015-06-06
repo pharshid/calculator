@@ -12,6 +12,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SyncRequest;
 import android.content.SyncResult;
+import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -61,9 +62,22 @@ public class CurrencySyncAdapter extends AbstractThreadedSyncAdapter {
      */
     private void getCurrencyDataFromHTML(UserAgent userAgent) {
 
+        Cursor cur = getContext().getContentResolver().query(
+                CurrencyContract.CurrencyEntry.CONTENT_URI,
+                null,
+                null,
+                null,
+                null
+        );
+        Boolean isListEmpty = false;
+        if(cur.getCount()==0) isListEmpty = true;
+
+        Vector<ContentValues> cVVector = new Vector<ContentValues>(24);
+
+
         String[] currencies = new String[] { "dollar", "eur" , "gbp", "try", "aed", "cad", "cny", "dkk", "hkd" , "myr", "nok", "pkr", "rub", "sar"};
-        Vector<ContentValues> cVVector = new Vector<ContentValues>(currencies.length);
-        int index = 1;
+        int[] currencyPri = new int[] {11,12,13,14,15,16,17,31,32,33,34,35,36,37};
+        int index = 0;
         for(String currency:currencies) {
             String value;
             ContentValues currencyValues = new ContentValues();
@@ -74,30 +88,57 @@ public class CurrencySyncAdapter extends AbstractThreadedSyncAdapter {
             currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_VALUE, value);
             currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_TYPE, 1);
             currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_SELECTED, 1);
-            currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_PRIORITY, index++);
-            cVVector.add(currencyValues);
+            currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_PRIORITY, currencyPri[index++]);
+            if(isListEmpty) {
+                getContext().getContentResolver().insert(CurrencyContract.CurrencyEntry.CONTENT_URI, currencyValues);
+            } else {
+                cVVector.add(currencyValues);
+            }
             Log.d(LOG_TAG, "Syncing... " + currency + " + " + value + " Inserted");
         }
 
-        // add to database
+        String[] gold = new String[] { "ons", "mesghal" , "geram18", "geram24", "silver", "sekeb", "sekee", "nim", "rob" , "gerami"};
+
+        index = 20;
+        for(String item:gold) {
+            String value;
+            ContentValues currencyValues = new ContentValues();
+            Elements elements = userAgent.doc.findEvery("<tr id=\"f-" + item + "\">");
+            elements = elements.findEvery("<td class=\"nf\">");
+            value = elements.innerText();
+            currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_KEY, item);
+            currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_VALUE, value);
+            currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_TYPE, 2);
+            currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_SELECTED, 1);
+            currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_PRIORITY, index++);
+            if(isListEmpty) {
+                getContext().getContentResolver().insert(CurrencyContract.CurrencyEntry.CONTENT_URI, currencyValues);
+            } else {
+                cVVector.add(currencyValues);
+            }
+
+            Log.d(LOG_TAG, "Syncing... " + item + " + " + value + " Inserted");
+        }
+
+
         if ( cVVector.size() > 0 ) {
-            getContext().getContentResolver().delete(
-                    CurrencyContract.CurrencyEntry.CONTENT_URI,
+
+            // delete old data so we don't build up an endless history
+            getContext().getContentResolver().delete(CurrencyContract.CurrencyEntry.CONTENT_URI,
                     null,
                     null
             );
+
             ContentValues[] cvArray = new ContentValues[cVVector.size()];
             cVVector.toArray(cvArray);
-//            for(ContentValues contentValues : cvArray) {
-//                getContext().getContentResolver().insert(CurrencyContract.CurrencyEntry.CONTENT_URI,contentValues);
-//            }
             getContext().getContentResolver().bulkInsert(CurrencyContract.CurrencyEntry.CONTENT_URI, cvArray);
 
-            // delete old data so we don't build up an endless history
-
+            Log.d(LOG_TAG, "Sync Complete. " + cVVector.size() + " Inserted");
         }
 
-        Log.d(LOG_TAG, "Sync Complete. " + cVVector.size() + " Inserted");
+
+
+
 
     }
 

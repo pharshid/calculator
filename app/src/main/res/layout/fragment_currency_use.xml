@@ -5,26 +5,30 @@
     android:layout_height="fill_parent"
     >
 
-    <LinearLayout
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="?android:attr/buttonBarStyle"
-        android:orientation="horizontal">
+        android:animateLayoutChanges="true"
+        />
 
-        <Button
-            android:id="@+id/button_goto_select"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="?android:attr/borderlessButtonStyle"
-
-            android:text="ADD / REMOVE"/>
-
-    </LinearLayout>
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        />
 
     <ListView android:id="@+id/listview_currency"
         android:layout_height="fill_parent"
-        android:layout_width="fill_parent">
+        android:layout_width="fill_parent"
+        >
     </ListView>
+
+
 
 
     <TextView
@@ -35,7 +39,9 @@
         android:textSize="@dimen/log_detail_txt_size"
         android:textColor="@android:color/darker_gray"
         android:gravity="center"
-        android:text="List is empty, go get some cannoli."
+        android:text="@string/loading_message"
+        android:layout_margin="@dimen/padding_large"
         />
+
 
 </LinearLayout>

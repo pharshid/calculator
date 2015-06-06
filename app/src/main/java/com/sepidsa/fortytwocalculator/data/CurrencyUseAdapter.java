@@ -1,11 +1,13 @@
 package com.sepidsa.fortytwocalculator;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.sepidsa.fortytwocalculator.data.CurrencyContract;
@@ -22,10 +24,11 @@ public class CurrencyUseAdapter extends CursorAdapter {
     private HashMap<String, String> currencyMap;
 
 
+
     public CurrencyUseAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
         mContext = context;
-        currencyMap = new HashMap<>(14);
+        currencyMap = new HashMap<>(24);
         currencyMap.put("dollar", context.getString(R.string.farsi_dollar));
         currencyMap.put("eur", context.getString(R.string.farsi_eur));
         currencyMap.put("gbp", context.getString(R.string.farsi_gbp));
@@ -40,9 +43,18 @@ public class CurrencyUseAdapter extends CursorAdapter {
         currencyMap.put("pkr", context.getString(R.string.farsi_pkr));
         currencyMap.put("rub", context.getString(R.string.farsi_rub));
         currencyMap.put("sar", context.getString(R.string.farsi_sar));
+        currencyMap.put("ons", context.getString(R.string.farsi_ons));
+        currencyMap.put("mesghal", context.getString(R.string.farsi_mesghal));
+        currencyMap.put("geram18", context.getString(R.string.farsi_geram18));
+        currencyMap.put("geram24", context.getString(R.string.farsi_geram24));
+        currencyMap.put("silver", context.getString(R.string.farsi_silver));
+        currencyMap.put("sekeb", context.getString(R.string.farsi_sekeb));
+        currencyMap.put("sekee", context.getString(R.string.farsi_sekee));
+        currencyMap.put("nim", context.getString(R.string.farsi_nim));
+        currencyMap.put("rob", context.getString(R.string.farsi_rob));
+        currencyMap.put("gerami", context.getString(R.string.farsi_gerami));
 
     }
-
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
