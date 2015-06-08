@@ -136,7 +136,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             LANDSCAPE_PHONE = 1,
             LANDSCAPE_TABLET = 2;
     public byte mLayoutState ;
-    public boolean mLogAdded = false;
     // This will be synced with the viewpager . and is provided kindly by www.viewpagerindicator.com
     private CirclePageIndicator mViewPagerIndicator = null;
 
@@ -1543,8 +1542,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         try {
 
             resultTextView.setText(mTempResult);
-            displayTranslation();
-            sendLogMessage(getMExpressionString().toString(), mTempResult, false, "");
             mAddStars.setAlpha(1);
             mAddStars.setRotation(0);
             mAddStars.setText(getResources().getString(R.string.star_outline));
@@ -1567,17 +1564,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             return true;
         }
 
-        if(sendLogMessage) {
-            mLogAdded = false;
-//            sendLogMessage(getMExpressionString().toString(), mTempResult,false, String.valueOf(mTagHimself.getText()));
-        }
+
         setMExpressionString(resultTextView.getText().toString().replace(",", ""));
         mButtonsStack.clear();
-
         mButtonsStack.push(resultTextView.getText().toString().replace(",",""));
         playSound(executeButtonSoundID);
         resultTextView.startAnimation(out_anim);
-
+        displayTranslation();
+        if(sendLogMessage) {
+            sendLogMessage(getMExpressionString().toString(), mTempResult, false, "");
+        }
         return false;
     }
 
