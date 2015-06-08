@@ -105,5 +105,11 @@
                 />
         </RelativeLayout>
 
+    <View android:layout_height="0.5dp"
+        android:layout_width="match_parent"
+        android:background="?android:attr/listDivider"
+        android:layout_marginRight="@dimen/padding_large"
+        android:layout_marginLeft="@dimen/padding_large"
+        />
 
 </LinearLayout>

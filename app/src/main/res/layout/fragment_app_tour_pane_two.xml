@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tour_descriptive_icon"
-        android:src="@drawable/ic_tour_history"
+        android:src="@drawable/coins"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/tour_screenshot"
         android:layout_margin="@dimen/padding_large"
@@ -31,18 +31,17 @@
 
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tour_title"
-        android:text="محاسبات قبلی را در تاریخچه برچسب بزنید و برای دسترسی فوری ستاره دار کنید"
+        android:text="آخرین نرخ ارز و طلا با یک اشاره"
         android:gravity="center"
         android:layout_centerHorizontal="true"
         android:textSize="@dimen/abc_text_size_large_material"
         android:textStyle="bold"
         android:textColor="@android:color/white"
         android:layout_below= "@+id/tour_descriptive_icon"
-        android:paddingLeft="@dimen/abc_text_size_large_material"
-        android:paddingRight="@dimen/abc_text_size_large_material"
+        android:layout_margin="25dp"
 
         />
 

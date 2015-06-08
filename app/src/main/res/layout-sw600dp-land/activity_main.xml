@@ -70,7 +70,7 @@
                         android:maxLines="1"
                         android:paddingRight="@dimen/padding_medium"
                         android:background="#1abc9c"
-                        android:layout_toRightOf="@id/constant_selected"
+                        android:layout_toRightOf="@id/btn_add_star"
                         />
 
                     <TextView
@@ -100,7 +100,7 @@
                         />
 
                     <Button
-                        android:id="@+id/constant_selected"
+                        android:id="@+id/btn_add_star"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:textColor="@android:color/white"
@@ -118,7 +118,7 @@
                         android:layout_height="45dp"
                         android:textColor="@android:color/white"
                         android:layout_centerVertical="true"
-                        android:layout_above="@id/constant_selected"
+                        android:layout_above="@id/btn_add_star"
                         android:layout_alignParentLeft="true"
                         android:background="@android:color/transparent"
                         android:visibility="gone"
@@ -157,7 +157,19 @@
                     android:visibility="visible"
                     android:layout_gravity="center"
                     android:gravity="center"
-
+                    android:text="@string/list"
+                    />
+                <Button
+                    android:id="@+id/currency_list"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="8"
+                    android:background="@android:color/transparent"
+                    android:layout_centerVertical="true"
+                    android:visibility="visible"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/dollar_icon_string"
 
                     />
 

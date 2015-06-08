@@ -1029,16 +1029,16 @@ public class AccountHeaderBuilder {
      * @param uri
      */
     private void setImageOrPlaceholder(ImageView iv, Drawable d, Bitmap b, Uri uri) {
-        if (uri != null) {
-            iv.setImageDrawable(UIUtils.getPlaceHolder(iv.getContext()));
-            iv.setImageURI(uri);
-        } else if (d == null && b == null) {
-            iv.setImageDrawable(UIUtils.getPlaceHolder(iv.getContext()));
-        } else if (b == null) {
-            iv.setImageDrawable(d);
-        } else {
-            iv.setImageBitmap(b);
-        }
+//        if (uri != null) {
+//            iv.setImageDrawable(UIUtils.getPlaceHolder(iv.getContext()));
+//            iv.setImageURI(uri);
+//        } else if (d == null && b == null) {
+//            iv.setImageDrawable(UIUtils.getPlaceHolder(iv.getContext()));
+//        } else if (b == null) {
+//            iv.setImageDrawable(d);
+//        } else {
+//            iv.setImageBitmap(b);
+//        }
     }
 
     /**

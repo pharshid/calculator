@@ -17,9 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#1abc9c"
-        android:layout_marginLeft="0.5dp"
-        android:layout_marginRight="0.5dp"
-        android:layout_marginTop="0.5dp"
+
+        android:elevation="5dp"
         >
 
 
@@ -31,7 +30,7 @@
             android:layout_alignParentLeft="true"
             android:textColor="@android:color/white"
             android:paddingLeft="@dimen/padding_small"
-            android:text="ver 1.71"
+            android:text="ver 2.00"
             />
 
 
@@ -52,7 +51,7 @@
             android:layout_above="@+id/fortyTwoSampleTranslation"
             android:layout_below="@+id/scientific_mode_textview" />
 
-        <com.sepidsa.fortytwocalculator.AutoResizeTextView
+        <TextView
             android:id="@+id/fortyTwoSampleTranslation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,8 +85,9 @@
         android:gravity="center"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
-        android:layout_margin="0.5dp"
+
     android:visibility="visible"
+        android:elevation="3dp"
 
         />
 
@@ -98,8 +98,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="25"
+        android:layout_weight="28"
         android:orientation="horizontal"
+        android:elevation="2dp"
 
         >
 
@@ -111,14 +112,7 @@
             android:text="فونت"
             android:background="#8b9dc3"
             android:textSize="22sp"
-            android:fontFamily="sans-serif-light"
             android:textColor="@android:color/white"
-            android:paddingTop="25dp"
-            android:paddingBottom="25dp"
-            android:layout_marginLeft="0.5dp"
-            android:layout_marginBottom="0.5dp"
-
-
             android:gravity="center"/>
 
         <Button
@@ -127,15 +121,11 @@
             android:layout_weight="60"
             android:text="ضخامت دکمه ها"
             android:textSize="22sp"
-            android:fontFamily="sans-serif-thin"
             android:background="#8b9dc3"
             android:textColor="@android:color/white"
             android:gravity="center"
-            android:paddingTop="25dp"
-            android:paddingBottom="25dp"
-            android:layout_marginLeft="0.5dp"
-            android:layout_marginBottom="0.5dp"
-            android:layout_marginRight="0.5dp"
+            android:elevation="1dp"
+
             android:id="@+id/dialpad_text_size"
 
             />
@@ -144,17 +134,13 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/tips"
+            android:id="@+id/language_selection"
             android:layout_weight="40"
             android:text="زبان"
             android:background="#8b9dc3"
             android:textSize="22sp"
-            android:fontFamily="sans-serif-light"
             android:textColor="@android:color/white"
-            android:paddingTop="25dp"
-            android:paddingBottom="25dp"
-            android:layout_marginLeft="0.5dp"
-            android:layout_marginBottom="0.5dp"
+
             android:gravity="center"/>
 
 

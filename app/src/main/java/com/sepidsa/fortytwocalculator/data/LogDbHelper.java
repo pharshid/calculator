@@ -23,6 +23,7 @@ public class LogDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_LOG_TABLE = "CREATE TABLE " + LogContract.LogEntry.TABLE_NAME + " (" +
                 LogEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 LogEntry.COLUMN_RESULT + " TEXT NOT NULL, " +
+                LogEntry.COLUMN_RESULT_NO_COMMA + " TEXT NOT NULL, " +
                 LogEntry.COLUMN_OPERATION + " TEXT NOT NULL, " +
                 LogEntry.COLUMN_TAG + " TEXT NOT NULL, " +
                 LogEntry.COLUMN_STARRED + " INTEGER NOT NULL " +

@@ -74,8 +74,8 @@ public class ConstantSelectFragment  extends DialogFragment implements LoaderMan
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView adapterView, final View view, final int position, long l) {
-                Toast.makeText(getActivity(),
-                        "item " + position + " clicked , IMPLEMENT ME.", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(),
+//                        "item " + position + " clicked , IMPLEMENT ME.", Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -89,7 +89,7 @@ public class ConstantSelectFragment  extends DialogFragment implements LoaderMan
                 View promptsView = li.inflate(R.layout.constant_input_dialog, null);
                 final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-                builder.setTitle("Enter your constant:");
+                builder.setTitle(getActivity().getString(R.string.farsi_enter_constant));
                 builder.setCancelable(false);
 
                 // Set up the input
@@ -109,7 +109,7 @@ public class ConstantSelectFragment  extends DialogFragment implements LoaderMan
 
 
 
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(getActivity().getString(R.string.farsi_ok), new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -133,7 +133,7 @@ public class ConstantSelectFragment  extends DialogFragment implements LoaderMan
 
                     }
                 });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(getActivity().getString(R.string.farsi_cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         inputMethodManager.hideSoftInputFromWindow(name.getWindowToken(), 0);

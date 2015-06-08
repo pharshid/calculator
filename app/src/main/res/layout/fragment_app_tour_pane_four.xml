@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tour_descriptive_icon"
-        android:src="@drawable/ic_tour_pi"
+        android:src="@drawable/businessman"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/tour_screenshot"
         android:layout_margin="@dimen/padding_large"
@@ -31,10 +31,10 @@
 
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tour_title"
-        android:text="لیست کاملی از ثابت های پرکاربرد در اختیار شما"
+        android:text="عملگرهای مهندسی برای مهندسان"
         android:gravity="center"
         android:layout_centerHorizontal="true"
         android:textSize="@dimen/abc_text_size_large_material"

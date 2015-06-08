@@ -71,7 +71,7 @@ public class ConstantSelectAdapter extends CursorAdapter {
         public ViewHolder(View view) {
             nameView = (TextView) view.findViewById(R.id.constant_name);
             numberView = (TextView) view.findViewById(R.id.constant_number);
-            selectedButton = (Switch) view.findViewById(R.id.constant_selected);
+            selectedButton = (Switch) view.findViewById(R.id.btn_add_star);
             deleteButton = (Button) view.findViewById(R.id.button_delete_item);
 
         }

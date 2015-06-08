@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/background"
-    android:background="#009688"
+    android:background="#00BCD4"
     >
 
 
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tour_descriptive_icon"
-        android:src="@drawable/ic_tour_scientific"
+        android:src="@drawable/notepad"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/tour_screenshot"
         android:layout_margin="@dimen/padding_large"
@@ -31,10 +31,10 @@
 
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tour_title"
-        android:text="عملگرهای مهندسی برای مهندسان"
+        android:text="تاریخچه محاسبات با برچسب و ستاره"
         android:gravity="center"
         android:layout_centerHorizontal="true"
         android:textSize="@dimen/abc_text_size_large_material"
@@ -43,6 +43,7 @@
         android:layout_below= "@+id/tour_descriptive_icon"
         android:paddingLeft="@dimen/abc_text_size_large_material"
         android:paddingRight="@dimen/abc_text_size_large_material"
+
         />
 
 

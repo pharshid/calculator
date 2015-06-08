@@ -64,7 +64,7 @@ public class LogAdapter extends CursorAdapter {
         String operation = cursor.getString(cursor.getColumnIndex(LogContract.LogEntry.COLUMN_OPERATION));
         String tag = cursor.getString(cursor.getColumnIndex(LogContract.LogEntry.COLUMN_TAG));
         Boolean starred = cursor.getInt(cursor.getColumnIndex(LogContract.LogEntry.COLUMN_STARRED)) != 0;
-
+        int iconColor = ((MainActivity)mContext).getDialpadFontColor();
         viewHolder.position = cursor.getInt((cursor.getColumnIndex(LogContract.LogEntry._ID)));
 
         viewHolder.resultView.setText(result);
@@ -77,12 +77,17 @@ public class LogAdapter extends CursorAdapter {
 
         viewHolder.deleteButton.setOnClickListener(mDeleteButtonOnClickListener);
         viewHolder.deleteButton.setTypeface(Typeface.createFromAsset(context.getAssets(), "flaticon.ttf"));
-        viewHolder.copyButton.setOnClickListener(mLabelButtonOnClickListener);
-        viewHolder.copyButton.setTypeface(Typeface.createFromAsset(context.getAssets(), "flaticon.ttf"));
+        viewHolder.deleteButton.setTextColor(iconColor);
+        viewHolder.labelButton.setOnClickListener(mLabelButtonOnClickListener);
+        viewHolder.labelButton.setTypeface(Typeface.createFromAsset(context.getAssets(), "flaticon.ttf"));
+        viewHolder.labelButton.setTextColor(iconColor);
         viewHolder.shareButton.setOnClickListener(mShareButtonOnClickListener);
         viewHolder.shareButton.setTypeface(Typeface.createFromAsset(context.getAssets(), "flaticon.ttf"));
+        viewHolder.shareButton.setTextColor(iconColor);
+
         viewHolder.useButton.setOnClickListener(mUseButtonOnClickListener);
         viewHolder.useButton.setTypeface(Typeface.createFromAsset(context.getAssets(), "flaticon.ttf"));
+        viewHolder.useButton.setTextColor(iconColor);
 
 
 
@@ -98,6 +103,7 @@ public class LogAdapter extends CursorAdapter {
         viewHolder.arrow.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "flaticon.ttf"));
         viewHolder.arrow.setRotation(0);
         viewHolder.arrow.setTranslationY(0);
+        viewHolder.arrow.setAlpha(1);
 
 
     }
@@ -114,7 +120,7 @@ public class LogAdapter extends CursorAdapter {
         public boolean checked;
 
         public final Button deleteButton;
-        public final Button copyButton;
+        public final Button labelButton;
         public final Button shareButton;
         public final Button useButton;
 
@@ -131,13 +137,9 @@ public class LogAdapter extends CursorAdapter {
             checked = false;
 
             deleteButton = (Button) view.findViewById(R.id.deleteButton);
-            copyButton = (Button) view.findViewById(R.id.labelButton);
+            labelButton = (Button) view.findViewById(R.id.labelButton);
             shareButton = (Button) view.findViewById(R.id.shareButton);
             useButton = (Button) view.findViewById(R.id.useButton);
-
-
-            //TODO Change typeface of arrow head.
-
 
         }
     }
@@ -229,7 +231,7 @@ public class LogAdapter extends CursorAdapter {
                     String currentLabel = cursor.getString(cursor.getColumnIndex(LogContract.LogEntry.COLUMN_TAG));
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                    builder.setTitle("Enter a Label:");
+                    builder.setTitle(mContext.getString(R.string.farsi_label));
 
                     // Set up the input
 
@@ -246,7 +248,7 @@ public class LogAdapter extends CursorAdapter {
                     inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
                     // Set up the buttons
 
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton(mContext.getString(R.string.farsi_ok), new DialogInterface.OnClickListener() {
 
 
                         @Override
@@ -264,7 +266,7 @@ public class LogAdapter extends CursorAdapter {
 
                         }
                     });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(mContext.getString(R.string.farsi_cancel), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             inputMethodManager.hideSoftInputFromWindow(input.getWindowToken(), 0);

@@ -29,174 +29,175 @@
     </string>
 
 
-    <string name="backSpace"></string>
-    <string name ="night1"></string>
-    <string name ="day2"></string>
-    <string name="star"></string>
-    <string name="star_icon"></string>
-    <string name="add_label"></string>
 
-    <string name="powertwo">x²</string>
-    <string name="powertwoTag">²</string>
-    <string name="powerthree">x³</string>
-    <string name="powerthreeTag">³</string>
+  <string name="powertwo">x²</string>
+  <string name="powertwoTag">²</string>
+  <string name="powerthree">x³</string>
+  <string name="powerthreeTag">³</string>
 
-    <string name="sin">sin</string>
-    <string name="cos">cos</string>
-    <string name="tan">tan</string>
-    <string name="cot">cot</string>
+  <string name="sin">sin</string>
+  <string name="cos">cos</string>
+  <string name="tan">tan</string>
+  <string name="cot">cot</string>
 
 
-    <string name="asin">asin</string>
-    <string name="acos">acos</string>
-    <string name="acot">acot</string>
-    <string name="atan">atan</string>
+  <string name="asin">asin</string>
+  <string name="acos">acos</string>
+  <string name="acot">acot</string>
+  <string name="atan">atan</string>
 
 
-    <string name="sinh">sinh</string>
-    <string name="cosh">cosh</string>
-    <string name="tanh">tanh</string>
-    <string name="coth">coth</string>
-    <string name="csch">csch</string>
-    <string name="sech">sech</string>
+  <string name="sinh">sinh</string>
+  <string name="cosh">cosh</string>
+  <string name="tanh">tanh</string>
+  <string name="coth">coth</string>
+  <string name="csch">csch</string>
+  <string name="sech">sech</string>
 
-    <string name="asinh">asinh</string>
-    <string name="acosh">acosh</string>
-    <string name="atanh">atanh</string>
-    <string name="acoth">acoth</string>
-    <string name="acsch">acsch</string>
-    <string name="asech">asech</string>
+  <string name="asinh">asinh</string>
+  <string name="acosh">acosh</string>
+  <string name="atanh">atanh</string>
+  <string name="acoth">acoth</string>
+  <string name="acsch">acsch</string>
+  <string name="asech">asech</string>
 
-    <string name="acsc">acsc</string>
-    <string name="asec">asec</string>
+  <string name="acsc">acsc</string>
+  <string name="asec">asec</string>
 
-    <string name="csc">csc</string>
-    <string name="sec">sec</string>
-    <string name="taninverse">cot</string>
-    <string name="cotinverse">tan</string>
+  <string name="csc">csc</string>
+  <string name="sec">sec</string>
+  <string name="taninverse">cot</string>
+  <string name="cotinverse">tan</string>
 
 
 
-    <string name="trigonomic">trigonomic</string>
+  <string name="trigonomic">trigonomic</string>
 
 
-    <string name="xinverse">ss</string>
+  <string name="xinverse">ss</string>
 
 
-    <string name="no_cheese">There is no cheese!</string>
+  <string name="no_cheese">There is no cheese!</string>
 
-    <string name="lore_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas molestie dignissim augue, eget eleifend quam facilisis sit amet. Donec at leo nibh. Sed bibendum purus vel quam mattis euismod. Donec justo ante, fermentum vel dapibus eu, euismod eu urna. Sed eu libero eros, eu egestas tortor. Duis et ante a erat ultrices interdum non et mi. Aliquam quis nulla non tortor malesuada pharetra vitae ac magna. Sed id felis arcu, ac aliquam tellus. Integer ut turpis enim. Nulla tristique, nisi feugiat placerat vestibulum, mauris urna scelerisque odio, a volutpat mauris nunc ut enim. Praesent vestibulum dolor nec enim rhoncus suscipit. Donec eleifend est quis risus faucibus et suscipit lacus dictum.\n\nVestibulum laoreet elit sagittis purus porta hendrerit auctor augue ultricies. Maecenas odio sem, iaculis id dapibus sed, gravida hendrerit metus. Suspendisse volutpat tincidunt urna et ornare. Nunc risus ipsum, cursus sit amet sodales a, bibendum eu tortor. Aliquam eros mi, pulvinar nec blandit vitae, rutrum sed nisl. Nulla facilisi. In libero nunc, faucibus et suscipit id, porttitor at neque. Donec a sem magna, id suscipit ipsum. Mauris orci ante, mattis sed pharetra vitae, accumsan sit amet dolor. Morbi libero diam, sodales sed suscipit ac, congue eu orci. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris eget velit nibh, eu egestas est. Sed sodales mattis nulla, ac molestie erat gravida at.\n\nCras gravida mi et nisi tristique vitae facilisis metus auctor. Etiam lobortis tincidunt venenatis. Donec eu magna et odio viverra auctor a et erat. Duis volutpat dignissim lectus eu sollicitudin. Sed libero nunc, auctor a auctor vitae, suscipit et ligula. Etiam ut quam diam, id suscipit dui. Nam eget volutpat purus. Vestibulum risus nulla, blandit ac sodales nec, malesuada id enim.\n\nDonec ac odio magna, at rhoncus massa. Maecenas risus orci, sagittis vitae scelerisque quis, condimentum sed ipsum. Maecenas sapien justo, varius consectetur consequat at, facilisis vel est. Vestibulum vulputate felis at purus scelerisque vel elementum lectus molestie. Donec posuere mollis eros vel posuere. Quisque odio velit, consequat nec tristique ac, interdum nec ipsum. Pellentesque fringilla vulputate interdum. Vivamus massa ante, ornare non laoreet sit amet, volutpat nec sapien. Curabitur et ligula metus. Nunc sit amet diam sit amet risus laoreet porta.\n\nSed ultricies aliquam nisi non mollis. Donec justo purus, lacinia sit amet venenatis non, interdum et magna. Mauris gravida sapien a nibh rhoncus eleifend. In feugiat posuere justo suscipit sagittis. Fusce lobortis, turpis at accumsan posuere, metus augue volutpat erat, a luctus ipsum justo sed nisl. Aliquam erat volutpat. In eu felis malesuada erat iaculis laoreet non vitae massa.</string>
+  <string name="app_name">42 Calculator</string>
+  <string name="action_settings">Settings</string>
+  <string name="hello_world">Hello world!</string>
+  <string name="zero">0</string>
+  <string name="point">.</string>
+  <string name="equals">=</string>
+  <string name="one">1</string>
+  <string name="two">2</string>
+  <string name="three">3</string>
+  <string name="four">4</string>
+  <string name="five">5</string>
+  <string name="six">6</string>
+  <string name="seven">7</string>
+  <string name="eight">8</string>
+  <string name="nine">9</string>
 
-    <string name="app_name">42 Calculator</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="zero">0</string>
-    <string name="point">.</string>
-    <string name="equals">=</string>
-    <string name="one">1</string>
-    <string name="two">2</string>
-    <string name="three">3</string>
-    <string name="four">4</string>
-    <string name="five">5</string>
-    <string name="six">6</string>
-    <string name="seven">7</string>
-    <string name="eight">8</string>
-    <string name="nine">9</string>
-    <string name="devision">/</string>
-    <string name="multiplyValue">\u00d7</string>
-    <string name="multiply">\u00d7</string>
-    <string name="subtract">−</string>
-    <string name="add">+</string>
-    <string name="percentage">%</string>
-    <string name="clear">C</string>
+  <string name="parenthesis_open">(</string>
+  <string name="parenthesis_closed">)</string>
+  <string name="devision">/</string>
+  <string name="multiplyValue">\u00d7</string>
+  <string name="multiply">\u00d7</string>
+  <string name="subtract">−</string>
+  <string name="add">+</string>
+  <string name="percentage">%</string>
+  <string name="clear">C</string>
 
-    <string name="ln">ln</string>
-    <string name="ln_tag">ln(</string>
-    <string name="log">log</string>
-    <string name="log_tag">log(</string>
-    <string name="inverse">inv</string>
-    <string name="ARC">ARC</string>
-
-    <string name="not">!</string>
-    <string name="Pi">π</string>
-    <string name="e">e</string>
-    <string name="power">^</string>
-    <string name="parenthesis_open">(</string>
-    <string name="parenthesis_closed">)</string>
-    <string name="devide">÷</string>
-    <string name="sqrt">√</string>
-
-    <string name="check_mark"></string>
+  <string name="ln">ln</string>
+  <string name="ln_tag">ln(</string>
+  <string name="log">log</string>
+  <string name="log_tag">log(</string>
+  <string name="inverse">inv</string>
+  <string name="ARC">ARC</string>
 
 
-    <string name="prompt">Language</string>
-    <string name="day"></string>
-    <string name="night"></string>
-    <string name="list"></string>
-    <string name="settings"></string>
-    <string name="volume_high"></string>
-    <string name="volume_off"></string>
-    <string name="language">\uE016</string>
-    <string name="help">\uE035</string>
-    <string name="theme"></string>
-    <string name="next_page">\uE003</string>
-    <string name="previous_page">\uE004</string>
-  <string name="hamburger_menu"></string>
-  <string name="hamburger_menu_big">☰</string>
-  <string name="chevron"></string>
-  <string name="delete_item"></string>
-  <string name="use_item"></string>
-  <string name="share_item"></string>
-    <!--COLOR Codes -->
+  <string name="tenpowerx">10ˣ</string>
+  <string name="epowerx">eˣ</string>
+  <string name="factoriel">!</string>
+  <string name="random">rnd</string>
+  <string name="Pi">π</string>
+  <string name="e">e</string>
+  <string name="power">^</string>
+
+  <string name="devide">÷</string>
+  <string name="sqrt">√</string>
+
+  <string name="check_mark"></string>
+
+  <string name="backSpace"></string>
+  <string name="add_label"></string>
+  <string name="prompt">Language</string>
+  <string name="day"></string>
+  <string name="night"></string>
+  <string name="settings"></string>
+  <string name="volume_high"></string>
+  <string name="volume_off"></string>
+  <string name="language">\uE016</string>
+  <string name="help">\uE035</string>
+  <string name="theme"></string>
+  <string name="next_page">\uE003</string>
+  <string name="previous_page">\uE004</string>
+  <string name="hamburger_menu"></string>
+  <string name="chevron"></string>
+  <string name="delete_item"></string>
+  <string name="use_item"></string>
+  <string name="share_item"></string>
+  <string name="star_icon"></string>
+  <string name="star_outline"></string>
+  <string name="list"></string>
+  <string name="dollar_icon_string"></string>
+
+  <!--COLOR Codes -->
 
 
 
-    <string name="color_a1">iOS Green</string>
-    <string name="color_a2">Ice Green</string>
-    <string name="color_a3">Holo Green</string>
-    <string name="color_b1">Holo Blue</string>
-    <string name="color_b2">Asphalt</string>
-    <string name="color_b3">Dark night</string>
-    <string name="color_c1">Candy Crush</string>
-    <string name="color_c2">Blood Red</string>
-    <string name="color_c3">Pearl Purple</string>
-    <string name="mr">MR</string>
-    <string name="mplus">M+</string>
-    <string name="mminus">M-</string>
-    <string name="mc">MC</string>
+  <string name="color_a1">iOS Green</string>
+  <string name="color_a2">Ice Green</string>
+  <string name="color_a3">Holo Green</string>
+  <string name="color_b1">Holo Blue</string>
+  <string name="color_b2">Asphalt</string>
+  <string name="color_b3">Dark night</string>
+  <string name="color_c1">Candy Crush</string>
+  <string name="color_c2">Blood Red</string>
+  <string name="color_c3">Pearl Purple</string>
+  <string name="mr">MR</string>
+  <string name="mplus">M+</string>
+  <string name="mminus">M-</string>
+  <string name="mc">MC</string>
 
 
-    <string name="color_picker_default_title" msgid="1248663997452044787">"انتخاب رنگ"</string>
-    <string name="color_swatch_description" msgid="2883438431173736180">"رنگ <xliff:g id="COLOR_INDEX">%1$d</xliff:g>"</string>
-    <string name="color_swatch_description_selected" msgid="5020921249944943124">"رنگ <xliff:g id="COLOR_INDEX">%1$d</xliff:g> انتخاب شد"</string>
-    <string name="Invert" />
-    <string name="constant">ثابت</string>
-    <string name="mode_deg">Deg</string>
+  <string name="color_picker_default_title" msgid="1248663997452044787">"انتخاب رنگ"</string>
+  <string name="color_swatch_description" msgid="2883438431173736180">"رنگ <xliff:g id="COLOR_INDEX">%1$d</xliff:g>"</string>
+  <string name="color_swatch_description_selected" msgid="5020921249944943124">"رنگ <xliff:g id="COLOR_INDEX">%1$d</xliff:g> انتخاب شد"</string>
+  <string name="Invert" />
+  <string name="constant">ثابت</string>
+  <string name="mode_deg">Deg</string>
 
-    <string-array name="languages_array">
-        <item>Persian</item>
-        <item>English</item>
-        <item>French</item>
+  <string-array name="languages_array">
+    <item>Persian</item>
+    <item>English</item>
+    <item>French</item>
 
-    </string-array>
+  </string-array>
 
-    <string name="demo_parallax_description">Image of a cat</string>
-    <string name="demo_parallax_plus">+</string>
-    <string name="accent_button">accent_button</string>
+  <string name="demo_parallax_description">Image of a cat</string>
+  <string name="demo_parallax_plus">+</string>
+  <string name="accent_button">accent_button</string>
 
-    <string name="title_activity_help">HelpActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+  <string name="title_activity_help">HelpActivity</string>
+  <string name="dummy_button">Dummy Button</string>
+  <string name="dummy_content">DUMMY\nCONTENT</string>
 
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
-    <string name="skip">بی خیال</string>
-    <string name="star_outline"></string>
+  <string name="title_section1">Section 1</string>
+  <string name="title_section2">Section 2</string>
+  <string name="title_section3">Section 3</string>
+  <string name="skip">بی خیال</string>
   <string name="parallax_activity_name">parallax_activity</string>
   <string name="premium_parallax_activity_name">premium_parallax</string>
 
-    <string name="title_activity_color_picker">ColorPickerActivity</string>
+  <string name="title_activity_color_picker">ColorPickerActivity</string>
   <string name="content_authority_currency">com.sepidsa.fortytwocalculator.currency</string>
   <string name="sync_account_type">fortytwocalculator.sepidsa.com</string>
   <string name="farsi_dollar">دلار</string>
@@ -224,6 +225,25 @@
   <string name="farsi_nim">سکه نیم بهار آزادی</string>
   <string name="farsi_rob">سکه ربع بهار آزادی</string>
   <string name="farsi_gerami">هر گرم سکه</string>
+  <string name="arabic_42">اثنان وأربعون</string>
+  <string name="english_42">forty two</string>
+  <string name="french_42">quarante-deux</string>
+  <string name="persian_42">چهل و دو</string>
+  <string name="favorites_list_empty">لیست خالیست \n محاسبات ستاره دار میاد اینجا</string>
+  <string name="log_empty_string">لیست خالیست \n تاریخچه محاسبات میاد اینجا</string>
+  <string name="farsi_label">برچسب را وارد کنید</string>
+  <string name="farsi_ok">خب</string>
+  <string name="farsi_cancel">بیخیال</string>
+  <string name="farsi_clear_log">پاک کردن تاریخچه</string>
+  <string name="farsi_clear_log_confirm">آیا مایلید تاریخچه پاک شه؟</string>
+  <string name="farsi_yes">بلی</string>
+  <string name="farsi_no">خیر</string>
+  <string name="farsi_list_is_empty">لیست خالیست</string>
+  <string name="farsi_clear_starred">ستاره دارها هم پاک شه</string>
+  <string name="farsi_enter_constant">ثابت را وارد کنید</string>
+  <string name="farsi_choose_email_app">با چی بفرستم؟</string>
+  <string name="farsi_about_42_calc">راجع به ماشین حساب  ۴۲</string>
+  <string name="become_premium">طلایی شو</string>
 
 
 </resources>

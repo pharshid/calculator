@@ -27,7 +27,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="25"
+            android:layout_weight="30"
             android:id="@+id/MotherTop"
             android:focusable="false"
             android:clipChildren="false"
@@ -38,7 +38,7 @@
 
 
             <Button
-                android:id="@+id/constant_selected"
+                android:id="@+id/btn_add_star"
                 android:layout_width="42dp"
                 android:layout_height="42dp"
                 android:textColor="@android:color/white"
@@ -58,19 +58,18 @@
 
             <com.sepidsa.fortytwocalculator.AutoResizeTextView
                 android:id="@+id/result"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:background="@android:color/darker_gray"
                 style="@style/text_switcher"
                 android:text="0"
-                android:layout_toRightOf="@id/constant_selected"
+                android:layout_toRightOf="@id/btn_add_star"
                 android:gravity="center_vertical|right"
-                android:maxLines="1"
-                android:paddingRight="@dimen/padding_large"
-                android:paddingLeft="@dimen/padding_large"
-                app:minTextSize="3sp"
-
-
+                android:ellipsize="none"
+                android:scrollbars = "vertical"
+                android:focusable="false"
+                android:paddingLeft="@dimen/padding_medium"
+                android:paddingRight="@dimen/padding_medium"
 
                 />
 
@@ -84,7 +83,7 @@
                 android:textColor="@android:color/white"
                 android:paddingLeft="@dimen/padding_small"
                 android:text="RAD"
-               />
+                />
 
 
             <TextView
@@ -110,7 +109,7 @@
                 android:layout_height="42dp"
                 android:textColor="@android:color/white"
                 android:layout_centerVertical="true"
-                android:layout_above="@id/constant_selected"
+                android:layout_above="@id/btn_add_star"
                 android:layout_alignParentLeft="true"
                 android:background="@android:color/transparent"
                 android:visibility="gone"
@@ -143,12 +142,27 @@
                 android:id="@+id/favorites_list"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="13"
+                android:layout_weight="11"
                 android:background="@android:color/transparent"
                 android:layout_centerVertical="true"
                 android:visibility="visible"
                 android:layout_gravity="center"
                 android:gravity="center"
+
+
+                />
+            <Button
+                android:id="@+id/currency_list"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="11"
+                android:background="@android:color/transparent"
+                android:layout_centerVertical="true"
+                android:visibility="visible"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="27sp"
+                android:text="@string/dollar_icon_string"
 
 
                 />
@@ -161,8 +175,9 @@
                 style="@style/translation_box"
                 android:paddingRight="@dimen/padding_large"
                 android:scrollbars = "vertical"
-                android:background="@android:color/transparent"
                 android:focusable="false"
+
+                android:background="@android:color/transparent"
 
                 />
 
@@ -172,16 +187,16 @@
 
 
 
-    <LinearLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="75"
-        android:orientation="vertical"
-        android:clipChildren="false"
-        android:clipToPadding="false"
+        <LinearLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="75"
+            android:orientation="vertical"
+            android:clipChildren="false"
+            android:clipToPadding="false"
 
-        >
+            >
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewpager"
@@ -191,15 +206,15 @@
                 android:tag="portrait_phone"
                 />
 
-        <com.viewpagerindicator.CirclePageIndicator
-            android:id="@+id/view_pager_indicator"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4"
-            android:layout_gravity="center_horizontal|top"
+            <com.viewpagerindicator.CirclePageIndicator
+                android:id="@+id/view_pager_indicator"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:layout_gravity="center_horizontal|top"
 
 
-            />
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -247,6 +262,7 @@
                     android:tag="@string/volume_high"
                     android:gravity="center_horizontal"
                     android:textColor="#DADFE1"
+                    android:visibility="gone"
 
 
                     />
@@ -276,7 +292,7 @@
 
             </LinearLayout>
 
-    </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
 

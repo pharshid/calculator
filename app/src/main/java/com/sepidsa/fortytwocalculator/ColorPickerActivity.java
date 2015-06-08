@@ -9,11 +9,12 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
 
-public class ColorPickerActivity extends FragmentActivity implements ColorPickerSwatch.OnColorSelectedListener, CompoundButton.OnCheckedChangeListener {
+public class ColorPickerActivity extends FragmentActivity implements ColorPickerSwatch.OnColorSelectedListener, CompoundButton.OnCheckedChangeListener, View.OnClickListener {
     public static final int SIZE_LARGE = 1;
     public static final int SIZE_SMALL = 2;
 
@@ -50,6 +51,7 @@ public class ColorPickerActivity extends FragmentActivity implements ColorPicker
     ColorPickerPalette mACcentPallete;
     ColorPickerPalette mKeypadPallete;
     Typeface mYekanFont;
+    ImageButton backButton;
     protected ColorPickerSwatch.OnColorSelectedListener mListener;
     Switch mClassicthemeSwitch;
     @Override
@@ -62,7 +64,8 @@ public class ColorPickerActivity extends FragmentActivity implements ColorPicker
         mKeypadLayout =  findViewById(R.id.layout_color_picker_keypad);
 
        setTypefaces();
-
+        backButton = (ImageButton)findViewById(R.id.button_back);
+        backButton.setOnClickListener(this);
         mIsPremium  = getIntent().getBooleanExtra("isPremium", false);
         mIsRetroThemeSelected = getIntent().getBooleanExtra("isRetroTheme", false);
         mAccentcolorCode = getIntent().getIntExtra("accentColor", Color.parseColor("#1abc9c"));
@@ -97,9 +100,22 @@ public class ColorPickerActivity extends FragmentActivity implements ColorPicker
         fontChaange.setTypeface(mYekanFont);
            fontChaange = (TextView) findViewById(R.id.textView_keypad);
         fontChaange.setTypeface(mYekanFont);
+        fontChaange.setTextColor(getDialpadFontColor());
 
     }
 
+    public int getDialpadFontColor() {
+        if (getKeypadBackgroundColorCode() != Color.WHITE){
+//            return  Color.DKGRAY;
+            return  Color.parseColor("#9E9E9E");
+        }else {
+            return  Color.parseColor("#a9a9a9");
+//            return  Color.parseColor("#9E9E9E");
+
+//            return  Color.LTGRAY;
+//            return  Color.parseColor("#757575");
+        }
+    }
 
     @Override
     public Intent getIntent() {
@@ -142,20 +158,30 @@ public class ColorPickerActivity extends FragmentActivity implements ColorPicker
 
         boolean selectedAccentColor = true;
         int [] temp = Utils.ColorUtils.colorChoice(getApplicationContext());
-        selectedAccentColor =  arrayContains(temp,color);
+        selectedAccentColor =  arrayContains(temp, color);
         if(selectedAccentColor){
             saveAccentColorCode(color);
             mAccentLayout.setBackgroundColor(getAccentColorCode());
             mACcentPallete.drawPalette(Utils.ColorUtils.colorChoice(getApplicationContext()), color, null);
         }else{
-            saveKeypadBackgroundColorCode(color);
-            mKeypadLayout.setBackgroundColor(getKeypadBackgroundColorCode());
-            mKeypadPallete.drawPalette(Utils.ColorUtils.colorChoiceForKeypad(getApplicationContext()), color, null);
-
+            if(getPremiumPreference()) {
+                saveKeypadBackgroundColorCode(color);
+                mKeypadLayout.setBackgroundColor(getKeypadBackgroundColorCode());
+                mKeypadPallete.drawPalette(Utils.ColorUtils.colorChoiceForKeypad(getApplicationContext()), color, null);
+            }else {
+               displayUpgradeToPremium(0);
+            }
 
         }
     }
 
+
+
+    private void displayUpgradeToPremium(int i) {
+        Intent myIntent = new Intent(ColorPickerActivity.this, PremiumShowcasePagerActivity.class);
+        ColorPickerActivity.this.startActivity(myIntent);
+
+    }
 
     // Saving the selected color theme to prefrence
     public void saveAccentColorCode(int colorCode){
@@ -223,4 +249,11 @@ public class ColorPickerActivity extends FragmentActivity implements ColorPicker
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.button_back:
+                this.finish();
+        }
+    }
 }

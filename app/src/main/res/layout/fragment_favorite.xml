@@ -19,7 +19,8 @@
         android:textSize="@dimen/log_detail_txt_size"
         android:textColor="@android:color/darker_gray"
         android:gravity="center"
-        android:text="List is empty, go get some cannoli."
+        android:text="@string/favorites_list_empty"
+        android:layout_margin="20dp"
         />
 
 </LinearLayout>

@@ -20,6 +20,7 @@ public class LogContract {
         public static final String TABLE_NAME = "log";
 
         public static final String COLUMN_RESULT = "result";
+        public static final String COLUMN_RESULT_NO_COMMA = "result_no_comma";
         public static final String COLUMN_OPERATION = "operation";
         public static final String COLUMN_TAG = "tag";
         public static final String COLUMN_STARRED = "starred";

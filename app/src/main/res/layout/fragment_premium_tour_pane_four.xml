@@ -3,15 +3,14 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/background"
-    android:background="#3F51B5"
+    android:background="#795548"
     android:orientation="vertical"
     >
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Unlock Premium"
+        android:text="@string/become_premium"
         android:background="@drawable/button_border"
         android:padding="@dimen/padding_large"
         android:layout_marginTop="@dimen/abc_control_padding_material"
@@ -29,7 +28,7 @@
             android:layout_width="128dp"
             android:layout_height="128dp"
             android:id="@+id/tour_descriptive_icon"
-            android:src="@drawable/ic_purchase_diamond"
+            android:src="@drawable/premium_constant"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/tour_screenshot"
             android:layout_margin="@dimen/padding_large"
@@ -43,11 +42,11 @@
             android:visibility="visible"
             android:src="@drawable/percentage_icon"
             android:id="@+id/tour_title"
-            android:text="نتیجه محاسبات را به حروف  ببینید"
+            android:text="ثابت های جدید"
             android:gravity="center"
             android:textSize="25sp"
             android:textStyle="bold"
-            android:textColor="@android:color/white"
+            android:textColor="#FFEB3B"
             android:layout_below= "@+id/tour_descriptive_icon"
             android:layout_margin="@dimen/padding_medium"
 
@@ -57,12 +56,11 @@
             android:id="@+id/tour_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@android:color/white"
             android:textSize="26sp"
-            android:text="توضیح مفصل مطلب بالا"
+            android:text="ثابت های دلخواه خود را به برنامه اضافه کنید"
             android:fontFamily="sans-serif-light"
             android:gravity="center"
-
             android:layout_below="@+id/tour_title"
             android:layout_centerHorizontal="true" />
 

@@ -28,7 +28,8 @@
             android:clickable="true"
             android:elevation="0dp"
             app:biv_maskDrawable="@drawable/circle_mask"
-            app:biv_selectorOnPress="@color/material_drawer_primary"/>
+            app:biv_selectorOnPress="@color/material_drawer_primary"
+            android:visibility="gone"/>
 
         <com.mikepenz.materialdrawer.view.BezelImageView
             android:id="@+id/account_header_drawer_small_first"

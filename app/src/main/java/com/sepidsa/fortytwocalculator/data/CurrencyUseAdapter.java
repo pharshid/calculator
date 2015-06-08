@@ -3,6 +3,8 @@ package com.sepidsa.fortytwocalculator;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,10 +74,26 @@ public class CurrencyUseAdapter extends CursorAdapter {
         viewHolder.position = cursor.getInt((cursor.getColumnIndex(CurrencyContract.CurrencyEntry._ID)));
         String key = cursor.getString(cursor.getColumnIndex(CurrencyContract.CurrencyEntry.COLUMN_KEY));
         String number = cursor.getString(cursor.getColumnIndex(CurrencyContract.CurrencyEntry.COLUMN_VALUE));
+        int type = cursor.getInt(cursor.getColumnIndex(CurrencyContract.CurrencyEntry.COLUMN_TYPE));
+//        viewHolder.flagView.setTextColor(Color.WHITE);
+//        viewHolder.flagView.setTypeface(Typeface.createFromAsset(context.getAssets(), "flaticon.ttf"));
+//        switch (type) {
+//            case 1:
+//                viewHolder.flagView.setBackgroundColor(Color.GREEN);
+//                viewHolder.flagView.setText("G");
 
+//                break;
+//            case 2:
+//                viewHolder.flagView.setBackgroundColor(Color.YELLOW);
+//                viewHolder.flagView.setText("Y");
 
+//        }
         viewHolder.nameView.setText(currencyMap.get(key));
+        viewHolder.nameView.setTypeface(Typeface.createFromAsset(context.getAssets(), "yekan.ttf"));
         viewHolder.numberView.setText(number);
+        viewHolder.numberView.setTypeface(Typeface.createFromAsset(context.getAssets(), "yekan.ttf"));
+
+
 
     }
 
@@ -84,11 +102,14 @@ public class CurrencyUseAdapter extends CursorAdapter {
     public static class ViewHolder {
         public final TextView nameView;
         public final TextView numberView;
+        public final TextView flagView;
         public int position;
+
 
         public ViewHolder(View view) {
             nameView = (TextView) view.findViewById(R.id.currency_translation);
             numberView = (TextView) view.findViewById(R.id.currency_value);
+            flagView = (TextView) view.findViewById(R.id.currency_flag);
         }
     }
 

@@ -19,7 +19,7 @@ public class NumberConveterPersianPartI {
           "ده ",
           "یازده ",
           "دوازده ",
-          "سیزده",
+          "سیزده ",
           "چهارده ",
           "پانزده ",
           "شانزده ",

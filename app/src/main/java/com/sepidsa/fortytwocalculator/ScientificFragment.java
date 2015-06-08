@@ -194,73 +194,127 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
             ((Button) mView.findViewById(R.id.buttonSinus)).setText("a"+ ((Button) mView.findViewById(R.id.buttonSinus)).getText());
             ((Button) mView.findViewById(R.id.buttonCosinus)).setText("a"+ ((Button) mView.findViewById(R.id.buttonCosinus)).getText());
             ((Button) mView.findViewById(R.id.buttonTan)).setText("a"+ ((Button) mView.findViewById(R.id.buttonTan)).getText());
-            ((Button) mView.findViewById(R.id.buttonCot)).setText("a"+ ((Button) mView.findViewById(R.id.buttonCot)).getText());
+//            ((Button) mView.findViewById(R.id.buttonfact)).setText("a"+ ((Button) mView.findViewById(R.id.buttonfact)).getText());
 
             ((Button) mView.findViewById(R.id.buttonSinusH)).setText("a"+ ((Button) mView.findViewById(R.id.buttonSinusH)).getText());
             ((Button) mView.findViewById(R.id.buttonCosinusH)).setText("a"+ ((Button) mView.findViewById(R.id.buttonCosinusH)).getText());
             ((Button) mView.findViewById(R.id.buttonTanH)).setText("a"+ ((Button) mView.findViewById(R.id.buttonTanH)).getText());
-            ((Button) mView.findViewById(R.id.buttonCotH)).setText("a"+ ((Button) mView.findViewById(R.id.buttonCotH)).getText());
+//            ((Button) mView.findViewById(R.id.buttonRandom)).setText("a"+ ((Button) mView.findViewById(R.id.buttonRandom)).getText());
         }else {
             ((Button) mView.findViewById(R.id.buttonSinus)).setText(((Button) mView.findViewById(R.id.buttonSinus)).getText().toString().substring(1));
             ((Button) mView.findViewById(R.id.buttonCosinus)).setText(((Button) mView.findViewById(R.id.buttonCosinus)).getText().toString().substring(1));
             ((Button) mView.findViewById(R.id.buttonTan)).setText(((Button) mView.findViewById(R.id.buttonTan)).getText().toString().substring(1));
-            ((Button) mView.findViewById(R.id.buttonCot)).setText(((Button) mView.findViewById(R.id.buttonCot)).getText().toString().substring(1));
+//            ((Button) mView.findViewById(R.id.buttonfact)).setText(((Button) mView.findViewById(R.id.buttonfact)).getText().toString().substring(1));
 
             ((Button) mView.findViewById(R.id.buttonSinusH)).setText(((Button) mView.findViewById(R.id.buttonSinusH)).getText().toString().substring(1));
             ((Button) mView.findViewById(R.id.buttonCosinusH)).setText(((Button) mView.findViewById(R.id.buttonCosinusH)).getText().toString().substring(1));
             ((Button) mView.findViewById(R.id.buttonTanH)).setText(((Button) mView.findViewById(R.id.buttonTanH)).getText().toString().substring(1));
-            ((Button) mView.findViewById(R.id.buttonCotH)).setText(((Button) mView.findViewById(R.id.buttonCotH)).getText().toString().substring(1));
+//            ((Button) mView.findViewById(R.id.buttonRandom)).setText(((Button) mView.findViewById(R.id.buttonRandom)).getText().toString().substring(1));
         }
     }
 
     private void applyInverse(boolean isOn) {
-        if(arcIsOn) {
-            if (isOn) {
+
+        if(isOn){
+            ((Button) mView.findViewById(R.id.buttonlog)).setText(getResources().getString(R.string.tenpowerx));
+            ((Button) mView.findViewById(R.id.buttonln)).setText(getResources().getString(R.string.epowerx));
+
+            if(arcIsOn) {
                 ((Button) mView.findViewById(R.id.buttonSinus)).setText("a"+ getResources().getString(R.string.csc));
                 ((Button) mView.findViewById(R.id.buttonCosinus)).setText("a"+ getResources().getString(R.string.sec));
                 ((Button) mView.findViewById(R.id.buttonTan)).setText("a"+ getResources().getString(R.string.taninverse));
-                ((Button) mView.findViewById(R.id.buttonCot)).setText("a"+ getResources().getString(R.string.cotinverse));
+//                ((Button) mView.findViewById(R.id.buttonfact)).setText("a"+ getResources().getString(R.string.cotinverse));
 
-               ((Button) mView.findViewById(R.id.buttonSinusH)).setText("a"+ getResources().getString(R.string.csch));
+                ((Button) mView.findViewById(R.id.buttonSinusH)).setText("a"+ getResources().getString(R.string.csch));
                 ((Button) mView.findViewById(R.id.buttonCosinusH)).setText("a"+ getResources().getString(R.string.sech));
                 ((Button) mView.findViewById(R.id.buttonTanH)).setText("a"+ getResources().getString(R.string.coth));
-                ((Button) mView.findViewById(R.id.buttonCotH)).setText("a"+ getResources().getString(R.string.tanh));
-            } else {
+//                ((Button) mView.findViewById(R.id.buttonRandom)).setText("a"+ getResources().getString(R.string.tanh));
+            }else{
                 ((Button) mView.findViewById(R.id.buttonSinus)).setText("a"+ getResources().getString(R.string.sin));
                 ((Button) mView.findViewById(R.id.buttonCosinus)).setText("a"+ getResources().getString(R.string.cos));
                 ((Button) mView.findViewById(R.id.buttonTan)).setText("a"+ getResources().getString(R.string.tan));
-                ((Button) mView.findViewById(R.id.buttonCot)).setText("a"+ getResources().getString(R.string.cot));
+//                ((Button) mView.findViewById(R.id.buttonfact)).setText("a"+ getResources().getString(R.string.cot));
 
                 ((Button) mView.findViewById(R.id.buttonSinusH)).setText("a"+ getResources().getString(R.string.sinh));
                 ((Button) mView.findViewById(R.id.buttonCosinusH)).setText("a"+ getResources().getString(R.string.cosh));
                 ((Button) mView.findViewById(R.id.buttonTanH)).setText("a"+ getResources().getString(R.string.tanh));
-                ((Button) mView.findViewById(R.id.buttonCotH)).setText("a"+ getResources().getString(R.string.coth));
+//                ((Button) mView.findViewById(R.id.buttonRandom)).setText("a"+ getResources().getString(R.string.coth));
             }
         }else {
+            ((Button) mView.findViewById(R.id.buttonlog)).setText(getResources().getString(R.string.log));
+            ((Button) mView.findViewById(R.id.buttonln)).setText(getResources().getString(R.string.ln));
 
-            if (isOn) {
+            if(arcIsOn) {
                 ((Button) mView.findViewById(R.id.buttonSinus)).setText(getResources().getString(R.string.csc));
                 ((Button) mView.findViewById(R.id.buttonCosinus)).setText(getResources().getString(R.string.sec));
                 ((Button) mView.findViewById(R.id.buttonTan)).setText(getResources().getString(R.string.taninverse));
-                ((Button) mView.findViewById(R.id.buttonCot)).setText(getResources().getString(R.string.cotinverse));
+//                ((Button) mView.findViewById(R.id.buttonfact)).setText(getResources().getString(R.string.cotinverse));
 
                 ((Button) mView.findViewById(R.id.buttonSinusH)).setText(getResources().getString(R.string.csch));
                 ((Button) mView.findViewById(R.id.buttonCosinusH)).setText(getResources().getString(R.string.sech));
                 ((Button) mView.findViewById(R.id.buttonTanH)).setText(getResources().getString(R.string.coth));
-                ((Button) mView.findViewById(R.id.buttonCotH)).setText(getResources().getString(R.string.tanh));
-            } else {
+//                ((Button) mView.findViewById(R.id.buttonRandom)).setText(getResources().getString(R.string.tanh));
+            }else{
                 ((Button) mView.findViewById(R.id.buttonSinus)).setText(getResources().getString(R.string.sin));
                 ((Button) mView.findViewById(R.id.buttonCosinus)).setText(getResources().getString(R.string.cos));
                 ((Button) mView.findViewById(R.id.buttonTan)).setText(getResources().getString(R.string.tan));
-                ((Button) mView.findViewById(R.id.buttonCot)).setText(getResources().getString(R.string.cot));
+//                ((Button) mView.findViewById(R.id.buttonfact)).setText(getResources().getString(R.string.cot));
 
                 ((Button) mView.findViewById(R.id.buttonSinusH)).setText(getResources().getString(R.string.sinh));
                 ((Button) mView.findViewById(R.id.buttonCosinusH)).setText(getResources().getString(R.string.cosh));
                 ((Button) mView.findViewById(R.id.buttonTanH)).setText(getResources().getString(R.string.tanh));
-                ((Button) mView.findViewById(R.id.buttonCotH)).setText(getResources().getString(R.string.coth));
+//                ((Button) mView.findViewById(R.id.buttonRandom)).setText(getResources().getString(R.string.coth));
             }
 
         }
+
+//        if(arcIsOn) {
+//            if (isOn) {
+//                ((Button) mView.findViewById(R.id.buttonSinus)).setText("a"+ getResources().getString(R.string.csc));
+//                ((Button) mView.findViewById(R.id.buttonCosinus)).setText("a"+ getResources().getString(R.string.sec));
+//                ((Button) mView.findViewById(R.id.buttonTan)).setText("a"+ getResources().getString(R.string.taninverse));
+////                ((Button) mView.findViewById(R.id.buttonfact)).setText("a"+ getResources().getString(R.string.cotinverse));
+//
+//               ((Button) mView.findViewById(R.id.buttonSinusH)).setText("a"+ getResources().getString(R.string.csch));
+//                ((Button) mView.findViewById(R.id.buttonCosinusH)).setText("a"+ getResources().getString(R.string.sech));
+//                ((Button) mView.findViewById(R.id.buttonTanH)).setText("a"+ getResources().getString(R.string.coth));
+////                ((Button) mView.findViewById(R.id.buttonRandom)).setText("a"+ getResources().getString(R.string.tanh));
+//            } else {
+//                ((Button) mView.findViewById(R.id.buttonSinus)).setText("a"+ getResources().getString(R.string.sin));
+//                ((Button) mView.findViewById(R.id.buttonCosinus)).setText("a"+ getResources().getString(R.string.cos));
+//                ((Button) mView.findViewById(R.id.buttonTan)).setText("a"+ getResources().getString(R.string.tan));
+////                ((Button) mView.findViewById(R.id.buttonfact)).setText("a"+ getResources().getString(R.string.cot));
+//
+//                ((Button) mView.findViewById(R.id.buttonSinusH)).setText("a"+ getResources().getString(R.string.sinh));
+//                ((Button) mView.findViewById(R.id.buttonCosinusH)).setText("a"+ getResources().getString(R.string.cosh));
+//                ((Button) mView.findViewById(R.id.buttonTanH)).setText("a"+ getResources().getString(R.string.tanh));
+////                ((Button) mView.findViewById(R.id.buttonRandom)).setText("a"+ getResources().getString(R.string.coth));
+//            }
+//        }else {
+//
+//            if (isOn) {
+//                ((Button) mView.findViewById(R.id.buttonSinus)).setText(getResources().getString(R.string.csc));
+//                ((Button) mView.findViewById(R.id.buttonCosinus)).setText(getResources().getString(R.string.sec));
+//                ((Button) mView.findViewById(R.id.buttonTan)).setText(getResources().getString(R.string.taninverse));
+////                ((Button) mView.findViewById(R.id.buttonfact)).setText(getResources().getString(R.string.cotinverse));
+//
+//                ((Button) mView.findViewById(R.id.buttonSinusH)).setText(getResources().getString(R.string.csch));
+//                ((Button) mView.findViewById(R.id.buttonCosinusH)).setText(getResources().getString(R.string.sech));
+//                ((Button) mView.findViewById(R.id.buttonTanH)).setText(getResources().getString(R.string.coth));
+////                ((Button) mView.findViewById(R.id.buttonRandom)).setText(getResources().getString(R.string.tanh));
+//            } else {
+//                ((Button) mView.findViewById(R.id.buttonSinus)).setText(getResources().getString(R.string.sin));
+//                ((Button) mView.findViewById(R.id.buttonCosinus)).setText(getResources().getString(R.string.cos));
+//                ((Button) mView.findViewById(R.id.buttonTan)).setText(getResources().getString(R.string.tan));
+////                ((Button) mView.findViewById(R.id.buttonfact)).setText(getResources().getString(R.string.cot));
+//
+//                ((Button) mView.findViewById(R.id.buttonSinusH)).setText(getResources().getString(R.string.sinh));
+//                ((Button) mView.findViewById(R.id.buttonCosinusH)).setText(getResources().getString(R.string.cosh));
+//                ((Button) mView.findViewById(R.id.buttonTanH)).setText(getResources().getString(R.string.tanh));
+////                ((Button) mView.findViewById(R.id.buttonRandom)).setText(getResources().getString(R.string.coth));
+//            }
+//
+//        }
     }
 
     @Override
@@ -294,7 +348,7 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
         int [] buttonsPointerArray;
 
         buttonsPointerArray = new int[]{ R.id.buttonSinus , R.id.buttonCosinus , R.id.buttonTan , R.id.buttonln , R.id.buttonlog , R.id.buttonlog , R.id.buttonpie , R.id.buttone, R.id.buttonpower ,
-                R.id.buttonrad , R.id.buttonCot ,  R.id.buttonPow2 , R.id.buttonPow3 , R.id.buttonSinusH , R.id.buttonCosinusH , R.id.buttonTanH , R.id.buttonCotH
+                R.id.buttonrad , R.id.buttonfact,  R.id.buttonPow2 , R.id.buttonPow3 , R.id.buttonSinusH , R.id.buttonCosinusH , R.id.buttonTanH , R.id.buttonRandom
                 , R.id.buttonConstant , R.id.buttonARC , R.id.switch_deg_rad ,R.id.buttonInverse
 
         };

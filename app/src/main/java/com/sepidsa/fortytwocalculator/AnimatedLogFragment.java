@@ -124,8 +124,6 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
                 // Start the animation on the toolbar
 
                 toolbar.startAnimation(expandAni);
-                Toast.makeText(getActivity(),
-                        "item " + position + " clicked", Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -146,15 +144,15 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
                     View checkBoxView = View.inflate(getActivity(), R.layout.checkbox, null);
                     final CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.checkbox);
 
-                    checkBox.setText("Also clear starred items.");
+                    checkBox.setText(getActivity().getString(R.string.farsi_clear_starred));
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-                    builder.setTitle("CLEAR LOG");
-                    builder.setMessage("Do you really want to clear log?")
+                    builder.setTitle(getActivity().getString(R.string.farsi_clear_log));
+                    builder.setMessage(getActivity().getString(R.string.farsi_clear_log_confirm))
                             .setView(checkBoxView)
                             .setCancelable(false)
-                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(getActivity().getString(R.string.farsi_yes), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     if (checkBox.isChecked()) {
                                         getActivity().getContentResolver().delete(LogContract.LogEntry.CONTENT_URI, null, null);
@@ -169,13 +167,13 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
 
                                 }
                             })
-                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(getActivity().getString(R.string.farsi_no), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
                                 }
                             }).show();
                 } else {
-                    Toast.makeText(getActivity(), "The list is empty.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),getActivity().getString(R.string.farsi_list_is_empty), Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -222,7 +220,7 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
 
                     getActivity().startActivity(Intent.createChooser(sharingIntent, "Share"));
                 } else {
-                    Toast.makeText(getActivity(), "There is nothing to share.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getActivity().getString(R.string.farsi_list_is_empty), Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -270,8 +268,12 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
             return new CursorLoader(getActivity(),
                     LogContract.LogEntry.CONTENT_URI,
                     LOG_COLUMNS,
-                    LogContract.LogEntry.COLUMN_TAG + " like ?" + " or " + LogContract.LogEntry.COLUMN_RESULT + " like ?" + " or " + LogContract.LogEntry.COLUMN_OPERATION + " like ?",
-                    new String[]{"%" + filter + "%", "%" + filter + "%", "%" + filter + "%"},
+                    LogContract.
+                            LogEntry.COLUMN_TAG + " like ?" + " or " +
+                            LogContract.LogEntry.COLUMN_RESULT_NO_COMMA + " like ?" + " or " +
+                            LogContract.LogEntry.COLUMN_RESULT + " like ?" + " or " +
+                            LogContract.LogEntry.COLUMN_OPERATION + " like ?",
+                    new String[]{"%" + filter + "%", "%" + filter + "%", "%" + filter + "%", "%" + filter + "%"},
                     null);
         }
     }

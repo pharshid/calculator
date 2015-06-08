@@ -39,7 +39,6 @@ import android.view.ViewParent;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -57,7 +56,6 @@ import com.mikepenz.materialdrawer.accountswitcher.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.sepidsa.fortytwocalculator.data.CurrencyContract;
 import com.sepidsa.fortytwocalculator.data.LogContract;
 import com.sepidsa.fortytwocalculator.sync.CurrencySyncAdapter;
 import com.sepidsa.fortytwocalculator.util.IabHelper;
@@ -85,19 +83,18 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     OnHeadlineSelectedListener mCallback;
 
     private static final String FRAGMENT_TAG_LOG_ = "log fragment";
-    private static final byte LANGUAGE_ARABIC =0 ;
+    public static final byte LANGUAGE_ARABIC = 3 ;
 
     private static final String LOG_DATA_KEY = "log data";
-    private static final int FONT_DIGITAL_7 = 3;
-    private static final int FONT_YEKAN = 4;
-    private static final int FONT_MAJALLA = 7;
+    public static final int FONT_DIGITAL_7 = 3;
+    public static final int FONT_YEKAN = 4;
+    public static final int FONT_MAJALLA = 7;
     private long mLatestInsertedId;
     private Drawer mDrawer;
-    Log_Adapter mLogAdapter;
     Serializable mListView ;
     //TextSwitcher mResultTextSwitcher = null;
     //the reason it's an editText and not a TextView is solely for supporting the scrolling function
-    private AutoResizeTextView mTranslationBox;
+    public AutoResizeTextView mTranslationBox;
 
     Button mButton ;
 
@@ -127,11 +124,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     int mSelectedColorCal0 = 0;
 
-    private static final int FONT_ROBOTO_THIN = 0;
-    private static final int FONT_ROBOTO_LIGHT = 1;
-    private static final int FONT_ROBOTO_REGULAR = 2;
-    private static final int FONT_MITRA = 5;
-    private static final int FONT_DASTNEVIS = 6;
+    public static final int FONT_ROBOTO_THIN = 0;
+    public static final int FONT_ROBOTO_LIGHT = 1;
+    public static final int FONT_ROBOTO_REGULAR = 2;
+    public static final int FONT_MITRA = 5;
+    public static final int FONT_DASTNEVIS = 6;
     private Typeface mRobotoLight;
     private Typeface mRobotoRegular;
 
@@ -167,7 +164,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     //    this typeface will be used for translation box
     private Typeface mTranslationBoxLetterFont = null;
     // Languages supported for "number to word" translation . will use theme Later for Localization
-    static final byte LANGUAGE_PERSIAN = 3
+    static final byte LANGUAGE_PERSIAN = 0
             , LANGUAGE_ENGLISH = 1
             , LANGUAGE_FRENCH = 2;
     private static final byte DEFAULT_LANGUAGE = LANGUAGE_PERSIAN;
@@ -183,7 +180,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     BigDecimal mMemoryVariable = new BigDecimal(0);
     TextView mMemoryVariableTextView;
     String mMemoryVariableString = "";
-    private Animation mErrorBlink,mBlink,mFadeIn,mFadeOut;
+    private Animation mErrorBlink;
+    public Animation mBlink;
+    private Animation mFadeIn;
+    private Animation mFadeOut;
 
     private SoundPool mSoundPool;
     private boolean mSoundPoolLoaded = false;
@@ -192,14 +192,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             , clearAllButtonSoundID
             , operatorsButtonSoundID
             , errorSoundID
+            , mAddStarSoundID
             , mHasVolumeSoundID
             , backSpaceButtonSoundID ;
 
     Animation  out_anim,in_anim;
     private Typeface mFlatIcon;
-    private String mDecimal_fraction = "";
+    public String mDecimal_fraction = "";
     private TextView mScientificModeTextView;
-    private Typeface mshekari;
     private Typeface mMajalla;
     private Typeface mMitra;
     private Typeface mDastnevis;
@@ -220,7 +220,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             doubleBackToExitPressedOnce = false;
         }
     };
-    private Button mAddToFavorites;
+    private Button mAddStars;
     private Button mAddLabel;
     private Typeface mPhalls,mDigital_7;
     private Typeface mRobotoThin;
@@ -245,6 +245,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     com.sepidsa.fortytwocalculator.util.IabHelper mHelper;
 
     public String base64EncodedPublicKey;
+    private Button mCurrencyList;
 
     // Container Activity must implement this interface
     public interface OnHeadlineSelectedListener {
@@ -311,11 +312,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mScientificModeTextView = (TextView) findViewById(R.id.scientific_mode_textview);
         result_textView_holder = findViewById(R.id.MotherTop);
         mFavoritesList = (Button)findViewById(R.id.favorites_list);
-        mAddToFavorites = (Button)findViewById(R.id.constant_selected);
+        mAddStars = (Button)findViewById(R.id.btn_add_star);
         mAddLabel = (Button)findViewById(R.id.add_label);
+        mCurrencyList =  (Button)findViewById(R.id.currency_list);
         mFavoritesList.setOnClickListener(this);
-        mAddToFavorites.setOnClickListener(this);
+        mAddStars.setOnClickListener(this);
         mAddLabel.setOnClickListener(this);
+        mCurrencyList.setOnClickListener(this);
 
 //        If it's a new instance of application i.e. Not because of rotation or configuration changes =================
         prepareBottomIcons();
@@ -373,8 +376,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.header)
                 .addProfiles(
-                        new ProfileDrawerItem().withName("ماشین حساب 42")
-                                .withIcon(getResources().getDrawable(R.mipmap.ic_launcher))
+                        new ProfileDrawerItem()
+//                                .withName("ماشین حساب 42")
+//                                .withIcon(getResources().getDrawable(R.mipmap.ic_launcher))
                 )
 //                .withCompactStyle(true)
                 .withAlternativeProfileHeaderSwitching(false)
@@ -391,12 +395,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 .withFullscreen(true)
                 .withAccountHeader(headerResult)
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName("راهنما").withIcon(getResources().getDrawable(R.drawable.ic_launcher)),
-                        new PrimaryDrawerItem().withName("درباره").withIcon(getResources().getDrawable(R.drawable.ic_launcher)),
-                        new PrimaryDrawerItem().withName("تماس با ما").withIcon(getResources().getDrawable(R.drawable.ic_launcher)),
+                        new PrimaryDrawerItem().withName("راهنما").withIcon(getResources().getDrawable(R.drawable.ic_lightbulb_outline_grey600_24dp)),
+                        new PrimaryDrawerItem().withName("درباره").withIcon(getResources().getDrawable(R.drawable.ic_information_outline_grey600_24dp)),
+                        new PrimaryDrawerItem().withName("پیام به ما").withIcon(getResources().getDrawable(R.drawable.ic_email_outline_grey600_24dp)),
 //                        new DividerDrawerItem(),
-                        new PrimaryDrawerItem().withName("ارتقا به نسخه طلایی").withIcon(getResources().getDrawable(R.drawable.ic_launcher)),
-                        new PrimaryDrawerItem().withName("بازیابی خرید").withIcon(getResources().getDrawable(R.drawable.ic_launcher))
+                        new PrimaryDrawerItem().withName("نسخه طلایی").withIcon(getResources().getDrawable(R.drawable.badge))
 
                 )
         .withSelectedItem(-1)
@@ -417,9 +420,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                                 break;
                             case 3:
                                 displayUpgradeToPremium(0);
-                                break;
-                            case 4:
-                                restorePurchases();
                                 break;
                             default:
                         }
@@ -445,8 +445,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     private void displayContactUs() {
-        // todo send email to info@sepidsa.com
-        sendEmail(this, "راجع به ۴۲", "", null);
+        sendEmail(this, getString(R.string.farsi_about_42_calc), "", null);
 
     }
 
@@ -503,7 +502,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     }
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(p_context);
-                    builder.setTitle("Choose your Email app");
+                    builder.setTitle(p_context.getString(R.string.farsi_choose_email_app));
                     builder.setItems(availableEmailAppsName, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -531,7 +530,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         {
             Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
 
-            String aEmailList[] = { "some@emaildomain.com"};
+            String aEmailList[] = { "feedback@sepidsa.com"};
 
             emailIntent.putExtra(Intent.EXTRA_EMAIL, aEmailList);
             emailIntent.putExtra(Intent.EXTRA_SUBJECT, null != p_subject ? p_subject : "");
@@ -708,7 +707,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
 //         super.onRestoreInstanceState(savedInstanceState);
-        Log.d(TAG_recreate, "Activity onRestoreInstanceState and is "+ savedInstanceState);
+        Log.d(TAG_recreate, "Activity onRestoreInstanceState and is " + savedInstanceState);
 
         // todo mtranslationbox restore
 
@@ -821,7 +820,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         ( (Button)findViewById(R.id.buttonSettings)).setTextColor(Color.LTGRAY);
         ( findViewById(R.id.buttonSettings)).setOnClickListener(this);
 
-        ( findViewById(R.id.buttonPremium)).setOnClickListener(this);
+//        ( findViewById(R.id.buttonPremium)).setOnClickListener(this);
 
 
         ( (Button)findViewById(R.id.buttonColors)).setTypeface(mFlatIcon);
@@ -982,7 +981,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         mMajalla = Typeface.createFromAsset(getApplicationContext().getAssets(), "majalla.ttf");
         mFlatIcon = Typeface.createFromAsset(getApplicationContext().getAssets(), "flaticon.ttf");
-        mshekari = Typeface.createFromAsset(getApplicationContext().getAssets(), "shekari.ttf");
         mDastnevis = Typeface.createFromAsset(getApplicationContext().getAssets(), "dastnevis.otf");
         mMitra = Typeface.createFromAsset(getApplicationContext().getAssets(), "mitra.ttf");
         mPhalls =  Typeface.createFromAsset(getApplicationContext().getAssets(), "yekan.ttf");
@@ -993,13 +991,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private void setIconButtons() {
         //todo refactor code
+        mCurrencyList.setTypeface(mFlatIcon);
         mFavoritesList.setTypeface(mFlatIcon);
         mFavoritesList.setText(getResources().getString(R.string.list));
         mFavoritesList.setTextSize(30);
-        mFavoritesList.setTextColor(getAccentColorCode());
 
         mAddLabel.setTypeface(mFlatIcon);
-        mAddToFavorites.setTypeface(mFlatIcon);
+        mAddStars.setTypeface(mFlatIcon);
+
     }
 
     private void setResultTextBox(){
@@ -1013,15 +1012,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             resultTextView.setTextColor(Color.BLACK);
 
         }
-        resultTextView.setLines(2);
         resultTextView.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-        resultTextView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
     }
 
     public int getLastSavedAppVersion(){
         //TODO set a cool default theme color
         SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
-        return Integer.parseInt(appPreferences.getString("appVersion","2.00"));
+        return Integer.parseInt(appPreferences.getString("appVersion", "2.00"));
     }
     public int getAccentColorCode(){
         //TODO set a cool default theme color
@@ -1126,9 +1123,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             resultTextView.setBackgroundColor(getAccentColorCode());
             result_textView_holder.setBackgroundColor(getAccentColorCode());
             mFavoritesList.setTextColor(getAccentColorCode());
+            mCurrencyList.setTextColor(getAccentColorCode());
+            mAddStars.setTextColor(Color.WHITE);
+
         }else {
             resultTextView.setBackgroundColor(Color.TRANSPARENT);
             result_textView_holder.setBackgroundColor(Color.TRANSPARENT);
+            mFavoritesList.setTextColor(Color.BLACK);
+            mCurrencyList.setTextColor(Color.BLACK);
+            mAddStars.setTextColor(Color.BLACK);
         }
     }
 
@@ -1508,7 +1511,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         mButtonsStack.clear();
         playSound(clearAllButtonSoundID);
-        mAddToFavorites.setVisibility(View.GONE);
+        mAddStars.setVisibility(View.GONE);
         mAddLabel.setVisibility(View.GONE);
     }
 
@@ -1542,15 +1545,18 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             resultTextView.setText(mTempResult);
             displayTranslation();
             sendLogMessage(getMExpressionString().toString(), mTempResult, false, "");
-            mAddToFavorites.setAlpha(1);
-            mAddToFavorites.setRotation(0);
-            mAddToFavorites.setText(getResources().getString(R.string.star));
-            mAddToFavorites.setTextColor(Color.WHITE);
-            mAddToFavorites.setScaleX(1);
-            mAddToFavorites.setScaleY(1);
-            mAddToFavorites.setTranslationY(0);
-
-            mAddToFavorites.setVisibility(View.VISIBLE);
+            mAddStars.setAlpha(1);
+            mAddStars.setRotation(0);
+            mAddStars.setText(getResources().getString(R.string.star_outline));
+            if(isRetroThemeSelected()){
+                mAddStars.setTextColor(Color.BLACK);
+            }else {
+                mAddStars.setTextColor(Color.WHITE);
+            }
+            mAddStars.setScaleX(1);
+            mAddStars.setScaleY(1);
+            mAddStars.setTranslationY(0);
+            mAddStars.setVisibility(View.VISIBLE);
 
 
             mAddLabel.setVisibility(View.VISIBLE);
@@ -1586,7 +1592,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             mTranslationBox.setTypeface(mTranslationBoxNumericFont);
             mTranslationBox.setText(gg);
 
-            mAddToFavorites.setVisibility(View.GONE);
+            mAddStars.setVisibility(View.GONE);
             mAddLabel.setVisibility(View.GONE);
 
         }
@@ -1650,7 +1656,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         String gg = getMExpressionString().toString().replaceAll("(?<!\\.\\d{0,6})\\d+?(?=(?:\\d{3})+(?:\\D|$))", "$0,");
         mTranslationBox.setTypeface(mTranslationBoxNumericFont);
         mTranslationBox.setText(gg);
-        mAddToFavorites.setVisibility(View.GONE);
+        mAddStars.setVisibility(View.GONE);
         mAddLabel.setVisibility(View.GONE);
         return;
     }
@@ -1667,7 +1673,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
-    private void displayTranslation() {
+    public void displayTranslation() {
 
 
         mTranslationBox.setTypeface(mTranslationBoxLetterFont);
@@ -1906,19 +1912,18 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             numericButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.button1, 1);
             executeButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.button28, 1);
             clearAllButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.clear_retro, 1);
-            backSpaceButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
             operatorsButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.operator_retro, 1);
             errorSoundID = mSoundPool.load(getApplicationContext(), R.raw.error_retro, 1);
-            mHasVolumeSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
         }else{
             numericButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.keypress, 1);
             executeButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.equal, 1);
             clearAllButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.clear, 1);
-            backSpaceButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
             operatorsButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.keypress, 1);
             errorSoundID = mSoundPool.load(getApplicationContext(), R.raw.error, 1);
-            mHasVolumeSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
         }
+        backSpaceButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
+        mHasVolumeSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
+        mAddStarSoundID = mSoundPool.load(getApplicationContext(), R.raw.fairy, 1);
 
 
     }
@@ -2006,13 +2011,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     void sendLogMessage(String Operation, String Result, boolean starred, String tagText) {
         Intent intent = new Intent("LogIntent");
         // add data
+
         intent.putExtra("OPERATION", Operation );
         intent.putExtra("RESULT", Result);
+        intent.putExtra("RESULT_NO_COMMA", Result.replace(",", ""));
         intent.putExtra("STARRED", starred);
         intent.putExtra("TAG", tagText);
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
         ContentValues cv = new ContentValues();
         cv.put(LogContract.LogEntry.COLUMN_RESULT,Result);
+        cv.put(LogContract.LogEntry.COLUMN_RESULT_NO_COMMA,Result.replace(",",""));
         cv.put(LogContract.LogEntry.COLUMN_OPERATION,Operation);
         cv.put(LogContract.LogEntry.COLUMN_TAG,tagText);
         cv.put(LogContract.LogEntry.COLUMN_STARRED, 0);
@@ -2068,7 +2076,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 getResources().getString(R.string.asech) + "(",
                 getResources().getString(R.string.acsch) + "(",
 
-                getResources().getString(R.string.ln_tag), getResources().getString(R.string.power), getResources().getString(R.string.log_tag),
+                getResources().getString(R.string.ln_tag), getResources().getString(R.string.power), getResources().getString(R.string.log_tag), getResources().getString(R.string.tenpowerx) + "(",
+                getResources().getString(R.string.epowerx) + "(",
                 getResources().getString(R.string.sqrt), getResources().getString(R.string.e),"+","−","-","÷","×"};
 
 
@@ -2137,6 +2146,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         this.mDefaultPage = (byte) (_defaultPage);
     }
 
+    void paintIconColors(){
+    }
 
     public void switchTheme() {
 //        SharedPreferences appPreferences = getSharedPreferences("typography", Context.MODE_PRIVATE);
@@ -2144,6 +2155,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         //switching from modern theme to clasic theme
         if (isRetroThemeSelected()) {
+
             switch (getTranslationLanguage()) {
                 case LANGUAGE_PERSIAN:
                 case LANGUAGE_ARABIC:
@@ -2161,7 +2173,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         } else {
             switch (getTranslationLanguage()) {
                 case LANGUAGE_PERSIAN:
-                    setFontForComponent("TRANSLATION_LITERAL_FONT", getPersianFontPreference());
+                    setFontForComponent("TRANSLATION_LITERAL_FONT", FONT_MITRA);
                     break;
                 case LANGUAGE_ARABIC:
                     setFontForComponent("TRANSLATION_LITERAL_FONT", FONT_MAJALLA);
@@ -2198,22 +2210,19 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             case R.id.favorites_list:
 
-//                FragmentManager fm = getSupportFragmentManager();
-//                FavoritesFragment favoritesDialog = new FavoritesFragment();
-//                favoritesDialog.show(fm, "fragment_favorites");
+                FragmentManager fm = getSupportFragmentManager();
+                FavoritesFragment favoritesDialog = new FavoritesFragment();
+                favoritesDialog.show(fm, "fragment_favorites");
 //                break;
 
-                FragmentManager fm = getSupportFragmentManager();
-                CurrencyUseFragment currencyDialog = new CurrencyUseFragment();
-                currencyDialog.show(fm, "fragment_currency_use");
+
 
                 break;
 
 
 
 
-            case R.id.constant_selected: {
-
+            case R.id.btn_add_star: {
 
                 String selection = LogContract.LogEntry._ID + "=?";
                 Cursor cursor = getContentResolver().query(LogContract.LogEntry.CONTENT_URI, null, selection, new String[]{Long.toString(mLatestInsertedId)}, null);
@@ -2226,10 +2235,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     }
                 }
                 cursor.close();
-                setClipView(mAddToFavorites, false);
-                mAddToFavorites.setText(getResources().getString(R.string.star_outline));
-                mAddToFavorites.setTextColor(Color.YELLOW);
-                mAddToFavorites.animate()
+                playSound(mAddStarSoundID);
+                setClipView(mAddStars, false);
+                mAddStars.setText(getResources().getString(R.string.star_icon));
+                mAddStars.setTextColor(Color.parseColor("#ff6e40"));
+                mAddStars.animate()
                         .translationY(200)
                         .scaleX(0.5f)
                         .scaleY(0.5f)
@@ -2247,7 +2257,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 if (cursor.moveToFirst()) {
                     String currentLabel = cursor.getString(cursor.getColumnIndex(LogContract.LogEntry.COLUMN_TAG));
                     android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
-                    builder.setTitle("Enter a Label:");
+                    builder.setTitle(getString(R.string.farsi_label));
 
                     // Set up the input
 
@@ -2264,7 +2274,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
                     // Set up the buttons
 
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton(getString(R.string.farsi_ok), new DialogInterface.OnClickListener() {
 
 
                         @Override
@@ -2282,7 +2292,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
                         }
                     });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(getString(R.string.farsi_cancel), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             inputMethodManager.hideSoftInputFromWindow(input.getWindowToken(), 0);
@@ -2320,7 +2330,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             break;
 
 
-
+            case R.id.currency_list:
+                CurrencyUseFragment currencyDialog = new CurrencyUseFragment();
+                currencyDialog.show(getSupportFragmentManager() , "fragment_currency_use");
+                break;
 
 
             case R.id.buttonSettings:
@@ -2388,74 +2401,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
 
-    public void showSpinner() {
-
-        AlertDialog.Builder b = new AlertDialog.Builder(this);
-// todo google play edition
-        String[] options = {"Arabic","English","French","Persian"};
-        b.setTitle("Language" );
-        b.setSingleChoiceItems(options, -1,new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("LanguagePreference", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = appPreferences.edit();
-
-                        dialog.dismiss();
-                        switch (which) {
-
-                            case 0: {
-                                editor.putInt("LANGUAGE", LANGUAGE_ARABIC);
-                                setFontForComponent("TRANSLATION_LITERAL_FONT",FONT_MAJALLA);
-                                break;
-                            }
-                            case 1: {
-                                editor.putInt("LANGUAGE", LANGUAGE_ENGLISH);
-                                if(isRetroThemeSelected()){
-                                    setFontForComponent("TRANSLATION_LITERAL_FONT", FONT_DIGITAL_7);
-
-                                }else {
-                                    setFontForComponent("TRANSLATION_LITERAL_FONT", FONT_ROBOTO_THIN);
-                                }
-                                break;
-                            }
-
-                            case 2: {
-                                editor.putInt("LANGUAGE", LANGUAGE_FRENCH);
-                                if(isRetroThemeSelected()){
-                                    setFontForComponent("TRANSLATION_LITERAL_FONT", FONT_DIGITAL_7);
-
-                                }else {
-                                    setFontForComponent("TRANSLATION_LITERAL_FONT", FONT_ROBOTO_THIN);
-                                }
-                                break;
-                            }
-                            case 3: {
-                                editor.putInt("LANGUAGE", LANGUAGE_PERSIAN);
-                                if(isRetroThemeSelected()){
-                                    setFontForComponent("TRANSLATION_LITERAL_FONT", FONT_YEKAN);
-                                }else {
-                                    setFontForComponent("TRANSLATION_LITERAL_FONT", getPersianFontPreference());
-                                }
-                                break;
-                            }
-
-                        }
-
-                        editor.commit();
-                        refreshFonts();
-                        if (mDecimal_fraction != null) {
-                            if (mJustPressedExecuteButton) {
-                                displayTranslation();
-                            } else {
-                                mTranslationBox.startAnimation(mBlink);
-                            }
-                        }
-
-                    }
-                }
-        );
-        b.show();
-    }
-
 
 
     @Override
@@ -2483,12 +2428,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             mTranslationBox.setTypeface(mTranslationBoxNumericFont);
         }
     }
-
-    int getPersianFontPreference() {
-        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("typography", MODE_PRIVATE);
-        return appPreferences.getInt("PERSIAN_FONT_PREFERENCE",FONT_MITRA);
-    }
-
 
 
     @Override

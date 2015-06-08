@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 
 public class ParallaxPagerActivity extends FragmentActivity {
 
-    static final int NUM_PAGES = 5;
+    static final int NUM_PAGES = 6;
 
     ViewPager pager;
     PagerAdapter pagerAdapter;
@@ -72,7 +72,7 @@ public class ParallaxPagerActivity extends FragmentActivity {
         });
 
         pager = (ViewPager) findViewById(R.id.pager);
-        pager.setOffscreenPageLimit(3);
+        pager.setOffscreenPageLimit(5);
         pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
         pager.setPageTransformer(true, new CrossfadePageTransformer());
@@ -173,12 +173,13 @@ public class ParallaxPagerActivity extends FragmentActivity {
 
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
-            mFragments = new Fragment[5];
+            mFragments = new Fragment[NUM_PAGES];
             mFragments[0] = ParallaxPane.newInstance(R.layout.fragment_app_tour_pane_one);
             mFragments[1] = ParallaxPane.newInstance(R.layout.fragment_app_tour_pane_two);
             mFragments[2] = ParallaxPane.newInstance(R.layout.fragment_app_tour_pane_three);
-            mFragments[3] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_four);
-            mFragments[4] = ParallaxPane.newInstance(R.layout.fragment_parallax_pane_transparent);
+            mFragments[3] = ParallaxPane.newInstance(R.layout.fragment_app_tour_pane_four);
+            mFragments[4] = ParallaxPane.newInstance(R.layout.fragment_app_tour_pane_five);
+            mFragments[5] = ParallaxPane.newInstance(R.layout.fragment_parallax_pane_transparent);
         }
 
         @Override

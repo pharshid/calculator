@@ -37,6 +37,10 @@ public class  Expression{
             s = s.substring( 1 );
             ans =new BigDecimal( Math.PI);
 
+        }else if( s.length() > 0 && s.indexOf("rnd") == 0){
+            s = s.substring( 3 );
+            ans =new BigDecimal( Math.random());
+
         }else{
             while( s.length() > 0 && Character.isDigit( s.charAt( 0 ) ) ){
                 temp.append(Integer.parseInt( "" + s.charAt( 0 ) ));
@@ -434,7 +438,25 @@ public class  Expression{
                 s = s.substring(3);
                 ans = new BigDecimal(Math.log10(trig().doubleValue()));
                 found = true;
-            } else if (s.indexOf("ln") == 0) {
+            }else if (s.indexOf("10ˣ") == 0) {
+
+                s = s.substring(3);
+                ans = trig();
+                double doubleAns = ans.doubleValue();
+
+                ans = new BigDecimal(Math.pow(10,doubleAns));
+                found = true;
+            }else if (s.indexOf("eˣ") == 0) {
+                s = s.substring(2);
+
+                ans = trig();
+                double doubleAns = ans.doubleValue();
+
+                ans = new BigDecimal(Math.pow(Math.E,doubleAns));
+                found = true;
+            }
+
+            else if (s.indexOf("ln") == 0) {
                 s = s.substring(2);
                 ans = BigDecimalUtils.ln(trig(), 6);
                 found = true;

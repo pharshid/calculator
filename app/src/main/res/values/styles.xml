@@ -45,12 +45,23 @@
     <style name="CustomButton.RETRO.grey" parent="CustomButton.RETRO">
         <item name="android:background">@drawable/selector_for_btn_grey</item>
     </style>
+
+
  <style name="CustomButton.RETRO.clear" parent="CustomButton.RETRO">
         <item name="android:background">@drawable/selector_for_btn_c</item>
     </style>
+    <style name="CustomButton.RETRO.clear.land" parent="CustomButton.RETRO.clear">
+        <item name="android:background">@drawable/selector_for_btn_c</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+
  <style name="CustomButton.RETRO.black" parent="CustomButton.RETRO">
         <item name="android:background">@drawable/selector_for_btn_black</item>
     </style>
+
+
 
     <style name="CustomButton.RETRO.grey.scientific" parent="CustomButton.RETRO.grey">
         <item name="android:layout_width">0dp</item>
@@ -67,6 +78,12 @@
         <item name="android:background">@drawable/selector_for_btn_equally</item>
     </style>
 
+
+    <style name="CustomButton.RETRO.equally.land" parent="CustomButton.RETRO.equally">
+        <item name="android:background">@drawable/selector_for_btn_equally</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
 
     <style name="CustomButton.SCIENTIFIC" parent="CustomButton">
 
@@ -209,12 +226,12 @@
     </style>
 
     <style name="text_switcher">
-        <item name="android:inputType">textNoSuggestions</item>
         <item name="android:cursorVisible">false</item>
         <item name="android:textIsSelectable">true</item>
 
-        <item name="android:paddingRight">@dimen/padding_small</item>
-        <item name="android:paddingLeft">@dimen/padding_medium</item>
+        <item name="android:inputType">textMultiLine|textNoSuggestions</item>
+        <item name="android:maxLines">4</item>
+
 
         <item name="android:textSize">@dimen/result_text_size</item>
     </style>

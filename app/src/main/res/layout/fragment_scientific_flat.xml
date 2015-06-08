@@ -160,23 +160,23 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/buttonln"
             style="@style/CustomButton.SCIENTIFIC"
-            android:layout_weight="1"
-            android:text="@string/ln"
-            android:tag="@string/ln_tag"
+            android:id="@+id/buttonRandom"
 
+            android:layout_weight="1"
+            android:text="@string/random"
+            android:tag="@string/random"
             />
+
 
         <Button
-            android:id="@+id/buttonlog"
             style="@style/CustomButton.SCIENTIFIC"
+            android:id="@+id/buttonfact"
+
             android:layout_weight="1"
-            android:text="@string/log"
-            android:tag="@string/log_tag"
+            android:text="@string/factoriel"
+            android:tag="@string/factoriel"
             />
-
-
 
 
         <Button
@@ -237,13 +237,13 @@
             />
 
         <Button
+            android:id="@+id/buttonlog"
             style="@style/CustomButton.SCIENTIFIC"
-            android:id="@+id/buttonCot"
-
             android:layout_weight="1"
-            android:text="@string/cot"
+            android:text="@string/log"
             android:tag="@string/trigonomic"
             />
+
 
 
     </LinearLayout>
@@ -282,15 +282,15 @@
             android:tag="@string/trigonomic"
             />
 
+
         <Button
+            android:id="@+id/buttonln"
             style="@style/CustomButton.SCIENTIFIC"
-            android:id="@+id/buttonCotH"
-
             android:layout_weight="1"
-            android:text="@string/coth"
+            android:text="@string/ln"
             android:tag="@string/trigonomic"
-            />
 
+            />
 
     </LinearLayout>
 

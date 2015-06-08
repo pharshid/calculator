@@ -17,7 +17,6 @@
         android:layout_marginTop="@dimen/abc_control_padding_material"
         android:textColor="@android:color/white"/>
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +29,7 @@
             android:layout_width="128dp"
             android:layout_height="128dp"
             android:id="@+id/tour_descriptive_icon"
-            android:src="@drawable/premium_classic"
+            android:src="@drawable/premium_support"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/tour_screenshot"
             android:layout_margin="@dimen/padding_large"
@@ -44,11 +43,11 @@
             android:visibility="visible"
             android:src="@drawable/percentage_icon"
             android:id="@+id/tour_title"
-            android:text="تم کلاسیک"
+            android:text="از ما حمایت کنید"
             android:gravity="center"
             android:textSize="25sp"
             android:textStyle="bold"
-            android:textColor="@android:color/holo_orange_light"
+            android:textColor="@android:color/white"
             android:layout_below= "@+id/tour_descriptive_icon"
             android:layout_margin="@dimen/padding_medium"
 
@@ -60,7 +59,7 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
             android:textSize="26sp"
-            android:text="با طعم نوستالژی"
+            android:text="با طلایی شدن از ما حمایت کنید، تا برنامه های زیبا بسازیم"
             android:fontFamily="sans-serif-light"
             android:gravity="center"
 

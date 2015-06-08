@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,7 +22,7 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
 
     private final Typeface mRobotoLight;
     private final Typeface mRobotoRegular;
-    private final Typeface mshekari;
+    private final Typeface mYekan;
     public Button sendFeedBack;
     Context mContext;
     Typeface  mRobotoThin ;
@@ -34,7 +35,8 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
     private static final int DIALPAD_FONT_ROBOTO_REGULAR = 2;
     private static final int PERSIAN_TRANSLATION_FONT_MITRA = 5;
     private static final int PERSIAN_TRANSLATION_FONT_DASTNEVIS = 6;
-    private AutoResizeTextView fortyTwoSample, fortyTwoSampleTranslation;
+    private AutoResizeTextView fortyTwoSample;
+    private TextView  fortyTwoSampleTranslation;
 
 
     /**
@@ -55,7 +57,7 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
         mRobotoRegular =  Typeface.createFromAsset(context.getAssets(), "roboto_regular.ttf");
         mDastnevis = Typeface.createFromAsset(context.getAssets(), "dastnevis.otf");
         mMitra = Typeface.createFromAsset(context.getAssets(), "mitra.ttf");
-        mshekari = Typeface.createFromAsset(context.getAssets(), "shekari.ttf");
+        mYekan = Typeface.createFromAsset(context.getAssets(), "yekan.ttf");
         mContext = context;
     }
 
@@ -67,30 +69,36 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
         setContentView(R.layout.custom_dialog);
         Button contact_us_Button =  (Button) findViewById(R.id.btn_CHANGE_TRANSLATION_FONT);
         contact_us_Button.setOnClickListener(this);
-        contact_us_Button.setTypeface(mDastnevis);
-
+        contact_us_Button.setTypeface(mYekan);
+        TextView app_version = (TextView)findViewById(R.id.scientific_mode_textview);
+        try {
+            app_version.setText("ver " + ((MainActivity) mContext).getVersion());
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        ;
         dialpad_textSize_Button =  (Button) findViewById(R.id.dialpad_text_size);
-        dialpad_textSize_Button.setTypeface(mDastnevis);
+        dialpad_textSize_Button.setTypeface(mYekan);
         dialpad_textSize_Button.setOnClickListener(this);
 
         Button give_Stars = (Button) findViewById(R.id.give_stars) ;
         give_Stars.setOnClickListener(this);
-        give_Stars.setTypeface(mDastnevis);
+        give_Stars.setTypeface(mYekan);
 
         fortyTwoSample = (AutoResizeTextView) findViewById(R.id.fortyTwoSample) ;
         fortyTwoSample.setOnClickListener(this);
-        fortyTwoSampleTranslation = (AutoResizeTextView) findViewById(R.id.fortyTwoSampleTranslation) ;
-        fortyTwoSampleTranslation.setTypeface(getDefaultPersianTranslationFont());
+        fortyTwoSampleTranslation = (TextView) findViewById(R.id.fortyTwoSampleTranslation) ;
         set_dialpad_textSize_Button_typeface();
         set_persian_translation_Button_typeface();
-        fortyTwoSampleTranslation.setTypeface(getDefaultPersianTranslationFont());
-        Button tips = (Button) findViewById(R.id.tips) ;
+        refreshSampleTypeface(((MainActivity)mContext).getTranslationLanguage());
+         Button tips = (Button) findViewById(R.id.language_selection) ;
         tips.setOnClickListener(this);
-        tips.setTypeface(mDastnevis);
+        tips.setTypeface(mYekan);
 
 
 
     }
+
 
     private void set_dialpad_textSize_Button_typeface() {
         SharedPreferences appPreferences = mContext.getSharedPreferences("typography", Context.MODE_PRIVATE);
@@ -109,6 +117,22 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
     }
 
     private void set_persian_translation_Button_typeface() {
+        SharedPreferences appPreferences = mContext.getSharedPreferences("typography", Context.MODE_PRIVATE);
+        switch (appPreferences.getInt("PERSIAN_FONT_PREFERENCE",PERSIAN_TRANSLATION_FONT_MITRA)) {
+            case 0 :
+                fortyTwoSampleTranslation.setTypeface(mMitra);
+                break;
+            case 1 :
+                fortyTwoSampleTranslation.setTypeface(mDastnevis);
+                break;
+            default:
+                fortyTwoSampleTranslation.setTypeface(mMitra);
+                break;
+        }
+
+    }
+
+    private void set_persian_translation_Button_language() {
         SharedPreferences appPreferences = mContext.getSharedPreferences("typography", Context.MODE_PRIVATE);
         switch (appPreferences.getInt("PERSIAN_FONT_PREFERENCE",PERSIAN_TRANSLATION_FONT_MITRA)) {
             case 0 :
@@ -149,43 +173,9 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
                 dismiss();
                 break;
 
-            case R.id.tips:
-                ((MainActivity)mContext).showSpinner();
- //
-//                AlertDialog dialog = new AlertDialog.Builder(mContext).setIcon(android.R.drawable.ic_dialog_alert).setTitle("").setMessage("- جهت پاک کردن کل عبارت دکمه C  را نگه دارید\n" +
-//                                "- جهت پاک کردن خلاصه محاسبات در ابتدای لیست انگشت تون رو به پایین بکشید\n" +
-//
-//                                "- درصد اینطوری کار می کنه\n" +
-//                                "50%200  = 100\n" +
-//                                "50% * 200  = 100\n" +
-//                                "200 * 50%  = 100\n\n" +
-//
-//                                "100 + 20% = 120\n" +
-//                                "100 - 20% = 80\n" +
-//                                "100 ÷ 20% = 500" + "\n\n" +
-//
-//                                " حافظه ماشین حساب یه چیز خیلی بدرد بخوره که به خاطر پیچیدگیش معمولا ازش کمتر استفاده می شه" +
-//                                "\nما سعی کردیم کار با حافظه رو آسون تر کنیم" + "\n\n" +
-//                                " فرض کن قراره هزینه خرید ۴ تا لامپ ۲۰ تومنی و ۵ کیلو گوجه ۷ تومنی رو حساب کنی" + "\n" +
-//                                " حافظه در ابتدا صفر هست  " + "\n" +
-//                                "اول ۴ ضربدر ۲۰ رو می نویسی و دکمه جمع رو نگه می داری. این مقدار به حافظه اضافه شد" + "\n" +
-//                                "حالا ۵ رو ضربدر ۷ کن و باز دوباره دکمه ی جمع رو نگه دار" + "\n" +
-//                                "محاسبه تمام شد.اگر بخوای مقدار حافظه رو واضح ببینی یا باهاش کار کنی دکمه مساوی رو نگه می داری" + "\n" +
-//                                "برای  خالی کردن حافظه دکمه ضرب رو نگه دار تا مقدارش صفر شه" + "\n" +
-//                                "ساده بود نه ؟"
-//
-//                ).setPositiveButton(
-//                        "باشه", new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.dismiss();
-//                            }
-//                        }).show();
-//                TextView textView = (TextView) dialog.findViewById(android.R.id.message);
-//                textView.setTypeface(mshekari);
-//
-//
-//                Button button1 = (Button) dialog.findViewById(android.R.id.button1);
-//                button1.setTypeface(mshekari);
+            case R.id.language_selection:
+
+                showSpinner();
                 break;
 
             case R.id.dialpad_text_size:
@@ -221,61 +211,115 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
 
                 SharedPreferences typographyPreferences = mContext.getSharedPreferences("typography", Context.MODE_PRIVATE);
                 SharedPreferences.Editor typographyeditor = typographyPreferences.edit();
-                switch (typographyPreferences.getInt("PERSIAN_FONT_PREFERENCE", PERSIAN_TRANSLATION_FONT_MITRA)) {
-                    case 5:
-                        fortyTwoSampleTranslation.setTypeface(mDastnevis);
-                        typographyeditor.putInt("PERSIAN_FONT_PREFERENCE",PERSIAN_TRANSLATION_FONT_DASTNEVIS );
-                        typographyeditor.apply();
-                        if(!((MainActivity) mContext).isRetroThemeSelected()){
-                            ((MainActivity) mContext).setFontForComponent("TRANSLATION_LITERAL_FONT",PERSIAN_TRANSLATION_FONT_DASTNEVIS);
-                        }
-                        break;
-
-                    case 6:
-                        fortyTwoSampleTranslation.setTypeface(mMitra);
-                        typographyeditor.putInt("PERSIAN_FONT_PREFERENCE",PERSIAN_TRANSLATION_FONT_MITRA );
-                        typographyeditor.apply();
-                        if(!((MainActivity) mContext).isRetroThemeSelected()){
-                            ((MainActivity) mContext).setFontForComponent("TRANSLATION_LITERAL_FONT",PERSIAN_TRANSLATION_FONT_MITRA);
-                        }
-                        break;
-
-                    default:
-                        fortyTwoSampleTranslation.setTypeface(mDastnevis);
-                        typographyeditor.putInt("PERSIAN_FONT_PREFERENCE", PERSIAN_TRANSLATION_FONT_DASTNEVIS);
-                        typographyeditor.apply();
-                        if(!((MainActivity) mContext).isRetroThemeSelected()){
-                            ((MainActivity) mContext).setFontForComponent("TRANSLATION_LITERAL_FONT",PERSIAN_TRANSLATION_FONT_DASTNEVIS);
-                        }
-                        break;
-                }
-//                set_persian_translation_Button_typeface();
-                ((MainActivity) mContext).refreshFonts();
-
-
-                break;
 
         }
     }
 
+    public void showSpinner() {
 
-        Typeface getDefaultPersianTranslationFont(){
+        AlertDialog.Builder b = new AlertDialog.Builder(mContext);
+// todo google play edition
+        String[] options = {"فارسی","انگلیسی","فرانسه","عربی"};
+        b.setTitle("زبان نتیجه محاسبه" );
+        b.setSingleChoiceItems(options, -1,new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferences appPreferences = mContext.getApplicationContext().getSharedPreferences("LanguagePreference", ((MainActivity) mContext).MODE_PRIVATE);
+                        SharedPreferences.Editor editor = appPreferences.edit();
+
+                        dialog.dismiss();
+                        switch (which) {
+                            case 0: {
+                                editor.putInt("LANGUAGE", MainActivity.LANGUAGE_PERSIAN);
+                                refreshSampleTypeface(MainActivity.LANGUAGE_PERSIAN);
+
+                                break;
+                            }
+                            case 1: {
+                                editor.putInt("LANGUAGE",  MainActivity.LANGUAGE_ENGLISH);
+                                refreshSampleTypeface(MainActivity.LANGUAGE_ENGLISH);
+                                break;
+
+                            }
+                            case 2: {
+                                editor.putInt("LANGUAGE", MainActivity.LANGUAGE_FRENCH);
+                                refreshSampleTypeface(MainActivity.LANGUAGE_FRENCH);
+                                break;
+
+                            }
+                            case 3: {
+                                editor.putInt("LANGUAGE",  MainActivity.LANGUAGE_ARABIC);
+                                refreshSampleTypeface(MainActivity.LANGUAGE_ARABIC);
+                                break;
+                            }
+
+                        }
+                        editor.commit();
+
+                        fortyTwoSampleTranslation.setTypeface(((MainActivity) mContext).getFontForComponent("TRANSLATION_LITERAL_FONT"));
+//                        fortyTwoSampleTranslation.setTextSize(60);
 
 
-            int PersianTranslationFont = ((MainActivity) mContext).getPersianFontPreference();
-            switch (PersianTranslationFont){
-                case PERSIAN_TRANSLATION_FONT_MITRA:
-                    return Typeface.createFromAsset(mContext.getAssets(), "mitra.ttf");
+                        ((MainActivity) mContext).refreshFonts();
+                        if (((MainActivity) mContext).mDecimal_fraction != null) {
+                            if (((MainActivity) mContext).mJustPressedExecuteButton) {
+                                ((MainActivity) mContext).displayTranslation();
+                            } else {
+                                ((MainActivity) mContext).mTranslationBox.startAnimation(((MainActivity) mContext).mBlink);
+                            }
+                        }
 
-                case PERSIAN_TRANSLATION_FONT_DASTNEVIS:
-                    return Typeface.createFromAsset(mContext.getAssets(), "dastnevis.otf");
-                default:
-                    return Typeface.createFromAsset(mContext.getAssets(), "mitra.ttf");
+                    }
 
-            }
+
+                }
+        );
+        b.show();
+    }
+
+    void refreshSampleTypeface(int language){
+        switch (language){
+
+
+            case MainActivity.LANGUAGE_PERSIAN:
+                fortyTwoSampleTranslation.setText(mContext.getString(R.string.persian_42));
+
+                if(((MainActivity) mContext).isRetroThemeSelected()){
+                    ((MainActivity) mContext).setFontForComponent("TRANSLATION_LITERAL_FONT", ((MainActivity) mContext).FONT_YEKAN);
+                }else {
+                    ((MainActivity) mContext).setFontForComponent("TRANSLATION_LITERAL_FONT", ((MainActivity) mContext).FONT_MITRA);
+                }
+                break;
+
+            case MainActivity.LANGUAGE_ENGLISH:
+                fortyTwoSampleTranslation.setText(mContext.getString(R.string.english_42));
+
+                if(((MainActivity) mContext).isRetroThemeSelected()){
+                    ((MainActivity) mContext).setFontForComponent("TRANSLATION_LITERAL_FONT", ((MainActivity) mContext).FONT_DIGITAL_7);
+
+                }else {
+                    ((MainActivity) mContext).setFontForComponent("TRANSLATION_LITERAL_FONT", ((MainActivity) mContext).FONT_ROBOTO_THIN);
+                }
+                break;
+
+            case MainActivity.LANGUAGE_FRENCH:
+                fortyTwoSampleTranslation.setText(mContext.getString(R.string.french_42));
+
+                if(((MainActivity) mContext).isRetroThemeSelected()){
+                    ((MainActivity) mContext).setFontForComponent("TRANSLATION_LITERAL_FONT", ((MainActivity) mContext).FONT_DIGITAL_7);
+
+                }else {
+                    ((MainActivity) mContext).setFontForComponent("TRANSLATION_LITERAL_FONT", ((MainActivity) mContext).FONT_ROBOTO_THIN);
+                }
+                break;
+            case MainActivity.LANGUAGE_ARABIC:
+                ((MainActivity) mContext).setFontForComponent("TRANSLATION_LITERAL_FONT", ((MainActivity) mContext).FONT_MAJALLA);
+                fortyTwoSampleTranslation.setText(mContext.getString(R.string.arabic_42));
+                break;
 
 
         }
+    }
+
 }
 
 

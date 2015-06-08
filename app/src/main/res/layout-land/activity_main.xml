@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
-    android:orientation="vertical" 
+    android:orientation="vertical"
     tools:context=".MainActivity"
     android:id="@+id/activity_body"
     android:elevation="0.2dp"
@@ -18,7 +18,7 @@
         android:layout_weight="19"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-       >
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -28,19 +28,19 @@
 
 
 
-        <com.sepidsa.fortytwocalculator.AutoResizeTextView
-            android:id="@+id/result"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:background="#1abc9c"
-            style="@style/text_switcher"
-            android:fontFamily="sans-serif-thin"
-            android:text="0"
-            android:gravity="center_vertical|right"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:layout_toRightOf="@id/constant_selected"
-            />
+            <com.sepidsa.fortytwocalculator.AutoResizeTextView
+                android:id="@+id/result"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:background="#1abc9c"
+                style="@style/text_switcher"
+                android:fontFamily="sans-serif-thin"
+                android:text="0"
+                android:gravity="center_vertical|right"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:layout_toRightOf="@id/btn_add_star"
+                />
 
             <TextView
                 android:id="@+id/scientific_mode_textview"
@@ -69,7 +69,7 @@
                 />
 
             <Button
-                android:id="@+id/constant_selected"
+                android:id="@+id/btn_add_star"
                 android:layout_width="42dp"
                 android:layout_height="42dp"
                 android:textColor="@android:color/black"
@@ -87,7 +87,7 @@
                 android:layout_height="42dp"
                 android:textColor="@android:color/white"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/constant_selected"
+                android:layout_toRightOf="@id/btn_add_star"
                 android:layout_alignParentBottom="true"
                 android:background="@android:color/transparent"
                 android:visibility="gone"
@@ -108,7 +108,7 @@
 
     </LinearLayout>
 
-        <!--Dialpad Section -->
+    <!--Dialpad Section -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -126,6 +126,21 @@
             android:visibility="visible"
             android:layout_gravity="center"
             android:gravity="center"
+            android:text="@string/list"
+
+            />
+        <Button
+            android:id="@+id/currency_list"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:background="@android:color/transparent"
+            android:layout_centerVertical="true"
+            android:visibility="visible"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/dollar_icon_string"
+            android:textSize="27sp"
 
 
             />
@@ -154,15 +169,15 @@
         android:background="@android:color/transparent">
 
         <!--<Button-->
-            <!--android:layout_width="0dp"-->
-            <!--android:id="@+id/west_cost"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="10"-->
-            <!--android:background="@android:color/white"-->
-           <!--android:text="left"-->
-            <!--android:textColor="@android:color/darker_gray"-->
-            <!--android:gravity="center"-->
-            <!--/>-->
+        <!--android:layout_width="0dp"-->
+        <!--android:id="@+id/west_cost"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="10"-->
+        <!--android:background="@android:color/white"-->
+        <!--android:text="left"-->
+        <!--android:textColor="@android:color/darker_gray"-->
+        <!--android:gravity="center"-->
+        <!--/>-->
 
 
         <LinearLayout
@@ -186,10 +201,10 @@
 
                 />
 
-         <Button
+            <Button
                 android:id="@+id/buttonColors"
                 style="@style/DIALPADBUTTON.LAND_NORMAL."
-                 android:layout_width="match_parent"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="@string/theme"
@@ -258,7 +273,7 @@
             style="@style/viewpager"
             android:tag="landscape_phone"
             android:layout_gravity="left"
-       />
+            />
 
 
     </LinearLayout>

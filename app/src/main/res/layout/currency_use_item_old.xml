@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:descendantFocusability="blocksDescendants">
+
+        <TextView
+            android:id="@+id/currency_flag"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:text="T"
+
+            />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/currency_translation"
+            android:textSize="@dimen/log_detail_txt_size"
+            android:textColor="@android:color/holo_blue_light"
+            android:gravity="right"
+            android:clickable="false"
+            android:focusable="false"
+            android:text="Name"
+            android:layout_toLeftOf="@id/currency_flag"
+
+            />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/currency_value"
+            android:textSize="@dimen/log_detail_txt_size"
+            android:textColor="@android:color/darker_gray"
+            android:gravity="left"
+            android:layout_below="@id/currency_translation"
+            android:focusable="false"
+            android:text="Number"
+            android:layout_toLeftOf="@id/currency_flag"
+
+            />
+
+
+    </RelativeLayout>
+
+
+
+

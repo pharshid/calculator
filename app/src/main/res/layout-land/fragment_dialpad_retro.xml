@@ -4,7 +4,7 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent"
+    android:background="@drawable/background_normal"
     android:orientation="vertical"
     android:baselineAligned="false"
     >
@@ -24,16 +24,17 @@
 
         <Button
             android:id="@+id/buttonConstant"
-            style="@style/CustomButton.SCIENTIFIC"
+            style="@style/CustomButton.RETRO.grey.scientific"
             android:layout_weight="1"
             android:text="@string/constant"
             android:tag="@string/constant"
-            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+
             />
 
         <Button
             android:id="@+id/buttonrad"
-            style="@style/CustomButton.SCIENTIFIC"
+            style="@style/CustomButton.RETRO.black.scientific"
             android:layout_weight="1"
             android:text="@string/sqrt"
             android:tag="@string/sqrt"
@@ -43,7 +44,7 @@
 
         <Button
             android:id="@+id/buttonpower"
-            style="@style/CustomButton.SCIENTIFIC"
+            style="@style/CustomButton.RETRO.black.scientific"
             android:layout_weight="1"
             android:tag="@string/power"
             android:text="@string/power"
@@ -51,7 +52,7 @@
 
         <Button
             android:id="@+id/buttonPow2"
-            style="@style/CustomButton.SCIENTIFIC"
+            style="@style/CustomButton.RETRO.black.scientific"
             android:layout_weight="1"
             android:text="@string/powertwo"
             android:tag="@string/powertwoTag"
@@ -61,7 +62,7 @@
 
         <Button
             android:id="@+id/buttonPow3"
-            style="@style/CustomButton.SCIENTIFIC"
+            style="@style/CustomButton.RETRO.black.scientific"
             android:layout_weight="1"
             android:text="@string/powerthree"
             android:tag="@string/powerthreeTag"
@@ -71,13 +72,11 @@
 
 
         <Button
-         android:id="@+id/buttonClear"
-            style="@style/DIALPADBUTTON.LAND_NORMAL.DIGIT"
+            android:id="@+id/buttonClear"
             android:layout_weight="1"
             android:tag="@string/clear"
             android:text="@string/clear"
-            android:textColor="@color/red_buttons_text_color"
-            android:background="@drawable/selector_for_btn_clear"
+            style="@style/CustomButton.RETRO.clear.land"
 
             />
 
@@ -87,7 +86,7 @@
             android:layout_weight="1"
             android:text="@string/seven"
             android:tag="@string/seven"
-            style="@style/DIALPADBUTTON.LAND_NORMAL.DIGIT"
+            style="@style/CustomButton.RETRO.black.scientific"
             />
 
         <Button
@@ -95,7 +94,7 @@
             android:layout_weight="1"
             android:text="@string/eight"
             android:tag="@string/eight"
-            style="@style/DIALPADBUTTON.LAND_NORMAL.DIGIT"
+            style="@style/CustomButton.RETRO.black.scientific"
             />
 
 
@@ -104,17 +103,16 @@
             android:layout_weight="1"
             android:text="@string/nine"
             android:tag="@string/nine"
-            style="@style/DIALPADBUTTON.LAND_NORMAL.DIGIT"
+            style="@style/CustomButton.RETRO.black.scientific"
             />
 
 
         <Button
             android:id="@+id/buttonDevide"
-            style="@style/DIALPADBUTTON.LAND_NORMAL."
+            style="@style/CustomButton.RETRO.grey.scientific"
             android:layout_weight="1"
             android:tag="@string/devide"
             android:text="@string/devide"
-            android:textColor="#4CD964"
             />
 
 
@@ -143,32 +141,27 @@
             android:tag="@string/inverse"
             android:textOn="INV"
             android:textOff="INV"
-            android:background="@android:color/transparent"
-            android:textStyle="bold"
+            style="@style/CustomButton.RETRO.grey.scientific"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+
             />
 
 
 
-        <Button
-            style="@style/CustomButton.SCIENTIFIC"
-            android:id="@+id/buttonRandom"
 
+
+        <Button
+            style="@style/CustomButton.RETRO.black.scientific"
+            android:id="@+id/buttonRandom"
             android:layout_weight="1"
             android:text="@string/random"
             android:tag="@string/random"
             />
 
 
-
-
-
-
-
-
         <Button
-            style="@style/CustomButton.SCIENTIFIC"
+            style="@style/CustomButton.RETRO.black.scientific"
             android:id="@+id/buttonfact"
-
             android:layout_weight="1"
             android:text="@string/factoriel"
             android:tag="@string/factoriel"
@@ -179,7 +172,7 @@
 
         <Button
             android:id="@+id/buttonpie"
-            style="@style/CustomButton.SCIENTIFIC"
+            style="@style/CustomButton.RETRO.black.scientific"
             android:layout_weight="1"
             android:tag="@string/Pi"
             android:text="@string/Pi"
@@ -189,7 +182,7 @@
 
         <Button
             android:id="@+id/buttone"
-            style="@style/CustomButton.SCIENTIFIC"
+            style="@style/CustomButton.RETRO.black.scientific"
             android:layout_weight="1"
             android:text="@string/e"
             android:tag="@string/e"
@@ -201,8 +194,9 @@
             android:layout_weight="1"
             android:text="@string/parenthesis_open"
             android:tag="@string/parenthesis_open"
-            android:textColor="#4CD964"
-            style="@style/DIALPADBUTTON.LAND_NORMAL.DIGIT" />
+            style="@style/CustomButton.RETRO.grey.scientific"
+
+            />
 
 
 
@@ -221,7 +215,7 @@
             android:layout_weight="1"
             android:text="@string/four"
             android:tag="@string/four"
-            style="@style/DIALPADBUTTON.LAND_NORMAL.DIGIT"
+            style="@style/CustomButton.RETRO.black.scientific"
 
             />
 
@@ -240,7 +234,7 @@
             android:layout_weight="1"
             android:text="@string/five"
             android:tag="@string/five"
-            style="@style/DIALPADBUTTON.LAND_NORMAL.DIGIT"
+            style="@style/CustomButton.RETRO.black.scientific"
             />
 
 
@@ -254,7 +248,7 @@
 
         <Button
             android:id="@+id/button6"
-            style="@style/DIALPADBUTTON.LAND_NORMAL.DIGIT"
+            style="@style/CustomButton.RETRO.black.scientific"
             android:layout_weight="1"
             android:text="@string/six"
             android:tag="@string/six"
@@ -264,11 +258,10 @@
 
         <Button
             android:id="@+id/buttonTimes"
-            style="@style/DIALPADBUTTON.LAND_NORMAL."
+            style="@style/CustomButton.RETRO.grey.scientific"
             android:layout_weight="1"
             android:tag="@string/multiplyValue"
             android:text="@string/multiply"
-            android:textColor="#4CD964"
             />
 
 
@@ -298,15 +291,16 @@
             android:textOff="@string/ARC"
             android:textOn="@string/ARC"
             android:tag="@string/ARC"
-            android:background="@android:color/transparent"
-            android:textStyle="bold"
+            style="@style/CustomButton.RETRO.grey.scientific"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+
             />
 
 
 
         <Button
             android:id="@+id/buttonSinus"
-            style="@style/CustomButton.SCIENTIFIC"
+            style="@style/CustomButton.RETRO.black.scientific"
             android:layout_weight="1"
             android:hint="@string/sin"
             android:text="@string/sin"
@@ -316,7 +310,7 @@
 
         <Button
             android:id="@+id/buttonCosinus"
-            style="@style/CustomButton.SCIENTIFIC"
+            style="@style/CustomButton.RETRO.black.scientific"
             android:layout_weight="1"
             android:text="@string/cos"
             android:tag="@string/trigonomic"
@@ -324,15 +318,18 @@
 
         <Button
             android:id="@+id/buttonTan"
-            style="@style/CustomButton.SCIENTIFIC"
+            style="@style/CustomButton.RETRO.black.scientific"
             android:layout_weight="1"
             android:text="@string/tan"
             android:tag="@string/trigonomic"
             />
 
+
+
+
         <Button
             android:id="@+id/buttonlog"
-            style="@style/CustomButton.SCIENTIFIC"
+            style="@style/CustomButton.RETRO.black.scientific"
             android:layout_weight="1"
             android:text="@string/log"
             android:tag="@string/log_tag"
@@ -344,8 +341,8 @@
             android:layout_weight="1"
             android:text="@string/parenthesis_closed"
             android:tag="@string/parenthesis_closed"
-            android:textColor="#4CD964"
-            style="@style/DIALPADBUTTON.LAND_NORMAL.DIGIT" />
+            style="@style/CustomButton.RETRO.grey.scientific"
+            />
 
 
 
@@ -355,7 +352,7 @@
             android:layout_weight="1"
             android:text="@string/one"
             android:tag="@string/one"
-            style="@style/DIALPADBUTTON.LAND_NORMAL.DIGIT"
+            style="@style/CustomButton.RETRO.black.scientific"
             />
 
 
@@ -364,7 +361,7 @@
             android:layout_weight="1"
             android:text="@string/two"
             android:tag="@string/two"
-            style="@style/DIALPADBUTTON.LAND_NORMAL.DIGIT"
+            style="@style/CustomButton.RETRO.black.scientific"
             />
 
 
@@ -373,17 +370,16 @@
             android:layout_weight="1"
             android:text="@string/three"
             android:tag="@string/three"
-            style="@style/DIALPADBUTTON.LAND_NORMAL.DIGIT"
+            style="@style/CustomButton.RETRO.black.scientific"
 
             />
 
         <Button
             android:id="@+id/buttonMinus"
-            style="@style/DIALPADBUTTON.LAND_NORMAL."
+            style="@style/CustomButton.RETRO.grey.scientific"
             android:layout_weight="1"
             android:text="@string/subtract"
             android:tag="@string/subtract"
-            android:textColor="#4CD964"
             />
 
     </LinearLayout>
@@ -410,13 +406,14 @@
             android:textOff="Rad"
             android:textOn="DEG"
             android:checked="true"
-            android:background="@android:color/transparent"
-            android:textStyle="bold" />
+            style="@style/CustomButton.RETRO.grey.scientific"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            />
 
 
         <Button
             android:id="@+id/buttonSinusH"
-            style="@style/CustomButton.SCIENTIFIC"
+            style="@style/CustomButton.RETRO.black.scientific"
             android:layout_weight="1"
             android:hint="@string/sinh"
             android:text="@string/sinh"
@@ -426,15 +423,17 @@
 
         <Button
             android:id="@+id/buttonCosinusH"
-            style="@style/CustomButton.SCIENTIFIC"
+            style="@style/CustomButton.RETRO.black.scientific"
             android:layout_weight="1"
             android:text="@string/cosh"
             android:tag="@string/trigonomic"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+
             />
 
         <Button
+            style="@style/CustomButton.RETRO.black.scientific"
             android:id="@+id/buttonTanH"
-            style="@style/CustomButton.SCIENTIFIC"
             android:layout_weight="1"
             android:text="@string/tanh"
             android:tag="@string/trigonomic"
@@ -443,34 +442,28 @@
 
         <Button
             android:id="@+id/buttonln"
-            style="@style/CustomButton.SCIENTIFIC"
+            style="@style/CustomButton.RETRO.black.scientific"
             android:layout_weight="1"
             android:text="@string/ln"
             android:tag="@string/ln_tag"
 
             />
-
-
-
-
-
         <Button
             android:id="@+id/buttonPercent"
             android:layout_weight="1"
             android:text="%"
             android:tag="%"
-            style="@style/DIALPADBUTTON.LAND_NORMAL.DIGIT"
-            android:textColor="#4CD964"
-
+            style="@style/CustomButton.RETRO.grey.scientific"
             />
 
         <Button
             android:id="@+id/buttonPoint"
-            style="@style/DIALPADBUTTON.LAND_NORMAL.DIGIT"
+            style="@style/CustomButton.RETRO.black.scientific"
             android:gravity="center_vertical|center_horizontal"
             android:text="@string/point"
             android:tag="@string/point"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            />
 
 
         <Button
@@ -478,18 +471,16 @@
             android:layout_weight="1"
             android:text="@string/zero"
             android:tag="@string/zero"
-            style="@style/DIALPADBUTTON.LAND_NORMAL.DIGIT"
+            style="@style/CustomButton.RETRO.black.scientific"
             />
 
 
         <Button
             android:id="@+id/buttonEquals"
-            style="@style/DIALPADBUTTON.LAND_NORMAL.DIGIT"
+            style="@style/CustomButton.RETRO.equally.land"
             android:layout_weight="1"
             android:text="@string/equals"
             android:tag="@string/equals"
-            android:textColor="@color/orange_buttons_text_color"
-            android:background="@drawable/selector_for_btn_equal"
             android:gravity="center"
 
             />
@@ -497,12 +488,11 @@
 
         <Button
             android:id="@+id/buttonPlus"
-            style="@style/DIALPADBUTTON.LAND_NORMAL."
+            style="@style/CustomButton.RETRO.grey.scientific"
             android:text="@string/add"
             android:tag="@string/add"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="#4CD964"
             />
 
 

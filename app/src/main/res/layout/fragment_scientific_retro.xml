@@ -233,11 +233,11 @@
 
         <Button
             style="@style/CustomButton.RETRO.black.scientific"
-            android:id="@+id/buttonCot"
+            android:id="@+id/buttonfact"
 
             android:layout_weight="1"
-            android:text="@string/cot"
-            android:tag="@string/trigonomic"
+            android:text="@string/factoriel"
+            android:tag="@string/factoriel"
             />
 
 
@@ -279,11 +279,11 @@
 
         <Button
             style="@style/CustomButton.RETRO.black.scientific"
-            android:id="@+id/buttonCotH"
+            android:id="@+id/buttonRandom"
 
             android:layout_weight="1"
-            android:text="@string/coth"
-            android:tag="@string/trigonomic"
+            android:text="@string/random"
+            android:tag="@string/random"
             />
 
 

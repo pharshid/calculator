@@ -14,11 +14,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 
 public class PremiumShowcasePagerActivity extends FragmentActivity {
 
-    static final int NUM_PAGES = 5;
+    static final int NUM_PAGES = 6;
 
     ViewPager pager;
     PagerAdapter pagerAdapter;
@@ -26,6 +27,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
     Button skip;
     Button done;
     ImageButton next;
+    Button buyPre;
 
     /*
         This is nasty but as the transparency of the fragments increases when swiping the underlying
@@ -63,16 +65,19 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             }
         });
 
+
         done = Button.class.cast(findViewById(R.id.done));
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                endTutorial();
+                buyPremium();
             }
         });
 
+
+
         pager = (ViewPager) findViewById(R.id.pager);
-        pager.setOffscreenPageLimit(3);
+        pager.setOffscreenPageLimit(6);
         pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
         pager.setPageTransformer(true, new CrossfadePageTransformer());
@@ -105,7 +110,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
                     next.setVisibility(View.VISIBLE);
                     done.setVisibility(View.GONE);
                 }else if(position == NUM_PAGES - 1){
-                    endTutorial();
+                    buyPremium();
                 }
             }
 
@@ -116,6 +121,15 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
         });
 
         buildCircles();
+    }
+
+    private void buyPremium() {
+        //TODO INSERT BUY PREMIUM CODE
+//        Toast.makeText(getApplicationContext(),"IMPLEMENT ME", Toast.LENGTH_SHORT).show();
+
+        // ITS ESSENTIAL
+        endTutorial();
+
     }
 
     /*
@@ -173,12 +187,13 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
 
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
-            mFragments = new Fragment[5];
+            mFragments = new Fragment[NUM_PAGES];
             mFragments[0] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_one);
             mFragments[1] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_two);
             mFragments[2] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_three);
             mFragments[3] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_four);
-            mFragments[4] = ParallaxPane.newInstance(R.layout.fragment_parallax_pane_transparent);
+            mFragments[4] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_five);
+            mFragments[5] = ParallaxPane.newInstance(R.layout.fragment_parallax_pane_transparent);
         }
 
         @Override
@@ -207,6 +222,17 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             View mountainNight = null;
             View rain = null;
             View hands = page.findViewById(R.id.tour_screenshot);
+            buyPre = Button.class.cast(findViewById(R.id.btn_buy_premium));
+
+
+            if(buyPre != null) {
+                buyPre.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        buyPremium();
+                    }
+                });
+            }
 
             if (position <= 1) {
                 page.setTranslationX(pageWidth * -position);

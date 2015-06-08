@@ -1,5 +1,4 @@
 package com.sepidsa.fortytwocalculator;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
@@ -21,7 +20,8 @@ import android.widget.TextView;
  * It should work fine with most Android versions, but might have some issues on Android 3.1 - 4.04, as setTextSize will only work for the first time. <br/>
  * More info here: https://code.google.com/p/android/issues/detail?id=22493 and here in case you wish to fix it: http://stackoverflow.com/a/21851239/878126
  */
-public class AutoResizeTextView extends TextView{
+public class AutoResizeTextView extends TextView
+{
     private static final int NO_LINE_LIMIT=-1;
     private final RectF _availableSpaceRect=new RectF();
     private final SparseIntArray _textCachedSizes=new SparseIntArray();
@@ -36,7 +36,8 @@ public class AutoResizeTextView extends TextView{
     private boolean _initiallized=false;
     private TextPaint paint;
 
-    private interface SizeTester{
+    private interface SizeTester
+    {
         /**
          * @param suggestedSize  Size of text to be tested
          * @param availableSpace available space in which text must fit
@@ -47,15 +48,18 @@ public class AutoResizeTextView extends TextView{
         public int onTestSize(int suggestedSize,RectF availableSpace);
     }
 
-    public AutoResizeTextView(final Context context){
+    public AutoResizeTextView(final Context context)
+    {
         this(context,null,0);
     }
 
-    public AutoResizeTextView(final Context context,final AttributeSet attrs){
+    public AutoResizeTextView(final Context context,final AttributeSet attrs)
+    {
         this(context,attrs,0);
     }
 
-    public AutoResizeTextView(final Context context,final AttributeSet attrs,final int defStyle){
+    public AutoResizeTextView(final Context context,final AttributeSet attrs,final int defStyle)
+    {
         super(context,attrs,defStyle);
         // using the minimal recommended font size
         _minTextSize=TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,12,getResources().getDisplayMetrics());
@@ -64,19 +68,24 @@ public class AutoResizeTextView extends TextView{
             // no value was assigned during construction
             _maxLines=NO_LINE_LIMIT;
         // prepare size tester:
-        _sizeTester=new SizeTester(){
+        _sizeTester=new SizeTester()
+        {
             final RectF textRect=new RectF();
 
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             @Override
-            public int onTestSize(final int suggestedSize,final RectF availableSPace){
+            public int onTestSize(final int suggestedSize,final RectF availableSPace)
+            {
                 paint.setTextSize(suggestedSize);
                 final String text=getText().toString();
-                final boolean singleline=getMaxLines()==1;
-                if(singleline){
+                final boolean singleLine=getMaxLines()==1;
+                if(singleLine)
+                {
                     textRect.bottom=paint.getFontSpacing();
                     textRect.right=paint.measureText(text);
-                }else{
+                }
+                else
+                {
                     final StaticLayout layout=new StaticLayout(text,paint,_widthLimit,Alignment.ALIGN_NORMAL,_spacingMult,_spacingAdd,true);
                     // return early if we have more lines
                     if(getMaxLines()!=NO_LINE_LIMIT&&layout.getLineCount()>getMaxLines())
@@ -100,41 +109,48 @@ public class AutoResizeTextView extends TextView{
     }
 
     @Override
-    public void setTypeface(final Typeface tf){
+    public void setTypeface(final Typeface tf)
+    {
         if(paint==null)
             paint=new TextPaint(getPaint());
         paint.setTypeface(tf);
+        adjustTextSize();
         super.setTypeface(tf);
     }
 
     @Override
-    public void setTextSize(final float size){
+    public void setTextSize(final float size)
+    {
         _maxTextSize=size;
         _textCachedSizes.clear();
         adjustTextSize();
     }
 
     @Override
-    public void setMaxLines(final int maxlines){
+    public void setMaxLines(final int maxlines)
+    {
         super.setMaxLines(maxlines);
         _maxLines=maxlines;
         reAdjust();
     }
 
     @Override
-    public int getMaxLines(){
+    public int getMaxLines()
+    {
         return _maxLines;
     }
 
     @Override
-    public void setSingleLine(){
+    public void setSingleLine()
+    {
         super.setSingleLine();
         _maxLines=1;
         reAdjust();
     }
 
     @Override
-    public void setSingleLine(final boolean singleLine){
+    public void setSingleLine(final boolean singleLine)
+    {
         super.setSingleLine(singleLine);
         if(singleLine)
             _maxLines=1;
@@ -143,14 +159,16 @@ public class AutoResizeTextView extends TextView{
     }
 
     @Override
-    public void setLines(final int lines){
+    public void setLines(final int lines)
+    {
         super.setLines(lines);
         _maxLines=lines;
         reAdjust();
     }
 
     @Override
-    public void setTextSize(final int unit,final float size){
+    public void setTextSize(final int unit,final float size)
+    {
         final Context c=getContext();
         Resources r;
         if(c==null)
@@ -162,7 +180,8 @@ public class AutoResizeTextView extends TextView{
     }
 
     @Override
-    public void setLineSpacing(final float add,final float mult){
+    public void setLineSpacing(final float add,final float mult)
+    {
         super.setLineSpacing(add,mult);
         _spacingMult=mult;
         _spacingAdd=add;
@@ -173,36 +192,42 @@ public class AutoResizeTextView extends TextView{
      *
      * @param minTextSize
      */
-    public void setMinTextSize(final float minTextSize){
+    public void setMinTextSize(final float minTextSize)
+    {
         _minTextSize=minTextSize;
         reAdjust();
     }
 
-    private void reAdjust(){
+    private void reAdjust()
+    {
         adjustTextSize();
     }
 
-    private void adjustTextSize(){
+    private void adjustTextSize()
+    {
         // This is a workaround for truncated text issue on ListView, as shown here: https://github.com/AndroidDeveloperLB/AutoFitTextView/pull/14
         // TODO think of a nicer, elegant solution.
-        post(new Runnable(){
-            @Override
-            public void run(){
-                if(!_initiallized)
-                    return;
-                final int startSize=(int)_minTextSize;
-                final int heightLimit=getMeasuredHeight()-getCompoundPaddingBottom()-getCompoundPaddingTop();
-                _widthLimit=getMeasuredWidth()-getCompoundPaddingLeft()-getCompoundPaddingRight();
-                if(_widthLimit<=0)
-                    return;
-                _availableSpaceRect.right=_widthLimit;
-                _availableSpaceRect.bottom=heightLimit;
-                superSetTextSize(startSize);
-            }
-        });
+//    post(new Runnable()
+//    {
+//    @Override
+//    public void run()
+//      {
+        if(!_initiallized)
+            return;
+        final int startSize=(int)_minTextSize;
+        final int heightLimit=getMeasuredHeight()-getCompoundPaddingBottom()-getCompoundPaddingTop();
+        _widthLimit=getMeasuredWidth()-getCompoundPaddingLeft()-getCompoundPaddingRight();
+        if(_widthLimit<=0)
+            return;
+        _availableSpaceRect.right=_widthLimit;
+        _availableSpaceRect.bottom=heightLimit;
+        superSetTextSize(startSize);
+//      }
+//    });
     }
 
-    private void superSetTextSize(int startSize){
+    private void superSetTextSize(int startSize)
+    {
         super.setTextSize(TypedValue.COMPLEX_UNIT_PX,efficientTextSizeSearch(startSize,(int)_maxTextSize,_sizeTester,_availableSpaceRect));
     }
 
@@ -214,13 +239,15 @@ public class AutoResizeTextView extends TextView{
      *
      * @param enable enable font size caching
      */
-    public void setEnableSizeCache(final boolean enable){
+    public void setEnableSizeCache(final boolean enable)
+    {
         _enableSizeCache=enable;
         _textCachedSizes.clear();
         adjustTextSize();
     }
 
-    private int efficientTextSizeSearch(final int start,final int end,final SizeTester sizeTester,final RectF availableSpace){
+    private int efficientTextSizeSearch(final int start,final int end,final SizeTester sizeTester,final RectF availableSpace)
+    {
         if(!_enableSizeCache)
             return binarySearch(start,end,sizeTester,availableSpace);
         final String text=getText().toString();
@@ -233,21 +260,27 @@ public class AutoResizeTextView extends TextView{
         return size;
     }
 
-    private int binarySearch(final int start,final int end,final SizeTester sizeTester,final RectF availableSpace){
+    private int binarySearch(final int start,final int end,final SizeTester sizeTester,final RectF availableSpace)
+    {
         int lastBest=start;
         int lo=start;
         int hi=end-1;
         int mid=0;
-        while(lo<=hi){
+        while(lo<=hi)
+        {
             mid=lo+hi>>>1;
             final int midValCmp=sizeTester.onTestSize(mid,availableSpace);
-            if(midValCmp<0){
+            if(midValCmp<0)
+            {
                 lastBest=lo;
                 lo=mid+1;
-            }else if(midValCmp>0){
+            }
+            else if(midValCmp>0)
+            {
                 hi=mid-1;
                 lastBest=hi;
-            }else return mid;
+            }
+            else return mid;
         }
         // make sure to return last best
         // this is what should always be returned
@@ -255,13 +288,15 @@ public class AutoResizeTextView extends TextView{
     }
 
     @Override
-    protected void onTextChanged(final CharSequence text,final int start,final int before,final int after){
+    protected void onTextChanged(final CharSequence text,final int start,final int before,final int after)
+    {
         super.onTextChanged(text,start,before,after);
         reAdjust();
     }
 
     @Override
-    protected void onSizeChanged(final int width,final int height,final int oldwidth,final int oldheight){
+    protected void onSizeChanged(final int width,final int height,final int oldwidth,final int oldheight)
+    {
         _textCachedSizes.clear();
         super.onSizeChanged(width,height,oldwidth,oldheight);
         if(width!=oldwidth||height!=oldheight)
