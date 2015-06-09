@@ -226,7 +226,7 @@
   <string name="english_42">forty two</string>
   <string name="french_42">quarante-deux</string>
   <string name="persian_42">چهل و دو</string>
-  <string name="favorites_list_empty">لیست خالیست \n محاسبات ستاره دار میاد اینجا</string>
+  <string name="favorites_list_empty">اعداد ستاره دار اینجا میاد</string>
   <string name="log_empty_string">لیست خالیه</string>
   <string name="farsi_label">برچسب را وارد کنید</string>
   <string name="farsi_ok">خب</string>

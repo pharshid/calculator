@@ -1371,6 +1371,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         if(sendLogMessage) {
             playSound(executeButtonSoundID);
             resultTextView.startAnimation(out_anim);
+            Runnable runnable = new Runnable() {
+                public void run() {
+                    sendLogMessage(getMExpressionString().toString(), mTempResult, false, "");
+                }
+            };
+            Thread mythread = new Thread(runnable);
+            mythread.start();
         }else{
             resultTextView.setText(mTempResult);
 
@@ -1758,13 +1765,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             public void onAnimationEnd(Animation animation) {
                 resultTextView.setText(mTempResult);
                 resultTextView.startAnimation(in_anim);
-                Runnable runnable = new Runnable() {
-                    public void run() {
-                        sendLogMessage(getMExpressionString().toString(), mTempResult, false, "");
-                    }
-                };
-                Thread mythread = new Thread(runnable);
-                mythread.start();
+
 
             }
 
