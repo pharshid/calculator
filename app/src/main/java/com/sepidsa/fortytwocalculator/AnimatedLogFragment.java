@@ -11,7 +11,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
-import android.widget.SearchView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.sepidsa.fortytwocalculator.data.LogContract;
@@ -84,7 +83,7 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
         mExpandButton.setTextColor(((MainActivity)getActivity()).getDialpadFontColor());
 
 
-        TextView empty = (TextView) rootView.findViewById(R.id.empty_list);
+        View empty =  rootView.findViewById(R.id.empty_view);
         mListView.setEmptyView(empty);
         mListView.setAdapter(mLogAdapter);
         getLoaderManager().restartLoader(0, null, (android.support.v4.app.LoaderManager.LoaderCallbacks) mLogFragment);

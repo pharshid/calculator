@@ -570,15 +570,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             resultTextView.setText(savedInstanceState.getString("mResultText"));
 
-//            if (mJustPressedExecuteButton) {
-//                calculateResult(null);
-//                updateUIExecute(false);
-//            } else {
-//                mTranslationBox.setTypeface(mTranslationBoxNumericFont);
-//                resultTextView.setText(savedInstanceState.getString("mResultText"));
-//
-//
-//            }
         }
     }
 
@@ -1335,6 +1326,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private boolean updateUIExecute(boolean sendLogMessage) {
 
+        if(isRetroThemeSelected()){
+            if(!getPremiumPreference()){
+                displayUpgradeToPremium(0);
+                return false;
+            }
+        }
         mDecimal_fraction = "";
         byte decimalIndex = (byte) mTempResult.indexOf(".");
         if(decimalIndex != -1){

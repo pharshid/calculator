@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="SKIP"
+            android:text="@string/premium_skip"
             android:textSize="18sp"
             android:textColor="@color/tutorial_button"
             android:background="@android:color/transparent"/>
@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="DONE"
+            android:text="@string/premium_agree"
             android:textSize="18sp"
             android:textColor="@color/tutorial_button"
             android:background="@android:color/transparent"
