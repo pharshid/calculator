@@ -9,15 +9,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="?android:attr/buttonBarStyle"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="right">
 
         <Button
             android:id="@+id/button_goto_select"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="?android:attr/borderlessButtonStyle"
-
-            android:text="ADD / REMOVE"/>
+            android:text="حذف و اضافه"/>
 
     </LinearLayout>
 
@@ -35,7 +35,9 @@
         android:textSize="@dimen/log_detail_txt_size"
         android:textColor="@android:color/darker_gray"
         android:gravity="center"
-        android:text="List is empty, go get some cannoli."
+        android:text="@string/farsi_list_is_empty"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
         />
 
 </LinearLayout>
