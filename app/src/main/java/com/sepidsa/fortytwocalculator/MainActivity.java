@@ -192,7 +192,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             , mHasVolumeSoundID
             , backSpaceButtonSoundID ;
 
-    Animation  out_anim,in_anim;
+    Animation out_anim_execute,in_anim;
     private Typeface mFlatIcon;
     public String mDecimal_fraction = "";
     private TextView mScientificModeTextView;
@@ -231,6 +231,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
     private Button mCurrencyList;
+    private Animation out_anim_clear;
 
     // Container Activity must implement this interface
     public interface OnHeadlineSelectedListener {
@@ -1192,7 +1193,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             }
             mJustPressedExecuteButton = true;
             setMExpressionString(mResultBeforeSignification.toString());
-            resultTextView.startAnimation(out_anim);
+            resultTextView.startAnimation(out_anim_execute);
             displayTranslation(true);
             checkCLRButtonSendIntent();
 
@@ -1299,7 +1300,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         setTranslationText("");
 //        mResult.setText(getResources().getString(R.string.zero)); todo
         mTempResult = "0";
-        resultTextView.startAnimation(out_anim);
+        resultTextView.startAnimation(out_anim_clear);
 
         mButtonsStack.clear();
         playSound(clearAllButtonSoundID);
@@ -1370,14 +1371,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         displayTranslation(sendLogMessage);
         if(sendLogMessage) {
             playSound(executeButtonSoundID);
-            resultTextView.startAnimation(out_anim);
-            Runnable runnable = new Runnable() {
-                public void run() {
-                    sendLogMessage(getMExpressionString().toString(), mTempResult, false, "");
-                }
-            };
-            Thread mythread = new Thread(runnable);
-            mythread.start();
+            resultTextView.startAnimation(out_anim_execute);
         }else{
             resultTextView.setText(mTempResult);
 
@@ -1754,8 +1748,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     void prepareAnimationStuff() {
         in_anim = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
-        out_anim  = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
-        out_anim.setAnimationListener(new Animation.AnimationListener() {
+        out_anim_execute = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
+        out_anim_execute.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
 
@@ -1765,7 +1759,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             public void onAnimationEnd(Animation animation) {
                 resultTextView.setText(mTempResult);
                 resultTextView.startAnimation(in_anim);
-
+                Runnable runnable = new Runnable() {
+                    public void run() {
+                        sendLogMessage(getMExpressionString().toString(), mTempResult, false, "");
+                    }
+                };
+                Thread mythread = new Thread(runnable);
+                mythread.start();
 
             }
 
@@ -1773,7 +1773,25 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             public void onAnimationRepeat(Animation animation) {
             }
         });
-        out_anim.setDuration(100);
+        out_anim_execute.setDuration(100);
+
+        out_anim_clear = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
+        out_anim_clear.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                resultTextView.setText(mTempResult);
+                resultTextView.startAnimation(in_anim);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        out_anim_clear.setDuration(100);
         prepareBlinkingErrorAnimation();
         prepareBlinkingAnimation();
 
