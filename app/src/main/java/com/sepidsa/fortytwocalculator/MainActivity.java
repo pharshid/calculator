@@ -693,7 +693,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         outState.putString("mDecimal_fraction", mDecimal_fraction);
 //        super.onSaveInstanceState(outState);
         Log.d(TAG_recreate, "Activity onSaveInstanceState ");
-
+        Log.d(TAG, "Destroying helper.");
+        if (mHelper != null) {
+            mHelper.dispose();
+            mHelper = null;
+        }
 
 
     }
@@ -737,15 +741,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             resultTextView.setText(savedInstanceState.getString("mResultText"));
 
-            if (mJustPressedExecuteButton) {
-                calculateResult(null);
-                updateUIExecute(false);
-            } else {
-                mTranslationBox.setTypeface(mTranslationBoxNumericFont);
-                resultTextView.setText(savedInstanceState.getString("mResultText"));
-
-
-            }
+//            if (mJustPressedExecuteButton) {
+//                calculateResult(null);
+//                updateUIExecute(false);
+//            } else {
+//                mTranslationBox.setTypeface(mTranslationBoxNumericFont);
+//                resultTextView.setText(savedInstanceState.getString("mResultText"));
+//
+//
+//            }
         }
     }
 

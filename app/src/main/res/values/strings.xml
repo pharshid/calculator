@@ -127,6 +127,7 @@
   <string name="check_mark"></string>
 
   <string name="backSpace"></string>
+  <string name="backSpace_retro"></string>
   <string name="add_label"></string>
   <string name="prompt">Language</string>
   <string name="day"></string>

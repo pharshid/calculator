@@ -44,8 +44,7 @@
     <dimen name="digital_lcd_text_size">70sp</dimen>
     <dimen
         name="retro_scientific_text_size">18sp</dimen>
-
-
+    <dimen name="retro_backspace_text_size">25sp</dimen>
 
 
     <color name="abc_search_url_text_normal">#ff7fa87f</color>

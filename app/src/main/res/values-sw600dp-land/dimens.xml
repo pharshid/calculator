@@ -40,7 +40,7 @@
 
 
     <dimen name="icon_button_padding_top">6dp</dimen>
-
+    <dimen name="retro_backspace_text_size">27sp</dimen>
 
 
 </resources>

@@ -32,6 +32,7 @@
 
     <dimen name="app_icon_top_text_size">55sp</dimen>
     <dimen name="app_icon_bottom_text_size">20sp</dimen>
+    <dimen name="retro_backspace_text_size">18sp</dimen>
 
 
 </resources>

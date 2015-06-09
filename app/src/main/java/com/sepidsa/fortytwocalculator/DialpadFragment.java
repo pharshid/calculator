@@ -577,23 +577,34 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
     void setClearButtonText(String input){
 
-//        if(mView!= null) {
             mView.findViewById(R.id.buttonClear).setTag(input);
-            ((Button) mView.findViewById(R.id.buttonClear)).setText(input);
 
             refreshCButtonTypeface();
-//        }
+
     }
 
     private void refreshCButtonTypeface() {
-        if( ((Button) mView.findViewById(R.id.buttonClear)).getText().equals(getResources().getString(R.string.backSpace)))
-        {
-            ((Button) mView.findViewById(R.id.buttonClear)).setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "flaticon.ttf"));
-        }
-        if( ((Button) mView.findViewById(R.id.buttonClear)).getText().equals("C"))
+
+        if( (mView.findViewById(R.id.buttonClear)).getTag().equals("C"))
         {
             //Change Clear Button's Text to C
+            ((Button) mView.findViewById(R.id.buttonClear)).setText("C");
             ((Button) mView.findViewById(R.id.buttonClear)).setTypeface(defaultFont);
+            ((Button) mView.findViewById(R.id.buttonClear)).setTextSize(getResources().getDimension(R.dimen.btn_text_size) / getResources().getDisplayMetrics().density);
+
+        }else {
+            //Change Clear Button's Text to Backspace
+
+            ((Button) mView.findViewById(R.id.buttonClear)).setTextSize(getResources().getDimension(R.dimen.retro_backspace_text_size) / getResources().getDisplayMetrics().density);
+            ((Button) mView.findViewById(R.id.buttonClear)).setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "flaticon.ttf"));
+            if(mIsRetroOn){
+                ((Button) mView.findViewById(R.id.buttonClear)).setText(getResources().getString(R.string.backSpace_retro));
+            }else{
+                ((Button) mView.findViewById(R.id.buttonClear)).setText(getResources().getString(R.string.backSpace_retro));
+
+                ((Button) mView.findViewById(R.id.buttonClear)).setText(getResources().getString(R.string.backSpace));
+
+            }
         }
     }
 

@@ -33,5 +33,6 @@
     <dimen name="text_size_medium">20sp</dimen>
     <dimen name="app_icon_top_text_size">70sp</dimen>
     <dimen name="app_icon_bottom_text_size">25sp</dimen>
+    <dimen name="retro_backspace_text_size">27sp</dimen>
 
 </resources>
