@@ -58,10 +58,6 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.sepidsa.fortytwocalculator.data.LogContract;
 import com.sepidsa.fortytwocalculator.sync.CurrencySyncAdapter;
-import com.sepidsa.fortytwocalculator.util.IabHelper;
-import com.sepidsa.fortytwocalculator.util.IabResult;
-import com.sepidsa.fortytwocalculator.util.Inventory;
-import com.sepidsa.fortytwocalculator.util.Purchase;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.io.File;
@@ -84,6 +80,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private static final String FRAGMENT_TAG_LOG_ = "log fragment";
     public static final byte LANGUAGE_ARABIC = 3 ;
+    static final String TAG = "mainactivity";
 
     private static final String LOG_DATA_KEY = "log data";
     public static final int FONT_DIGITAL_7 = 3;
@@ -225,25 +222,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private Typeface mRobotoThin;
 
     // SKUs for our products: the premium upgrade (non-consumable)
-    static final String SKU_PREMIUM = "premium_upgrade";
-    static final String SKU_CLASSIC_THEME = "classic_theme_upgrade";
-
     // Does the user have the premium upgrade?
     boolean mIsPremium = false;
     boolean mHasPuyrchasedClassicTheme = false;
 
     // (arbitrary) request code for the purchase flow
-    static final int RC_REQUEST = 10001;
-    static final String TAG = "in_app_billing";
     static final String TAG_recreate = "recreate";
 
-    IabHelper.QueryInventoryFinishedListener
-            mQueryFinishedListener;
 
-    // The helper object
-    com.sepidsa.fortytwocalculator.util.IabHelper mHelper;
-
-    public String base64EncodedPublicKey;
     private Button mCurrencyList;
 
     // Container Activity must implement this interface
@@ -257,7 +243,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         TinyDB db = new TinyDB(getApplicationContext());
 
-         base64EncodedPublicKey = "MIHNMA0GCSqGSIb3DQEBAQUAA4G7ADCBtwKBrwCgNUrs2KdQY911EkU3jcroP73iRap4P48t6pK3O3+NHum0/GYibcC5WAdw7YSIcirAlKr8niYErlVmbx9pkAAACMepMF11xQABddFvkgKMOLa+MGt/V2TAACeoA7DvLN8YyG8U6HwC1juu+honao7IW0mxbmOT34Xv4ff9wHajVB/Cm1S00Un7Ro0DBZQ3VBwShSbmqxVMOHx6e5ObuzE0gTqDdsNcgGab4lFf4wkCAwEAAQ==";
 
         // You can find it in your Bazaar console, in the Dealers section.
         // It is recommended to add more security than just pasting it in your source code;
@@ -306,64 +291,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         buildNavigationDrawer();
         CurrencySyncAdapter.initializeSyncAdapter(this);
 
-        mHelper = new IabHelper(this, base64EncodedPublicKey);
-        mHelper.enableDebugLogging(false);
-        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-            public void onIabSetupFinished(IabResult result) {
-                Log.d(TAG, "Setup finished.");
-
-                if (!result.isSuccess()) {
-                    // Oh noes, there was a problem.
-                    complain("Problem setting up in-app billing: " + result);
-                    return;
-                }
-
-                // Have we been disposed of in the meantime? If so, quit.
-                if (mHelper == null) return;
-
-                // IAB is fully set up. Now, let's get an inventory of stuff we own.
-                Log.d(TAG, "Setup successful. Querying inventory.");
-//                mHelper.queryInventoryAsync(mGotInventoryListener);
-            }
-        });
 
         showAppTour();
     }
-
-    // Listener that's called when we finish querying the items and subscriptions we own
-    IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
-        public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-            Log.d(TAG, "Query inventory finished.");
-
-            // Have we been disposed of in the meantime? If so, quit.
-            if (mHelper == null) return;
-
-            // Is it a failure?
-            if (result.isFailure()) {
-//                complain("Failed to query inventory: " + result);
-                return;
-            }
-
-            Log.d(TAG, "Query inventory was successful.");
-
-            /*
-             * Check for items we own. Notice that for each purchase, we check
-             * the developer payload to see if it's correct! See
-             * verifyDeveloperPayload().
-             */
-
-            // Do we have the premium upgrade?
-            Purchase premiumPurchase = inventory.getPurchase(SKU_PREMIUM);
-//            mIsPremium = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
-          setPremiumPreference (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
-
-            Log.d(TAG, "User is " + (getPremiumPreference() ? "PREMIUM" : "NOT PREMIUM"));
-
-//            updateUi();
-//            setWaitScreen(false);
-            Log.d(TAG, "Initial inventory query finished; enabling main UI.");
-        }
-    };
 
 
 
@@ -429,13 +359,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mDrawer = result;
     }
 
-    private void restorePurchases() {
-        //TODO check with bazaar, show dialog.
-     mHelper.queryInventoryAsync(mGotInventoryListener);
-        Toast.makeText(getApplicationContext(), "خریدهای درون برنامه ای به روز شد :)",
-                Toast.LENGTH_LONG).show();
-
-    }
 
     private void displayUpgradeToPremium(int i) {
         Intent myIntent = new Intent(MainActivity.this, PremiumShowcasePagerActivity.class);
@@ -583,50 +506,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
-    private void queryAvaiablePurchases() {
-
-        List additionalSkuList = new ArrayList();
-        additionalSkuList.add(SKU_PREMIUM);
-        mHelper.queryInventoryAsync(true, additionalSkuList,
-                mQueryFinishedListener);
-    // returning the result to query finished listner (this)
-
-    }
-
-
-    void purchaseContent(String SKU){
-
-
-
-        IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener
-                = new IabHelper.OnIabPurchaseFinishedListener() {
-            public void onIabPurchaseFinished(IabResult result, Purchase purchase)
-            {
-                if (result.isFailure()) {
-                    Log.d(TAG, "Error purchasing: " + result);
-                    return;
-                }
-                else if (purchase.getSku().equals(SKU_PREMIUM)) {
-                    Log.d(TAG, "KHARID ANJAM SHOD: " + result);
-
-                    // consume the gas and update the UI
-                }
-                else if (purchase.getSku().equals(SKU_CLASSIC_THEME)) {
-                    // give user access to premium content and update the UI
-
-                    // update UI
-                }
-            }
-        };
-        mHelper.launchPurchaseFlow(this, SKU, 10001,
-                mPurchaseFinishedListener, "bGoa+V7g/yqDXvKRqq+JTFn4uQZbPiQJo4pf9RzJ");
-    }
-
-    void checkPurchases() {
-        mHelper.queryInventoryAsync(mGotInventoryListener);
-        // todo update ui
-
-    }
 
 
     @Override
@@ -648,7 +527,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         outState.putString("mTempResult", mTempResult);
         outState.putString("mDecimal_fraction", mDecimal_fraction);
         Log.d(TAG_recreate, "Activity onSaveInstanceState ");
-        Log.d(TAG, "Destroying helper.");
 
 
     }
@@ -793,33 +671,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("volumeState", Context.MODE_PRIVATE);
         return  appPreferences.getBoolean("hasVolume",true);
     }
-     public boolean getPremiumPreference(){
-        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("purchases", Context.MODE_PRIVATE);
-        return  appPreferences.getBoolean("isPremium",false);
-    }
-
-    public void setPremiumPreference(boolean isPremium){
-
-        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("purchases", MODE_PRIVATE);
-        SharedPreferences.Editor editor = appPreferences.edit();
-        editor.putBoolean("isPremium", isPremium);
-        editor.apply();
 
 
-    }
-
-    void complain(String message) {
-        Log.e(TAG, "**** TrivialDrive Error: " + message);
-        alert("Error: " + message);
-    }
-
-    void alert(String message) {
-        AlertDialog.Builder bld = new AlertDialog.Builder(this);
-        bld.setMessage(message);
-        bld.setNeutralButton("OK", null);
-        Log.d(TAG, "Showing alert dialog: " + message);
-        bld.create().show();
-    }
 
     @Override
     protected void onDestroy() {
@@ -835,11 +688,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             }
         }
 
-        Log.d(TAG, "Destroying helper.");
-        if (mHelper != null) {
-            mHelper.dispose();
-            mHelper = null;
-        }
+
 
     }
 
@@ -2344,6 +2193,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         return;
     }
 
+    public boolean getPremiumPreference(){
+        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("purchases", Context.MODE_PRIVATE);
+        return  appPreferences.getBoolean("isPremium",false);
+    }
+
     public static void setClipView(View view, boolean clip) {
         if (view != null) {
             ViewParent parent = view.getParent();
@@ -2401,88 +2255,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 Log.d(TAG_recreate, "Acrivity Right before recreate");
                          recreate();
             }
-        } else {
-            Log.d(TAG, "onActivityResult(" + requestCode + "," + resultCode + "," + data);
-            if (mHelper == null) return;
-
-            // Pass on the activity result to the helper for handling
-            if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
-                // not handled, so handle it ourselves (here's where you'd
-                // perform any handling of activity results not related to in-app
-                // billing...
-                super.onActivityResult(requestCode, resultCode, data);
-            } else {
-                Log.d(TAG, "onActivityResult handled by IABUtil.");
-            }
         }
     }
 
-    /** Verifies the developer payload of a purchase. */
-    boolean verifyDeveloperPayload(Purchase p) {
-        String payload = p.getDeveloperPayload();
 
-        /*
-         * TODO: verify that the developer payload of the purchase is correct. It will be
-         * the same one that you sent when initiating the purchase.
-         *
-         * WARNING: Locally generating a random string when starting a purchase and
-         * verifying it here might seem like a good approach, but this will fail in the
-         * case where the user purchases an item on one device and then uses your app on
-         * a different device, because on the other device you will not have access to the
-         * random string you originally generated.
-         *
-         * So a good developer payload has these characteristics:
-         *
-         * 1. If two different users purchase an item, the payload is different between them,
-         *    so that one user's purchase can't be replayed to another user.
-         *
-         * 2. The payload must be such that you can verify it even when the app wasn't the
-         *    one who initiated the purchase flow (so that items purchased by the user on
-         *    one device work on other devices owned by the user).
-         *
-         * Using your own server to store and verify developer payloads across app
-         * installations is recommended.
-         */
-
-        return true;
-    }
 
 
     // Callback for when a purchase is finished
-    IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
-        public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-            Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
-
-            // if we were disposed of in the meantime, quit.
-            if (mHelper == null) return;
-
-            if (result.isFailure()) {
-
-//                complain("Error purchasing: " + result);
-//                setWaitScreen(false);
-                return;
-            }
-            if (!verifyDeveloperPayload(purchase)) {
-//                complain("Error purchasing. Authenticity verification failed.");
-//                setWaitScreen(false);
-                return;
-            }
-
-            Log.d(TAG, "Purchase successful.");
-
-
-             if (purchase.getSku().equals(SKU_PREMIUM)) {
-                 // bought the premium upgrade!
-                Log.d(TAG, "Purchase is premium upgrade. Congratulating user.");
-                alert("مبارک باشه !");
-//                mIsPremium = true;
-                 setPremiumPreference(true);
-//todo update ui for finished
-//                updateUi();
-//                setWaitScreen(false);
-            }
-        }
-    };
 
 
 

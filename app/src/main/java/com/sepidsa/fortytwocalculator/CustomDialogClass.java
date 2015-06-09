@@ -94,8 +94,6 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
         tips.setOnClickListener(this);
         tips.setTypeface(mYekan);
 
-
-
     }
 
 
@@ -208,8 +206,10 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
 
             case R.id.btn_CHANGE_TRANSLATION_FONT:
 
-                SharedPreferences typographyPreferences = mContext.getSharedPreferences("typography", Context.MODE_PRIVATE);
-                SharedPreferences.Editor typographyeditor = typographyPreferences.edit();
+                Intent myIntent = new Intent(mContext, PremiumShowcasePagerActivity.class);
+                mContext.startActivity(myIntent);
+                dismiss();
+                break;
 
         }
     }
