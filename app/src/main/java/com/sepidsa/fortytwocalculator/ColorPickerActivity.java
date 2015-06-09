@@ -63,7 +63,7 @@ public class ColorPickerActivity extends FragmentActivity implements ColorPicker
         mAccentLayout =  findViewById(R.id.layout_color_picker_accent);
         mKeypadLayout =  findViewById(R.id.layout_color_picker_keypad);
 
-       setTypefaces();
+        setTypefaces();
         backButton = (ImageButton)findViewById(R.id.button_back);
         backButton.setOnClickListener(this);
         mIsPremium  = getIntent().getBooleanExtra("isPremium", false);
@@ -96,9 +96,9 @@ public class ColorPickerActivity extends FragmentActivity implements ColorPicker
     private void setTypefaces() {
         TextView fontChaange = (TextView) findViewById(R.id.textview_accent);
         fontChaange.setTypeface(mYekanFont);
-           fontChaange = (TextView) findViewById(R.id.textview_use_classic);
+        fontChaange = (TextView) findViewById(R.id.textview_use_classic);
         fontChaange.setTypeface(mYekanFont);
-           fontChaange = (TextView) findViewById(R.id.textView_keypad);
+        fontChaange = (TextView) findViewById(R.id.textView_keypad);
         fontChaange.setTypeface(mYekanFont);
         fontChaange.setTextColor(getDialpadFontColor());
 
@@ -169,7 +169,7 @@ public class ColorPickerActivity extends FragmentActivity implements ColorPicker
                 mKeypadLayout.setBackgroundColor(getKeypadBackgroundColorCode());
                 mKeypadPallete.drawPalette(Utils.ColorUtils.colorChoiceForKeypad(getApplicationContext()), color, null);
             }else {
-               displayUpgradeToPremium(0);
+                displayUpgradeToPremium(0);
             }
 
         }

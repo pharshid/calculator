@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@android:color/white"
+    style="@android:style/TextAppearance.DeviceDefault.Widget.EditText"
+    android:clickable="true"
+    >
+
+    <RelativeLayout
+        android:id="@+id/MotherTop"
+        android:orientation="vertical"
+        android:layout_weight="30"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#4DB6AC"
+        android:padding="15dp"
+        android:elevation="5dp"
+        >
+
+
+        <TextView
+            android:id="@+id/scientific_mode_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:textColor="@android:color/white"
+            android:paddingLeft="@dimen/padding_small"
+            android:text="ver 2.00"
+            />
+
+
+
+        <ImageView
+            android:id="@+id/fortyTwoSample"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="42"
+            android:textSize="80sp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="@android:color/white"
+ android:layout_margin="10dp"
+            android:layout_above="@+id/fortyTwoSampleTranslation"
+            android:layout_below="@+id/scientific_mode_textview"
+            android:src="@drawable/ic_launcher"
+             android:layout_centerInParent="true"
+
+            />
+
+
+
+
+    </RelativeLayout>
+
+
+
+
+
+
+    <TextView
+        android:id="@+id/give_stars"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="70"
+        android:text="@string/about_string"
+        android:textSize="22sp"
+        android:fontFamily="sans-serif-light"
+        android:background="#607D8B"
+        android:textColor="#fff"
+        android:gravity="center"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+
+    android:visibility="visible"
+        android:elevation="3dp"
+
+        />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</LinearLayout>
+
+
+

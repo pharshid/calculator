@@ -265,26 +265,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
 
-        mHelper = new IabHelper(this, base64EncodedPublicKey);
-        mHelper.enableDebugLogging(false);
-        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-            public void onIabSetupFinished(IabResult result) {
-                Log.d(TAG, "Setup finished.");
-
-                if (!result.isSuccess()) {
-                    // Oh noes, there was a problem.
-                    complain("Problem setting up in-app billing: " + result);
-                    return;
-                }
-
-                // Have we been disposed of in the meantime? If so, quit.
-                if (mHelper == null) return;
-
-                // IAB is fully set up. Now, let's get an inventory of stuff we own.
-                Log.d(TAG, "Setup successful. Querying inventory.");
-                mHelper.queryInventoryAsync(mGotInventoryListener);
-            }
-        });
 
 
 
@@ -326,6 +306,26 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         buildNavigationDrawer();
         CurrencySyncAdapter.initializeSyncAdapter(this);
 
+        mHelper = new IabHelper(this, base64EncodedPublicKey);
+        mHelper.enableDebugLogging(false);
+        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            public void onIabSetupFinished(IabResult result) {
+                Log.d(TAG, "Setup finished.");
+
+                if (!result.isSuccess()) {
+                    // Oh noes, there was a problem.
+                    complain("Problem setting up in-app billing: " + result);
+                    return;
+                }
+
+                // Have we been disposed of in the meantime? If so, quit.
+                if (mHelper == null) return;
+
+                // IAB is fully set up. Now, let's get an inventory of stuff we own.
+                Log.d(TAG, "Setup successful. Querying inventory.");
+//                mHelper.queryInventoryAsync(mGotInventoryListener);
+            }
+        });
 
         showAppTour();
     }
@@ -570,8 +570,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     private void displayAbout() {
-        Intent myIntent = new Intent(MainActivity.this, HelpActivityOld.class);
-        MainActivity.this.startActivity(myIntent);
+        AboutDialog cdc = new AboutDialog(this , android.R.style.Theme_Material_Dialog_Alert);
+        cdc.show();
+//        Intent myIntent = new Intent(MainActivity.this, HelpActivityOld.class);
+//        MainActivity.this.startActivity(myIntent);
 
     }
 
@@ -579,11 +581,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         Intent myIntent = new Intent(MainActivity.this, HelpActivity.class);
         MainActivity.this.startActivity(myIntent);
 
-    }
-
-
-    private String getTheCannoli() {
-        return null;
     }
 
     private void queryAvaiablePurchases() {
@@ -594,48 +591,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 mQueryFinishedListener);
     // returning the result to query finished listner (this)
 
-    }
-
-
-    com.sepidsa.fortytwocalculator.util.IabHelper.QueryInventoryFinishedListener setInventoryFinishedListener(){
-        mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
-            public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-                Log.d(TAG, "Query inventory finished.");
-                if (result.isFailure()) {
-                    Log.d(TAG, "Failed to query inventory: " + result);
-
-//                    new AlertDialog.Builder(getApplicationContext())
-//                            .setTitle("خطا در اتصال به بازار")
-//                            .setMessage("لطفا چک کنید که در برنامه بازار با اکنت بازارتون وارد شدید و به اینترنت متصل هستید")
-//                            .setPositiveButton("باشه جتما", new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    // continue with delete
-//                                }
-//                            })
-//                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    // do nothing
-//                                }
-//                            })
-//                            .setIcon(android.R.drawable.ic_dialog_alert)
-//                            .show();
-                    return;
-                }
-                else {
-                    Log.d(TAG, "Query inventory was successful.");
-                    // does the user have the premium upgrade?
-                   setPremiumPreference(inventory.hasPurchase(SKU_PREMIUM));
-
-                    // update UI accordingly
-
-
-                    Log.d(TAG, "User is " + (getPremiumPreference() ? "PREMIUM" : "NOT PREMIUM"));
-                }
-
-                Log.d(TAG, "Initial inventory query finished; enabling main UI.");
-            }
-        };
-        return mGotInventoryListener;
     }
 
 
@@ -676,6 +631,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
 
 
         outState.putSerializable("buttonStack", mButtonsStack);
@@ -691,13 +647,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         outState.putSerializable("mMemoryVariable", mMemoryVariable);
         outState.putString("mTempResult", mTempResult);
         outState.putString("mDecimal_fraction", mDecimal_fraction);
-//        super.onSaveInstanceState(outState);
         Log.d(TAG_recreate, "Activity onSaveInstanceState ");
         Log.d(TAG, "Destroying helper.");
-        if (mHelper != null) {
-            mHelper.dispose();
-            mHelper = null;
-        }
 
 
     }
@@ -709,7 +660,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-//         super.onRestoreInstanceState(savedInstanceState);
+         super.onRestoreInstanceState(savedInstanceState);
         Log.d(TAG_recreate, "Activity onRestoreInstanceState and is " + savedInstanceState);
 
         // todo mtranslationbox restore
@@ -983,7 +934,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         mMajalla = Typeface.createFromAsset(getApplicationContext().getAssets(), "majalla.ttf");
         mFlatIcon = Typeface.createFromAsset(getApplicationContext().getAssets(), "flaticon.ttf");
-        mDastnevis = Typeface.createFromAsset(getApplicationContext().getAssets(), "dastnevis.otf");
         mMitra = Typeface.createFromAsset(getApplicationContext().getAssets(), "mitra.ttf");
         mPhalls =  Typeface.createFromAsset(getApplicationContext().getAssets(), "yekan.ttf");
         mDigital_7 =  Typeface.createFromAsset(getApplicationContext().getAssets(), "digital_7.ttf");
@@ -2248,7 +2198,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 playSound(mAddStarSoundID);
                 setClipView(mAddStars, false);
                 mAddStars.setText(getResources().getString(R.string.star_icon));
-                mAddStars.setTextColor(Color.parseColor("#ff6e40"));
+                mAddStars.setTextColor(Color.parseColor("#FFC107"));
                 mAddStars.animate()
                         .translationY(200)
                         .scaleX(0.5f)
@@ -2524,7 +2474,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
              if (purchase.getSku().equals(SKU_PREMIUM)) {
                  // bought the premium upgrade!
                 Log.d(TAG, "Purchase is premium upgrade. Congratulating user.");
-                alert("Thank you for upgrading to premium!");
+                alert("مبارک باشه !");
 //                mIsPremium = true;
                  setPremiumPreference(true);
 //todo update ui for finished

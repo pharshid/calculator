@@ -2,7 +2,6 @@ package com.sepidsa.fortytwocalculator;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -48,6 +47,7 @@ public class ExpandAnimation extends Animation {
         mMarginEnd = (mMarginStart == 0 ? (0- view.getHeight()) : 0);
 
         mArrow = (TextView) parent.findViewById(R.id.arrow);
+        mArrow.setTextColor(((MainActivity)context).getDialpadFontColor());
 
 //        setClipView(mArrow, false);
 //        setClipView(parent, false);

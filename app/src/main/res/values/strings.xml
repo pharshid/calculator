@@ -128,27 +128,23 @@
 
   <string name="backSpace"></string>
   <string name="backSpace_retro"></string>
-  <string name="add_label"></string>
+  <string name="add_label"></string>
   <string name="prompt">Language</string>
-  <string name="day"></string>
-  <string name="night"></string>
-  <string name="settings"></string>
-  <string name="volume_high"></string>
-  <string name="volume_off"></string>
-  <string name="language">\uE016</string>
+
+  <string name="settings"></string>
+  <string name="volume_high"></string>
+  <string name="volume_off"></string>
   <string name="help">\uE035</string>
-  <string name="theme"></string>
-  <string name="next_page">\uE003</string>
-  <string name="previous_page">\uE004</string>
-  <string name="hamburger_menu"></string>
-  <string name="chevron"></string>
-  <string name="delete_item"></string>
-  <string name="use_item"></string>
-  <string name="share_item"></string>
-  <string name="star_icon"></string>
-  <string name="star_outline"></string>
-  <string name="list"></string>
-  <string name="dollar_icon_string"></string>
+  <string name="theme"></string>
+  <string name="hamburger_menu"></string>
+  <string name="chevron"></string>
+  <string name="delete_item"></string>
+  <string name="use_item"></string>
+  <string name="share_item"></string>
+  <string name="star_icon"></string>
+  <string name="star_outline"></string>
+  <string name="list"></string>
+  <string name="dollar_icon_string"></string>
 
   <!--COLOR Codes -->
 
@@ -245,6 +241,7 @@
   <string name="farsi_choose_email_app">با چی بفرستم؟</string>
   <string name="farsi_about_42_calc">راجع به ماشین حساب  ۴۲</string>
   <string name="become_premium">طلایی شو</string>
+    <string name="about_string">ماشین حساب ۴۲  \n  ساخت ایران \n</string>
 
 
 </resources>

@@ -160,7 +160,6 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 //            setClearButtonText(getResources().getString(R.string.backSpace));
 //
 //        }
-        ((MainActivity)getActivity()).checkCLRButtonSendIntent();
 
         if(mView.findViewById(R.id.switch_deg_rad) != null) {
             ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setChecked(((MainActivity) getActivity()).getAngleMode());
@@ -353,39 +352,29 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        mClearButtonChangedReceiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-////                if(isAdded()) {
-//                // Extract data included in the Intent
-//                Log.d(TAG, "Fragment onreceive and context null state is " + context);
-//
-//                String message = intent.getStringExtra("buttonValue");
-//                setClearButtonText(message);
-////                }
-//            }
-//        };
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        ((MainActivity)getActivity()).checkCLRButtonSendIntent();
 
         //If no retro theme is selected apply flat theme colors to keys
         if(!((MainActivity) getActivity()).isRetroThemeSelected()){
             redrawKeypad();
         }
+
+
         Log.d(TAG, "Fragment onStart");
-
-
-//        if (!((MainActivity) getActivity()).isRetroThemeSelected())
-//            redrawKeypad();
 
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+
         LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mThemeChangedReciever, new IntentFilter("themeIntent"));
 //        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mClearButtonChangedReceiver, new IntentFilter("clearIntent"));
 
@@ -577,7 +566,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
     void setClearButtonText(String input){
 
-            mView.findViewById(R.id.buttonClear).setTag(input);
+      mView.findViewById(R.id.buttonClear).setTag(input);
 
             refreshCButtonTypeface();
 

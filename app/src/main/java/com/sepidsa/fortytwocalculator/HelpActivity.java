@@ -1,15 +1,19 @@
 package com.sepidsa.fortytwocalculator;
 
 
-import android.app.ExpandableListActivity;
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class HelpActivity extends ExpandableListActivity{
+public class HelpActivity extends Activity implements ExpandableListView.OnChildClickListener, View.OnClickListener {
 
     private ArrayList<String> parentItems = new ArrayList<String>();
     private ArrayList<Object> childItems = new ArrayList<Object>();
@@ -20,14 +24,19 @@ public class HelpActivity extends ExpandableListActivity{
         super.onCreate(savedInstanceState);
 
         // this is not really  necessary as ExpandableListActivity contains an ExpandableList
-        //setContentView(R.layout.activity_help);
+        setContentView(R.layout.activity_help);
 
-        ExpandableListView expandableList = getExpandableListView(); // you can use (ExpandableListView) findViewById(R.id.list)
 
+        ExpandableListView expandableList = (ExpandableListView) findViewById(R.id.list); // you can use (ExpandableListView) findViewById(R.id.list)
+
+       ImageButton backButton = (ImageButton)findViewById(R.id.button_back);
+        backButton.setOnClickListener(this);
+
+        TextView dummy = (TextView)findViewById(R.id.help_page_title);
+        dummy.setTypeface(Typeface.createFromAsset(getAssets(), "yekan.ttf"));
         expandableList.setDividerHeight(2);
         expandableList.setGroupIndicator(null);
         expandableList.setClickable(true);
-
         setGroupParents();
         setChildData();
 
@@ -57,34 +66,30 @@ public class HelpActivity extends ExpandableListActivity{
 
             childItems.add(child);
         }
-//        child.add("Core");
-//        child.add("Games");
-//        childItems.add(child);
-//
-//        // Core Java
-//        child = new ArrayList<String>();
-//        child.add("Apache");
-//        child.add("Applet");
-//        child.add("AspectJ");
-//        child.add("Beans");
-//        child.add("Crypto");
-//        childItems.add(child);
-//
-//        // Desktop Java
-//        child = new ArrayList<String>();
-//        child.add("Accessibility");
-//        child.add("AWT");
-//        child.add("ImageIO");
-//        child.add("Print");
-//        childItems.add(child);
-//
-//        // Enterprise Java
-//        child = new ArrayList<String>();
-//        child.add("EJB3");
-//        child.add("GWT");
-//        child.add("Hibernate");
-//        child.add("JSP");
-//        childItems.add(child);
+
     }
 
+    /**
+     * Callback method to be invoked when a child in this expandable list has
+     * been clicked.
+     *
+     * @param parent        The ExpandableListView where the click happened
+     * @param v             The view within the expandable list/ListView that was clicked
+     * @param groupPosition The group position that contains the child that
+     *                      was clicked
+     * @param childPosition The child position within the group
+     * @param id            The row id of the child that was clicked
+     * @return True if the click was handled
+     */
+    @Override
+    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+        return false;
+    }
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.button_back:
+                this.finish();
+        }
+    }
 }

@@ -109,7 +109,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="40"
-            android:text="فونت"
+            android:text="نسخه طلایی"
             android:background="#8b9dc3"
             android:textSize="22sp"
             android:textColor="@android:color/white"
@@ -129,6 +129,8 @@
             android:id="@+id/dialpad_text_size"
 
             />
+
+
 
 
         <Button

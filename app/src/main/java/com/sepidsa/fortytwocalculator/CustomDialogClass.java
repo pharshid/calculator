@@ -55,7 +55,6 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
         mRobotoThin = Typeface.createFromAsset(context.getAssets(), "roboto_thin.ttf");
         mRobotoLight = Typeface.createFromAsset(context.getAssets(), "roboto_light.ttf");
         mRobotoRegular =  Typeface.createFromAsset(context.getAssets(), "roboto_regular.ttf");
-        mDastnevis = Typeface.createFromAsset(context.getAssets(), "dastnevis.otf");
         mMitra = Typeface.createFromAsset(context.getAssets(), "mitra.ttf");
         mYekan = Typeface.createFromAsset(context.getAssets(), "yekan.ttf");
         mContext = context;

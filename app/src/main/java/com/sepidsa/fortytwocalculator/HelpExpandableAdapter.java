@@ -1,9 +1,8 @@
 package com.sepidsa.fortytwocalculator;
 
 
-import java.util.ArrayList;
-
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,6 +11,8 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class HelpExpandableAdapter extends BaseExpandableListAdapter {
 
@@ -38,7 +39,7 @@ public class HelpExpandableAdapter extends BaseExpandableListAdapter {
         TextView textView = null;
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.help_header_item, null);
+            convertView = inflater.inflate(R.layout.help_item, null);
         }
 
         textView = (TextView) convertView.findViewById(R.id.textView1);
@@ -53,6 +54,7 @@ public class HelpExpandableAdapter extends BaseExpandableListAdapter {
             }
         });
 
+        ((TextView)convertView).setTypeface(Typeface.createFromAsset(this.activity.getAssets(), "bbc.ttf"));
         return convertView;
     }
 
@@ -60,11 +62,12 @@ public class HelpExpandableAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.help_item, null);
+            convertView = inflater.inflate(R.layout.help_item_header, null);
         }
 
         ((CheckedTextView) convertView).setText(parentItems.get(groupPosition));
         ((CheckedTextView) convertView).setChecked(isExpanded);
+        ((TextView)convertView).setTypeface(Typeface.createFromAsset(this.activity.getAssets(), "yekan.ttf"));
 
         return convertView;
     }
