@@ -254,18 +254,7 @@
 
 
                     />
-                <Button
-                    android:id="@+id/buttonPremium"
-                    style="@style/icon_button.portrait"
-                    android:layout_weight="1"
-                    android:text="BUY"
-                    android:tag="@string/volume_high"
-                    android:gravity="center_horizontal"
-                    android:textColor="#DADFE1"
-                    android:visibility="gone"
 
-
-                    />
                 <Button
                     android:id="@+id/buttonColors"
                     style="@style/icon_button.portrait"

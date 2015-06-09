@@ -742,7 +742,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 updateUIExecute(false);
             } else {
                 mTranslationBox.setTypeface(mTranslationBoxNumericFont);
-//
                 resultTextView.setText(savedInstanceState.getString("mResultText"));
 
 
@@ -1041,7 +1040,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 //        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
 //        return appPreferences.getBoolean("has_watched_app_tour_v2.00", false);
-        return false;
+        return true;
     }
 
     private void setWatchedAppTour(){
@@ -1400,7 +1399,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             mJustPressedExecuteButton = true;
             setMExpressionString(mResultBeforeSignification.toString());
             resultTextView.startAnimation(out_anim);
-            displayTranslation();
+            displayTranslation(true);
             checkCLRButtonSendIntent();
 
         }
@@ -1541,7 +1540,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         try {
 
-            resultTextView.setText(mTempResult);
             mAddStars.setAlpha(1);
             mAddStars.setRotation(0);
             mAddStars.setText(getResources().getString(R.string.star_outline));
@@ -1567,13 +1565,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         setMExpressionString(resultTextView.getText().toString().replace(",", ""));
         mButtonsStack.clear();
-        mButtonsStack.push(resultTextView.getText().toString().replace(",",""));
-        playSound(executeButtonSoundID);
-        resultTextView.startAnimation(out_anim);
-        displayTranslation();
-//        if(sendLogMessage) {
-//            sendLogMessage(getMExpressionString().toString(), mTempResult, false, "");
-//        }
+        mButtonsStack.push(resultTextView.getText().toString().replace(",", ""));
+
+        displayTranslation(sendLogMessage);
+        if(sendLogMessage) {
+            playSound(executeButtonSoundID);
+            resultTextView.startAnimation(out_anim);
+        }else{
+            resultTextView.setText(mTempResult);
+
+        }
         return false;
     }
 
@@ -1669,12 +1670,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
-    public void displayTranslation() {
+    public void displayTranslation(boolean animate) {
 
 
         mTranslationBox.setTypeface(mTranslationBoxLetterFont);
         printResultWithTranslation(mDecimal_fraction, getTranslationLanguage());
-        mTranslationBox.startAnimation(mBlink);
+        if(animate) {
+            mTranslationBox.startAnimation(mBlink);
+        }
     }
 
 
@@ -1955,6 +1958,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             public void onAnimationEnd(Animation animation) {
                 resultTextView.setText(mTempResult);
                 resultTextView.startAnimation(in_anim);
+                Runnable runnable = new Runnable() {
+                    public void run() {
+                        sendLogMessage(getMExpressionString().toString(), mTempResult, false, "");
+                    }
+                };
+                Thread mythread = new Thread(runnable);
+                mythread.start();
 
             }
 
@@ -2244,7 +2254,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                         .setDuration(1000);
             }
 
-//                sendLogMessage(getMExpressionString().toString(), mTempResult, true, String.valueOf(mTagHimself.getText()));
             break;
 
             case R.id.add_label: {
@@ -2341,18 +2350,18 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             mDrawer.openDrawer();
                 break;
 
-         case R.id.buttonPremium:
-             Log.d(TAG, "Upgrade button clicked; launching purchase flow for upgrade.");
-//             setWaitScreen(true);
-
-        /* TODO: for security, generate your payload here for verification. See the comments on
-         *        verifyDeveloperPayload() for more info. Since this is a SAMPLE, we just use
-         *        an empty string, but on a production app you should carefully generate this. */
-             String payload = "";
-
-             mHelper.launchPurchaseFlow(this, SKU_PREMIUM, RC_REQUEST,
-                     mPurchaseFinishedListener, payload);
-                break;
+//         case R.id.buttonPremium:
+//             Log.d(TAG, "Upgrade button clicked; launching purchase flow for upgrade.");
+////             setWaitScreen(true);
+//
+//        /* TODO: for security, generate your payload here for verification. See the comments on
+//         *        verifyDeveloperPayload() for more info. Since this is a SAMPLE, we just use
+//         *        an empty string, but on a production app you should carefully generate this. */
+//             String payload = "";
+//
+//             mHelper.launchPurchaseFlow(this, SKU_PREMIUM, RC_REQUEST,
+//                     mPurchaseFinishedListener, payload);
+//                break;
 
 
 

@@ -8,33 +8,30 @@
     android:id="@+id/activity_body"
     >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:layout_weight="30"
-        android:id="@+id/MotherTop">
+
 
 
 
 
         <LinearLayout
-            android:id="@+id/Top"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="30"
+            android:id="@+id/MotherTop"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
             android:layout_marginTop="10dp"
-            android:layout_weight="1"
             android:background="@drawable/display_normal"
-            android:orientation="vertical" >
+            >
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="10"
                 android:orientation="horizontal"
+
                 >
 
 
@@ -43,22 +40,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
                     android:background="@android:color/transparent"
                     android:textColor="@android:color/black"
-                    android:paddingLeft="@dimen/padding_small"
+                    android:paddingRight="@dimen/padding_small"
                     android:text="RAD"
                     />
 
                 <TextView
                     android:id="@+id/m_vaiable_textview"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@id/scientific_mode_textview"
+                    android:layout_toLeftOf="@id/scientific_mode_textview"
                     android:background="@android:color/transparent"
                     android:textColor="@android:color/black"
-                    android:paddingLeft="@dimen/padding_small"
+                    android:paddingRight="@dimen/padding_small"
                     android:text=" M = 0"
                     android:inputType="textMultiLine|textNoSuggestions"
 
@@ -67,7 +64,7 @@
 
 
 
-            </LinearLayout>
+            </RelativeLayout>
 
 
 
@@ -187,7 +184,6 @@
 
 
 
-        </LinearLayout>
 
     </LinearLayout>
 
@@ -220,7 +216,7 @@
                 android:text="@string/hamburger_menu"
                 android:textColor="#DADFE1"
                 android:tag="p"
-                android:textSize="18sp"
+                android:textSize="@dimen/retro_scientific_text_size"
 
                 />
 
@@ -234,7 +230,7 @@
                 android:text="@string/theme"
                 android:textColor="#DADFE1"
                 android:tag="q"
-                android:textSize="18sp"
+                android:textSize="@dimen/retro_scientific_text_size"
                 />
 
 
@@ -248,7 +244,7 @@
                 android:text="@string/volume_high"
                 android:textColor="#DADFE1"
                 android:tag="@string/volume_high"
-                android:textSize="18sp"
+                android:textSize="@dimen/retro_scientific_text_size"
 
                 />
 
@@ -265,7 +261,7 @@
                 android:tag="feedback"
                 android:gravity="center"
                 android:textColor="#DADFE1"
-                android:textSize="18sp"
+                android:textSize="@dimen/retro_scientific_text_size"
                 />
 
 

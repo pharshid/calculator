@@ -262,7 +262,7 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
                         ((MainActivity) mContext).refreshFonts();
                         if (((MainActivity) mContext).mDecimal_fraction != null) {
                             if (((MainActivity) mContext).mJustPressedExecuteButton) {
-                                ((MainActivity) mContext).displayTranslation();
+                                ((MainActivity) mContext).displayTranslation(true);
                             } else {
                                 ((MainActivity) mContext).mTranslationBox.startAnimation(((MainActivity) mContext).mBlink);
                             }

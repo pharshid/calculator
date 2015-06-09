@@ -31,24 +31,19 @@ import android.widget.ToggleButton;
  *
  */
 public class DialpadFragment extends android.support.v4.app.Fragment implements OnClickListener,  CompoundButton.OnCheckedChangeListener {
-    private static final int DIALPAD_FONT_ROBOTO_THIN = 0;
-    private static final int DIALPAD_FONT_ROBOTO_LIGHT = 1;
-    private static final int DIALPAD_FONT_ROBOTO_REGULAR = 2;
+
     private boolean arcIsOn = false;
           String TAG = "recreate";
     View mView;
     private Typeface defaultFont;
 
     private BroadcastReceiver mThemeChangedReciever;
-    private BroadcastReceiver mClearButtonChangedReceiver;
-    private BroadcastReceiver mDialPadTypeFaceChangedReceiver;
 
 
     private int[] idList;
     boolean mIsRetroOn = false ;
-    private BroadcastReceiver mDialPadTypeFaceColorChangedReceiver;
     private Typeface scientificFont;
-
+     static float scientific_toggle_textSize = 18f;
 
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container, Bundle savedInstanceState) {
@@ -68,10 +63,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         defaultFont = ((MainActivity)getActivity()).getFontForComponent("DIALPAD_FONT");
         scientificFont = ((MainActivity)getActivity()).getFontForComponent("SCIENTIFIC_FONT");
 
-        //If no retro theme is selected apply flat theme colors to keys
-        if(!((MainActivity) getActivity()).isRetroThemeSelected()){
-            redrawKeypad();
-        }
+
 
 
 
@@ -173,7 +165,11 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         if(mView.findViewById(R.id.switch_deg_rad) != null) {
             ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setChecked(((MainActivity) getActivity()).getAngleMode());
             ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setOnCheckedChangeListener(this);
-            ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setOnClickListener(this);
+           (mView.findViewById(R.id.switch_deg_rad)).setOnClickListener(this);
+            ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setTextSize(scientific_toggle_textSize);
+            ((ToggleButton) (mView.findViewById(R.id.buttonInverse))).setTextSize(scientific_toggle_textSize);
+            ((ToggleButton) (mView.findViewById(R.id.buttonARC))).setTextSize(scientific_toggle_textSize);
+
         }
 
         mThemeChangedReciever = new BroadcastReceiver() {
@@ -375,6 +371,10 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
     public void onStart() {
         super.onStart();
 
+        //If no retro theme is selected apply flat theme colors to keys
+        if(!((MainActivity) getActivity()).isRetroThemeSelected()){
+            redrawKeypad();
+        }
         Log.d(TAG, "Fragment onStart");
 
 
@@ -412,7 +412,6 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
             case R.id.switch_deg_rad:
 
                 boolean on = ((ToggleButton) view).isChecked();
-
                 if (on) {
                     //result in Degree
                     ((MainActivity)getActivity()).  setAngleMode(true);

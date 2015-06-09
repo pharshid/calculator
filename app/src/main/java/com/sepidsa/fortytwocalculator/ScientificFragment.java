@@ -33,6 +33,7 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
     private boolean inversed = false;
     private boolean arcIsOn = false;
     private boolean mIsRetroOn = false;
+    private float scientific_toggle_textSize = 18f;
 
 
     public static final ScientificFragment newInstance(String message)
@@ -50,6 +51,10 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
         mIsRetroOn = ((MainActivity)getActivity()).isRetroThemeSelected();
         if(mIsRetroOn) {
             mView = inflater.inflate(R.layout.fragment_scientific_retro, container, false);
+            ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setTextSize(scientific_toggle_textSize);
+            ((ToggleButton) (mView.findViewById(R.id.buttonInverse))).setTextSize(scientific_toggle_textSize);
+            ((ToggleButton) (mView.findViewById(R.id.buttonARC))).setTextSize(scientific_toggle_textSize);
+
         }else {
             mView = inflater.inflate(R.layout.fragment_scientific_flat, container, false);
 

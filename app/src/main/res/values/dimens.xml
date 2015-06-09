@@ -42,6 +42,9 @@
     <dimen name="log_detail_txt_size">30sp</dimen>
     <dimen name="result_text_size">65sp</dimen>
     <dimen name="digital_lcd_text_size">70sp</dimen>
+    <dimen
+        name="retro_scientific_text_size">18sp</dimen>
+
 
 
 
