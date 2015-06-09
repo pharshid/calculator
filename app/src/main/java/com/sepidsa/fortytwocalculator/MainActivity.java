@@ -1571,9 +1571,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         playSound(executeButtonSoundID);
         resultTextView.startAnimation(out_anim);
         displayTranslation();
-        if(sendLogMessage) {
-            sendLogMessage(getMExpressionString().toString(), mTempResult, false, "");
-        }
+//        if(sendLogMessage) {
+//            sendLogMessage(getMExpressionString().toString(), mTempResult, false, "");
+//        }
         return false;
     }
 
