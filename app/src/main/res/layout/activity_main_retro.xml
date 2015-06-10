@@ -8,11 +8,20 @@
     android:id="@+id/activity_body"
     >
 
-    <LinearLayout
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
         android:layout_weight="30"
+        >
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:id="@+id/MotherTop">
 
 
@@ -30,13 +39,17 @@
             android:background="@drawable/display_normal"
             android:orientation="vertical" >
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="10"
-                android:orientation="horizontal"
-                >
 
+
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="30"
+
+                >
 
                 <TextView
                     android:id="@+id/scientific_mode_textview"
@@ -44,10 +57,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
-                    android:background="@android:color/transparent"
                     android:textColor="@android:color/black"
-                    android:paddingLeft="@dimen/padding_small"
+                    android:paddingLeft="@dimen/padding_large"
                     android:text="RAD"
+                    android:textSize="10sp"
                     />
 
                 <TextView
@@ -61,32 +74,16 @@
                     android:paddingLeft="@dimen/padding_small"
                     android:text=" M = 0"
                     android:inputType="textMultiLine|textNoSuggestions"
+                    android:textSize="10sp"
 
                     />
-
-
-
-
-            </LinearLayout>
-
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="35"
-
-                >
-
 
             <com.sepidsa.fortytwocalculator.AutoResizeTextView
                 android:id="@+id/translationEditText"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:textColor="@android:color/black"
-                android:paddingTop="4dp"
                 android:gravity="right|center_vertical"
-                android:ellipsize="marquee"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:textSize="30sp"
                 android:paddingRight="@dimen/padding_large"
@@ -102,13 +99,12 @@
                     android:layout_height="42dp"
                     android:textColor="@android:color/black"
                     android:layout_centerVertical="true"
-                    android:layout_above="@id/btn_add_star"
                     android:layout_alignParentLeft="true"
                     android:background="@android:color/transparent"
                     android:text="@string/add_label"
                     android:textSize="19sp"
                     android:visibility="gone"
-
+                    android:layout_below="@id/scientific_mode_textview"
                     />
 
                 <Button
@@ -123,11 +119,13 @@
                     android:visibility="gone"
                     android:text="@string/star_icon"
                     android:textSize="21sp"
+                    android:layout_below="@id/add_label"
+
                     />
 
             </RelativeLayout>
 
-            <View android:layout_height="2dp"
+            <View android:layout_height="1dp"
                 android:layout_width="match_parent"
 
                 android:background="?android:attr/listDivider"
@@ -144,10 +142,10 @@
 
                 <com.sepidsa.fortytwocalculator.AutoResizeTextView
                     android:id="@+id/result"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textIsSelectable="true"
-                    android:background="@null"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:textIsSelectable="false"
+                    android:background="@android:color/transparent"
                     android:focusable="false"
                     style="@style/text_switcher"
                     android:textSize="@dimen/digital_lcd_text_size"
@@ -156,8 +154,8 @@
                     android:paddingRight="@dimen/padding_large"
                     android:textColor="@android:color/black"
                     android:scrollbars = "vertical"
-                    android:singleLine="false"
                     android:layout_toRightOf="@id/currency_list"
+                    android:layout_marginBottom="@dimen/padding_small"
                     />
 
                 <Button
@@ -179,7 +177,6 @@
                     android:layout_height="42dp"
                     android:textColor="@android:color/black"
                     android:background="@android:color/transparent"
-                    android:layout_alignTop="@+id/currency_list"
                     android:layout_centerVertical="true"
                     />
 
@@ -192,6 +189,7 @@
         </LinearLayout>
 
     </LinearLayout>
+    </RelativeLayout>
 
 
     <LinearLayout
@@ -282,7 +280,7 @@
                 android:text="@string/hamburger_menu"
                 android:textColor="#fff"
                 android:tag="p"
-                android:gravity="center_horizontal"
+                android:gravity="center"
 
                 />
 
