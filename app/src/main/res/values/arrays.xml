@@ -2,45 +2,72 @@
 <resources>
     <string-array name="default_color_choice_values" translatable="false">
 
-        <item>#00E676</item>
         <item>#1abc9c</item>
         <item>#009688</item>
+        <item>#004D40</item>
         <item>#336e7b</item>
         <item>#00bcd4</item>
-        <item>#0099CC</item>
+        <item>#039BE5</item>
+        <item>#000000</item>
         <item>#607D8B</item>
         <item>#666B5B</item>
-        <item>#E0D570</item>
-        <item>#827717</item>
+        <item>#757575</item>
+        <item>#01579B</item>
         <item>#795548</item>
-        <item>#000000</item>
-        <item>#BA68C8</item>
         <item>#ff6e40</item>
-        <item>#ff4444</item>
-        <item>#FF4081</item>
+        <item>#F06292</item>
+        <item>#D81B60</item>
+        <item>#BA68C8</item>
+        <item>#C51162</item>
+        <item>#880E4F</item>
+
     </string-array>
 
     <string-array name="keypad_color_choice_values" translatable="false">
 
         <item>#ffffff</item>
         <item>#1c1c1c</item>
+        <item>#A5D6A7</item>
+        <item>#DCE775</item>
+        <item>#B2FF59</item>
+        <item>#B9F6CA</item>
+        <item>#FFF59D</item>
+        <item>#FFCC80</item>
+        <item>#FFAB91</item>
+        <item>#B0BEC5</item>
+        <item>#BDBDBD</item>
+        <item>#FFCDD2</item>
+        <item>#FF5252</item>
+        <item>#FF80AB</item>
+        <item>#E1BEE7</item>
+        <item>#B39DDB</item>
+        <item>#9FA8DA</item>
+        <item>#80DEEA</item>
+    </string-array>
+
+    <string-array name="dialpad_font_color_choice_values" translatable="false">
+
+        <item>#9E9E9E</item>
+        <item>#E0E0E0</item>
+        <item>#388E3C</item>
+        <item>#AEEA00</item>
+        <item>#B2FF59</item>
+        <item>#009688</item>
+        <item>#FFF59D</item>
+        <item>#FFCC80</item>
+        <item>#FFAB91</item>
+        <item>#B0BEC5</item>
+        <item>#BDBDBD</item>
+        <item>#FFCDD2</item>
+        <item>#FBE9E7</item>
         <item>#FCE4EC</item>
-        <item>#F8BBD0</item>
         <item>#E1BEE7</item>
         <item>#F3E5F5</item>
-        <item>#E8EAF6</item>
-        <item>#90CAF9</item>
-        <item>#ECEFF1</item>
-        <item>#80DEEA</item>
-        <item>#FFFF00</item>
-        <item>#E0F2F1</item>
-        <item>#F9FBE7</item>
-        <item>#E6EE9C</item>
-        <item>#FFCC80</item>
-        <item>#F5F5F5</item>
-        <item>#FF8A65</item>
-        <item>#FFCCBC</item>
+        <item>#3F51B5</item>
+        <item>#00838F</item>
     </string-array>
+
+
  <string-array name="help_sub_topics" translatable="false">
 
         <item>این ماشین حساب به نحوی طراحی شده که به فشردن دکمه مساوی به هیچ وجه نیازی نباشه. اما برای بهتر خونده شدن نتیجه می تونید دکمه مساوی رو بزنید تا پاسخ رو به یکی از چهار زبان فارسی انگلیسی عربی و فرانسه ببینید.از موارد پرکاربرد این قابلیت هنگام پرکردن فیش بانکی هست </item>
