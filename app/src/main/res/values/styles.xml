@@ -64,11 +64,13 @@
 
 
     <style name="CustomButton.RETRO.grey.scientific" parent="CustomButton.RETRO.grey">
+        <item name="android:textSize">@dimen/btn_scientific_text_size</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
 
     </style> <style name="CustomButton.RETRO.black.scientific" parent="CustomButton.RETRO.black">
-        <item name="android:layout_width">0dp</item>
+    <item name="android:textSize">@dimen/btn_scientific_text_size</item>
+    <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
     </style>
 

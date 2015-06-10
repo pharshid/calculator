@@ -700,7 +700,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             }
 
             this.doubleBackToExitPressedOnce = true;
-            Toast.makeText(this, "یه بار دیگه لطفا", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"دوباره لطفا", Toast.LENGTH_SHORT).show();
 
             mHandler = new Handler();
             mHandler.postDelayed(mRunnable, 2000);

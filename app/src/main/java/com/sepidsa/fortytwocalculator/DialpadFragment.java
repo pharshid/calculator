@@ -589,7 +589,6 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
             if(mIsRetroOn){
                 ((Button) mView.findViewById(R.id.buttonClear)).setText(getResources().getString(R.string.backSpace_retro));
             }else{
-                ((Button) mView.findViewById(R.id.buttonClear)).setText(getResources().getString(R.string.backSpace_retro));
 
                 ((Button) mView.findViewById(R.id.buttonClear)).setText(getResources().getString(R.string.backSpace));
 

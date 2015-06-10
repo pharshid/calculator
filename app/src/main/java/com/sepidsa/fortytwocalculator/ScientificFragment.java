@@ -69,7 +69,9 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
                 if( v instanceof Button){
 
                     ((Button) v).setTypeface(defaultFont);
-                    ((Button) v).setTextColor(((MainActivity) getActivity()).getDialpadFontColor());
+                    if(!mIsRetroOn) {
+                        ((Button) v).setTextColor(((MainActivity) getActivity()).getDialpadFontColor());
+                    }
                 }
             }
         }
@@ -99,8 +101,10 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
                         }
 
                     case "changeKeypadFontColor":
+                        if(!mIsRetroOn) {
 
-                        setTextColorState(idList, getNonAccentColorStateList());
+                            setTextColorState(idList, getNonAccentColorStateList());
+                        }
                         break;
                 }
             }
