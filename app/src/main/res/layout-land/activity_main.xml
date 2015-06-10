@@ -78,7 +78,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
                 android:background="@android:color/transparent"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:text="@string/star_icon"
                 android:textSize="21sp"
                 />
@@ -91,7 +91,7 @@
                 android:layout_toRightOf="@id/btn_add_star"
                 android:layout_alignParentBottom="true"
                 android:background="@android:color/transparent"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:text="@string/add_label"
                 android:textSize="19sp"
 

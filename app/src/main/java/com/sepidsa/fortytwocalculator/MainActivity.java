@@ -277,7 +277,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mFavoritesList = (Button)findViewById(R.id.favorites_list);
         mAddStars = (Button)findViewById(R.id.btn_add_star);
         mAddLabel = (Button)findViewById(R.id.add_label);
-        mCurrencyList =  (Button)findViewById(R.id.add_label);
+        mCurrencyList =  (Button)findViewById(R.id.currency_list);
         mFavoritesList.setOnClickListener(this);
         mAddStars.setOnClickListener(this);
         mAddLabel.setOnClickListener(this);
@@ -635,6 +635,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
         ( (Button)findViewById(R.id.buttonSettings)).setTypeface(mFlatIcon);
+        ( (Button)findViewById(R.id.buttonSettings)).setTextColor(getAccentColorCode());
         ( (Button)findViewById(R.id.buttonSettings)).setTextColor(Color.parseColor("#9E9E9E"));
         ( findViewById(R.id.buttonSettings)).setOnClickListener(this);
 

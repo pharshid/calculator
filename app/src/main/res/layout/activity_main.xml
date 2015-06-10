@@ -145,7 +145,6 @@
                 android:layout_weight="11"
                 android:background="@android:color/transparent"
                 android:layout_centerVertical="true"
-                android:visibility="visible"
                 android:layout_gravity="center"
                 android:gravity="center"
 
