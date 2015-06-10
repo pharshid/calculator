@@ -812,7 +812,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public int getAccentColorCode(){
         //TODO set a cool default theme color
         SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("THEME", MODE_PRIVATE);
-        return appPreferences.getInt("ACCENT_COLOR_CODE", Color.parseColor("#1abc9c"));
+        return appPreferences.getInt("ACCENT_COLOR_CODE", Color.parseColor("#009688"));
     }
 
     public void showAppTour(){
@@ -929,17 +929,33 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         redrawKeypadBackground();
         sendChangeKeypadFontColorIntent();
     }
-    public int getDialpadFontColor() {
-        if (getKeypadBackgroundColorCode() != Color.WHITE){
-//            return  Color.DKGRAY;
-            return  Color.parseColor("#9E9E9E");
-        }else {
-            return  Color.parseColor("#a9a9a9");
+//    public int getDialpadFontColor() {
+//        if (getKeypadBackgroundColorCode() != Color.WHITE){
+////            return  Color.DKGRAY;
 //            return  Color.parseColor("#9E9E9E");
+//        }else {
+//            return  Color.parseColor("#a9a9a9");
+////            return  Color.parseColor("#9E9E9E");
+//
+////            return  Color.LTGRAY;
+////            return  Color.parseColor("#757575");
+//        }
+//    }
 
-//            return  Color.LTGRAY;
-//            return  Color.parseColor("#757575");
+    int indexOf(int[] parent,int child){
+
+        for(int index=0; index <parent.length;index++){
+            if(parent[index] == child) {
+                return index;
+            }
         }
+        return 0;
+    }
+
+    public int getDialpadFontColor() {
+        String[] color_array = this.getResources().getStringArray(R.array.dialpad_font_color_choice_values);
+        int indexOfCurrentBackgroundColor = indexOf(Utils.ColorUtils.colorChoiceForKeypad(getApplicationContext()), getKeypadBackgroundColorCode());
+        return  Color.parseColor(color_array[indexOfCurrentBackgroundColor]);
     }
 
     private void redrawKeypadBackground() {

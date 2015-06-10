@@ -75,7 +75,7 @@ public class ColorPickerActivity extends FragmentActivity implements ColorPicker
         mClassicthemeSwitch.setChecked(isRetroThemeSelected());
 
         mACcentPallete = (ColorPickerPalette)findViewById(R.id.color_picker_accent);
-        mACcentPallete.init(16, 6, this);
+        mACcentPallete.init(18, 6, this);
         mACcentPallete.setSelected(true);
 
 
@@ -105,16 +105,9 @@ public class ColorPickerActivity extends FragmentActivity implements ColorPicker
     }
 
     public int getDialpadFontColor() {
-        if (getKeypadBackgroundColorCode() != Color.WHITE){
-//            return  Color.DKGRAY;
-            return  Color.parseColor("#9E9E9E");
-        }else {
-            return  Color.parseColor("#a9a9a9");
-//            return  Color.parseColor("#9E9E9E");
-
-//            return  Color.LTGRAY;
-//            return  Color.parseColor("#757575");
-        }
+        String[] color_array = this.getResources().getStringArray(R.array.dialpad_font_color_choice_values);
+        int indexOfCurrentBackgroundColor = indexOf(Utils.ColorUtils.colorChoiceForKeypad(getApplicationContext()), getKeypadBackgroundColorCode());
+        return  Color.parseColor(color_array[indexOfCurrentBackgroundColor]);
     }
 
     @Override
@@ -135,12 +128,14 @@ public class ColorPickerActivity extends FragmentActivity implements ColorPicker
     }
 
 
-    boolean arrayContains(int[] parent,int child){
+    int arrayContains(int[] parent,int child){
 
         for(int index:parent){
-            if(index == child){return true;}
+            if(index == child){
+                return index;
+            }
         }
-        return false;
+        return -1;
     }
 
     int indexOf(int[] parent,int child){
@@ -158,16 +153,22 @@ public class ColorPickerActivity extends FragmentActivity implements ColorPicker
 
         boolean selectedAccentColor = true;
         int [] temp = Utils.ColorUtils.colorChoice(getApplicationContext());
-        selectedAccentColor =  arrayContains(temp, color);
+        if(arrayContains(temp, color)!= -1){
+            selectedAccentColor = true;
+        }else {
+            selectedAccentColor = false;
+        }
         if(selectedAccentColor){
             saveAccentColorCode(color);
             mAccentLayout.setBackgroundColor(getAccentColorCode());
             mACcentPallete.drawPalette(Utils.ColorUtils.colorChoice(getApplicationContext()), color, null);
         }else{
-            if(getPremiumPreference()) {
+            if(!getPremiumPreference()) {
                 saveKeypadBackgroundColorCode(color);
                 mKeypadLayout.setBackgroundColor(getKeypadBackgroundColorCode());
                 mKeypadPallete.drawPalette(Utils.ColorUtils.colorChoiceForKeypad(getApplicationContext()), color, null);
+                TextView fontChaange = (TextView) findViewById(R.id.textView_keypad);
+                fontChaange.setTextColor(getDialpadFontColor());
             }else {
                 displayUpgradeToPremium(0);
             }
@@ -194,7 +195,7 @@ public class ColorPickerActivity extends FragmentActivity implements ColorPicker
     public int getAccentColorCode(){
         //TODO set a cool default theme color
         SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("THEME", MODE_PRIVATE);
-        return appPreferences.getInt("ACCENT_COLOR_CODE", Color.parseColor("#1abc9c"));
+        return appPreferences.getInt("ACCENT_COLOR_CODE", Color.parseColor("#009688"));
     }
 
     public int getKeypadBackgroundColorCode(){
