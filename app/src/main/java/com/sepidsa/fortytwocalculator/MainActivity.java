@@ -773,7 +773,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mRobotoRegular = Typeface.createFromAsset(getApplicationContext().getAssets(), "roboto_regular.ttf");
         mRobotoThin = Typeface.createFromAsset(getApplicationContext().getAssets(), "roboto_thin.ttf");
 
-        mMajalla = Typeface.createFromAsset(getApplicationContext().getAssets(), "majalla.ttf");
+        mMajalla = Typeface.createFromAsset(getApplicationContext().getAssets(), "yekan.ttf");
         mFlatIcon = Typeface.createFromAsset(getApplicationContext().getAssets(), "flaticon.ttf");
         mMitra = Typeface.createFromAsset(getApplicationContext().getAssets(), "mitra.ttf");
         mPhalls =  Typeface.createFromAsset(getApplicationContext().getAssets(), "yekan.ttf");
@@ -1728,6 +1728,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
+    public  int getClearSoundID(){
+        return clearAllButtonSoundID;
+    }
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     protected SoundPool createNewSoundPool(){
         AudioAttributes attributes = new AudioAttributes.Builder()

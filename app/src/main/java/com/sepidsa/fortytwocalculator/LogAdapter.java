@@ -190,6 +190,9 @@ public class LogAdapter extends CursorAdapter {
         public void onClick(View view) {
             final View parent = findParentRecursively(view);
             if (parent != null) {
+
+                ((MainActivity)mContext).playSound(((MainActivity)mContext).getClearSoundID());
+
                 ViewHolder viewHolder = (ViewHolder) parent.getTag();
                 final int position = viewHolder.position;
                 String selection = LogContract.LogEntry._ID + "=?";
@@ -202,6 +205,9 @@ public class LogAdapter extends CursorAdapter {
                         selectionArgs
                 );
             }
+
+
+
         }
     };
 

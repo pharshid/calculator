@@ -39,7 +39,7 @@ public class HelpExpandableAdapter extends BaseExpandableListAdapter {
         TextView textView = null;
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.help_item, null);
+            convertView = inflater.inflate(R.layout.list_item_help_child, null);
         }
 
         textView = (TextView) convertView.findViewById(R.id.textView1);
@@ -62,7 +62,7 @@ public class HelpExpandableAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.help_item_header, null);
+            convertView = inflater.inflate(R.layout.list_item_help_group, null);
         }
 
         ((CheckedTextView) convertView).setText(parentItems.get(groupPosition));

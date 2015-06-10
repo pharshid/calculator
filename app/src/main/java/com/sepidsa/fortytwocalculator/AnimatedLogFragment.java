@@ -159,6 +159,7 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
                                     if (checkBox.isChecked()) {
                                         getActivity().getContentResolver().delete(LogContract.LogEntry.CONTENT_URI, null, null);
 
+
                                     } else {
                                         getActivity().getContentResolver().delete(
                                                 LogContract.LogEntry.CONTENT_URI,
@@ -166,6 +167,7 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
                                                 new String[]{"1"}
                                         );
                                     }
+                                    ((MainActivity)getActivity()).playSound(((MainActivity)getActivity()).getClearSoundID());
 
                                 }
                             })

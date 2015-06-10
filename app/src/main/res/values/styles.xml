@@ -71,9 +71,7 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
     </style>
- <style name="CustomButton.RETRO.plus" parent="CustomButton.RETRO">
-        <item name="android:background">@drawable/selector_for_btn_plus</item>
-    </style>
+
  <style name="CustomButton.RETRO.equally" parent="CustomButton.RETRO">
         <item name="android:background">@drawable/selector_for_btn_equally</item>
     </style>

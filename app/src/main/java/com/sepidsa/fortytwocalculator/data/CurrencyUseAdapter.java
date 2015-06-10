@@ -1,20 +1,16 @@
-package com.sepidsa.fortytwocalculator;
+package com.sepidsa.fortytwocalculator.data;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.sepidsa.fortytwocalculator.data.CurrencyContract;
+import com.sepidsa.fortytwocalculator.R;
 
-import java.util.Dictionary;
 import java.util.HashMap;
 
 /**
@@ -102,14 +98,14 @@ public class CurrencyUseAdapter extends CursorAdapter {
     public static class ViewHolder {
         public final TextView nameView;
         public final TextView numberView;
-        public final TextView flagView;
+//        public final TextView flagView;
         public int position;
 
 
         public ViewHolder(View view) {
             nameView = (TextView) view.findViewById(R.id.currency_translation);
             numberView = (TextView) view.findViewById(R.id.currency_value);
-            flagView = (TextView) view.findViewById(R.id.currency_flag);
+//            flagView = (TextView) view.findViewById(R.id.currency_flag);
         }
     }
 

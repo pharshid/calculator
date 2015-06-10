@@ -45,7 +45,6 @@
                 android:layout_height="128dp"
                 android:layout_centerHorizontal="true"
                 android:visibility="visible"
-                android:src="@drawable/percentage_icon"
                 android:id="@+id/tour_title"
                 android:text="رنگین کمانی از رنگ"
                 android:gravity="center"
