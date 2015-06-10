@@ -67,6 +67,7 @@ public class SplashScreen extends Activity {
     protected void onPause() {
         super.onPause();
         overridePendingTransition(R.anim.appear, R.anim.disappear);
+        finish();
 
     }
 }
