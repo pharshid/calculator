@@ -242,7 +242,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         Log.d(TAG_recreate, "Activity oncreate");
         super.onCreate(savedInstanceState);
 
-        TinyDB db = new TinyDB(getApplicationContext());
 
 
         // You can find it in your Bazaar console, in the Dealers section.
@@ -254,7 +253,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
 
-        mListView = db.getListString(LOG_DATA_KEY);
         setTypeFaces();
 
         if(isRetroThemeSelected()){
@@ -520,7 +518,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         outState.putCharSequence("mTranslationText", mTranslationBox.getText().toString());
         outState.putSerializable("mButtonStack", mButtonsStack);
-        outState.putSerializable("mListView", mListView);
         outState.putString("mExpressionBuffer", mExpressionBuffer.toString());
         outState.putBoolean("mJustPressedExecuteButton", mJustPressedExecuteButton);
         outState.putBoolean("mISRetroThemeOn", isRetroThemeSelected());
@@ -552,7 +549,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             mButtonsStack.addAll((Collection<String>) savedInstanceState.getSerializable("mButtonStack"));
 
             //TODO
-            mListView = savedInstanceState.getSerializable("mListView");
             mExpressionBuffer = new StringBuilder();
             String exTemp = savedInstanceState.getString("mExpressionBuffer");
 
