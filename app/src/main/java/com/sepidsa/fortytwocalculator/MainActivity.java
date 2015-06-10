@@ -636,12 +636,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         ( (Button)findViewById(R.id.buttonSettings)).setTypeface(mFlatIcon);
         ( (Button)findViewById(R.id.buttonSettings)).setTextColor(getAccentColorCode());
-        ( (Button)findViewById(R.id.buttonSettings)).setTextColor(Color.parseColor("#9E9E9E"));
+        ( (Button)findViewById(R.id.buttonSettings)).setTextColor(Color.parseColor("#BDBDBD"));
         ( findViewById(R.id.buttonSettings)).setOnClickListener(this);
 
 
         ( (Button)findViewById(R.id.buttonMute)).setTypeface(mFlatIcon);
-        ( (Button)findViewById(R.id.buttonMute)).setTextColor(Color.parseColor("#9E9E9E"));
+        ( (Button)findViewById(R.id.buttonMute)).setTextColor(Color.parseColor("#BDBDBD"));
         findViewById(R.id.buttonMute).setOnClickListener(this);
         if(getVolumeFromPreference()) {
             ((Button) findViewById(R.id.buttonMute)).setText(getResources().getText(R.string.volume_high));
@@ -650,12 +650,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
 
         ( (Button)findViewById(R.id.buttonColors)).setTypeface(mFlatIcon);
-        ( (Button)findViewById(R.id.buttonColors)).setTextColor(Color.parseColor("#9E9E9E"));
+        ( (Button)findViewById(R.id.buttonColors)).setTextColor(Color.parseColor("#BDBDBD"));
         ( findViewById(R.id.buttonColors)).setOnClickListener(this);
 
 
         ( (Button)findViewById(R.id.buttonHamburgerMenu)).setTypeface(mFlatIcon);
-        ( (Button)findViewById(R.id.buttonHamburgerMenu)).setTextColor((Color.parseColor("#9E9E9E")));
+        ( (Button)findViewById(R.id.buttonHamburgerMenu)).setTextColor((Color.parseColor("#BDBDBD")));
         ( findViewById(R.id.buttonHamburgerMenu)).setOnClickListener(this);
 
 
