@@ -68,7 +68,6 @@ public class LogAdapter extends CursorAdapter {
         viewHolder.position = cursor.getInt((cursor.getColumnIndex(LogContract.LogEntry._ID)));
 
         viewHolder.resultView.setText(result);
-        viewHolder.resultView.setTextColor(((MainActivity) context).getAccentColorCode());
         viewHolder.operationView.setText(operation);
         viewHolder.tagView.setText(tag);
         viewHolder.starredButton.setChecked(starred);
@@ -77,18 +76,24 @@ public class LogAdapter extends CursorAdapter {
 
         viewHolder.deleteButton.setOnClickListener(mDeleteButtonOnClickListener);
         viewHolder.deleteButton.setTypeface(Typeface.createFromAsset(context.getAssets(), "flaticon.ttf"));
-        viewHolder.deleteButton.setTextColor(iconColor);
         viewHolder.labelButton.setOnClickListener(mLabelButtonOnClickListener);
         viewHolder.labelButton.setTypeface(Typeface.createFromAsset(context.getAssets(), "flaticon.ttf"));
-        viewHolder.labelButton.setTextColor(iconColor);
         viewHolder.shareButton.setOnClickListener(mShareButtonOnClickListener);
         viewHolder.shareButton.setTypeface(Typeface.createFromAsset(context.getAssets(), "flaticon.ttf"));
-        viewHolder.shareButton.setTextColor(iconColor);
 
         viewHolder.useButton.setOnClickListener(mUseButtonOnClickListener);
         viewHolder.useButton.setTypeface(Typeface.createFromAsset(context.getAssets(), "flaticon.ttf"));
-        viewHolder.useButton.setTextColor(iconColor);
 
+        if(!((MainActivity) context).isRetroThemeSelected()) {
+
+            viewHolder.resultView.setTextColor(((MainActivity) context).getAccentColorCode());
+
+            viewHolder.operationView.setTextColor(iconColor);
+            viewHolder.shareButton.setTextColor(iconColor);
+            viewHolder.labelButton.setTextColor(iconColor);
+            viewHolder.deleteButton.setTextColor(iconColor);
+            viewHolder.useButton.setTextColor(iconColor);
+        }
 
 
 

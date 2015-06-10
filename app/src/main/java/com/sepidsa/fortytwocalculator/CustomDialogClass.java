@@ -16,6 +16,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class CustomDialogClass extends Dialog implements View.OnClickListener {
@@ -206,8 +207,15 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
 
             case R.id.btn_CHANGE_TRANSLATION_FONT:
 
-                Intent myIntent = new Intent(mContext, PremiumShowcasePagerActivity.class);
-                mContext.startActivity(myIntent);
+                try{
+                    Intent myIntent = new Intent(mContext, PremiumShowcasePagerActivity.class);
+                    mContext.startActivity(myIntent);
+                }
+                catch (Exception e ){
+                    Toast.makeText(mContext,"مشکل در اتصال به بازار",Toast.LENGTH_LONG);
+
+                }
+
                 dismiss();
                 break;
 

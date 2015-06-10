@@ -74,6 +74,7 @@
                         android:tag="keypad_color"
                         android:layout_below="@+id/textview_accent"
                         android:layout_centerHorizontal="true"
+                        android:layout_centerInParent="true"
 
                         />
 
@@ -119,7 +120,8 @@
                         android:focusable="false"
                         android:tag="keypad_color"
                         android:layout_below="@+id/textView_keypad"
-                        android:layout_centerHorizontal="true"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
                         />
 
 
@@ -157,7 +159,7 @@
 
         <Switch
             android:id="@+id/switch_classic_theme"
-            android:layout_width="70dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"

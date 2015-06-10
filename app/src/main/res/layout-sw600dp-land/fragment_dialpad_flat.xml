@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:drakeet="http://schemas.android.com/tools"
     android:id="@+id/LinearLayout1"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
@@ -15,11 +16,11 @@
 
 
 
+
     <LinearLayout
         android:id="@+id/SecondRow"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginBottom="3dp"
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical">
@@ -32,9 +33,10 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:tag="@string/clear"
-            android:text="@string/clear"
+            android:text= "@string/clear"
 
             android:textColor="@color/red_buttons_text_color"
+            android:background="@drawable/selector_for_btn_clear"
 
             />
 
@@ -45,10 +47,10 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
 
+
             android:layout_weight="1"
             android:text="@string/seven"
             android:tag="@string/seven"
-
             style="@style/CustomButton.TABLET"
             />
 
@@ -57,15 +59,15 @@
 
         <Button
             android:id="@+id/button4"
+
             android:layout_width="match_parent"
             android:layout_height="0dp"
 
+            style="@style/CustomButton.TABLET"
 
             android:layout_weight="1"
             android:text="@string/four"
             android:tag="@string/four"
-
-            style="@style/CustomButton.TABLET"
 
             />
 
@@ -86,11 +88,11 @@
         <Button
             android:id="@+id/buttonPoint"
             style="@style/CustomButton.TABLET"
+
             android:layout_width="match_parent"
             android:layout_height="0dp"
 
 
-            android:gravity="center_vertical|center_horizontal"
 
             android:text="@string/point"
             android:tag="@string/point"
@@ -101,6 +103,8 @@
 
 
     </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_width="0dp"
@@ -115,8 +119,20 @@
             android:layout_weight="1"
             android:text="@string/parenthesis_open"
             android:tag="@string/parenthesis_open"
-            android:textColor="#4CD964"
-            style="@style/CustomButton.TABLET" />
+            style="@style/CustomButton.TABLET"
+
+            />
+
+
+        <!-- <Button
+             android:id="@+id/button8"
+             android:layout_weight="1"
+             android:text="@string/eight"
+             android:tag="@string/eight"
+
+             style="@style/CustomButton.TABLET"
+             />
+ -->
 
 
         <Button
@@ -128,6 +144,12 @@
             />
 
 
+
+
+
+
+
+
         <Button
             android:id="@+id/button5"
             android:layout_weight="1"
@@ -135,6 +157,13 @@
             android:tag="@string/five"
             style="@style/CustomButton.TABLET"
             />
+
+
+
+
+
+
+
 
 
         <Button
@@ -172,8 +201,10 @@
             android:layout_weight="1"
             android:text="@string/parenthesis_closed"
             android:tag="@string/parenthesis_closed"
-            android:textColor="#4CD964"
-            style="@style/CustomButton.TABLET" />
+            style="@style/CustomButton.TABLET"
+
+
+            />
 
 
         <Button
@@ -182,13 +213,13 @@
             android:text="@string/nine"
             android:tag="@string/nine"
             style="@style/CustomButton.TABLET"
+
             />
 
         <Button
             android:id="@+id/button6"
             style="@style/CustomButton.TABLET"
             android:layout_weight="1"
-            android:scrollbarThumbHorizontal="@dimen/activity_horizontal_margin"
             android:text="@string/six"
             android:tag="@string/six"
             />
@@ -203,23 +234,19 @@
             />
 
 
-
-
         <Button
             android:id="@+id/buttonPercent"
             android:layout_weight="1"
-            android:text="%"
-            android:tag="%"
-            style="@style/CustomButton"
-            android:textColor="#4CD964"
-
+            android:text="@string/percentage"
+            android:tag="@string/percentage"
+            style="@style/CustomButton.TABLET"
             />
 
 
-
-
-
     </LinearLayout>
+
+
+
 
     <LinearLayout
         android:layout_width="0dp"
@@ -233,22 +260,22 @@
 
 
 
+
         <Button
             android:id="@+id/buttonDevide"
-            style="@style/CustomButton.TABLET"
             android:layout_weight="1"
             android:tag="@string/devide"
             android:text="@string/devide"
-            android:textColor="#4CD964"/>
+            style="@style/CustomButton.TABLET"
+
+            />
 
         <Button
             android:id="@+id/buttonTimes"
             style="@style/CustomButton.TABLET"
             android:layout_weight="1"
-            android:tag="@string/multiplyValue"
+            android:tag="@string/multiply"
             android:text="@string/multiply"
-            android:textColor="#4CD964"
-
             />
 
 
@@ -258,7 +285,7 @@
             android:layout_weight="1"
             android:text="@string/subtract"
             android:tag="@string/subtract"
-            android:textColor="#4CD964"/>
+            />
 
         <Button
             android:id="@+id/buttonPlus"
@@ -266,11 +293,11 @@
             android:text="@string/add"
             android:tag="@string/add"
             android:layout_weight="1"
-            android:textColor="#4CD964"/>
+            />
 
         <Button
             android:id="@+id/buttonEquals"
-            style="@style/CustomButton"
+            style="@style/CustomButton.TABLET"
             android:layout_weight="1"
             android:text="@string/equals"
             android:tag="@string/equals"
@@ -278,6 +305,11 @@
             android:background="@drawable/selector_for_btn_equal"
             />
 
+
+
+
     </LinearLayout>
+
+
 
 </LinearLayout>

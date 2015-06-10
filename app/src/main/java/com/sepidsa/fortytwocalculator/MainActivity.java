@@ -277,7 +277,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mFavoritesList = (Button)findViewById(R.id.favorites_list);
         mAddStars = (Button)findViewById(R.id.btn_add_star);
         mAddLabel = (Button)findViewById(R.id.add_label);
-        mCurrencyList =  (Button)findViewById(R.id.currency_list);
+        mCurrencyList =  (Button)findViewById(R.id.add_label);
         mFavoritesList.setOnClickListener(this);
         mAddStars.setOnClickListener(this);
         mAddLabel.setOnClickListener(this);
@@ -360,8 +360,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
     private void displayUpgradeToPremium(int i) {
-        Intent myIntent = new Intent(MainActivity.this, PremiumShowcasePagerActivity.class);
-        MainActivity.this.startActivity(myIntent);
+        try{
+            Intent myIntent = new Intent(MainActivity.this, PremiumShowcasePagerActivity.class);
+            MainActivity.this.startActivity(myIntent);
+        }
+        catch (RuntimeException e ){
+            Toast.makeText(getApplicationContext(),"مشکل در اتصال به بازار",Toast.LENGTH_LONG);
+        }
+
+
 
     }
 
@@ -626,8 +633,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private void prepareBottomIcons() {
 
+
+        ( (Button)findViewById(R.id.buttonSettings)).setTypeface(mFlatIcon);
+        ( (Button)findViewById(R.id.buttonSettings)).setTextColor(Color.parseColor("#9E9E9E"));
+        ( findViewById(R.id.buttonSettings)).setOnClickListener(this);
+
+
         ( (Button)findViewById(R.id.buttonMute)).setTypeface(mFlatIcon);
-        ( (Button)findViewById(R.id.buttonMute)).setTextColor(Color.LTGRAY);
+        ( (Button)findViewById(R.id.buttonMute)).setTextColor(Color.parseColor("#9E9E9E"));
         findViewById(R.id.buttonMute).setOnClickListener(this);
         if(getVolumeFromPreference()) {
             ((Button) findViewById(R.id.buttonMute)).setText(getResources().getText(R.string.volume_high));
@@ -635,21 +648,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             ( (Button)findViewById(R.id.buttonMute)).setText(getResources().getText(R.string.volume_off));
         }
 
-        ( (Button)findViewById(R.id.buttonSettings)).setTypeface(mFlatIcon);
-        ( (Button)findViewById(R.id.buttonSettings)).setTextColor(Color.LTGRAY);
-        ( findViewById(R.id.buttonSettings)).setOnClickListener(this);
-
-//        ( findViewById(R.id.buttonPremium)).setOnClickListener(this);
-
-
         ( (Button)findViewById(R.id.buttonColors)).setTypeface(mFlatIcon);
-        ( (Button)findViewById(R.id.buttonColors)).setTextColor(Color.LTGRAY);
+        ( (Button)findViewById(R.id.buttonColors)).setTextColor(Color.parseColor("#9E9E9E"));
         ( findViewById(R.id.buttonColors)).setOnClickListener(this);
 
 
-
         ( (Button)findViewById(R.id.buttonHamburgerMenu)).setTypeface(mFlatIcon);
-        ( (Button)findViewById(R.id.buttonHamburgerMenu)).setTextColor(Color.LTGRAY);
+        ( (Button)findViewById(R.id.buttonHamburgerMenu)).setTextColor((Color.parseColor("#9E9E9E")));
         ( findViewById(R.id.buttonHamburgerMenu)).setOnClickListener(this);
 
 
@@ -694,7 +699,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             }
 
             this.doubleBackToExitPressedOnce = true;
-            Toast.makeText(this, "جهت خروج یه بار دیگه لطفا", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "یه بار دیگه لطفا", Toast.LENGTH_SHORT).show();
 
             mHandler = new Handler();
             mHandler.postDelayed(mRunnable, 2000);
@@ -1339,12 +1344,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private boolean updateUIExecute(boolean sendLogMessage) {
 
-        if(isRetroThemeSelected()){
-            if(!getPremiumPreference()){
-                displayUpgradeToPremium(0);
-                return false;
-            }
-        }
+//        if(isRetroThemeSelected()){
+//            if(!getPremiumPreference()){
+//                displayUpgradeToPremium(0);
+//                return false;
+//            }
+//        }
         mDecimal_fraction = "";
         byte decimalIndex = (byte) mTempResult.indexOf(".");
         if(decimalIndex != -1){

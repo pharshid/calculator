@@ -200,6 +200,21 @@
                     android:orientation="vertical"
                     android:gravity="center" >
 
+
+                    <Button
+                        android:id="@+id/buttonHamburgerMenu"
+                        style="@style/CustomButton.icon_button."
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:text="@string/hamburger_menu"
+                        android:tag="p"
+                        android:textSize="18sp"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:textColor="#DADFE1"
+
+                        />
+
                     <Button
                         android:id="@+id/buttonColors"
                         android:layout_width="fill_parent"
@@ -244,18 +259,16 @@
                         android:textColor="#DADFE1"
                         />
 
-                    <Button
-                        android:id="@+id/buttonParallax"
+
+                    <ImageView
+                        android:id="@+id/buttonempty"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_weight="1"
-                        android:text="@string/help"
-                        android:textColor="#DADFE1"
-                        android:tag="p"
-                        style="@style/CustomButton.icon_button."
+                        android:tag="feedBack"
                         android:gravity="center_horizontal|center_vertical"
+                        android:background="@android:color/transparent"
                         />
-
 
 
 

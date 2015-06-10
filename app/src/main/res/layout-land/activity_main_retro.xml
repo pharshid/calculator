@@ -430,7 +430,6 @@
                 android:id="@+id/buttonMute"
                 style="@style/CustomButton.RETRO.grey.scientific"
                 android:background="@drawable/selector_for_btn_blue"
-
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"

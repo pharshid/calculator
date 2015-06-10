@@ -158,7 +158,6 @@
                 android:layout_weight="11"
                 android:background="@android:color/transparent"
                 android:layout_centerVertical="true"
-                android:visibility="visible"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textSize="27sp"
@@ -235,7 +234,7 @@
                     android:text="@string/settings"
                     android:tag="feedback"
                     android:gravity="center_horizontal"
-                    android:textColor="#DADFE1"
+                    android:textColor="#90A4AE"
 
                     />
 
@@ -250,7 +249,7 @@
                     android:text="@string/volume_high"
                     android:tag="@string/volume_high"
                     android:gravity="center_horizontal"
-                    android:textColor="#DADFE1"
+                    android:textColor="#BDBDBD"
 
 
                     />
@@ -260,7 +259,7 @@
                     style="@style/icon_button.portrait"
                     android:layout_weight="1"
                     android:text="@string/theme"
-                    android:textColor="#DADFE1"
+                    android:textColor="#E0E0E0"
                     android:tag="@string/theme"
                     android:gravity="center_horizontal"
 
@@ -273,7 +272,7 @@
                     style="@style/icon_button.portrait"
                     android:layout_weight="1"
                     android:text="@string/hamburger_menu"
-                    android:textColor="#DADFE1"
+                    android:textColor="#FF3D00"
                     android:tag="p"
                     android:gravity="center_horizontal"
 

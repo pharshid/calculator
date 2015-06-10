@@ -12,6 +12,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class ColorPickerActivity extends FragmentActivity implements ColorPickerSwatch.OnColorSelectedListener, CompoundButton.OnCheckedChangeListener, View.OnClickListener {
@@ -170,8 +171,13 @@ public class ColorPickerActivity extends FragmentActivity implements ColorPicker
                 TextView fontChaange = (TextView) findViewById(R.id.textView_keypad);
                 fontChaange.setTextColor(getDialpadFontColor());
             }else {
-                displayUpgradeToPremium(0);
-            }
+                try{
+                    displayUpgradeToPremium(0);
+                }
+                catch (Exception e ){
+                    Toast.makeText(getApplicationContext(), "مشکل در اتصال به بازار", Toast.LENGTH_LONG);
+
+                }            }
 
         }
     }

@@ -23,7 +23,10 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="15dp"
+
+        >
 
 
         <Button
@@ -112,6 +115,8 @@
         android:orientation="vertical"
         android:layout_weight="1"
         android:gravity="center"
+        android:layout_margin="15dp"
+
         >
 
         <Button
@@ -193,6 +198,8 @@
         android:orientation="vertical"
         android:layout_weight="1"
         android:gravity="center"
+        android:layout_margin="15dp"
+
         >
 
 
@@ -254,6 +261,7 @@
         android:orientation="vertical"
         android:layout_weight="1"
         android:gravity="center"
+        android:layout_margin="15dp"
 
         >
 

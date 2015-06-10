@@ -55,7 +55,6 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="false"
                 android:layout_marginTop="@dimen/padding_large"
-                android:layout_marginRight="@dimen/padding_large"
                 />
 
             <TextView
@@ -64,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/chevron"
                 android:gravity="center"
-
+                android:textColor="#9E9E9E"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignStart="@id/log_checkbox"
@@ -72,18 +71,17 @@
                 android:layout_below="@id/log_checkbox"
                 android:layout_alignParentBottom="true"
                 android:paddingBottom="@dimen/padding_small"
-                android:layout_marginRight="@dimen/padding_large"
                 android:textSize="15sp" />
 
 
             <TextView
+                android:id="@+id/result"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/result"
                 style="@style/CustomButton"
                 android:textSize="@dimen/log_title_txt_size"
                 android:paddingTop="@dimen/padding_small"
-                android:textColor="@android:color/black"
+                android:textColor="#616161"
                 android:gravity="left"
                 android:layout_toLeftOf="@id/log_checkbox"
                 android:clickable="false"
@@ -133,7 +131,9 @@
                 android:focusableInTouchMode="false"
                 android:layout_width="wrap_content"
                 style="?android:attr/borderlessButtonStyle"
-            android:text="@string/delete_item"/>
+                android:textColor="#9E9E9E"
+
+                android:text="@string/delete_item"/>
 
             <Button android:id="@+id/labelButton"
                 android:layout_height="50dip"
@@ -141,6 +141,7 @@
                 android:focusableInTouchMode="false"
                 android:layout_width="wrap_content"
                 style="?android:attr/borderlessButtonStyle"
+                android:textColor="#9E9E9E"
                 android:text="@string/add_label"/>
 
             <Button android:id="@+id/shareButton"
@@ -149,6 +150,7 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 style="?android:attr/borderlessButtonStyle"
+                android:textColor="#9E9E9E"
                 android:text="@string/share_item"/>
 
             <Button android:id="@+id/useButton"
@@ -158,6 +160,7 @@
                 android:focusableInTouchMode="false"
                 android:visibility="visible"
                 style="?android:attr/borderlessButtonStyle"
+                android:textColor="#9E9E9E"
                 android:text="@string/use_item"/>
 
         </LinearLayout>
