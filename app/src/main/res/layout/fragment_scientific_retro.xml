@@ -15,6 +15,16 @@
         android:orientation="horizontal"
         android:gravity="center">
 
+        <Button
+            android:id="@+id/buttonConstant"
+            style="@style/CustomButton.RETRO.grey.scientific"
+            android:background="@drawable/selector_for_btn_blue"
+
+            android:layout_weight="1"
+            android:text="@string/constant"
+            android:tag="@string/constant"
+            />
+
         <ToggleButton
             android:id="@+id/buttonInverse"
             style="@style/CustomButton.RETRO.grey.scientific"
@@ -31,15 +41,6 @@
             />
 
 
-        <Button
-            android:id="@+id/buttonConstant"
-            style="@style/CustomButton.RETRO.grey.scientific"
-            android:background="@drawable/selector_for_btn_blue"
-
-            android:layout_weight="1"
-            android:text="@string/constant"
-            android:tag="@string/constant"
-            />
 
         <ToggleButton
             style="@style/CustomButton.RETRO.grey.scientific"
@@ -146,34 +147,9 @@
         android:orientation="horizontal"
         android:gravity="center">
 
-        <Button
-            android:id="@+id/buttonln"
-            style="@style/CustomButton.RETRO.black.scientific"
-            android:layout_weight="1"
-            android:text="@string/ln"
-            android:tag="@string/ln_tag"
-
-            />
-
-        <Button
-            android:id="@+id/buttonlog"
-            style="@style/CustomButton.RETRO.black.scientific"
-            android:layout_weight="1"
-            android:text="@string/log"
-            android:tag="@string/log_tag"
-            />
 
 
 
-
-        <Button
-            android:id="@+id/buttonpie"
-            style="@style/CustomButton.RETRO.black.scientific"
-            android:layout_weight="1"
-            android:tag="@string/Pi"
-            android:text="@string/Pi"
-
-            />
 
 
         <Button
@@ -184,10 +160,32 @@
             android:tag="@string/e"
             />
 
+        <Button
+            style="@style/CustomButton.RETRO.black.scientific"
+            android:id="@+id/buttonfact"
 
+            android:layout_weight="1"
+            android:text="@string/factoriel"
+            android:tag="@string/factoriel"
+            />
 
+        <Button
+            android:id="@+id/buttonpie"
+            style="@style/CustomButton.RETRO.black.scientific"
+            android:layout_weight="1"
+            android:tag="@string/Pi"
+            android:text="@string/Pi"
 
+            />
 
+        <Button
+            style="@style/CustomButton.RETRO.black.scientific"
+            android:id="@+id/buttonRandom"
+
+            android:layout_weight="1"
+            android:text="@string/random"
+            android:tag="@string/random"
+            />
 
         <!--android:track="@drawable/rectangle"-->
 
@@ -238,13 +236,14 @@
             />
 
         <Button
+            android:id="@+id/buttonln"
             style="@style/CustomButton.RETRO.black.scientific"
-            android:id="@+id/buttonfact"
-
             android:layout_weight="1"
-            android:text="@string/factoriel"
-            android:tag="@string/factoriel"
+            android:text="@string/ln"
+            android:tag="@string/ln_tag"
+
             />
+
 
 
     </LinearLayout>
@@ -284,13 +283,17 @@
             />
 
         <Button
+            android:id="@+id/buttonlog"
             style="@style/CustomButton.RETRO.black.scientific"
-            android:id="@+id/buttonRandom"
-
             android:layout_weight="1"
-            android:text="@string/random"
-            android:tag="@string/random"
+            android:text="@string/log"
+            android:tag="@string/log_tag"
             />
+
+
+
+
+
 
 
     </LinearLayout>

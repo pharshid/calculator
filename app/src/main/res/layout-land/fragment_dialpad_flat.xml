@@ -149,16 +149,6 @@
 
 
 
-        <Button
-            style="@style/CustomButton.SCIENTIFIC"
-            android:id="@+id/buttonRandom"
-
-            android:layout_weight="1"
-            android:text="@string/random"
-            android:tag="@string/random"
-            />
-
-
 
 
 
@@ -194,6 +184,16 @@
             android:text="@string/e"
             android:tag="@string/e"
             />
+
+        <Button
+            style="@style/CustomButton.SCIENTIFIC"
+            android:id="@+id/buttonRandom"
+
+            android:layout_weight="1"
+            android:text="@string/random"
+            android:tag="@string/random"
+            />
+
 
 
         <Button
@@ -331,11 +331,12 @@
             />
 
         <Button
-            android:id="@+id/buttonlog"
+            android:id="@+id/buttonln"
             style="@style/CustomButton.SCIENTIFIC"
             android:layout_weight="1"
-            android:text="@string/log"
-            android:tag="@string/log_tag"
+            android:text="@string/ln"
+            android:tag="@string/ln_tag"
+
             />
 
 
@@ -442,12 +443,11 @@
 
 
         <Button
-            android:id="@+id/buttonln"
+            android:id="@+id/buttonlog"
             style="@style/CustomButton.SCIENTIFIC"
             android:layout_weight="1"
-            android:text="@string/ln"
-            android:tag="@string/ln_tag"
-
+            android:text="@string/log"
+            android:tag="@string/log_tag"
             />
 
 

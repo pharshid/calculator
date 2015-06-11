@@ -49,6 +49,7 @@
 
  <style name="CustomButton.RETRO.clear" parent="CustomButton.RETRO">
         <item name="android:background">@drawable/selector_for_btn_c</item>
+        <item name="android:textSize">@dimen/btn_clear_text_size</item>
     </style>
     <style name="CustomButton.RETRO.clear.land" parent="CustomButton.RETRO.clear">
         <item name="android:background">@drawable/selector_for_btn_c</item>

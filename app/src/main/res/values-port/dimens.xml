@@ -19,6 +19,7 @@
 
     <dimen name="scientific_button_text_size">43sp</dimen>
     <dimen name="btn_text_size">45.0sp</dimen>
+    <dimen name="btn_clear_text_size">38.0sp</dimen>
     <dimen name="result_text_size">99sp</dimen>
     <dimen name="digital_lcd_text_size">70sp</dimen>
 
@@ -33,6 +34,6 @@
     <dimen name="text_size_medium">20sp</dimen>
     <dimen name="app_icon_top_text_size">70sp</dimen>
     <dimen name="app_icon_bottom_text_size">25sp</dimen>
-    <dimen name="retro_backspace_text_size">27sp</dimen>
+    <dimen name="retro_backspace_text_size">23sp</dimen>
 
 </resources>

@@ -195,6 +195,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="@string/hamburger_menu"
                 android:textColor="#DADFE1"
                 android:tag="p"
@@ -208,6 +209,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="@string/theme"
                 android:textColor="#DADFE1"
                 android:tag="q"
@@ -225,6 +227,7 @@
                 android:textColor="#DADFE1"
                 android:tag="@string/volume_high"
                 android:textSize="18sp"
+                android:gravity="center"
 
                 />
 
@@ -239,7 +242,7 @@
                 android:layout_weight="1"
                 android:text="@string/settings"
                 android:tag="feedback"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:textColor="#DADFE1"
                 android:textSize="18sp"
                 />

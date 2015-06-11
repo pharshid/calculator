@@ -17,6 +17,8 @@
     <dimen name="margin_scroller_stack">13.0dp</dimen>
 
     <dimen name="btn_text_size">35.0sp</dimen>
+    <dimen name="btn_clear_text_size">31.0sp</dimen>
+
     <dimen name="scientific_button_text_size">35.0sp</dimen>
     <dimen name="icon_button_size">30.0sp</dimen>
 

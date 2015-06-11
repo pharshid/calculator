@@ -25,6 +25,8 @@
         <Button
             android:id="@+id/buttonConstant"
             style="@style/CustomButton.RETRO.grey.scientific"
+            android:background="@drawable/selector_for_btn_blue"
+
             android:layout_weight="1"
             android:text="@string/constant"
             android:tag="@string/constant"
@@ -34,6 +36,7 @@
         <Button
             android:id="@+id/buttonrad"
             style="@style/CustomButton.RETRO.black.scientific"
+
             android:layout_weight="1"
             android:text="@string/sqrt"
             android:tag="@string/sqrt"
@@ -150,6 +153,7 @@
             android:textOff="INV"
             style="@style/CustomButton.RETRO.grey.scientific"
             android:textAppearance="?android:attr/textAppearanceSmall"
+            android:background="@drawable/selector_for_btn_blue"
 
             />
 
@@ -157,15 +161,7 @@
 
 
 
-        <Button
-            style="@style/CustomButton.RETRO.black.scientific"
-            android:id="@+id/buttonRandom"
-            android:layout_weight="1"
-            android:text="@string/random"
-            android:tag="@string/random"
-            android:textSize="@dimen/retro_scientific_text_size"
 
-            />
 
 
         <Button
@@ -203,7 +199,15 @@
 
             />
 
+        <Button
+            style="@style/CustomButton.RETRO.black.scientific"
+            android:id="@+id/buttonRandom"
+            android:layout_weight="1"
+            android:text="@string/random"
+            android:tag="@string/random"
+            android:textSize="@dimen/retro_scientific_text_size"
 
+            />
         <Button
             android:id="@+id/openParen"
             android:layout_weight="1"
@@ -308,6 +312,7 @@
             android:tag="@string/ARC"
             style="@style/CustomButton.RETRO.grey.scientific"
             android:textAppearance="?android:attr/textAppearanceSmall"
+            android:background="@drawable/selector_for_btn_blue"
 
             />
 
@@ -345,18 +350,16 @@
 
             />
 
-
-
-
         <Button
-            android:id="@+id/buttonlog"
+            android:id="@+id/buttonln"
             style="@style/CustomButton.RETRO.black.scientific"
             android:layout_weight="1"
-            android:text="@string/log"
-            android:tag="@string/log_tag"
+            android:text="@string/ln"
+            android:tag="@string/ln_tag"
             android:textSize="@dimen/retro_scientific_text_size"
-
             />
+
+
 
 
         <Button
@@ -431,6 +434,8 @@
             android:checked="true"
             style="@style/CustomButton.RETRO.grey.scientific"
             android:textAppearance="?android:attr/textAppearanceSmall"
+            android:background="@drawable/selector_for_btn_blue"
+
             />
 
 
@@ -466,16 +471,18 @@
             />
 
 
+
         <Button
-            android:id="@+id/buttonln"
+            android:id="@+id/buttonlog"
             style="@style/CustomButton.RETRO.black.scientific"
             android:layout_weight="1"
-            android:text="@string/ln"
-            android:tag="@string/ln_tag"
+            android:text="@string/log"
+            android:tag="@string/log_tag"
             android:textSize="@dimen/retro_scientific_text_size"
 
-
             />
+
+
         <Button
             android:id="@+id/buttonPercent"
             android:layout_weight="1"

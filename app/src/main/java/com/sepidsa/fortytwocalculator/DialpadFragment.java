@@ -95,6 +95,29 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
 
         }
+
+
+//        if(((MainActivity)getActivity()).stackSize() <= 1){
+//            setClearButtonText(getResources().getString(R.string.clear));
+//        }else {
+//            setClearButtonText(getResources().getString(R.string.backSpace));
+//
+//        }
+
+        if(mView.findViewById(R.id.switch_deg_rad) != null) {
+            ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setChecked(((MainActivity) getActivity()).getAngleMode());
+            ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setOnCheckedChangeListener(this);
+           (mView.findViewById(R.id.switch_deg_rad)).setOnClickListener(this);
+            ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setTextSize(scientific_toggle_textSize);
+            ((ToggleButton) (mView.findViewById(R.id.buttonInverse))).setTextSize(scientific_toggle_textSize);
+            ((ToggleButton) (mView.findViewById(R.id.buttonARC))).setTextSize(scientific_toggle_textSize);
+
+        }
+        if(!mIsRetroOn){
+            redrawKeypadInFlatTheme();
+        }
+
+
         (mView.findViewById(R.id.buttonClear)).setOnLongClickListener(new View.OnLongClickListener() {
 
             @Override
@@ -154,23 +177,6 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
 
 
-//        if(((MainActivity)getActivity()).stackSize() <= 1){
-//            setClearButtonText(getResources().getString(R.string.clear));
-//        }else {
-//            setClearButtonText(getResources().getString(R.string.backSpace));
-//
-//        }
-
-        if(mView.findViewById(R.id.switch_deg_rad) != null) {
-            ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setChecked(((MainActivity) getActivity()).getAngleMode());
-            ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setOnCheckedChangeListener(this);
-           (mView.findViewById(R.id.switch_deg_rad)).setOnClickListener(this);
-            ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setTextSize(scientific_toggle_textSize);
-            ((ToggleButton) (mView.findViewById(R.id.buttonInverse))).setTextSize(scientific_toggle_textSize);
-            ((ToggleButton) (mView.findViewById(R.id.buttonARC))).setTextSize(scientific_toggle_textSize);
-
-        }
-
         mThemeChangedReciever = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -181,7 +187,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
                     switch (message) {
                         case "changeAccentColor":
-                            redrawKeypad();
+                            redrawKeypadInFlatTheme();
                             break;
 
                         case "changeKeypadFontColor":
@@ -244,47 +250,40 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
                 ((Button) mView.findViewById(R.id.buttonSinus)).setText("a"+ getResources().getString(R.string.csc));
                 ((Button) mView.findViewById(R.id.buttonCosinus)).setText("a"+ getResources().getString(R.string.sec));
                 ((Button) mView.findViewById(R.id.buttonTan)).setText("a"+ getResources().getString(R.string.taninverse));
-//                ((Button) mView.findViewById(R.id.buttonfact)).setText("a"+ getResources().getString(R.string.cotinverse));
 
                 ((Button) mView.findViewById(R.id.buttonSinusH)).setText("a"+ getResources().getString(R.string.csch));
                 ((Button) mView.findViewById(R.id.buttonCosinusH)).setText("a"+ getResources().getString(R.string.sech));
                 ((Button) mView.findViewById(R.id.buttonTanH)).setText("a"+ getResources().getString(R.string.coth));
-//                ((Button) mView.findViewById(R.id.buttonRandom)).setText("a"+ getResources().getString(R.string.tanh));
             }else{
-                ((Button) mView.findViewById(R.id.buttonSinus)).setText("a"+ getResources().getString(R.string.sin));
-                ((Button) mView.findViewById(R.id.buttonCosinus)).setText("a"+ getResources().getString(R.string.cos));
-                ((Button) mView.findViewById(R.id.buttonTan)).setText("a"+ getResources().getString(R.string.tan));
-//                ((Button) mView.findViewById(R.id.buttonfact)).setText("a"+ getResources().getString(R.string.cot));
 
-                ((Button) mView.findViewById(R.id.buttonSinusH)).setText("a"+ getResources().getString(R.string.sinh));
-                ((Button) mView.findViewById(R.id.buttonCosinusH)).setText("a"+ getResources().getString(R.string.cosh));
-                ((Button) mView.findViewById(R.id.buttonTanH)).setText("a"+ getResources().getString(R.string.tanh));
-//                ((Button) mView.findViewById(R.id.buttonRandom)).setText("a"+ getResources().getString(R.string.coth));
+                ((Button) mView.findViewById(R.id.buttonSinus)).setText(getResources().getString(R.string.csc));
+                ((Button) mView.findViewById(R.id.buttonCosinus)).setText(getResources().getString(R.string.sec));
+                ((Button) mView.findViewById(R.id.buttonTan)).setText(getResources().getString(R.string.taninverse));
+
+                ((Button) mView.findViewById(R.id.buttonSinusH)).setText(getResources().getString(R.string.csch));
+                ((Button) mView.findViewById(R.id.buttonCosinusH)).setText(getResources().getString(R.string.sech));
+                ((Button) mView.findViewById(R.id.buttonTanH)).setText(getResources().getString(R.string.coth));
             }
         }else {
             ((Button) mView.findViewById(R.id.buttonlog)).setText(getResources().getString(R.string.log));
             ((Button) mView.findViewById(R.id.buttonln)).setText(getResources().getString(R.string.ln));
 
             if(arcIsOn) {
-                ((Button) mView.findViewById(R.id.buttonSinus)).setText(getResources().getString(R.string.csc));
-                ((Button) mView.findViewById(R.id.buttonCosinus)).setText(getResources().getString(R.string.sec));
-                ((Button) mView.findViewById(R.id.buttonTan)).setText(getResources().getString(R.string.taninverse));
-//                ((Button) mView.findViewById(R.id.buttonfact)).setText(getResources().getString(R.string.cotinverse));
+                ((Button) mView.findViewById(R.id.buttonSinus)).setText("a"+ getResources().getString(R.string.sin));
+                ((Button) mView.findViewById(R.id.buttonCosinus)).setText("a"+ getResources().getString(R.string.cos));
+                ((Button) mView.findViewById(R.id.buttonTan)).setText("a"+ getResources().getString(R.string.tan));
 
-                ((Button) mView.findViewById(R.id.buttonSinusH)).setText(getResources().getString(R.string.csch));
-                ((Button) mView.findViewById(R.id.buttonCosinusH)).setText(getResources().getString(R.string.sech));
-                ((Button) mView.findViewById(R.id.buttonTanH)).setText(getResources().getString(R.string.coth));
-//                ((Button) mView.findViewById(R.id.buttonRandom)).setText(getResources().getString(R.string.tanh));
+                ((Button) mView.findViewById(R.id.buttonSinusH)).setText("a"+ getResources().getString(R.string.sinh));
+                ((Button) mView.findViewById(R.id.buttonCosinusH)).setText("a"+ getResources().getString(R.string.cosh));
+                ((Button) mView.findViewById(R.id.buttonTanH)).setText("a"+ getResources().getString(R.string.tanh));
             }else{
                 ((Button) mView.findViewById(R.id.buttonSinus)).setText(getResources().getString(R.string.sin));
                 ((Button) mView.findViewById(R.id.buttonCosinus)).setText(getResources().getString(R.string.cos));
                 ((Button) mView.findViewById(R.id.buttonTan)).setText(getResources().getString(R.string.tan));
-//                ((Button) mView.findViewById(R.id.buttonfact)).setText(getResources().getString(R.string.cot));
 
                 ((Button) mView.findViewById(R.id.buttonSinusH)).setText(getResources().getString(R.string.sinh));
                 ((Button) mView.findViewById(R.id.buttonCosinusH)).setText(getResources().getString(R.string.cosh));
                 ((Button) mView.findViewById(R.id.buttonTanH)).setText(getResources().getString(R.string.tanh));
-//                ((Button) mView.findViewById(R.id.buttonRandom)).setText(getResources().getString(R.string.coth));
             }
 
         }
@@ -361,9 +360,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         ((MainActivity)getActivity()).checkCLRButtonSendIntent();
 
         //If no retro theme is selected apply flat theme colors to keys
-        if(!((MainActivity) getActivity()).isRetroThemeSelected()){
-            redrawKeypad();
-        }
+
 
 
         Log.d(TAG, "Fragment onStart");
@@ -508,7 +505,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         };
         return buttonsPointerArray;
     }
-    void redrawKeypad(){
+    void redrawKeypadInFlatTheme(){
 
         setTextColorState(getOperatorButtonsID(), getThemeColorStateList());
         setTextColorState(getNonAccentButtonsID(), getNonAccentColorStateList());
@@ -579,7 +576,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
             //Change Clear Button's Text to C
             ((Button) mView.findViewById(R.id.buttonClear)).setText("C");
             ((Button) mView.findViewById(R.id.buttonClear)).setTypeface(defaultFont);
-            ((Button) mView.findViewById(R.id.buttonClear)).setTextSize(getResources().getDimension(R.dimen.btn_text_size) / getResources().getDisplayMetrics().density);
+            ((Button) mView.findViewById(R.id.buttonClear)).setTextSize(getResources().getDimension(R.dimen.btn_clear_text_size) / getResources().getDisplayMetrics().density);
 
         }else {
             //Change Clear Button's Text to Backspace

@@ -248,19 +248,6 @@
                 android:orientation="vertical"
                 android:gravity="center" >
 
-                <Button
-                    android:id="@+id/buttonColors"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    style="@style/CustomButton.RETRO.grey"
-                    android:text="@string/theme"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:tag="@string/theme"
-                    android:textColor="#DADFE1"
-
-                    />
-
 
                 <Button
                     android:id="@+id/buttonHamburgerMenu"
@@ -272,8 +259,26 @@
                     android:tag="@string/theme"
                     android:gravity="center_horizontal|center_vertical"
                     android:textColor="#DADFE1"
+                    android:textSize="@dimen/retro_scientific_text_size"
 
                     />
+
+                <Button
+                    android:id="@+id/buttonColors"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    style="@style/CustomButton.RETRO.grey"
+                    android:text="@string/theme"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:tag="@string/theme"
+                    android:textColor="#DADFE1"
+                    android:textSize="@dimen/retro_scientific_text_size"
+
+                    />
+
+
+
 
                 <Button
                     android:id="@+id/buttonMute"
@@ -285,6 +290,7 @@
                     android:text="@string/volume_high"
                     android:gravity="center_horizontal|center_vertical"
                     android:textColor="#DADFE1"
+                    android:textSize="@dimen/retro_scientific_text_size"
 
                     />
 
@@ -302,6 +308,7 @@
                     style="@style/CustomButton.RETRO.grey"
                     android:gravity="center"
                     android:textColor="#DADFE1"
+                    android:textSize="@dimen/retro_scientific_text_size"
                     />
 
                 <ImageView
