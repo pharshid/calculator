@@ -584,6 +584,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         super.onStart();
 
+
         setResultTextBox();
 
         mTranslationBox = (AutoResizeTextView)findViewById(R.id.translationEditText);
@@ -626,10 +627,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         if (!mJustPressedExecuteButton) {
             mTranslationBox.setTypeface(mTranslationBoxNumericFont);
         }
+
         redrawAccent();
         redrawKeypadBackground();
-
-
 
         super.onResume();
     }
@@ -908,22 +908,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
 
-    public void changeAccentColor(int colorCode) {
-        saveAccentColorCode(colorCode);
-        redrawAccent();
-    }
+
 
     void redrawAccent(){
 
         if(!isRetroThemeSelected()) {
-            sendChangeAccentColorIntent();
-            setMViewPagerIndicatorColor();
-            resultTextView.setBackgroundColor(getAccentColorCode());
-            result_textView_holder.setBackgroundColor(getAccentColorCode());
             mFavoritesList.setTextColor(getAccentColorCode());
             mCurrencyList.setTextColor(getAccentColorCode());
-            mAddStars.setTextColor(Color.WHITE);
-
         }else {
             resultTextView.setBackgroundColor(Color.TRANSPARENT);
             result_textView_holder.setBackgroundColor(Color.TRANSPARENT);
@@ -932,24 +923,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             mAddStars.setTextColor(Color.BLACK);
         }
     }
-
-    public void changeKeypadBackgroundColor(int backgroundColorCode){
-        saveKeypadBackgroundColorCode(backgroundColorCode);
-        redrawKeypadBackground();
-        sendChangeKeypadFontColorIntent();
-    }
-//    public int getDialpadFontColor() {
-//        if (getKeypadBackgroundColorCode() != Color.WHITE){
-////            return  Color.DKGRAY;
-//            return  Color.parseColor("#9E9E9E");
-//        }else {
-//            return  Color.parseColor("#a9a9a9");
-////            return  Color.parseColor("#9E9E9E");
-//
-////            return  Color.LTGRAY;
-////            return  Color.parseColor("#757575");
-//        }
-//    }
 
     int indexOf(int[] parent,int child){
 
@@ -988,15 +961,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     //
     private void sendChangeAccentColorIntent() {
-        Intent intent = new Intent("themeIntent");
-        intent.putExtra("message", "changeAccentColor");
-        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
-    }
-    private void sendChangeKeypadFontColorIntent() {
-        Intent intent = new Intent("themeIntent");
-        intent.putExtra("message", "changeKeypadFontColor");
-        intent.putExtra("fontColor", getDialpadFontColor());
-        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+        if(mViewPager!= null) {
+            ViewPagerAdapter adapter = (ViewPagerAdapter) mViewPager.getAdapter();
+            DialpadFragment dialpadFragment = (DialpadFragment)adapter.getItem(1);
+            dialpadFragment.redrawKeypadInFlatTheme();
+        }
+//        Intent intent = new Intent("themeIntent");
+//        intent.putExtra("message", "changeAccentColor");
+//        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
     }
 
     public void setMViewPagerIndicatorColor(){
@@ -1730,8 +1702,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             }
         });
         if (isRetroThemeSelected()) {
-            numericButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.button1, 1);
-            executeButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.button28, 1);
+            numericButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.keypress_retro, 1);
+            executeButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.equal_retro, 1);
             clearAllButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.clear_retro, 1);
             operatorsButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.operator_retro, 1);
             errorSoundID = mSoundPool.load(getApplicationContext(), R.raw.error_retro, 1);
@@ -2285,7 +2257,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == 2 && resultCode == 2){
+        if(requestCode == resultCode ){
             if(data.getBooleanExtra("switchTheme",true)){
                 switchTheme();
 //                Intent i = getBaseContext().getPackageManager()

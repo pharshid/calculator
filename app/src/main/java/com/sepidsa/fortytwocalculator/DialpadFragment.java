@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -33,7 +34,7 @@ import android.widget.ToggleButton;
 public class DialpadFragment extends android.support.v4.app.Fragment implements OnClickListener,  CompoundButton.OnCheckedChangeListener {
 
     private boolean arcIsOn = false;
-          String TAG = "recreate";
+    String TAG = "recreate";
     View mView;
     private Typeface defaultFont;
 
@@ -43,7 +44,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
     private int[] idList;
     boolean mIsRetroOn = false ;
     private Typeface scientificFont;
-     static float scientific_toggle_textSize = 18f;
+    static float scientific_toggle_textSize = 18f;
 
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container, Bundle savedInstanceState) {
@@ -108,15 +109,15 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
             ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setChecked(((MainActivity) getActivity()).getAngleMode());
             ((Button) (mView.findViewById(R.id.buttonConstant))).setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "yekan.ttf"));
             ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setOnCheckedChangeListener(this);
-           (mView.findViewById(R.id.switch_deg_rad)).setOnClickListener(this);
+            (mView.findViewById(R.id.switch_deg_rad)).setOnClickListener(this);
             ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setTextSize(scientific_toggle_textSize);
             ((ToggleButton) (mView.findViewById(R.id.buttonInverse))).setTextSize(scientific_toggle_textSize);
             ((ToggleButton) (mView.findViewById(R.id.buttonARC))).setTextSize(scientific_toggle_textSize);
 
         }
-        if(!mIsRetroOn){
-            redrawKeypadInFlatTheme();
-        }
+//        if(!mIsRetroOn){
+//            redrawKeypadInFlatTheme();
+//        }
 
 
         (mView.findViewById(R.id.buttonClear)).setOnLongClickListener(new View.OnLongClickListener() {
@@ -187,15 +188,6 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
                 if (!((MainActivity) getActivity()).isRetroThemeSelected()) {
 
                     switch (message) {
-                        case "changeAccentColor":
-                            redrawKeypadInFlatTheme();
-                            break;
-
-                        case "changeKeypadFontColor":
-
-                            setTextColorState(getNonAccentButtonsID(), getNonAccentColorStateList());
-                            break;
-
                         case "changeDialpadFont":
                             defaultFont = ((MainActivity) getActivity()).getFontForComponent("DIALPAD_FONT");
                             for (int id : idList) {
@@ -359,8 +351,10 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
     public void onStart() {
         super.onStart();
         ((MainActivity)getActivity()).checkCLRButtonSendIntent();
-
-        //If no retro theme is selected apply flat theme colors to keys
+        if(!mIsRetroOn){
+            redrawKeypadInFlatTheme();
+        }
+        //If no retro theme is selected then apply flat theme colors to keys
 
 
 
@@ -507,29 +501,36 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         return buttonsPointerArray;
     }
     void redrawKeypadInFlatTheme(){
-
         setTextColorState(getOperatorButtonsID(), getThemeColorStateList());
         setTextColorState(getNonAccentButtonsID(), getNonAccentColorStateList());
-        setBackgroundColorForOperators();
+        int x = BuildConfig.VERSION_CODE;
+        if(BuildConfig.VERSION_CODE<21) {
+            setBackgroundColorForOperators();
+        }
     }
 
     private ColorStateList getThemeColorStateList() {
         int[][] states = getStateAray();
         int[] colors = new int[] {
                 Color.WHITE,
-                ((MainActivity) getActivity()).getAccentColorCode()
+               getAccentColorCode()
         };
 
         return new ColorStateList(states, colors);
+    }
+    public int getAccentColorCode(){
+        //TODO set a cool default theme color
+        SharedPreferences appPreferences =this.getActivity().getSharedPreferences("THEME", Context.MODE_PRIVATE);
+        return appPreferences.getInt("ACCENT_COLOR_CODE", Color.parseColor("#009688"));
     }
 
     private ColorStateList getNonAccentColorStateList() {
         int[][] states = getStateAray();
         int[] colors;
-            colors = new int[]{
-                    ((MainActivity) getActivity()).getAccentColorCode(), ((MainActivity) getActivity()).getDialpadFontColor(),
+        colors = new int[]{
+                getAccentColorCode(), ((MainActivity) getActivity()).getDialpadFontColor(),
 
-            };
+        };
 
         return new ColorStateList(states, colors);
     }
@@ -564,9 +565,9 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
     void setClearButtonText(String input){
 
-      mView.findViewById(R.id.buttonClear).setTag(input);
+        mView.findViewById(R.id.buttonClear).setTag(input);
 
-            refreshCButtonTypeface();
+        refreshCButtonTypeface();
 
     }
 
