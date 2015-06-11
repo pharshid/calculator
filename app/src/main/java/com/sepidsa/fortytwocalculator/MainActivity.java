@@ -915,12 +915,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         if(!isRetroThemeSelected()) {
             mFavoritesList.setTextColor(getAccentColorCode());
             mCurrencyList.setTextColor(getAccentColorCode());
+            mViewPagerIndicator.setFillColor(getAccentColorCode());
         }else {
             resultTextView.setBackgroundColor(Color.TRANSPARENT);
             result_textView_holder.setBackgroundColor(Color.TRANSPARENT);
             mFavoritesList.setTextColor(Color.BLACK);
             mCurrencyList.setTextColor(Color.BLACK);
             mAddStars.setTextColor(Color.BLACK);
+            mViewPagerIndicator.setFillColor(Color.parseColor("#9e9e9e"));
+
         }
     }
 
