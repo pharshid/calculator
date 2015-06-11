@@ -24,6 +24,8 @@
             android:tag="@string/constant"
             android:background="@android:color/transparent"
             style="?android:attr/borderlessButtonStyle"
+            android:textSize="@dimen/retro_backspace_text_size"
+            android:gravity="center"
             />
 
 
