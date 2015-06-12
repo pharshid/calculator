@@ -20,6 +20,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -73,6 +74,8 @@ public class LogAdapter extends CursorAdapter {
         viewHolder.starredButton.setChecked(starred);
         viewHolder.starredButton.setOnClickListener(mStarOnClickListener);
 
+        viewHolder.tagView.setBackgroundColor(((MainActivity) mContext).getAccentColorCode());
+
 
         viewHolder.deleteButton.setOnClickListener(mDeleteButtonOnClickListener);
         viewHolder.deleteButton.setTypeface(Typeface.createFromAsset(context.getAssets(), "flaticon.ttf"));
@@ -120,6 +123,7 @@ public class LogAdapter extends CursorAdapter {
         public final CheckBox starredButton;
         public final View toolbar;
         public final TextView arrow;
+        public final FrameLayout tagBackground;
 
         public int position;
         public boolean checked;
@@ -137,6 +141,7 @@ public class LogAdapter extends CursorAdapter {
             starredButton = (CheckBox) view.findViewById(R.id.log_checkbox);
             toolbar = view.findViewById(R.id.toolbar);
             arrow = (TextView) view.findViewById(R.id.arrow);
+            tagBackground = (FrameLayout) view.findViewById(R.id.tag_background);
 
 
             checked = false;

@@ -20,6 +20,8 @@
             android:id="@+id/log_search_view"
             android:layout_gravity="start"
             android:gravity="start"
+            android:searchIcon="@drawable/ic_search_gray"
+            android:closeIcon="@drawable/ic_cancel_gray"
             />
 
         <Button

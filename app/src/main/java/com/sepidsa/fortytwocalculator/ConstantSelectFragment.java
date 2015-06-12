@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -84,82 +85,88 @@ public class ConstantSelectFragment  extends DialogFragment implements LoaderMan
             @Override
             public void onClick(View v) {
 
-
-                LayoutInflater li = LayoutInflater.from(getActivity());
-                View promptsView = li.inflate(R.layout.constant_input_dialog, null);
-                final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-                builder.setTitle(getActivity().getString(R.string.farsi_enter_constant));
-                builder.setCancelable(false);
-
-                // Set up the input
-
-                final EditText name = (EditText) promptsView.findViewById(R.id.input_name);
-                final EditText number = (EditText) promptsView.findViewById(R.id.input_number);
-                final InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-
-                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-
-                name.setInputType(InputType.TYPE_CLASS_TEXT);
-                number.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                builder.setView(promptsView);
-                name.requestFocus();
-                inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-                // Set up the buttons
+                    if(((MainActivity)getActivity()).getPremiumPreference()) {
 
 
+                        LayoutInflater li = LayoutInflater.from(getActivity());
+                        View promptsView = li.inflate(R.layout.constant_input_dialog, null);
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-                builder.setPositiveButton(getActivity().getString(R.string.farsi_ok), new DialogInterface.OnClickListener() {
+                        builder.setTitle(getActivity().getString(R.string.farsi_enter_constant));
+                        builder.setCancelable(false);
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                        // Set up the input
 
-                        try {
-                            String newName = name.getText().toString();
-                            Double newNumber = Double.parseDouble(number.getText().toString());
-                            ContentValues values = new ContentValues();
-                            values.put(ConstantContract.ConstantEntry.COLUMN_NAME, newName);
-                            values.put(ConstantContract.ConstantEntry.COLUMN_NUMBER, newNumber);
-                            values.put(ConstantContract.ConstantEntry.COLUMN_SELECTED, 1);
+                        final EditText name = (EditText) promptsView.findViewById(R.id.input_name);
+                        final EditText number = (EditText) promptsView.findViewById(R.id.input_number);
+                        final InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
 
-                            getActivity().getContentResolver().insert(
-                                    ConstantContract.ConstantEntry.CONTENT_URI,
-                                    values
-                            );
-                            inputMethodManager.hideSoftInputFromWindow(name.getWindowToken(), 0);
-                        } catch (NumberFormatException nfe) {
-                            dialog.cancel();
-                        }
+                        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
 
-                    }
-                });
-                builder.setNegativeButton(getActivity().getString(R.string.farsi_cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        inputMethodManager.hideSoftInputFromWindow(name.getWindowToken(), 0);
-                        dialog.cancel();
+                        name.setInputType(InputType.TYPE_CLASS_TEXT);
+                        number.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                        builder.setView(promptsView);
+                        name.requestFocus();
+                        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                        // Set up the buttons
 
-                    }
-                });
+                        builder.setPositiveButton(getActivity().getString(R.string.farsi_ok), new DialogInterface.OnClickListener() {
 
-                final AlertDialog dialog = builder.create();
-                dialog.show();
-                EditText.OnKeyListener keyListener = new EditText.OnKeyListener() {
-                    public boolean onKey(View v, int keyCode, KeyEvent event) {
-                        if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                            switch (keyCode) {
-                                case KeyEvent.KEYCODE_DPAD_CENTER:
-                                case KeyEvent.KEYCODE_ENTER:
-                                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick();
-                                    return true;
-                                default:
-                                    break;
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                try {
+                                    String newName = name.getText().toString();
+                                    Double newNumber = Double.parseDouble(number.getText().toString());
+                                    ContentValues values = new ContentValues();
+                                    values.put(ConstantContract.ConstantEntry.COLUMN_NAME, newName);
+                                    values.put(ConstantContract.ConstantEntry.COLUMN_NUMBER, newNumber);
+                                    values.put(ConstantContract.ConstantEntry.COLUMN_SELECTED, 1);
+
+                                    getActivity().getContentResolver().insert(
+                                            ConstantContract.ConstantEntry.CONTENT_URI,
+                                            values
+                                    );
+                                    inputMethodManager.hideSoftInputFromWindow(name.getWindowToken(), 0);
+                                } catch (NumberFormatException nfe) {
+                                    dialog.cancel();
+                                }
+
                             }
-                        }
-                        return false;
+                        });
+                        builder.setNegativeButton(getActivity().getString(R.string.farsi_cancel), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                inputMethodManager.hideSoftInputFromWindow(name.getWindowToken(), 0);
+                                dialog.cancel();
+
+                            }
+                        });
+
+                        final AlertDialog dialog = builder.create();
+                        dialog.show();
+                        EditText.OnKeyListener keyListener = new EditText.OnKeyListener() {
+                            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                                    switch (keyCode) {
+                                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                                        case KeyEvent.KEYCODE_ENTER:
+                                            dialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick();
+                                            return true;
+                                        default:
+                                            break;
+                                    }
+                                }
+                                return false;
+                            }
+                        };
+                        number.setOnKeyListener(keyListener);
                     }
-                };
-                number.setOnKeyListener(keyListener);
+
+                else {
+                        Intent myIntent = new Intent(getActivity(), PremiumShowcasePagerActivity.class);
+                        startActivity(myIntent);
+                    }
 
             }
         });

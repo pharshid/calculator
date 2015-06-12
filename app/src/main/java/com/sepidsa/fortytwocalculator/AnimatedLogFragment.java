@@ -3,7 +3,9 @@ package com.sepidsa.fortytwocalculator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,18 +13,28 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sepidsa.fortytwocalculator.data.LogContract;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * Created by Farshid on 5/17/2015.
@@ -62,6 +74,7 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
     }
 
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -74,6 +87,10 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
         mClearButton = (Button) rootView.findViewById(R.id.button_clear_log);
         mExpandButton = (Button) rootView.findViewById(R.id.button_export_log);
         mSearchView = (SearchView) rootView.findViewById(R.id.log_search_view);
+        int id = mSearchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+        TextView textView = (TextView) mSearchView.findViewById(id);
+        textView.setTextColor(((MainActivity) getActivity()).getAccentColorCode());
+
 
         //setting icon typefaces for these 2 buttons
 
@@ -201,21 +218,21 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
                 String tag;
                 Boolean starred;
 
-                while(cursor.moveToNext()) {
+                while (cursor.moveToNext()) {
                     result = cursor.getString(cursor.getColumnIndex(LogContract.LogEntry.COLUMN_RESULT));
                     operation = cursor.getString(cursor.getColumnIndex(LogContract.LogEntry.COLUMN_OPERATION));
                     tag = cursor.getString(cursor.getColumnIndex(LogContract.LogEntry.COLUMN_TAG));
                     starred = cursor.getInt(cursor.getColumnIndex(LogContract.LogEntry.COLUMN_STARRED)) != 0;
 
-                    if(!tag.equals("")) tag += " :\n";
+                    if (!tag.equals("")) tag += " :\n";
                     String starString = "";
-                    if(starred) starString = " (*)";
+                    if (starred) starString = " (*)";
 
                     shareText += tag + operation + " = " + result + starString + "\n\n";
                 }
 
 
-                if(!shareText.equals("")) {
+                if (!shareText.equals("")) {
                     Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                     sharingIntent.setType("text/plain");
                     String subject = "42 Calculations";
@@ -233,6 +250,8 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
             }
         });
 
+//        mListView.smoothScrollToPosition(mLogAdapter.getCount() - 1 );
+
         return rootView;
     }
 
@@ -240,9 +259,11 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mLogAdapter.swapCursor(data);
-        if (mPosition != ListView.INVALID_POSITION) {
-            mListView.smoothScrollToPosition(mPosition);
-        }
+//        if (mPosition != ListView.INVALID_POSITION) {
+//            mListView.smoothScrollToPosition(mPosition);
+//            mListView.setSelection(mLogAdapter.getCount() -1);
+//        }
+        mListView.smoothScrollToPosition(mLogAdapter.getCount() -1);
     }
 
     @Override
@@ -253,6 +274,7 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        mPosition = mListView.getLastVisiblePosition();
         if (mPosition != ListView.INVALID_POSITION) {
             outState.putInt(SELECTED_KEY, mPosition);
         }

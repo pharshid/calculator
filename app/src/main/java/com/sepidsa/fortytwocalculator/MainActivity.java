@@ -625,7 +625,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         Thread mythread = new Thread(runnable);
         mythread.start();
 
-        settHasbazaar(isBazaarPackageInstalled(getApplicationContext(),BAZAAR_PACKAGE_NAME));
+        settHasbazaar(isBazaarPackageInstalled(getApplicationContext(), BAZAAR_PACKAGE_NAME));
 
 
     }
@@ -689,6 +689,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         if (isFinishing()) {
             // todo clear database if user if non-premium
+            if(!getPremiumPreference()) {
+                getContentResolver().delete(LogContract.LogEntry.CONTENT_URI, null, null);
+            }
+
+
         } else {
             //It's an orientation change.
             if (mHandler != null) {
