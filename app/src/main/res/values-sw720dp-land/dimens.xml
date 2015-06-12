@@ -20,7 +20,6 @@
     <dimen name="color_pallette_left_padding">0dp</dimen>
 
     <dimen name="scientific_button_text_size">40sp</dimen>
-    <dimen name="btn_text_size">55.0sp</dimen>
     <dimen name="icon_button_size">37.0sp</dimen>
     <dimen name="spinner_text_size">37sp</dimen>
     <dimen name="language_menu_text_size">31sp</dimen>
@@ -32,6 +31,8 @@
 
     <dimen name="log_title_txt_size">35sp</dimen>
     <dimen name="log_detail_txt_size">27sp</dimen>
-     <dimen name="language_spinner_padding_left">35dp</dimen>
-    <dimen name="retro_backspace_text_size">27sp</dimen>
+
+    <dimen name="btn_text_size">42.0sp</dimen>
+    <dimen name="btn_clear_text_size">42.0sp</dimen>
+    <dimen name="retro_backspace_text_size">35sp</dimen>
 </resources>

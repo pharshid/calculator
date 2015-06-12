@@ -326,7 +326,7 @@
 
 
             <fragment
-                android:id="@+id/left_frame"
+                android:id="@+id/scientific_frame"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -336,7 +336,7 @@
 
 
             <fragment
-                android:id="@+id/middle_frame"
+                android:id="@+id/dialpad_frame"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

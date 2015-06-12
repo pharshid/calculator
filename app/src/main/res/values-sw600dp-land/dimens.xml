@@ -16,8 +16,7 @@
     <dimen name="btn_height_about">70.0dp</dimen>
     <dimen name="margin_scroller_stack">13.0dp</dimen>
 
-    <dimen name="btn_text_size">35.0sp</dimen>
-    <dimen name="btn_clear_text_size">31.0sp</dimen>
+
 
     <dimen name="scientific_button_text_size">35.0sp</dimen>
     <dimen name="icon_button_size">30.0sp</dimen>
@@ -37,11 +36,10 @@
     <dimen name="spinner_text_size">27sp</dimen>
     <dimen name="language_spinner_padding_left">30dp</dimen>
 
-
-
-
-
     <dimen name="icon_button_padding_top">6dp</dimen>
+
+    <dimen name="btn_text_size">35.0sp</dimen>
+    <dimen name="btn_clear_text_size">31.0sp</dimen>
     <dimen name="retro_backspace_text_size">27sp</dimen>
 
 

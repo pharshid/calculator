@@ -23,7 +23,8 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
 
         <Button
@@ -51,7 +52,7 @@
             android:layout_weight="1"
             android:text="@string/seven"
             android:tag="@string/seven"
-            style="@style/CustomButton.TABLET"
+            style="@style/CustomButton.DIGIT"
             />
 
 
@@ -63,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
 
-            style="@style/CustomButton.TABLET"
+            style="@style/CustomButton.DIGIT"
 
             android:layout_weight="1"
             android:text="@string/four"
@@ -81,13 +82,13 @@
             android:text="@string/one"
             android:tag="@string/one"
 
-            style="@style/CustomButton.TABLET"
+            style="@style/CustomButton.DIGIT"
             />
 
 
         <Button
             android:id="@+id/buttonPoint"
-            style="@style/CustomButton.TABLET"
+            style="@style/CustomButton.DIGIT"
 
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -119,7 +120,7 @@
             android:layout_weight="1"
             android:text="@string/parenthesis_open"
             android:tag="@string/parenthesis_open"
-            style="@style/CustomButton.TABLET"
+            style="@style/CustomButton.DIGIT"
 
             />
 
@@ -130,7 +131,7 @@
              android:text="@string/eight"
              android:tag="@string/eight"
 
-             style="@style/CustomButton.TABLET"
+             style="@style/CustomButton.DIGIT"
              />
  -->
 
@@ -140,7 +141,7 @@
             android:layout_weight="1"
             android:text="@string/eight"
             android:tag="@string/eight"
-            style="@style/CustomButton.TABLET"
+            style="@style/CustomButton.DIGIT"
             />
 
 
@@ -155,7 +156,7 @@
             android:layout_weight="1"
             android:text="@string/five"
             android:tag="@string/five"
-            style="@style/CustomButton.TABLET"
+            style="@style/CustomButton.DIGIT"
             />
 
 
@@ -171,7 +172,7 @@
             android:layout_weight="1"
             android:text="@string/two"
             android:tag="@string/two"
-            style="@style/CustomButton.TABLET"
+            style="@style/CustomButton.DIGIT"
             />
 
         <Button
@@ -182,7 +183,7 @@
             android:paddingRight="0dp"
             android:text="@string/zero"
             android:tag="@string/zero"
-            style="@style/CustomButton.TABLET"
+            style="@style/CustomButton.DIGIT"
             />
 
     </LinearLayout>
@@ -201,7 +202,7 @@
             android:layout_weight="1"
             android:text="@string/parenthesis_closed"
             android:tag="@string/parenthesis_closed"
-            style="@style/CustomButton.TABLET"
+            style="@style/CustomButton.DIGIT"
 
 
             />
@@ -212,13 +213,13 @@
             android:layout_weight="1"
             android:text="@string/nine"
             android:tag="@string/nine"
-            style="@style/CustomButton.TABLET"
+            style="@style/CustomButton.DIGIT"
 
             />
 
         <Button
             android:id="@+id/button6"
-            style="@style/CustomButton.TABLET"
+            style="@style/CustomButton.DIGIT"
             android:layout_weight="1"
             android:text="@string/six"
             android:tag="@string/six"
@@ -230,7 +231,7 @@
             android:layout_weight="1"
             android:text="@string/three"
             android:tag="@string/three"
-            style="@style/CustomButton.TABLET"
+            style="@style/CustomButton.DIGIT"
             />
 
 
@@ -239,7 +240,7 @@
             android:layout_weight="1"
             android:text="@string/percentage"
             android:tag="@string/percentage"
-            style="@style/CustomButton.TABLET"
+            style="@style/CustomButton.DIGIT"
             />
 
 
@@ -254,7 +255,6 @@
         android:orientation="vertical"
         android:layout_weight="1"
         android:gravity="center"
-
         >
 
 
@@ -266,13 +266,13 @@
             android:layout_weight="1"
             android:tag="@string/devide"
             android:text="@string/devide"
-            style="@style/CustomButton.TABLET"
+            style="@style/CustomButton.DIGIT"
 
             />
 
         <Button
             android:id="@+id/buttonTimes"
-            style="@style/CustomButton.TABLET"
+            style="@style/CustomButton.DIGIT"
             android:layout_weight="1"
             android:tag="@string/multiply"
             android:text="@string/multiply"
@@ -281,7 +281,7 @@
 
         <Button
             android:id="@+id/buttonMinus"
-            style="@style/CustomButton.TABLET"
+            style="@style/CustomButton.DIGIT"
             android:layout_weight="1"
             android:text="@string/subtract"
             android:tag="@string/subtract"
@@ -289,7 +289,7 @@
 
         <Button
             android:id="@+id/buttonPlus"
-            style="@style/CustomButton.TABLET"
+            style="@style/CustomButton.DIGIT"
             android:text="@string/add"
             android:tag="@string/add"
             android:layout_weight="1"
@@ -297,7 +297,7 @@
 
         <Button
             android:id="@+id/buttonEquals"
-            style="@style/CustomButton.TABLET"
+            style="@style/CustomButton.DIGIT"
             android:layout_weight="1"
             android:text="@string/equals"
             android:tag="@string/equals"

@@ -76,6 +76,7 @@ import java.util.Stack;
 
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener,  CompoundButton.OnCheckedChangeListener {
+    private static final String BAZAAR_PACKAGE_NAME = "com.farsitel.bazaar";
     OnHeadlineSelectedListener mCallback;
 
     private static final String FRAGMENT_TAG_LOG_ = "log fragment";
@@ -252,7 +253,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
 
-
         setTypeFaces();
 
         if(isRetroThemeSelected()){
@@ -295,6 +295,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
 
+
+     public static boolean isBazaarPackageInstalled(Context context, String packageName) {
+         final PackageManager packageManager = context.getPackageManager();
+         Intent intent = packageManager.getLaunchIntentForPackage(packageName);
+         if (intent == null) {
+             return false;
+         }
+         List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+         return list.size() > 0;
+     }
 
     private void buildNavigationDrawer() {
         // Navigation Drawer Codes //
@@ -615,6 +625,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         Thread mythread = new Thread(runnable);
         mythread.start();
 
+        settHasbazaar(isBazaarPackageInstalled(getApplicationContext(),BAZAAR_PACKAGE_NAME));
 
 
     }
@@ -734,12 +745,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         if (mViewPager != null) {
 
-
-            if (((String) mViewPager.getTag()).equals("portrait_phone") == true) {
-                //getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT
-                // if in Portrait Phone
-//                mColorPage = 3;
-                mViewPager.setAdapter(null);
+             // if in Portrait Phone
                 List<Fragment> fList = new ArrayList<Fragment>();
                 fList.add(new AnimatedLogFragment());
                 fList.add(new DialpadFragment());
@@ -749,23 +755,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 mViewPager.setOffscreenPageLimit(2);
                 mViewPager.setCurrentItem(DIALPAD_FRAGMENT);
                 setmDefaultPage(DIALPAD_FRAGMENT);
-            } else if (((String) mViewPager.getTag()).equals("landscape_phone") == true) {
-                // if in Landscape Phone
-                List<Fragment> fList = new ArrayList<Fragment>();
-                fList.add(new AnimatedLogFragment());
-                fList.add(new DialpadFragment());
-//                mColorPage = 2;
-                mViewPager.setAdapter(new ViewPagerAdapter(fragmentManager, fList));
-                mLayoutState = LANDSCAPE_PHONE;
-                mViewPager.setOffscreenPageLimit(2);
-                mViewPager.setCurrentItem(DIALPAD_FRAGMENT);
-                setmDefaultPage(DIALPAD_FRAGMENT);
 
-
-            }
         }
         else {
-
             mLayoutState = LANDSCAPE_TABLET;
         }
 
@@ -823,6 +815,19 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("THEME", MODE_PRIVATE);
         return appPreferences.getInt("ACCENT_COLOR_CODE", Color.parseColor("#009688"));
     }
+
+
+
+
+    public void settHasbazaar(boolean hasBazaar){
+        //TODO set a cool default theme color
+        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
+        SharedPreferences.Editor editor = appPreferences.edit();
+        editor.putBoolean("IS_BAZAAR_INSTALLED", hasBazaar);
+        editor.commit();
+    }
+
+
 
     public void showAppTour(){
         if(hasWatchedAppTour()){
@@ -915,15 +920,18 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         if(!isRetroThemeSelected()) {
             mFavoritesList.setTextColor(getAccentColorCode());
             mCurrencyList.setTextColor(getAccentColorCode());
-            mViewPagerIndicator.setFillColor(getAccentColorCode());
+            if(mViewPager!=null) {
+                mViewPagerIndicator.setFillColor(getAccentColorCode());
+            }
         }else {
             resultTextView.setBackgroundColor(Color.TRANSPARENT);
             result_textView_holder.setBackgroundColor(Color.TRANSPARENT);
             mFavoritesList.setTextColor(Color.BLACK);
             mCurrencyList.setTextColor(Color.BLACK);
             mAddStars.setTextColor(Color.BLACK);
-            mViewPagerIndicator.setFillColor(Color.parseColor("#9e9e9e"));
-
+            if(mViewPager!=null) {
+                mViewPagerIndicator.setFillColor(Color.parseColor("#9e9e9e"));
+            }
         }
     }
 
@@ -1863,6 +1871,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             ViewPagerAdapter adapter = (ViewPagerAdapter) mViewPager.getAdapter();
             DialpadFragment dialpadFragment = (DialpadFragment)adapter.getItem(1);
             dialpadFragment.setClearButtonText(value);
+        }else{
+            //it means we're in tablet mode
+            DialpadFragment dialpadFragment = (DialpadFragment)getSupportFragmentManager().findFragmentById(R.id.dialpad_frame);
+            dialpadFragment.setClearButtonText(value);
+
         }
 
     }

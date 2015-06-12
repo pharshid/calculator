@@ -41,11 +41,11 @@
 
 
         <TextView
-                android:layout_width="match_parent"
+            android:id="@+id/tour_title"
+            android:layout_width="match_parent"
                 android:layout_height="128dp"
                 android:layout_centerHorizontal="true"
                 android:visibility="visible"
-                android:id="@+id/tour_title"
                 android:text="رنگین کمانی از رنگ"
                 android:gravity="center"
                 android:textSize="25sp"

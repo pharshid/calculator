@@ -76,7 +76,7 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
             }
         }
         if(mView.findViewById(R.id.switch_deg_rad) != null) {
-            ((Button) (mView.findViewById(R.id.buttonConstant))).setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "yekan.ttf"));
+//            ((Button) (mView.findViewById(R.id.buttonConstant))).setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "mitra.ttf"));
             ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setChecked(((MainActivity) getActivity()).getAngleMode());
             ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setOnCheckedChangeListener(this);
             mView.findViewById(R.id.switch_deg_rad).setOnClickListener(this);

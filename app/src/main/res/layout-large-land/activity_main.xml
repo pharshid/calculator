@@ -196,7 +196,7 @@
                     android:id="@+id/FourthRowScientific"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight=".35"
+                    android:layout_weight=".25"
                     android:orientation="vertical"
                     android:gravity="center" >
 
@@ -209,9 +209,9 @@
                         android:layout_weight="1"
                         android:text="@string/hamburger_menu"
                         android:tag="p"
-                        android:textSize="18sp"
                         android:gravity="center_horizontal|center_vertical"
                         android:textColor="#DADFE1"
+                        android:textSize="@dimen/retro_scientific_text_size"
 
                         />
 
@@ -225,6 +225,7 @@
                         android:gravity="center_horizontal|center_vertical"
                         android:tag="@string/theme"
                         android:textColor="#DADFE1"
+                        android:textSize="@dimen/retro_scientific_text_size"
 
                         />
 
@@ -240,6 +241,7 @@
                         android:text="@string/volume_high"
                         android:gravity="center_horizontal|center_vertical"
                         android:textColor="#DADFE1"
+                        android:textSize="@dimen/retro_scientific_text_size"
 
                         />
 
@@ -257,6 +259,8 @@
                         style="@style/CustomButton.icon_button."
                         android:gravity="center_horizontal|center_vertical"
                         android:textColor="#DADFE1"
+                        android:textSize="@dimen/retro_scientific_text_size"
+
                         />
 
 
@@ -268,6 +272,8 @@
                         android:tag="feedBack"
                         android:gravity="center_horizontal|center_vertical"
                         android:background="@android:color/transparent"
+                        android:textSize="@dimen/retro_scientific_text_size"
+
                         />
 
 
@@ -280,7 +286,7 @@
 
 
                 <fragment
-                    android:id="@+id/left_frame"
+                    android:id="@+id/scientific_frame"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -290,7 +296,7 @@
 
 
                 <fragment
-                    android:id="@+id/middle_frame"
+                    android:id="@+id/dialpad_frame"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

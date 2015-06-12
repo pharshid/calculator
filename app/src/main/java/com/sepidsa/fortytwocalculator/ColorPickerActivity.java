@@ -17,30 +17,6 @@ import android.widget.Toast;
 
 public class ColorPickerActivity extends FragmentActivity implements ColorPickerSwatch.OnColorSelectedListener, CompoundButton.OnCheckedChangeListener, View.OnClickListener {
     public static final int SIZE_LARGE = 1;
-    public static final int SIZE_SMALL = 2;
-
-    private static final String KEY_COLORS_KEYPAD = "color_keypad" ;
-    protected static final String KEY_SELECTED_COLOR_KEYPAD = "selected_color_keypad";
-
-
-    protected static final String KEY_TITLE_ID = "title_id";
-    protected static final String KEY_COLORS = "colors";
-    protected static final String KEY_COLOR_CONTENT_DESCRIPTIONS = "color_content_descriptions";
-    protected static final String KEY_SELECTED_COLOR = "selected_color";
-    protected static final String KEY_COLUMNS = "columns";
-    protected static final String KEY_SIZE = "size";
-
-    protected int mTitleResId = R.string.color_picker_default_title;
-    protected int[] mAccentColors = null;
-    protected int[] mColorsKeypad = null;
-
-    protected String[] mColorContentDescriptions = null;
-    protected int mSelectedColor;
-    protected int mColumns;
-    protected int mSize;
-    private int mSelectedKeypadBackgroundColor;
-
-
 
 
     boolean mIsPremium;
@@ -53,7 +29,6 @@ public class ColorPickerActivity extends FragmentActivity implements ColorPicker
     ColorPickerPalette mKeypadPallete;
     Typeface mYekanFont;
     ImageButton backButton;
-    protected ColorPickerSwatch.OnColorSelectedListener mListener;
     Switch mClassicthemeSwitch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

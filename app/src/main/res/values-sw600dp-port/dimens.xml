@@ -27,7 +27,8 @@
 
     <dimen name="scientific_button_text_size">35sp</dimen>
     <dimen name="btn_text_size">45.0sp</dimen>
-    <dimen name="btn_clear_text_size">37.0sp</dimen>
+    <dimen name="btn_clear_text_size">45.0sp</dimen>
+    <dimen name="retro_backspace_text_size">35sp</dimen>
 
     <dimen name="result_text_size">160sp</dimen>
 

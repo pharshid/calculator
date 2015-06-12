@@ -107,18 +107,15 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
         if(mView.findViewById(R.id.switch_deg_rad) != null) {
             ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setChecked(((MainActivity) getActivity()).getAngleMode());
-            ((Button) (mView.findViewById(R.id.buttonConstant))).setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "yekan.ttf"));
             ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setOnCheckedChangeListener(this);
+            ((Button) (mView.findViewById(R.id.buttonConstant))).setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "mitra.ttf"));
             (mView.findViewById(R.id.switch_deg_rad)).setOnClickListener(this);
+            (mView.findViewById(R.id.buttonConstant)).setOnClickListener(this);
             ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setTextSize(scientific_toggle_textSize);
             ((ToggleButton) (mView.findViewById(R.id.buttonInverse))).setTextSize(scientific_toggle_textSize);
             ((ToggleButton) (mView.findViewById(R.id.buttonARC))).setTextSize(scientific_toggle_textSize);
 
         }
-//        if(!mIsRetroOn){
-//            redrawKeypadInFlatTheme();
-//        }
-
 
         (mView.findViewById(R.id.buttonClear)).setOnLongClickListener(new View.OnLongClickListener() {
 

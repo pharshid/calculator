@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -19,6 +20,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sepidsa.fortytwocalculator.util.IabHelper;
 import com.sepidsa.fortytwocalculator.util.IabResult;
@@ -41,7 +44,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
     Button done;
     ImageButton next;
     Button buyPre;
-
+    boolean mHasBazaar =false;
     IabHelper.QueryInventoryFinishedListener
             mQueryFinishedListener;
 
@@ -64,26 +67,9 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
 
 
         base64EncodedPublicKey = "MIHNMA0GCSqGSIb3DQEBAQUAA4G7ADCBtwKBrwCgNUrs2KdQY911EkU3jcroP73iRap4P48t6pK3O3+NHum0/GYibcC5WAdw7YSIcirAlKr8niYErlVmbx9pkAAACMepMF11xQABddFvkgKMOLa+MGt/V2TAACeoA7DvLN8YyG8U6HwC1juu+honao7IW0mxbmOT34Xv4ff9wHajVB/Cm1S00Un7Ro0DBZQ3VBwShSbmqxVMOHx6e5ObuzE0gTqDdsNcgGab4lFf4wkCAwEAAQ==";
-        mHelper = new IabHelper(this, base64EncodedPublicKey);
-        mHelper.enableDebugLogging(false);
-        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-            public void onIabSetupFinished(IabResult result) {
-                Log.d(TAG, "Setup finished.");
 
-                if (!result.isSuccess()) {
-                    // Oh noes, there was a problem.
-                    complain("Problem setting up in-app billing: " + result);
-                    return;
-                }
+        mHasBazaar = getHasbazaar();
 
-                // Have we been disposed of in the meantime? If so, quit.
-                if (mHelper == null) return;
-
-                // IAB is fully set up. Now, let's get an inventory of stuff we own.
-                Log.d(TAG, "Setup successful. Querying inventory.");
-//                mHelper.queryInventoryAsync(mGotInventoryListener);
-            }
-        });
 
         /*
             Setting this makes sure we draw fullscreen, without this the transparent Activity shows
@@ -116,6 +102,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 buyPremium();
+                endTutorial();
             }
         });
 
@@ -156,6 +143,8 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
                     done.setVisibility(View.GONE);
                 }else if(position == NUM_PAGES - 1){
                     buyPremium();
+                    endTutorial();
+
                 }
             }
 
@@ -166,6 +155,35 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
         });
 
         buildCircles();
+
+        if(mHasBazaar) {
+            mHelper = new IabHelper(this, base64EncodedPublicKey);
+            mHelper.enableDebugLogging(false);
+            mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+                public void onIabSetupFinished(IabResult result) {
+                    Log.d(TAG, "Setup finished.");
+
+                    if (!result.isSuccess()) {
+                        // Oh noes, there was a problem.
+                        complain("Problem setting up in-app billing: " + result);
+                        return;
+                    }
+
+                    // Have we been disposed of in the meantime? If so, quit.
+                    if (mHelper == null) return;
+
+                    // IAB is fully set up. Now, let's get an inventory of stuff we own.
+                    Log.d(TAG, "Setup successful. Querying inventory.");
+                    mHelper.queryInventoryAsync(mGotInventoryListener);
+                }
+            });
+        }
+    }
+
+    public boolean getHasbazaar(){
+        //TODO set a cool default theme color
+        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
+        return appPreferences.getBoolean("IS_BAZAAR_INSTALLED", false);
     }
 
     // Listener that's called when we finish querying the items and subscriptions we own
@@ -209,13 +227,21 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
     private void buyPremium() {
         //TODO INSERT BUY PREMIUM CODE
 //        Toast.makeText(getApplicationContext(),"IMPLEMENT ME", Toast.LENGTH_SHORT).show();
-        mHelper.launchPurchaseFlow(this, SKU_PREMIUM, RC_REQUEST,
-                mPurchaseFinishedListener, "bGoa+V7g/yqDXvKRqq+JTFn4uQZbPiQJo4pf9RzJ");
+        if(mHelper!= null) {
+            mHelper.launchPurchaseFlow(this, SKU_PREMIUM, RC_REQUEST,
+                    mPurchaseFinishedListener, "bGoa+V7g/yqDXvKRqq+JTFn4uQZbPiQJo4pf9RzJ");
+                      // Fade the premium tour
 
+        }else {
+            if(!mHasBazaar){
+                Toast.makeText(getApplicationContext(),"لطفا بازار رو نصب کن",Toast.LENGTH_LONG).show();
 
+            }else{
+                Toast.makeText(getApplicationContext(),"مشکل در ارتباط با بازار",Toast.LENGTH_LONG).show();
 
-        // ITS ESSENTIAL
-        endTutorial();
+            }
+
+        }
 
     }
 
@@ -402,11 +428,21 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             super(fm);
             mFragments = new Fragment[NUM_PAGES];
             mFragments[0] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_one);
+
+
             mFragments[1] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_two);
             mFragments[2] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_three);
             mFragments[3] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_four);
             mFragments[4] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_five);
             mFragments[5] = ParallaxPane.newInstance(R.layout.fragment_parallax_pane_transparent);
+            Typeface flatIcon = Typeface.createFromAsset(getAssets(), "yekan.ttf");
+//            for (Fragment fg:mFragments){
+//
+//                TextView tv = (TextView)(fg.getView().findViewById(R.id.tour_title));
+////                tv.setTypeface(flatIcon);
+////                tv = (TextView)(fg.getView().findViewById(R.id.tour_description));
+////                tv.setTypeface(flatIcon);
+//            }
         }
 
         @Override
@@ -443,6 +479,9 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
                     @Override
                     public void onClick(View v) {
                         buyPremium();
+                        if(mHasBazaar){
+                            endTutorial();
+                        }
                     }
                 });
             }
