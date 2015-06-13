@@ -365,7 +365,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
             }
             break;
-            
+
             default:
                 if(view.getTag().toString().equals( "trigonomic")){
                     ((MainActivity) getActivity()).aButtonIsPressed(((Button)view).getText().toString()+"(");

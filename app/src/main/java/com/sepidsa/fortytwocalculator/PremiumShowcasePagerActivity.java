@@ -21,11 +21,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sepidsa.fortytwocalculator.util.IabHelper;
@@ -85,36 +83,6 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
 //        window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
         setContentView(R.layout.activity_parallax_pager);
-        //        if( getHasbazaar()) {
-
-
-        mHelper = new IabHelper(this, base64EncodedPublicKey);
-        mHelper.enableDebugLogging(false);
-        try{
-            mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-                public void onIabSetupFinished(IabResult result) {
-                    Log.d(TAG, "Setup finished.");
-
-                    if (!result.isSuccess()) {
-                        // Oh noes, there was a problem.
-                        complain("Problem setting up in-app billing: " + result);
-                        return;
-                    }
-
-                    // Have we been disposed of in the meantime? If so, quit.
-                    if (mHelper == null) return;
-
-                    // IAB is fully set up. Now, let's get an inventory of stuff we own.
-                    Log.d(TAG, "Setup successful. Querying inventory.");
-                    mHelper.queryInventoryAsync(mGotInventoryListener);
-                }
-            });
-        }
-
-        catch (Exception e){
-            Toast.makeText(getApplicationContext(),"مطمئن شوید که وارد اکانت بازار شده اید",Toast.LENGTH_LONG).show();
-        }
-//        }
 
         skip = Button.class.cast(findViewById(R.id.skip));
         skip.setOnClickListener(new View.OnClickListener() {
@@ -193,10 +161,41 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
         });
 
         buildCircles();
-
-
+        if(isBazaarPackageInstalled(getApplicationContext(),BAZAAR_PACKAGE_NAME)) {
+            setupMHelper();
+        }
     }
 
+    private void setupMHelper() {
+        mHelper = new IabHelper(this, base64EncodedPublicKey);
+//        mHelper.enableDebugLogging(false);
+        try{
+        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            public void onIabSetupFinished(IabResult result) {
+                Log.d(TAG, "Setup finished.");
+
+                if (!result.isSuccess()) {
+                    // Oh noes, there was a problem.
+                    complain("Problem setting up in-app billing: " + result);
+                    return;
+                }
+
+                // Have we been disposed of in the meantime? If so, quit.
+                if (mHelper == null) return;
+
+                // IAB is fully set up. Now, let's get an inventory of stuff we own.
+                Log.d(TAG, "Setup successful. Querying inventory.");
+                    mHelper.queryInventoryAsync(mGotInventoryListener);
+            }
+        });}catch (SecurityException se){
+        if(mHelper != null){
+            mHelper.dispose();
+            mHelper = null;
+        }
+            Toast.makeText(getApplicationContext(),"problem setting up helper",Toast.LENGTH_LONG).show();
+
+        }
+    }
 
 
     public static boolean isBazaarPackageInstalled(Context context, String packageName) {
@@ -215,6 +214,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
         return appPreferences.getBoolean("IS_BAZAAR_INSTALLED", false);
     }
 
+    //    private boolean mGotInventory =false;
     // Listener that's called when we finish querying the items and subscriptions we own
     IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
         public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
@@ -226,7 +226,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             // Is it a failure?
             if (result.isFailure()) {
 //                complain("Failed to query inventory: " + result);
-                Toast.makeText(getApplicationContext(),"مشکل در ارتباط با بازار",Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(),"لطفا ابتدا در بازار وارد اکانت خود شوید",Toast.LENGTH_LONG).show();
 
                 return;
             }
@@ -238,11 +238,11 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
              * the developer payload to see if it's correct! See
              * verifyDeveloperPayload().
              */
-
+//            mGotInventory = true;
             // Do we have the premium upgrade?
             Purchase premiumPurchase = inventory.getPurchase(SKU_PREMIUM);
 //            mIsPremium = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
-            setPremiumPreference (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
+                setPremiumPreference (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
             if(getPremiumPreference()){
                 Toast.makeText(getApplicationContext(),"شما در حال حاضر طلایی هستید",Toast.LENGTH_LONG).show();
             }
@@ -259,25 +259,26 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
 
     private void buyPremium() {
         //TODO INSERT BUY PREMIUM CODE
-
-        if(mHelper!= null) {
-            try {
+        if(!isBazaarPackageInstalled(getApplicationContext(), BAZAAR_PACKAGE_NAME)){
+            showDownloadBazaarDialog();
+        }else {
+            if (mHelper != null) {
+                try {
+                    mHelper.launchPurchaseFlow(this, SKU_PREMIUM, RC_REQUEST,
+                            mPurchaseFinishedListener, "");
+                    // Fade the premium tour
+                } catch (Exception e) {
+                    mHelper.dispose();
+                    mHelper = null;
+                    Toast.makeText(getApplicationContext(), "لطفا چند لحظه بعد دوباره امتحان کنید", Toast.LENGTH_LONG).show();
+                }
+            } else {
+                setupMHelper();
+                if (mHelper != null) {
                 mHelper.launchPurchaseFlow(this, SKU_PREMIUM, RC_REQUEST,
                         mPurchaseFinishedListener, "");
-                // Fade the premium tour
-            }catch (Exception e){
-                Toast.makeText(getApplicationContext(),"لطفا چند لحظه بعد دوباره امتحان کنید",Toast.LENGTH_LONG).show();
+                }
             }
-
-        }else {
-            if(!getHasbazaar()){
-            showDownloadBazaarDialog();
-
-            }else{
-                Toast.makeText(getApplicationContext(),"در حال دریافت اطلاعات شما",Toast.LENGTH_LONG).show();
-
-            }
-
         }
 
     }
@@ -286,12 +287,12 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
 
 
-        adb.setTitle("بازار نصب نیست.دانلود بشه ؟");
+        adb.setTitle("ظاهرا بازار نصب نیست. لطفا بازار رو دانلود کنید و برنامه رو از طریق بازار مجددا نصب کنید تا بتونید طلایی بشید");
 
 
-       adb.setPositiveButton("موافقم", new DialogInterface.OnClickListener() {
+        adb.setPositiveButton("موافقم", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-               goToUrl("www.google.com");
+                goToUrl("http://cafebazaar.ir/download/bazaar.apk");
             } });
 
         adb.setNegativeButton("باشه بعدا", new DialogInterface.OnClickListener() {
@@ -300,9 +301,8 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             } });
         adb.show();
     }
-    private void goToUrl (String url) {
-        String page = "http://cafebazaar.ir/download/bazaar.apk";
-        Uri uriUrl = Uri.parse(page);
+    private void goToUrl (String address) {
+        Uri uriUrl = Uri.parse(address);
         Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
         startActivity(launchBrowser);
     }
@@ -317,12 +317,12 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
 
             if (result.isFailure()) {
 
-//                complain("Error purchasing: " + result);
+                complain("Error purchasing: " + result);
 //                setWaitScreen(false);
                 return;
             }
             if (!verifyDeveloperPayload(purchase)) {
-//                complain("Error purchasing. Authenticity verification failed.");
+                complain("Error purchasing. Authenticity verification failed.");
 //                setWaitScreen(false);
                 return;
             }
@@ -434,23 +434,33 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
     @Override
     protected void onStart() {
         super.onStart();
-//        settHasbazaar(isBazaarPackageInstalled(getApplicationContext(), BAZAAR_PACKAGE_NAME));
+    }
 
-//        mHasBazaar =;
+    @Override
+    protected void onPause() {
+        super.onPause();
 
 
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
 
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
         Log.d(TAG, "Destroying helper.");
         if (mHelper != null) {
             mHelper.dispose();
             mHelper = null;
         }
         Log.d(TAG, "Destroying helper.");
+
+        super.onDestroy();
+
+
 
     }
 

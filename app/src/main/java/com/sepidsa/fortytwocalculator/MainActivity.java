@@ -25,7 +25,6 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.text.InputType;
@@ -127,7 +126,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public static final int FONT_ROBOTO_LIGHT = 1;
     public static final int FONT_ROBOTO_REGULAR = 2;
     public static final int FONT_MITRA = 5;
-    public static final int FONT_DASTNEVIS = 6;
     private Typeface mRobotoLight;
     private Typeface mRobotoRegular;
 
@@ -851,9 +849,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     public boolean hasWatchedAppTour(){
 
-//        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
-//        return appPreferences.getBoolean("has_watched_app_tour_v2.00", false);
-        return false;
+        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
+        return appPreferences.getBoolean("has_watched_app_tour_v2.00", false);
     }
 
     private void setWatchedAppTour(){
@@ -2018,8 +2015,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 return mPhalls;
             case FONT_MITRA:
                 return mMitra;
-            case FONT_DASTNEVIS:
-                return mDastnevis;
             case FONT_MAJALLA:
                 return mMajalla;
         }
