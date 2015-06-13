@@ -16,7 +16,9 @@
         android:id="@+id/tour_screenshot"
             android:background="@drawable/page3"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:visibility="invisible"
+        >
 
 
     </LinearLayout>

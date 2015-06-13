@@ -17,6 +17,7 @@
         android:background="@drawable/page2"
         android:orientation="horizontal"
         android:gravity="center"
+        android:visibility="invisible"
 
         >
 
