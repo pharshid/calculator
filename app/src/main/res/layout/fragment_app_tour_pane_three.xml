@@ -14,7 +14,6 @@
         android:layout_height="0dp"
         android:layout_weight="50"
         android:id="@+id/tour_screenshot"
-            android:background="@drawable/page3"
         android:orientation="horizontal"
         android:gravity="center"
         android:visibility="invisible"

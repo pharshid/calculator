@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -97,14 +98,6 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
         }
 
-
-//        if(((MainActivity)getActivity()).stackSize() <= 1){
-//            setClearButtonText(getResources().getString(R.string.clear));
-//        }else {
-//            setClearButtonText(getResources().getString(R.string.backSpace));
-//
-//        }
-
         if(mView.findViewById(R.id.switch_deg_rad) != null) {
             ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setChecked(((MainActivity) getActivity()).getAngleMode());
             ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setOnCheckedChangeListener(this);
@@ -119,7 +112,6 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
             ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setTextSize(scientific_toggle_textSize);
             ((ToggleButton) (mView.findViewById(R.id.buttonInverse))).setTextSize(scientific_toggle_textSize);
             ((ToggleButton) (mView.findViewById(R.id.buttonARC))).setTextSize(scientific_toggle_textSize);
-
         }
 
         (mView.findViewById(R.id.buttonClear)).setOnLongClickListener(new View.OnLongClickListener() {
@@ -216,30 +208,26 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
             ((Button) mView.findViewById(R.id.buttonSinus)).setText("a"+ ((Button) mView.findViewById(R.id.buttonSinus)).getText());
             ((Button) mView.findViewById(R.id.buttonCosinus)).setText("a"+ ((Button) mView.findViewById(R.id.buttonCosinus)).getText());
             ((Button) mView.findViewById(R.id.buttonTan)).setText("a"+ ((Button) mView.findViewById(R.id.buttonTan)).getText());
-//            ((Button) mView.findViewById(R.id.buttonfact)).setText("a"+ ((Button) mView.findViewById(R.id.buttonfact)).getText());
 
             ((Button) mView.findViewById(R.id.buttonSinusH)).setText("a"+ ((Button) mView.findViewById(R.id.buttonSinusH)).getText());
             ((Button) mView.findViewById(R.id.buttonCosinusH)).setText("a"+ ((Button) mView.findViewById(R.id.buttonCosinusH)).getText());
             ((Button) mView.findViewById(R.id.buttonTanH)).setText("a"+ ((Button) mView.findViewById(R.id.buttonTanH)).getText());
-//            ((Button) mView.findViewById(R.id.buttonRandom)).setText("a"+ ((Button) mView.findViewById(R.id.buttonRandom)).getText());
         }else {
             ((Button) mView.findViewById(R.id.buttonSinus)).setText(((Button) mView.findViewById(R.id.buttonSinus)).getText().toString().substring(1));
             ((Button) mView.findViewById(R.id.buttonCosinus)).setText(((Button) mView.findViewById(R.id.buttonCosinus)).getText().toString().substring(1));
             ((Button) mView.findViewById(R.id.buttonTan)).setText(((Button) mView.findViewById(R.id.buttonTan)).getText().toString().substring(1));
-//            ((Button) mView.findViewById(R.id.buttonfact)).setText(((Button) mView.findViewById(R.id.buttonfact)).getText().toString().substring(1));
 
             ((Button) mView.findViewById(R.id.buttonSinusH)).setText(((Button) mView.findViewById(R.id.buttonSinusH)).getText().toString().substring(1));
             ((Button) mView.findViewById(R.id.buttonCosinusH)).setText(((Button) mView.findViewById(R.id.buttonCosinusH)).getText().toString().substring(1));
             ((Button) mView.findViewById(R.id.buttonTanH)).setText(((Button) mView.findViewById(R.id.buttonTanH)).getText().toString().substring(1));
-//            ((Button) mView.findViewById(R.id.buttonRandom)).setText(((Button) mView.findViewById(R.id.buttonRandom)).getText().toString().substring(1));
         }
     }
 
     private void applyInverse(boolean isOn) {
 
         if(isOn){
-//            ((Button) mView.findViewById(R.id.buttonlog)).setText(getResources().getString(R.string.tenpowerx));
 //            ((Button) mView.findViewById(R.id.buttonlog)).setTag(getResources().getString(R.string.tenpowerx_tag));
+//            ((Button) mView.findViewById(R.id.buttonlog)).setText(getResources().getString(R.string.tenpowerx));
             ((Button) mView.findViewById(R.id.buttonln)).setText(getResources().getString(R.string.epowerx));
 
             if(arcIsOn) {
@@ -325,8 +313,6 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
 
         LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mThemeChangedReciever, new IntentFilter("themeIntent"));
-//        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mClearButtonChangedReceiver, new IntentFilter("clearIntent"));
-
         Log.d(TAG, "Fragment onResume ");
 
 
@@ -371,7 +357,15 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
                 }
                 break;
 
+            case R.id.buttonConstant: {
 
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                ConstantUseFragment constantUseDialog = new ConstantUseFragment();
+                constantUseDialog.show(fm, "fragment_constant_use");
+
+            }
+            break;
+            
             default:
                 if(view.getTag().toString().equals( "trigonomic")){
                     ((MainActivity) getActivity()).aButtonIsPressed(((Button)view).getText().toString()+"(");
@@ -460,10 +454,10 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
     void redrawKeypadInFlatTheme(){
         setTextColorState(getOperatorButtonsID(), getThemeColorStateList());
         setTextColorState(getNonAccentButtonsID(), getNonAccentColorStateList());
-        int x = BuildConfig.VERSION_CODE;
-        if(BuildConfig.VERSION_CODE<21) {
-            setBackgroundColorForOperators();
-        }
+//        int x = BuildConfig.VERSION_CODE;
+//        if(BuildConfig.VERSION_CODE<21) {
+//            setBackgroundColorForOperators();
+//        }
     }
 
     private ColorStateList getThemeColorStateList() {
