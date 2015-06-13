@@ -552,7 +552,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             View map = page.findViewById(R.id.tour_screenshot);
             View mountain = null;
             View mountainNight = null;
-            View rain = null;
+            View rain = page.findViewById(R.id.tour_description);;
             View hands = page.findViewById(R.id.tour_screenshot);
             buyPre = Button.class.cast(findViewById(R.id.btn_buy_premium));
 
