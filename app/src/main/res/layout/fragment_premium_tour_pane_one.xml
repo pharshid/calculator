@@ -35,7 +35,6 @@
                 android:id="@+id/tour_descriptive_icon"
                 android:src="@drawable/premium_theme"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@id/tour_screenshot"
                 android:layout_margin="@dimen/padding_large"
                 />
 
@@ -43,7 +42,7 @@
         <TextView
             android:id="@+id/tour_title"
             android:layout_width="match_parent"
-                android:layout_height="128dp"
+            android:layout_height="100dp"
                 android:layout_centerHorizontal="true"
                 android:visibility="visible"
                 android:text="رنگین کمانی از رنگ"
@@ -52,7 +51,6 @@
                 android:textStyle="bold"
                 android:textColor="@android:color/white"
                 android:layout_below= "@+id/tour_descriptive_icon"
-                android:layout_margin="@dimen/padding_medium"
 
                 />
         <TextView
@@ -61,11 +59,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#607D8B"
-                android:textSize="26sp"
+            android:textSize="18sp"
                 android:text="پالِت رنگ صفحه کلید در اختیار شماست"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
-
                 android:layout_below="@+id/tour_title"
                 android:layout_centerHorizontal="true" />
 

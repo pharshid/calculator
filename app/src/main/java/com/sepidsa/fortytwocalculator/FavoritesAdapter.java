@@ -53,8 +53,10 @@ public class FavoritesAdapter extends CursorAdapter {
 
 
         viewHolder.resultView.setText(result);
+        viewHolder.resultView.setTextColor(((MainActivity) mContext).getAccentColorCode());
         viewHolder.operationView.setText(operation);
         viewHolder.tagView.setText(tag);
+        viewHolder.tagView.setBackgroundColor(((MainActivity) mContext).getAccentColorCode());
         viewHolder.starredButton.setChecked(starred);
         viewHolder.starredButton.setOnClickListener(mStarOnClickListener);
 

@@ -83,31 +83,41 @@
                 android:textSize="@dimen/log_detail_txt_size"
                 android:textColor="@android:color/darker_gray"
                 android:gravity="left"
-                android:paddingLeft="@dimen/padding_small"
+                android:paddingLeft="@dimen/padding_medium"
                 android:layout_toLeftOf="@id/log_checkbox"
                 android:focusable="false"
                 android:background="@android:color/transparent"
 
 
                 />
-            <TextView
-                android:layout_width="match_parent"
+            <FrameLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/LOG_tag"
                 android:layout_below="@id/operation"
+                android:layout_toLeftOf="@id/log_checkbox"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="@dimen/padding_small"
+                android:paddingLeft="@dimen/padding_medium"
+                >
+            <TextView
+                android:id="@+id/LOG_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 style="@style/CustomButton"
                 android:textSize="@dimen/log_detail_txt_size"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="@android:color/white"
                 android:gravity="left"
-                android:layout_toLeftOf="@id/log_checkbox"
                 android:focusable="false"
                 android:background="@android:color/transparent"
                 />
+
+            </FrameLayout>
         </RelativeLayout>
 
     <View android:layout_height="0.5dp"
         android:layout_width="match_parent"
-        android:background="?android:attr/listDivider"
+        android:background="#bdbdbd"
+
         android:layout_marginRight="@dimen/padding_large"
         android:layout_marginLeft="@dimen/padding_large"
         />

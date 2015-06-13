@@ -38,18 +38,16 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="128dp"
+            android:layout_height="100dp"
             android:layout_centerHorizontal="true"
             android:visibility="visible"
             android:id="@+id/tour_title"
             android:text="از ما حمایت کنید"
             android:gravity="center"
-            android:textSize="25sp"
+            android:textSize="26sp"
             android:textStyle="bold"
-            android:textColor="@android:color/white"
+            android:textColor="#FFC107"
             android:layout_below= "@+id/tour_descriptive_icon"
-            android:layout_margin="@dimen/padding_medium"
-
             />
         <TextView
 
@@ -57,11 +55,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:textSize="26sp"
+            android:textSize="18sp"
             android:text="با طلایی شدن از ما حمایت کنید، تا برنامه های زیبا بسازیم"
             android:fontFamily="sans-serif-light"
             android:gravity="center"
-
+                android:padding="@dimen/padding_large"
             android:layout_below="@+id/tour_title"
             android:layout_centerHorizontal="true" />
 

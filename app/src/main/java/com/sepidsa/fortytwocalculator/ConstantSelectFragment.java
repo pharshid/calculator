@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v4.app.DialogFragment;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -68,6 +69,7 @@ public class ConstantSelectFragment  extends DialogFragment implements LoaderMan
 
         mListView = (ListView) rootView.findViewById(R.id.listview_constant);
         mAddButton = (Button) rootView.findViewById(R.id.button_add_item);
+        mAddButton.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "yekan.ttf"));
         TextView empty = (TextView) rootView.findViewById(R.id.empty_list);
         mListView.setEmptyView(empty);
         mListView.setAdapter(mConstantSelectAdapter);

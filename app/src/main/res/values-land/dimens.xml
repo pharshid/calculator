@@ -27,14 +27,15 @@
     <dimen name="color_pallette_left_padding">50dp</dimen>
     <dimen name="language_menu_text_size">10sp</dimen>
 
-    <dimen name="log_title_txt_size">40sp</dimen>
-    <dimen name="log_detail_txt_size">34sp</dimen>
+    <dimen name="log_title_txt_size">24sp</dimen>
+    <dimen name="log_detail_txt_size">21sp</dimen>
     <dimen name="result_text_size">65sp</dimen>
     <dimen name="digital_lcd_text_size">40sp</dimen>
 
     <dimen name="app_icon_top_text_size">55sp</dimen>
     <dimen name="app_icon_bottom_text_size">20sp</dimen>
     <dimen name="retro_backspace_text_size">16sp</dimen>
+    <dimen name="list_item_margin_medium" >4dp</dimen>
 
 
 </resources>

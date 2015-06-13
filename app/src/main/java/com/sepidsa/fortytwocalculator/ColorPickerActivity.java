@@ -139,7 +139,7 @@ public class ColorPickerActivity extends FragmentActivity implements ColorPicker
             mAccentLayout.setBackgroundColor(getAccentColorCode());
             mACcentPallete.drawPalette(Utils.ColorUtils.colorChoice(getApplicationContext()), color, null);
         }else{
-            if(!getPremiumPreference()) {
+            if(getPremiumPreference()) {
                 saveKeypadBackgroundColorCode(color);
                 mKeypadLayout.setBackgroundColor(getKeypadBackgroundColorCode());
                 mKeypadPallete.drawPalette(Utils.ColorUtils.colorChoiceForKeypad(getApplicationContext()), color, null);
@@ -150,7 +150,7 @@ public class ColorPickerActivity extends FragmentActivity implements ColorPicker
                     displayUpgradeToPremium(0);
                 }
                 catch (Exception e ){
-                    Toast.makeText(getApplicationContext(), "مشکل در اتصال به بازار", Toast.LENGTH_LONG);
+                    Toast.makeText(getApplicationContext(), "مشکل در اتصال به بازار", Toast.LENGTH_LONG).show();
 
                 }            }
 

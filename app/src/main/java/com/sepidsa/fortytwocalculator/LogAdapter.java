@@ -75,6 +75,7 @@ public class LogAdapter extends CursorAdapter {
         viewHolder.starredButton.setOnClickListener(mStarOnClickListener);
 
         viewHolder.tagView.setBackgroundColor(((MainActivity) mContext).getAccentColorCode());
+        viewHolder.tagView.setOnClickListener(mLabelButtonOnClickListener);
 
 
         viewHolder.deleteButton.setOnClickListener(mDeleteButtonOnClickListener);

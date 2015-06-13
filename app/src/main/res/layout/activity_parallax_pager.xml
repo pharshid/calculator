@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="@string/premium_agree"
+            android:text="@string/app_tour_agree"
             android:textSize="18sp"
             android:textColor="@color/tutorial_button"
             android:background="@android:color/transparent"

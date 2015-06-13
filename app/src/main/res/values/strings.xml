@@ -241,9 +241,12 @@
   <string name="farsi_choose_email_app">با چی بفرستم؟</string>
   <string name="farsi_about_42_calc">راجع به ماشین حساب  ۴۲</string>
   <string name="become_premium">طلایی شو</string>
-    <string name="about_string">ماشین حساب ۴۲  \n  ساخت ایران \n</string>
+    <string name="about_string">تیم سپیدسا \n</string>
     <string name="premium_agree">موافقم</string>
+    <string name="app_tour_agree">چه خوب</string>
     <string name="premium_skip">باشه بعد</string>
+  <string name="tenpowerx_tag">E</string>
+    <string name="title_activity_about">AboutActivity</string>
 
 
 </resources>

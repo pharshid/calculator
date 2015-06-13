@@ -16,40 +16,32 @@
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" />
-
     <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- Permissions required by the sync adapter -->
-    <uses-permission
-        android:name="android.permission.READ_SYNC_SETTINGS"/>
-    <uses-permission
-        android:name="android.permission.WRITE_SYNC_SETTINGS"/>
-    <uses-permission
-        android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
-
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name" >
-
         <activity
-            android:name="SplashScreen"
-            android:theme="@style/Theme.Transparent"
-            >
+            android:name=".SplashScreen"
+            android:theme="@style/Theme.Transparent" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"></action>
-                <category android:name="android.intent.category.LAUNCHER"></category>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="user"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:windowSoftInputMode="stateHidden" >
-
         </activity>
 
         <provider
@@ -62,7 +54,6 @@
             android:authorities="com.sepidsa.fortytwocalculator.constants"
             android:exported="false"
             android:syncable="true" />
-
         <provider
             android:name=".data.CurrencyProvider"
             android:authorities="com.sepidsa.fortytwocalculator.currency"
@@ -75,7 +66,6 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" >
         </activity>
-
         <activity
             android:name=".ParallaxPagerActivity"
             android:label="@string/parallax_activity_name"
@@ -92,24 +82,21 @@
             android:name=".ColorPickerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_color_picker"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:parentActivityName=".MainActivity"
-            >
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" >
+
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
-
         </activity>
 
-
         <!-- SyncAdapter's dummy authentication service -->
-        <service
-            android:name=".sync.CurrencyAuthenticatorService"
-            >
+        <service android:name=".sync.CurrencyAuthenticatorService" >
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
+
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" />
@@ -118,17 +105,25 @@
         <!-- The SyncAdapter service -->
         <service
             android:name=".sync.CurrencySyncService"
-            android:exported="true"
-            >
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
             </intent-filter>
+
             <meta-data
                 android:name="android.content.SyncAdapter"
                 android:resource="@xml/syncadapter" />
         </service>
 
-
+        <activity
+            android:name=".AboutActivity"
+            android:label="@string/title_activity_about"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.sepidsa.fortytwocalculator.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

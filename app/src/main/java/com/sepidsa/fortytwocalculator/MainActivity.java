@@ -56,6 +56,7 @@ import com.mikepenz.materialdrawer.accountswitcher.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.sepidsa.fortytwocalculator.data.ConstantContract;
 import com.sepidsa.fortytwocalculator.data.LogContract;
 import com.sepidsa.fortytwocalculator.sync.CurrencySyncAdapter;
 import com.viewpagerindicator.CirclePageIndicator;
@@ -296,15 +297,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
 
-     public static boolean isBazaarPackageInstalled(Context context, String packageName) {
-         final PackageManager packageManager = context.getPackageManager();
-         Intent intent = packageManager.getLaunchIntentForPackage(packageName);
-         if (intent == null) {
-             return false;
-         }
-         List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-         return list.size() > 0;
-     }
+    public static boolean isBazaarPackageInstalled(Context context, String packageName) {
+        final PackageManager packageManager = context.getPackageManager();
+        Intent intent = packageManager.getLaunchIntentForPackage(packageName);
+        if (intent == null) {
+            return false;
+        }
+        List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        return list.size() > 0;
+    }
 
     private void buildNavigationDrawer() {
         // Navigation Drawer Codes //
@@ -340,7 +341,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                         new PrimaryDrawerItem().withName("نسخه طلایی").withIcon(getResources().getDrawable(R.drawable.badge))
 
                 )
-        .withSelectedItem(-1)
+                .withSelectedItem(-1)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
@@ -509,8 +510,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     private void displayAbout() {
-        AboutDialog cdc = new AboutDialog(this , android.R.style.Theme_Material_Dialog_Alert);
-        cdc.show();
+        Intent myIntent = new Intent(MainActivity.this, AboutActivity.class);
+        MainActivity.this.startActivity(myIntent);
 //        Intent myIntent = new Intent(MainActivity.this, HelpActivityOld.class);
 //        MainActivity.this.startActivity(myIntent);
 
@@ -553,7 +554,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-         super.onRestoreInstanceState(savedInstanceState);
+        super.onRestoreInstanceState(savedInstanceState);
         Log.d(TAG_recreate, "Activity onRestoreInstanceState and is " + savedInstanceState);
 
         // todo mtranslationbox restore
@@ -620,12 +621,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             public void run() {
                 prepareAnimationStuff();
                 prepareSoundStuff();
+                settHasbazaar(isBazaarPackageInstalled(getApplicationContext(), BAZAAR_PACKAGE_NAME));
+                populateConstantDatabaseFirstRun();
+
             }
         };
         Thread mythread = new Thread(runnable);
         mythread.start();
 
-        settHasbazaar(isBazaarPackageInstalled(getApplicationContext(), BAZAAR_PACKAGE_NAME));
 
 
     }
@@ -750,16 +753,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         if (mViewPager != null) {
 
-             // if in Portrait Phone
-                List<Fragment> fList = new ArrayList<Fragment>();
-                fList.add(new AnimatedLogFragment());
-                fList.add(new DialpadFragment());
-                fList.add(new ScientificFragment());
-                mViewPager.setAdapter(new ViewPagerAdapter(fragmentManager, fList));
-                mLayoutState = PORTRAIT_BOTH;
-                mViewPager.setOffscreenPageLimit(2);
-                mViewPager.setCurrentItem(DIALPAD_FRAGMENT);
-                setmDefaultPage(DIALPAD_FRAGMENT);
+            // if in Portrait Phone
+            List<Fragment> fList = new ArrayList<Fragment>();
+            fList.add(new AnimatedLogFragment());
+            fList.add(new DialpadFragment());
+            fList.add(new ScientificFragment());
+            mViewPager.setAdapter(new ViewPagerAdapter(fragmentManager, fList));
+            mLayoutState = PORTRAIT_BOTH;
+            mViewPager.setOffscreenPageLimit(0);
+            mViewPager.setCurrentItem(DIALPAD_FRAGMENT);
+            setmDefaultPage(DIALPAD_FRAGMENT);
 
         }
         else {
@@ -850,7 +853,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 //        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
 //        return appPreferences.getBoolean("has_watched_app_tour_v2.00", false);
-        return true;
+        return false;
     }
 
     private void setWatchedAppTour(){
@@ -1262,7 +1265,48 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
+    void populateConstantDatabaseFirstRun(){
+        if(!getPopulateConstantDatabase()){
 
+            String[] names = getResources().getStringArray(R.array.constant_default_names);
+            String[] numbers = getResources().getStringArray(R.array.constant_default_numbers);
+            String[] selections = getResources().getStringArray(R.array.constant_default_selections);
+
+            for(int index = 0 ; index < names.length ; index++) {
+                String newName = names[index];
+                Double newNumber = Double.parseDouble(numbers[index]);
+                int selection = Integer.parseInt(selections[index]);
+                ContentValues values = new ContentValues();
+
+                values.put(ConstantContract.ConstantEntry.COLUMN_NAME, newName);
+                values.put(ConstantContract.ConstantEntry.COLUMN_NUMBER, newNumber);
+                values.put(ConstantContract.ConstantEntry.COLUMN_SELECTED, selection);
+
+                getContentResolver().insert(
+                        ConstantContract.ConstantEntry.CONTENT_URI,
+                        values
+                );
+            }
+
+            setPopulateConstantDatabase(true);
+        }
+
+    }
+
+    private void setPopulateConstantDatabase(boolean hasPopulated) {
+        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
+        SharedPreferences.Editor editor = appPreferences.edit();
+
+        editor.putBoolean("hasPopulatedConstantDatabase", hasPopulated);
+
+
+        editor.apply();
+    }
+
+    private boolean getPopulateConstantDatabase() {
+        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
+       return  appPreferences.getBoolean("hasPopulatedConstantDatabase",false);
+    }
 
     private void performBackspace() {
 
@@ -1336,12 +1380,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private boolean updateUIExecute(boolean sendLogMessage) {
 
-//        if(isRetroThemeSelected()){
-//            if(!getPremiumPreference()){
-//                displayUpgradeToPremium(0);
-//                return false;
-//            }
-//        }
+        if(isRetroThemeSelected()){
+            if(!getPremiumPreference()){
+                displayUpgradeToPremium(0);
+                return false;
+            }
+        }
         mDecimal_fraction = "";
         byte decimalIndex = (byte) mTempResult.indexOf(".");
         if(decimalIndex != -1){
@@ -1373,7 +1417,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
 
 
-        setMExpressionString(resultTextView.getText().toString().replace(",", ""));
+        setMExpressionString(getMExpressionString().toString().replace(",", ""));
         mButtonsStack.clear();
         mButtonsStack.push(resultTextView.getText().toString().replace(",", ""));
 
@@ -1920,7 +1964,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
                 getResources().getString(R.string.ln_tag), getResources().getString(R.string.power), getResources().getString(R.string.log_tag), getResources().getString(R.string.tenpowerx) + "(",
                 getResources().getString(R.string.epowerx) + "(",
-                getResources().getString(R.string.sqrt), getResources().getString(R.string.e),"+","−","-","÷","×"};
+                getResources().getString(R.string.sqrt), getResources().getString(R.string.e),"+","−","-","÷","×","E"};
 
 
         List<String> myList = Arrays.asList(nonDigitStrings);
@@ -2183,7 +2227,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 break;
 
             case R.id.buttonHamburgerMenu:
-            mDrawer.openDrawer();
+                mDrawer.openDrawer();
                 break;
 
 //         case R.id.buttonPremium:
@@ -2286,7 +2330,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 //                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                startActivity(i);
                 Log.d(TAG_recreate, "Acrivity Right before recreate");
-                         recreate();
+                recreate();
             }
         }
     }

@@ -201,22 +201,54 @@ public class  Expression{
                         ans = new BigDecimal(Math.log(-1));	// otherwise make it NaN
                     }
                 }
-                else if( expNeg ) {
-//                    ans = new BigDecimal(Math.exp(e.multiply(new BigDecimal(Math.log(ans.doubleValue()))).negate().doubleValue()));
-//                    ans = ans.pow(e.negate().intValue()) ;
-                    ans = BigDecimalUtils.intPower(ans,e.negate().intValue(),6);
 
-                }
                 else{
 //                    ans = new BigDecimal( Math.exp( e.multiply(new BigDecimal( Math.log(ans.doubleValue()) )).doubleValue())) ;
-                    ans = ans.pow(e.intValue()) ;
+//                    ans = ans.pow(e.intValue()) ;
+//                    BigDecimal logx = BigDecimalUtils.(x) ;
+//                    BigDecimal ylogx = y.multiply(logx) ;
+//                    BigDecimal resul = exp(ylogx) ;
+//                    ans = BigDecimalMath.pow(ans, e);
+//                    BigDecimal d = ans;
 //                    ans =   BigFunctions.exp( BigFunctions.ln(e,100).multiply(ans),100 );
+                    BigDecimal n1 = ans;
+                    BigDecimal n2 = e;
+                    ans = bigdecimalPower(ans, n1, n2, expNeg);
                 }
             } else
                 break;
         }
         if( neg )
             ans = ans.negate();
+        return ans;
+    }
+
+    private BigDecimal bigdecimalPower(BigDecimal ans, BigDecimal n1, BigDecimal n2, boolean expNeg) {
+        int signOf2 = n2.signum();
+        if(expNeg) ans = ans.negate();
+        try {
+            // Perform X^(A+B)=X^A*X^B (B = remainder)
+            double dn1 = n1.doubleValue();
+            // Compare the same row of digits according to context
+            if (n1.doubleValue()!= dn1)
+                throw new Exception(); // Cannot convert n1 to double
+            n2 = n2.multiply(new BigDecimal(signOf2)); // n2 is now positive
+            BigDecimal remainderOf2 = n2.remainder(BigDecimal.ONE);
+            BigDecimal n2IntPart = n2.subtract(remainderOf2);
+            // Calculate big part of the power using context -
+            // bigger range and performance but lower accuracy
+            BigDecimal intPow = n1.pow(n2IntPart.intValueExact(),
+                    new MathContext(6));
+            BigDecimal doublePow =
+                    new BigDecimal(Math.pow(dn1, remainderOf2.doubleValue()));
+            ans = intPow.multiply(doublePow);
+        } catch (Exception error) {
+            error.printStackTrace();
+        }
+        // Fix negative power
+        if (expNeg) {
+            ans = BigDecimal.ONE.divide(ans, 6, BigDecimal.ROUND_HALF_UP);
+        }
         return ans;
     }
 
@@ -445,6 +477,7 @@ public class  Expression{
                 double doubleAns = ans.doubleValue();
 
                 ans = new BigDecimal(Math.pow(10,doubleAns));
+//                BigDecimalUtils.intPower()
                 found = true;
             }else if (s.indexOf("eˣ") == 0) {
                 s = s.substring(2);

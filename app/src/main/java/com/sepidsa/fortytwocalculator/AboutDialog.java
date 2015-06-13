@@ -1,5 +1,6 @@
 package com.sepidsa.fortytwocalculator;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -8,7 +9,7 @@ import android.view.Window;
 /**
  * Created by ehsanparhizkar on 6/9/15 AD.
  */
-public class AboutDialog extends Dialog {
+public class AboutDialog extends Activity {
     /**
      * Create a Dialog window that uses the default dialog frame style.
      *
@@ -16,10 +17,6 @@ public class AboutDialog extends Dialog {
      *                uses the window manager and theme in this context to
      *                present its UI.
      */
-    public AboutDialog(Context context, int theme) {
-        super(context, theme);
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

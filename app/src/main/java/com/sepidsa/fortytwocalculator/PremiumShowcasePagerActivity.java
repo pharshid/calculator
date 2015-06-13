@@ -2,10 +2,14 @@ package com.sepidsa.fortytwocalculator;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -17,6 +21,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,13 +33,15 @@ import com.sepidsa.fortytwocalculator.util.IabResult;
 import com.sepidsa.fortytwocalculator.util.Inventory;
 import com.sepidsa.fortytwocalculator.util.Purchase;
 
+import java.util.List;
+
 
 public class PremiumShowcasePagerActivity extends FragmentActivity {
 
     static final int NUM_PAGES = 6;
     static final String SKU_PREMIUM = "premium_upgrade";
     static final int RC_REQUEST = 10001;
-
+    boolean mThreadLock = false;
     static final String TAG = "in_app_billing";
 
     ViewPager pager;
@@ -58,6 +65,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
         setOnPageChangeListener below
      */
     boolean isOpaque = true;
+    private static final String BAZAAR_PACKAGE_NAME = "com.farsitel.bazaar";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +76,6 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
 
         base64EncodedPublicKey = "MIHNMA0GCSqGSIb3DQEBAQUAA4G7ADCBtwKBrwCgNUrs2KdQY911EkU3jcroP73iRap4P48t6pK3O3+NHum0/GYibcC5WAdw7YSIcirAlKr8niYErlVmbx9pkAAACMepMF11xQABddFvkgKMOLa+MGt/V2TAACeoA7DvLN8YyG8U6HwC1juu+honao7IW0mxbmOT34Xv4ff9wHajVB/Cm1S00Un7Ro0DBZQ3VBwShSbmqxVMOHx6e5ObuzE0gTqDdsNcgGab4lFf4wkCAwEAAQ==";
 
-        mHasBazaar = getHasbazaar();
-
 
         /*
             Setting this makes sure we draw fullscreen, without this the transparent Activity shows
@@ -79,6 +85,36 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
 //        window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
         setContentView(R.layout.activity_parallax_pager);
+        //        if( getHasbazaar()) {
+
+
+        mHelper = new IabHelper(this, base64EncodedPublicKey);
+        mHelper.enableDebugLogging(false);
+        try{
+            mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+                public void onIabSetupFinished(IabResult result) {
+                    Log.d(TAG, "Setup finished.");
+
+                    if (!result.isSuccess()) {
+                        // Oh noes, there was a problem.
+                        complain("Problem setting up in-app billing: " + result);
+                        return;
+                    }
+
+                    // Have we been disposed of in the meantime? If so, quit.
+                    if (mHelper == null) return;
+
+                    // IAB is fully set up. Now, let's get an inventory of stuff we own.
+                    Log.d(TAG, "Setup successful. Querying inventory.");
+                    mHelper.queryInventoryAsync(mGotInventoryListener);
+                }
+            });
+        }
+
+        catch (Exception e){
+            Toast.makeText(getApplicationContext(),"مطمئن شوید که وارد اکانت بازار شده اید",Toast.LENGTH_LONG).show();
+        }
+//        }
 
         skip = Button.class.cast(findViewById(R.id.skip));
         skip.setOnClickListener(new View.OnClickListener() {
@@ -102,8 +138,9 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 buyPremium();
-                endTutorial();
-            }
+                if(getHasbazaar()){
+                    endTutorial();
+                }            }
         });
 
 
@@ -117,13 +154,13 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 //See note above for why this is needed
-                if(position == NUM_PAGES - 2 && positionOffset > 0){
-                    if(isOpaque) {
+                if (position == NUM_PAGES - 2 && positionOffset > 0) {
+                    if (isOpaque) {
                         pager.setBackgroundColor(Color.TRANSPARENT);
                         isOpaque = false;
                     }
-                }else{
-                    if(!isOpaque) {
+                } else {
+                    if (!isOpaque) {
                         pager.setBackgroundColor(getResources().getColor(R.color.tutorial_background_opaque));
                         isOpaque = true;
                     }
@@ -133,18 +170,19 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             @Override
             public void onPageSelected(int position) {
                 setIndicator(position);
-                if(position == NUM_PAGES - 2){
+                if (position == NUM_PAGES - 2) {
                     skip.setVisibility(View.GONE);
                     next.setVisibility(View.GONE);
                     done.setVisibility(View.VISIBLE);
-                }else if(position < NUM_PAGES - 2){
+                } else if (position < NUM_PAGES - 2) {
                     skip.setVisibility(View.VISIBLE);
                     next.setVisibility(View.VISIBLE);
                     done.setVisibility(View.GONE);
-                }else if(position == NUM_PAGES - 1){
+                } else if (position == NUM_PAGES - 1) {
                     buyPremium();
-                    endTutorial();
-
+                    if(getHasbazaar()) {
+                        endTutorial();
+                    }
                 }
             }
 
@@ -156,28 +194,19 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
 
         buildCircles();
 
-        if(mHasBazaar) {
-            mHelper = new IabHelper(this, base64EncodedPublicKey);
-            mHelper.enableDebugLogging(false);
-            mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-                public void onIabSetupFinished(IabResult result) {
-                    Log.d(TAG, "Setup finished.");
 
-                    if (!result.isSuccess()) {
-                        // Oh noes, there was a problem.
-                        complain("Problem setting up in-app billing: " + result);
-                        return;
-                    }
+    }
 
-                    // Have we been disposed of in the meantime? If so, quit.
-                    if (mHelper == null) return;
 
-                    // IAB is fully set up. Now, let's get an inventory of stuff we own.
-                    Log.d(TAG, "Setup successful. Querying inventory.");
-                    mHelper.queryInventoryAsync(mGotInventoryListener);
-                }
-            });
+
+    public static boolean isBazaarPackageInstalled(Context context, String packageName) {
+        final PackageManager packageManager = context.getPackageManager();
+        Intent intent = packageManager.getLaunchIntentForPackage(packageName);
+        if (intent == null) {
+            return false;
         }
+        List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        return list.size() > 0;
     }
 
     public boolean getHasbazaar(){
@@ -197,6 +226,8 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             // Is it a failure?
             if (result.isFailure()) {
 //                complain("Failed to query inventory: " + result);
+                Toast.makeText(getApplicationContext(),"مشکل در ارتباط با بازار",Toast.LENGTH_LONG).show();
+
                 return;
             }
 
@@ -212,7 +243,9 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             Purchase premiumPurchase = inventory.getPurchase(SKU_PREMIUM);
 //            mIsPremium = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
             setPremiumPreference (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
-
+            if(getPremiumPreference()){
+                Toast.makeText(getApplicationContext(),"شما در حال حاضر طلایی هستید",Toast.LENGTH_LONG).show();
+            }
             Log.d(TAG, "User is " + (getPremiumPreference() ? "PREMIUM" : "NOT PREMIUM"));
 
 //            updateUi();
@@ -226,23 +259,52 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
 
     private void buyPremium() {
         //TODO INSERT BUY PREMIUM CODE
-//        Toast.makeText(getApplicationContext(),"IMPLEMENT ME", Toast.LENGTH_SHORT).show();
+
         if(mHelper!= null) {
-            mHelper.launchPurchaseFlow(this, SKU_PREMIUM, RC_REQUEST,
-                    mPurchaseFinishedListener, "bGoa+V7g/yqDXvKRqq+JTFn4uQZbPiQJo4pf9RzJ");
-                      // Fade the premium tour
+            try {
+                mHelper.launchPurchaseFlow(this, SKU_PREMIUM, RC_REQUEST,
+                        mPurchaseFinishedListener, "");
+                // Fade the premium tour
+            }catch (Exception e){
+                Toast.makeText(getApplicationContext(),"لطفا چند لحظه بعد دوباره امتحان کنید",Toast.LENGTH_LONG).show();
+            }
 
         }else {
-            if(!mHasBazaar){
-                Toast.makeText(getApplicationContext(),"لطفا بازار رو نصب کن",Toast.LENGTH_LONG).show();
+            if(!getHasbazaar()){
+            showDownloadBazaarDialog();
 
             }else{
-                Toast.makeText(getApplicationContext(),"مشکل در ارتباط با بازار",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"در حال دریافت اطلاعات شما",Toast.LENGTH_LONG).show();
 
             }
 
         }
 
+    }
+
+    void showDownloadBazaarDialog(){
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+
+
+        adb.setTitle("بازار نصب نیست.دانلود بشه ؟");
+
+
+       adb.setPositiveButton("موافقم", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+               goToUrl("www.google.com");
+            } });
+
+        adb.setNegativeButton("باشه بعدا", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            } });
+        adb.show();
+    }
+    private void goToUrl (String url) {
+        String page = "http://cafebazaar.ir/download/bazaar.apk";
+        Uri uriUrl = Uri.parse(page);
+        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+        startActivity(launchBrowser);
     }
 
 
@@ -280,6 +342,16 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             }
         }
     };
+
+
+
+    public void settHasbazaar(boolean hasBazaar){
+        //TODO set a cool default theme color
+        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
+        SharedPreferences.Editor editor = appPreferences.edit();
+        editor.putBoolean("IS_BAZAAR_INSTALLED", hasBazaar);
+        editor.commit();
+    }
 
     /** Verifies the developer payload of a purchase. */
     boolean verifyDeveloperPayload(Purchase p) {
@@ -358,6 +430,17 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             }
         }
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        settHasbazaar(isBazaarPackageInstalled(getApplicationContext(), BAZAAR_PACKAGE_NAME));
+
+//        mHasBazaar =;
+
+
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -479,7 +562,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
                     @Override
                     public void onClick(View v) {
                         buyPremium();
-                        if(mHasBazaar){
+                        if(getHasbazaar()){
                             endTutorial();
                         }
                     }

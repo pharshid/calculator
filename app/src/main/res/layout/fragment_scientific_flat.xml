@@ -292,7 +292,7 @@
             style="@style/CustomButton.SCIENTIFIC"
             android:layout_weight="1"
             android:text="@string/log"
-            android:tag="@string/trigonomic"
+            android:tag="@string/log_tag"
             />
     </LinearLayout>
 

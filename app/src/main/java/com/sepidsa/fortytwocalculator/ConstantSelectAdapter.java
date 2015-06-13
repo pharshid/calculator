@@ -3,6 +3,7 @@ package com.sepidsa.fortytwocalculator;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,6 +53,8 @@ public class ConstantSelectAdapter extends CursorAdapter {
 
 
         viewHolder.nameView.setText(name);
+        viewHolder.nameView.setTextColor(((MainActivity)mContext).getAccentColorCode());
+        viewHolder.nameView.setTypeface(Typeface.createFromAsset(context.getAssets(), "yekan.ttf"));
         viewHolder.numberView.setText(Double.toString(number));
         viewHolder.selectedButton.setChecked(selected);
         viewHolder.selectedButton.setOnClickListener(mSelectedOnClickListener);
@@ -109,7 +112,6 @@ public class ConstantSelectAdapter extends CursorAdapter {
                             selectionArgs
                     );
 
-                    showMessage(Integer.toString(position) + isCheckedInteger);
 
 
                 }
@@ -124,7 +126,6 @@ public class ConstantSelectAdapter extends CursorAdapter {
             if (parent != null) {
                 ViewHolder viewHolder = (ViewHolder) parent.getTag();
                 final int position = viewHolder.position;
-                showMessage("delete " + position);
                 String selection = ConstantContract.ConstantEntry._ID + "=?";
                 String[] selectionArgs = new String[]{String.valueOf(position)};
                 Uri uri = ConstantContract.ConstantEntry.CONTENT_URI;
@@ -150,9 +151,7 @@ public class ConstantSelectAdapter extends CursorAdapter {
     }
 
 
-    private void showMessage(String message) {
-        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-    }
+
 
 
 }

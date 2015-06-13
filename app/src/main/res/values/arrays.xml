@@ -8,16 +8,17 @@
         <item>#336e7b</item>
         <item>#00bcd4</item>
         <item>#29B6F6</item>
-        <item>#000000</item>
-        <item>#607D8B</item>
-        <item>#666B5B</item>
-        <item>#757575</item>
         <item>#01579B</item>
+        <item>#607D8B</item>
+        <item>#000000</item>
         <item>#795548</item>
+        <item>#FFC107</item>
         <item>#ff6e40</item>
         <item>#F06292</item>
-        <item>#D81B60</item>
+        <item>#E91E63</item>
+        <!--<item>#D81B60</item>-->
         <item>#BA68C8</item>
+        <item>#7C4DFF</item>
         <item>#C51162</item>
         <item>#880E4F</item>
 
@@ -68,8 +69,151 @@
 
     </string-array>
 
+    <string-array name="constant_default_names" translatable="false">
 
- <string-array name="help_sub_topics" translatable="false">
+        <!--<item>جرم اتمی</item>-->
+        <item>ثابت آووگادرو</item>
+        <!--<item>مگنتون بور</item>-->
+        <!--<item>شعاع بور</item>-->
+        <!--<item>ثابت بولتزمن</item>-->
+        <item>دمای سلسیوس</item>
+        <item>امپدانس مشخصه خلاء</item>
+        <!--<item>شعاع کلاسیک الکترون</item>-->
+        <!--<item>طول موچ کامپتون</item>-->
+        <item>کوانتوم رسانایی</item>
+        <!--<item>ثابت الکتریکی</item>-->
+        <!--<item>گشتاور مغناطیسی الکترون</item>-->
+        <!--<item>جرم الکترون</item>-->
+        <!--<item>بار ابتدایی</item>-->
+        <item>عدد اویلر</item>
+        <item>ثابت فارادی</item>
+        <item>ثابت ساختار ظریف</item>
+        <!--<item>ثابت تابش اولیه</item>-->
+        <item>نسبت طلایی</item>
+        <item>ثابت مغناطیسی</item>
+        <!--<item>کوانتوم شار مغناطیسی</item>-->
+        <item>ثابت گاز مولی</item>
+        <item>حجم مولی گاز ایده آل</item>
+        <!--<item>گشتاور مغناطیسی موآن</item>-->
+        <!--<item>جرم موآن</item>-->
+        <!--<item>طول موج نوترون کامپتون</item>-->
+        <!--<item>گشتاور مغناطیسی نوترون</item>-->
+        <!--<item>جرم نوترون</item>-->
+        <!--<item>ثابت جاذبه نیوتن</item>-->
+        <!--<item>مگنتون هسته ای</item>-->
+        <item>عدد پی</item>
+        <!--<item>پلانک</item>-->
+        <!--<item>طول موج  پروتونی کامپتون</item>-->
+        <item>نسبت ژیرومغناطیسی پروتون</item>
+        <!--<item>گشتاور مغناطیسی پروتون</item>-->
+        <!--<item>جرم پروتون</item>-->
+        <item>ثابت رایدبرگ</item>
+        <item>ثابت تابش ثانویه</item>
+        <item>سرعت نور</item>
+        <item>شتاب استاندارد جاذبه</item>
+        <item>اتمسفر استاندارد</item>
+        <item>ثابت استفان-بولتزمن</item>
+
+
+    </string-array>
+
+    <string-array name="constant_default_numbers" translatable="false">
+
+        <!--<item>1.660538921e-27</item>-->
+        <item>6.02214129e23</item>
+        <!--<item>9.27400968e-24</item>-->
+        <!--<item>5.2917721092e-11</item>-->
+        <!--<item>1.3806488e-23</item>-->
+        <item>273.15</item>
+        <item>376.730313461</item>
+        <!--<item>2.8179403267e-15</item>-->
+        <!--<item>2.4263102389e-12</item>-->
+        <item>0.000077480917346</item>
+        <!--<item>8.854187817e-12</item>-->
+        <!--<item>-9.2847643e-24</item>-->
+        <!--<item>9.10938291e-31</item>-->
+        <!--<item>1.602176565e-19</item>-->
+        <item>2.71828182846</item>
+        <item>96485.3365</item>
+        <item>0.0072973525698</item>
+        <!--<item>3.74177153e-16</item>-->
+        <item>1.61803398875</item>
+        <item>0.0000012566370614</item>
+        <!--<item>2.067833758e-15</item>-->
+        <item>8.3144621</item>
+        <item>0.022710953</item>
+        <!--<item>-4.49044807e-26</item>-->
+        <!--<item>1.883531475e-28</item>-->
+        <!--<item>1.3195909068e-15</item>-->
+        <!--<item>-9.6623647e-27</item>-->
+        <!--<item>1.674927351e-27</item>-->
+        <!--<item>6.67384e-11</item>-->
+        <!--<item>5.05078353e-27</item>-->
+        <item>3.14159265359</item>
+        <!--<item>6.62606957e-34</item>-->
+        <!--<item>1.32140985623e-15</item>-->
+        <item>267522200.5</item>
+        <!--<item>1.4106067473e-26</item>-->
+        <!--<item>1.672621777e-27</item>-->
+        <item>10973731.5685</item>
+        <item>0.01438777</item>
+        <item>299792458</item>
+        <item>9.80665</item>
+        <item>101325</item>
+        <item>0.00000005670373</item>
+
+
+    </string-array>
+
+    <string-array name="constant_default_selections" translatable="false">
+
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <!--<item>1</item>-->
+        <!--<item>1</item>-->
+        <!--<item>1</item>-->
+        <!--<item>1</item>-->
+        <!--<item>1</item>-->
+        <!--<item>1</item>-->
+        <!--<item>1</item>-->
+        <!--<item>1</item>-->
+        <!--<item>1</item>-->
+        <!--<item>1</item>-->
+        <!--<item>1</item>-->
+        <!--<item>1</item>-->
+        <!--<item>1</item>-->
+        <!--<item>1</item>-->
+        <!--<item>1</item>-->
+        <!--<item>1</item>-->
+        <!--<item>1</item>-->
+        <!--<item>1</item>-->
+        <!--<item>1</item>-->
+        <!--<item>1</item>-->
+        <!--<item>1</item>-->
+        <!--<item>1</item>-->
+        <!--<item>1</item>-->
+
+    </string-array>
+
+
+    <string-array name="help_sub_topics" translatable="false">
 
         <item>این ماشین حساب به نحوی طراحی شده که به فشردن دکمه مساوی به هیچ وجه نیازی نباشه. اما برای بهتر خونده شدن نتیجه می تونید دکمه مساوی رو بزنید تا پاسخ رو به یکی از چهار زبان فارسی انگلیسی عربی و فرانسه ببینید.از موارد پرکاربرد این قابلیت هنگام پرکردن فیش بانکی هست </item>
         <item>شما می تونید عددهای مهم رو ستاره دار کنید. بعد ازون در هر لحظه که احتیاج بود می تونید دکمه لیست ستاره ها رو در صفحه اصلی بزنید تا فقط اعدادی که ستاره دار هستند به شما نمایش داده شن.با انتخاب هر عدد بلافاصله مقدارش وارد صفحه نمایش می شه</item>

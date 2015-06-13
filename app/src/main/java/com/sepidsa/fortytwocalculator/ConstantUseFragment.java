@@ -1,6 +1,7 @@
 package com.sepidsa.fortytwocalculator;
 
 import android.app.Dialog;
+import android.graphics.Typeface;
 import android.support.v4.app.DialogFragment;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -17,7 +18,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sepidsa.fortytwocalculator.data.ConstantContract;
 
@@ -42,6 +42,9 @@ public class ConstantUseFragment  extends DialogFragment implements LoaderManage
     public ConstantUseFragment() {
     }
 
+
+
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         getLoaderManager().initLoader(CONSTANT_LOADER, null, this);
@@ -59,6 +62,8 @@ public class ConstantUseFragment  extends DialogFragment implements LoaderManage
 
         mListView = (ListView) rootView.findViewById(R.id.listview_constant);
         mGotoSelect = (Button) rootView.findViewById(R.id.button_goto_select);
+        mGotoSelect.setTextColor(((MainActivity)getActivity()).getAccentColorCode());
+        mGotoSelect.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "yekan.ttf"));
         TextView empty = (TextView) rootView.findViewById(R.id.empty_list);
         mListView.setEmptyView(empty);
         mListView.setAdapter(mConstantUseAdapter);

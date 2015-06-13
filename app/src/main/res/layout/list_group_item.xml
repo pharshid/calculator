@@ -117,7 +117,7 @@
 
                 style="@style/CustomButton"
                 android:textSize="@dimen/log_detail_txt_size"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="@android:color/white"
                 android:gravity="left"
 
                 android:focusable="false"

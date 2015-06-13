@@ -23,8 +23,8 @@
     <dimen name="result_text_size">99sp</dimen>
     <dimen name="digital_lcd_text_size">70sp</dimen>
 
-    <dimen name="log_title_txt_size">30sp</dimen>
-    <dimen name="log_detail_txt_size">19sp</dimen>
+    <dimen name="log_title_txt_size">24sp</dimen>
+    <dimen name="log_detail_txt_size">18sp</dimen>
 
     <dimen name="icon_button_size">19sp</dimen>
 
@@ -35,5 +35,6 @@
     <dimen name="app_icon_top_text_size">70sp</dimen>
     <dimen name="app_icon_bottom_text_size">25sp</dimen>
     <dimen name="retro_backspace_text_size">23sp</dimen>
+    <dimen name="list_item_margin_medium" >8dp</dimen>
 
 </resources>

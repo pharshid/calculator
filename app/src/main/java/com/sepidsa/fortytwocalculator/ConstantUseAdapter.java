@@ -2,6 +2,7 @@ package com.sepidsa.fortytwocalculator;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,8 @@ public class ConstantUseAdapter extends CursorAdapter {
 
 
         viewHolder.nameView.setText(name);
+        viewHolder.nameView.setTextColor(((MainActivity)mContext).getAccentColorCode());
+        viewHolder.nameView.setTypeface(Typeface.createFromAsset(context.getAssets(), "yekan.ttf"));
         viewHolder.numberView.setText(Double.toString(number));
 
     }

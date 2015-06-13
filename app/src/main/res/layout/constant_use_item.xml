@@ -31,7 +31,8 @@
         android:animateLayoutChanges="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:descendantFocusability="blocksDescendants">
+        android:descendantFocusability="blocksDescendants"
+        android:layout_margin="@dimen/padding_medium">
 
 
 
@@ -44,7 +45,7 @@
             android:paddingTop="@dimen/padding_small"
             android:textColor="@android:color/holo_blue_light"
             android:gravity="right"
-            android:paddingRight="@dimen/padding_small"
+            android:paddingRight="@dimen/list_item_margin_medium"
             android:clickable="false"
             android:focusable="false"
             android:text="Name"
@@ -53,15 +54,15 @@
             />
 
         <TextView
+            android:id="@+id/constant_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/constant_number"
             android:layout_below="@+id/constant_name"
             style="@style/CustomButton"
             android:textSize="@dimen/log_detail_txt_size"
             android:textColor="@android:color/darker_gray"
             android:gravity="left"
-            android:paddingRight="@dimen/padding_small"
+            android:paddingLeft="@dimen/list_item_margin_medium"
             android:focusable="false"
             android:text="Number"
 
