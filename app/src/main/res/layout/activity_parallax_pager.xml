@@ -32,6 +32,8 @@
             android:text="@string/premium_skip"
             android:textSize="18sp"
             android:textColor="@color/tutorial_button"
+            android:paddingLeft="@dimen/padding_large"
+
             android:background="@android:color/transparent"/>
 
         <LinearLayout
@@ -52,7 +54,9 @@
             android:textSize="18sp"
             android:textColor="@color/tutorial_button"
             android:background="@android:color/transparent"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:paddingRight="@dimen/padding_large"
+            />
 
         <ImageButton
             android:id="@+id/next"

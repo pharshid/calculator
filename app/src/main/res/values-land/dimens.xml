@@ -35,6 +35,8 @@
     <dimen name="app_icon_top_text_size">55sp</dimen>
     <dimen name="app_icon_bottom_text_size">20sp</dimen>
     <dimen name="retro_backspace_text_size">16sp</dimen>
+    <dimen name="retro_m_variable_text_size">9sp</dimen>
+
     <dimen name="list_item_margin_medium" >4dp</dimen>
 
 

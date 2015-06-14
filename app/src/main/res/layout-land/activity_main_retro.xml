@@ -50,7 +50,7 @@
                     android:textColor="@android:color/black"
                     android:paddingLeft="@dimen/padding_small"
                     android:text="RAD"
-                    android:textSize="8sp"
+                    android:textSize="@dimen/retro_m_variable_text_size"
 
                     />
 
@@ -65,7 +65,7 @@
                     android:paddingLeft="@dimen/padding_small"
                     android:text=" M = 0"
                     android:inputType="textMultiLine|textNoSuggestions"
-                    android:textSize="8sp"
+                    android:textSize="@dimen/retro_m_variable_text_size"
                     />
 
 

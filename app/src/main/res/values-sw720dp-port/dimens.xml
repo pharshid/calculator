@@ -19,7 +19,6 @@
     <dimen name="result_text_size">180sp</dimen>
     <dimen name="btn_text_size">60.0sp</dimen>
     <dimen name="btn_clear_text_size">60.0sp</dimen>
-    <dimen name="retro_backspace_text_size">46sp</dimen>
 
 
 

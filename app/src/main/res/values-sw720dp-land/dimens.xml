@@ -34,5 +34,4 @@
 
     <dimen name="btn_text_size">42.0sp</dimen>
     <dimen name="btn_clear_text_size">42.0sp</dimen>
-    <dimen name="retro_backspace_text_size">35sp</dimen>
 </resources>
