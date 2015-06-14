@@ -17,7 +17,6 @@
             android:padding="@dimen/padding_large"
             android:layout_marginTop="@dimen/abc_control_padding_material"
             android:textColor="@android:color/white"
-            android:visibility="invisible"
         />
 
 

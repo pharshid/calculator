@@ -64,6 +64,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
      */
     boolean isOpaque = true;
     private static final String BAZAAR_PACKAGE_NAME = "com.farsitel.bazaar";
+    private boolean mSetupFinished =false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,10 +106,12 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buyPremium();
-                if(getHasbazaar()){
-//                    endTutorial();
-                }            }
+                if(getPremiumPreference()){
+                    endTutorial();
+                }else{
+                    buyPremium();
+                }
+            }
         });
 
 
@@ -147,9 +150,10 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
                     next.setVisibility(View.VISIBLE);
                     done.setVisibility(View.GONE);
                 } else if (position == NUM_PAGES - 1) {
-                    buyPremium();
-                    if(getHasbazaar()) {
+                    if(getPremiumPreference()){
                         endTutorial();
+                    }else{
+                        buyPremium();
                     }
                 }
             }
@@ -170,29 +174,30 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
         mHelper = new IabHelper(this, base64EncodedPublicKey);
 //        mHelper.enableDebugLogging(false);
         try{
-        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-            public void onIabSetupFinished(IabResult result) {
-                Log.d(TAG, "Setup finished.");
+            mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+                public void onIabSetupFinished(IabResult result) {
+                    Log.d(TAG, "Setup finished.");
 
-                if (!result.isSuccess()) {
-                    // Oh noes, there was a problem.
-                    complain("Problem setting up in-app billing: " + result);
-                    return;
-                }
+                    if (!result.isSuccess()) {
+                        // Oh noes, there was a problem.
+                        complain("Problem setting up in-app billing: " + result);
+                        return;
+                    }
 
-                // Have we been disposed of in the meantime? If so, quit.
-                if (mHelper == null) return;
+                    // Have we been disposed of in the meantime? If so, quit.
+                    if (mHelper == null) return;
 
-                // IAB is fully set up. Now, let's get an inventory of stuff we own.
-                Log.d(TAG, "Setup successful. Querying inventory.");
+                    // IAB is fully set up. Now, let's get an inventory of stuff we own.
+                    Log.d(TAG, "Setup successful. Querying inventory.");
+                    mSetupFinished = true;
                     mHelper.queryInventoryAsync(mGotInventoryListener);
-                buyPre.setVisibility(View.VISIBLE);
+//                buyPre.setVisibility(View.VISIBLE);
+                }
+            });}catch (SecurityException se){
+            if(mHelper != null){
+                mHelper.dispose();
+                mHelper = null;
             }
-        });}catch (SecurityException se){
-        if(mHelper != null){
-            mHelper.dispose();
-            mHelper = null;
-        }
             Toast.makeText(getApplicationContext(),"problem setting up helper",Toast.LENGTH_LONG).show();
 
         }
@@ -227,8 +232,6 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             // Is it a failure?
             if (result.isFailure()) {
 //                complain("Failed to query inventory: " + result);
-//                Toast.makeText(getApplicationContext(),"لطفا ابتدا در بازار وارد اکانت خود شوید",Toast.LENGTH_LONG).show();
-
                 return;
             }
 
@@ -242,8 +245,8 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
 //            mGotInventory = true;
             // Do we have the premium upgrade?
             Purchase premiumPurchase = inventory.getPurchase(SKU_PREMIUM);
-           boolean mIsPremium = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
-                setPremiumPreference (mIsPremium);
+            boolean mIsPremium = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
+            setPremiumPreference (mIsPremium);
             if(getPremiumPreference()){
                 Toast.makeText(getApplicationContext(),"شما در حال حاضر طلایی هستید",Toast.LENGTH_LONG).show();
 //                endTutorial();
@@ -265,24 +268,19 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
         if(!isBazaarPackageInstalled(getApplicationContext(), BAZAAR_PACKAGE_NAME)){
             showDownloadBazaarDialog();
         }else {
-            if (mHelper != null) {
+            if (mHelper != null && mSetupFinished) {
                 try {
                     mHelper.launchPurchaseFlow(this, SKU_PREMIUM, RC_REQUEST,
                             mPurchaseFinishedListener, "");
-//                    mHelper.queryInventoryAsync(mGotInventoryListener);
-
                     // Fade the premium tour
                 } catch (Exception e) {
                     mHelper.dispose();
                     mHelper = null;
-                    Toast.makeText(getApplicationContext(), "لطفا چند لحظه بعد دوباره امتحان کنید", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "مشکل در ارتباط با بازار", Toast.LENGTH_LONG).show();
                 }
             } else {
-                setupMHelper();
-                if (mHelper != null) {
-                mHelper.launchPurchaseFlow(this, SKU_PREMIUM, RC_REQUEST,
-                        mPurchaseFinishedListener, "");
-                }
+                Toast.makeText(getApplicationContext(), "لطفا چند لحظه بعد دوباره امتحان کنید", Toast.LENGTH_LONG).show();
+
             }
         }
 
@@ -322,7 +320,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
 
             if (result.isFailure()) {
 
-                complain("Error purchasing: " + result);
+//                complain("Error purchasing: " + result);
 //                setWaitScreen(false);
                 return;
             }
@@ -339,7 +337,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
                 // bought the premium upgrade!
                 Log.d(TAG, "Purchase is premium upgrade. Congratulating user.");
 //                endTutorial();
-                alert("مبارک باشه !");
+                Toast.makeText(getApplicationContext(),"شما طلایی هستید...مبارک باشه!",Toast.LENGTH_LONG).show();
 //                mIsPremium = true;
                 setPremiumPreference(true);
 //todo update ui for finished
@@ -422,18 +420,18 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
 //        if(requestCode == resultCode ){
 
 
-            Log.d(TAG, "onActivityResult(" + requestCode + "," + resultCode + "," + data);
-            if (mHelper == null) return;
+        Log.d(TAG, "onActivityResult(" + requestCode + "," + resultCode + "," + data);
+        if (mHelper == null) return;
 
-            // Pass on the activity result to the helper for handling
-            if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
-                // not handled, so handle it ourselves (here's where you'd
-                // perform any handling of activity results not related to in-app
-                // billing...
-                super.onActivityResult(requestCode, resultCode, data);
-            } else {
-                Log.d(TAG, "onActivityResult handled by IABUtil.");
-            }
+        // Pass on the activity result to the helper for handling
+        if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
+            // not handled, so handle it ourselves (here's where you'd
+            // perform any handling of activity results not related to in-app
+            // billing...
+            super.onActivityResult(requestCode, resultCode, data);
+        } else {
+            Log.d(TAG, "onActivityResult handled by IABUtil.");
+        }
 //        }
     }
 
