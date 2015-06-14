@@ -311,7 +311,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         // Create the AccountHeader
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
-                .withHeaderBackground(R.drawable.header)
+                .withHeaderBackground(R.drawable.forty_two_header_1440)
                 .addProfiles(
                         new ProfileDrawerItem()
 //                                .withName("ماشین حساب 42")

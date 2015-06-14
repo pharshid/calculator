@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/SplashImageView"
-        android:src="@drawable/sepidsa_icon"
+        android:src="@drawable/forty_two_300percent"
         android:layout_centerInParent="true"
         />
 
