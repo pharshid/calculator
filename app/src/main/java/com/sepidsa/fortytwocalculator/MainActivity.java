@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -754,10 +753,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             List<Fragment> fList = new ArrayList<Fragment>();
             fList.add(new AnimatedLogFragment());
             fList.add(new DialpadFragment());
-            if(getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
+            if( mViewPager.getTag().equals("portrait_phone")) {
                 // if in landscape phone also add a page for scientific
                 fList.add(new ScientificFragment());
-
             }
             // if in Portrait Phone
 

@@ -30,8 +30,11 @@
     <dimen name="btn_clear_text_size">45.0sp</dimen>
     <dimen name="retro_backspace_text_size">30sp</dimen>
     <dimen name="retro_m_variable_text_size">18sp</dimen>
+    <dimen name="digital_lcd_text_size">90sp</dimen>
+    <dimen name="digital_lcd_translation_textsize">50sp</dimen>
 
     <dimen name="result_text_size">160sp</dimen>
+    <dimen name="btn_scientific_text_size">36sp</dimen>
 
 
     <dimen name="log_title_txt_size">41sp</dimen>

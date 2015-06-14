@@ -83,21 +83,20 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:textColor="@android:color/black"
-                android:gravity="right|center_vertical"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:textSize="30sp"
+                android:gravity="right|bottom"
+                android:paddingBottom="@dimen/padding_small"
+                android:textSize="@dimen/digital_lcd_translation_textsize"
                 android:paddingRight="@dimen/padding_large"
                 android:scrollbars = "vertical"
                 android:background="@android:color/transparent"
                 android:layout_toRightOf="@id/btn_add_star"
-                android:includeFontPadding="false"
 
                 />
 
                 <Button
                     android:id="@+id/add_label"
                     android:layout_width="42dp"
-                    android:layout_height="24dp"
+                    android:layout_height="42dp"
                     android:textColor="@android:color/black"
                     android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"
@@ -105,12 +104,11 @@
                     android:text="@string/add_label"
                     android:textSize="19sp"
                     android:visibility="gone"
-                    android:layout_below="@id/scientific_mode_textview"
+                    android:layout_above="@id/btn_add_star"
                     />
 
                 <Button
                     android:id="@+id/btn_add_star"
-                    android:layout_below="@id/add_label"
                     android:layout_width="42dp"
                     android:layout_height="24dp"
                     android:textColor="@android:color/black"

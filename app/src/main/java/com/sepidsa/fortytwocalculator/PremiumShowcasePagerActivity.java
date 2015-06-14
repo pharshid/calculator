@@ -107,7 +107,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             public void onClick(View v) {
                 buyPremium();
                 if(getHasbazaar()){
-                    endTutorial();
+//                    endTutorial();
                 }            }
         });
 
@@ -186,6 +186,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
                 // IAB is fully set up. Now, let's get an inventory of stuff we own.
                 Log.d(TAG, "Setup successful. Querying inventory.");
                     mHelper.queryInventoryAsync(mGotInventoryListener);
+                buyPre.setVisibility(View.VISIBLE);
             }
         });}catch (SecurityException se){
         if(mHelper != null){
@@ -241,10 +242,12 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
 //            mGotInventory = true;
             // Do we have the premium upgrade?
             Purchase premiumPurchase = inventory.getPurchase(SKU_PREMIUM);
-//            mIsPremium = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
-                setPremiumPreference (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
+           boolean mIsPremium = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
+                setPremiumPreference (mIsPremium);
             if(getPremiumPreference()){
                 Toast.makeText(getApplicationContext(),"شما در حال حاضر طلایی هستید",Toast.LENGTH_LONG).show();
+//                endTutorial();
+
             }
             Log.d(TAG, "User is " + (getPremiumPreference() ? "PREMIUM" : "NOT PREMIUM"));
 
@@ -266,6 +269,8 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
                 try {
                     mHelper.launchPurchaseFlow(this, SKU_PREMIUM, RC_REQUEST,
                             mPurchaseFinishedListener, "");
+//                    mHelper.queryInventoryAsync(mGotInventoryListener);
+
                     // Fade the premium tour
                 } catch (Exception e) {
                     mHelper.dispose();
@@ -333,6 +338,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             if (purchase.getSku().equals(SKU_PREMIUM)) {
                 // bought the premium upgrade!
                 Log.d(TAG, "Purchase is premium upgrade. Congratulating user.");
+//                endTutorial();
                 alert("مبارک باشه !");
 //                mIsPremium = true;
                 setPremiumPreference(true);
@@ -413,7 +419,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == resultCode ){
+//        if(requestCode == resultCode ){
 
 
             Log.d(TAG, "onActivityResult(" + requestCode + "," + resultCode + "," + data);
@@ -428,7 +434,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             } else {
                 Log.d(TAG, "onActivityResult handled by IABUtil.");
             }
-        }
+//        }
     }
 
     @Override
@@ -573,7 +579,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
                     public void onClick(View v) {
                         buyPremium();
                         if(getHasbazaar()){
-                            endTutorial();
+//                            endTutorial();
                         }
                     }
                 });

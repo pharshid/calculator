@@ -22,6 +22,7 @@
     <dimen name="btn_clear_text_size">38.0sp</dimen>
     <dimen name="result_text_size">99sp</dimen>
     <dimen name="digital_lcd_text_size">70sp</dimen>
+    <dimen name="digital_lcd_translation_textsize">27sp</dimen>
 
     <dimen name="log_title_txt_size">36sp</dimen>
     <dimen name="log_detail_txt_size">16sp</dimen>
