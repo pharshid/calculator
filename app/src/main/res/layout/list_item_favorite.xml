@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:button="@drawable/custom_star"
-                android:gravity="center"
+                android:gravity="center_horizontal|top"
                 android:focusable="false"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
@@ -55,13 +55,31 @@
                 />
 
 
+
+
             <TextView
+                android:id="@+id/operation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/CustomButton"
+                android:textSize="@dimen/log_detail_txt_size"
+                android:textColor="@android:color/darker_gray"
+                android:gravity="left"
+                android:paddingLeft="@dimen/padding_small"
+                android:paddingTop="@dimen/padding_medium"
+                android:layout_toLeftOf="@id/log_checkbox"
+                android:focusable="false"
+                android:background="@android:color/transparent"
+                android:includeFontPadding="false"
+                />
+
+            <TextView
                 android:id="@+id/result"
+                android:layout_below="@id/operation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 style="@style/CustomButton"
                 android:textSize="@dimen/log_title_txt_size"
-                android:paddingTop="@dimen/padding_small"
                 android:textColor="@android:color/holo_blue_light"
                 android:gravity="left"
                 android:layout_toLeftOf="@id/log_checkbox"
@@ -69,34 +87,17 @@
                 android:clickable="false"
                 android:focusable="false"
                 android:background="@android:color/transparent"
+                android:includeFontPadding="false"
 
-
-
-                />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/operation"
-                android:layout_below="@+id/result"
-                style="@style/CustomButton"
-                android:textSize="@dimen/log_detail_txt_size"
-                android:textColor="@android:color/darker_gray"
-                android:gravity="left"
-                android:paddingLeft="@dimen/padding_medium"
-                android:layout_toLeftOf="@id/log_checkbox"
-                android:focusable="false"
-                android:background="@android:color/transparent"
 
                 />
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/operation"
+                android:layout_below="@id/result"
                 android:layout_toLeftOf="@id/log_checkbox"
                 android:layout_alignParentLeft="true"
-                android:layout_marginBottom="@dimen/padding_small"
-                android:paddingLeft="@dimen/padding_medium"
+                android:paddingLeft="@dimen/padding_small"
                 >
             <TextView
                 android:id="@+id/LOG_tag"

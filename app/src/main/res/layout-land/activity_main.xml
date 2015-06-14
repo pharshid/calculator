@@ -39,8 +39,9 @@
                 android:gravity="center_vertical|right"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:layout_toRightOf="@id/btn_add_star"
+                android:layout_toRightOf="@id/add_label"
                 android:paddingRight="@dimen/padding_medium"
+                android:includeFontPadding="false"
                 />
 
             <TextView
@@ -53,6 +54,7 @@
                 android:textColor="@android:color/white"
                 android:paddingLeft="@dimen/padding_small"
                 android:text="RAD"
+
                 />
 
             <TextView
@@ -66,7 +68,7 @@
                 android:paddingLeft="@dimen/padding_small"
                 android:text=" M = 0"
                 android:inputType="textMultiLine|textNoSuggestions"
-
+                android:textSize="@dimen/retro_m_variable_text_size"
                 />
 
             <Button
@@ -152,6 +154,7 @@
             android:layout_height="match_parent"
             android:layout_weight="90"
             style="@style/translation_box"
+            android:includeFontPadding="false"
 
             />
 

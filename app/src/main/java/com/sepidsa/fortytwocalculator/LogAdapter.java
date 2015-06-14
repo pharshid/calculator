@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
@@ -50,7 +51,7 @@ public class LogAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View view = LayoutInflater.from(context).inflate(R.layout.list_group_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.list_item_history, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         view.setTag(viewHolder);
         return view;
@@ -74,7 +75,13 @@ public class LogAdapter extends CursorAdapter {
         viewHolder.starredButton.setChecked(starred);
         viewHolder.starredButton.setOnClickListener(mStarOnClickListener);
 
-        viewHolder.tagView.setBackgroundColor(((MainActivity) mContext).getAccentColorCode());
+        if(((MainActivity) context).isRetroThemeSelected()) {
+            viewHolder.tagView.setBackgroundColor(Color.parseColor("#bdbdbd"));
+
+        }else {
+            viewHolder.tagView.setBackgroundColor(((MainActivity) mContext).getAccentColorCode());
+
+        }
         viewHolder.tagView.setOnClickListener(mLabelButtonOnClickListener);
 
 

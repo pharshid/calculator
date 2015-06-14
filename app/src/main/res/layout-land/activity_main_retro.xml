@@ -66,6 +66,8 @@
                     android:text=" M = 0"
                     android:inputType="textMultiLine|textNoSuggestions"
                     android:textSize="@dimen/retro_m_variable_text_size"
+                    android:includeFontPadding="false"
+
                     />
 
 
@@ -164,6 +166,8 @@
                     android:scrollbars = "vertical"
                     android:singleLine="false"
                     android:layout_toRightOf="@id/currency_list"
+                    android:includeFontPadding="false"
+
                     />
 
                 <Button

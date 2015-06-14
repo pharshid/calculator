@@ -29,7 +29,7 @@
     <dimen name="viewpager_margin_sideways">40dp</dimen>
     <dimen name="translation_text_size">35sp</dimen>
 
-    <dimen name="log_title_txt_size">39sp</dimen>
+    <dimen name="log_title_txt_size">40sp</dimen>
     <dimen name="log_detail_txt_size">28sp</dimen>
     <dimen name="language_menu_text_size">30sp</dimen>
 
