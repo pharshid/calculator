@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:background="@android:color/white"
+    android:background="#00ACC1"
     style="@android:style/TextAppearance.DeviceDefault.Widget.EditText"
     android:clickable="true"
     >
@@ -13,7 +13,7 @@
     <RelativeLayout
         android:id="@+id/MotherTop"
         android:orientation="vertical"
-        android:layout_weight="25"
+        android:layout_weight="23"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#fff"
@@ -51,32 +51,12 @@
 
             />
 
-        <TextView
-            android:id="@+id/sepidsa_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="www.sepidsa.com"
-            android:textSize="16sp"
-            android:fontFamily="sans-serif-light"
-            android:background="@android:color/white"
-            android:textColor="#1693a5"
-            android:gravity="center"
-            android:visibility="visible"
-            android:layout_below="@id/sepidsa_logo"
-            android:layout_centerHorizontal="true"
 
-            />
 
 
     </RelativeLayout>
 
 
-    <View android:layout_height="1dp"
-        android:layout_width="match_parent"
-        android:background="?android:attr/listDivider"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        />
 
 
 
@@ -106,18 +86,21 @@
                 />
 
             <TextView
+                android:id="@+id/farshid_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@id/avatar_farshid"
+                android:layout_below="@id/avatar_farshid"
                 android:text="farshid"
-                android:layout_centerHorizontal="true"/>
+                android:textColor="@android:color/white"
+                android:layout_centerHorizontal="true"
+                />
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_below="@id/avatar_farshid"
+                android:layout_below="@id/farshid_name"
                 android:layout_margin="@dimen/padding_large"
 
                 >
@@ -130,9 +113,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/mail_to_farshid"
-                    android:src="@drawable/ic_email_outline_grey600_24dp"
+                    android:src="@drawable/ic_email_white_24dp"
                     android:background="@android:color/transparent"
-                    android:padding="@dimen/padding_large"
+                    android:padding="@dimen/padding_medium"
 
                     />
 
@@ -141,9 +124,9 @@
                     android:layout_toLeftOf="@id/mail_to_farshid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/linked_in"
+                    android:src="@drawable/ic_linkedin_white_24dp"
                     android:background="@android:color/transparent"
-                    android:padding="@dimen/padding_large"
+                    android:padding="@dimen/padding_medium"
 
                     />
 
@@ -155,10 +138,10 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/instagram"
+                    android:src="@drawable/ic_instagram_white_24dp"
                     android:background="@android:color/transparent"
                     android:layout_centerInParent="true"
-                    android:padding="@dimen/padding_large"
+                    android:padding="@dimen/padding_medium"
 
                     />
 
@@ -183,18 +166,22 @@
                 android:layout_margin="@dimen/padding_large"
                 />
             <TextView
+                android:id="@+id/ehsan_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@id/avatar_ehsan"
+                android:layout_below="@id/avatar_ehsan"
                 android:text="Ehsan"
-                android:layout_centerHorizontal="true"/>
+                android:layout_centerHorizontal="true"
+                android:textColor="@android:color/white"
+
+                />
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_below="@id/avatar_ehsan"
+                android:layout_below="@id/ehsan_name"
                 android:layout_margin="@dimen/padding_large"
 
                 >
@@ -205,9 +192,9 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_email_outline_grey600_24dp"
+                    android:src="@drawable/ic_email_white_24dp"
                     android:background="@android:color/transparent"
-                    android:padding="@dimen/padding_large"
+                    android:padding="@dimen/padding_medium"
 
                     />
 
@@ -216,9 +203,9 @@
                     android:layout_toLeftOf="@id/mail_to_ehsan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/linked_in"
+                    android:src="@drawable/ic_linkedin_white_24dp"
                     android:background="@android:color/transparent"
-                    android:padding="@dimen/padding_large"
+                    android:padding="@dimen/padding_medium"
 
                     />
 
@@ -229,19 +216,33 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/instagram"
+                    android:src="@drawable/ic_instagram_white_24dp"
                     android:background="@android:color/transparent"
                     android:layout_centerInParent="true"
-                    android:padding="@dimen/padding_large"
+                    android:padding="@dimen/padding_medium"
 
                     />
             </RelativeLayout>
         </RelativeLayout>
 
-
     </LinearLayout>
 
 
+    <TextView
+
+        android:id="@+id/sepidsa_name"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:text="www.sepidsa.com"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:visibility="visible"
+        android:layout_below="@id/sepidsa_logo"
+        android:layout_gravity="center"
+        />
 
 
 
