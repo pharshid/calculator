@@ -263,7 +263,6 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
 //            mListView.smoothScrollToPosition(mPosition);
 //            mListView.setSelection(mLogAdapter.getCount() -1);
 //        }
-        mListView.smoothScrollToPosition(mLogAdapter.getCount() -1);
     }
 
     @Override
