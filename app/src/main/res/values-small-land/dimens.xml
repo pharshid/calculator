@@ -33,8 +33,8 @@
     <dimen name="icon_button_size">20sp</dimen>
     <dimen name="spinner_text_size">20sp</dimen>
 
-    <dimen name="log_title_txt_size">23sp</dimen>
-    <dimen name="log_detail_txt_size">19sp</dimen>
+    <dimen name="log_title_txt_size">26sp</dimen>
+    <dimen name="log_detail_txt_size">17sp</dimen>
     <dimen name="result_text_size">50sp</dimen>
 
     <dimen name="tool_bar_side_margin">25dp</dimen>

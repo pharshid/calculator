@@ -7,19 +7,6 @@
 
     >
 
-    <TextView
-        android:id="@+id/result"
-        android:layout_toLeftOf="@id/log_checkbox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/CustomButton"
-        android:textSize="@dimen/log_title_txt_size"
-        android:paddingTop="@dimen/padding_small"
-        android:textColor="@android:color/holo_blue_light"
-        android:gravity="left"
-
-
-        />
 
     <CheckBox
         android:id="@+id/log_checkbox"
@@ -35,24 +22,39 @@
 
     <TextView
         android:id="@+id/operation"
-        android:layout_below="@+id/result"
         android:layout_toLeftOf="@id/log_checkbox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/CustomButton"
         android:textSize="@dimen/log_detail_txt_size"
         android:textColor="@android:color/darker_gray"
-        android:gravity="right"
-
+        android:gravity="left"
+        android:text="2+2"
 
         />
+    <TextView
+        android:id="@+id/result"
+        android:layout_below="@id/operation"
+        android:layout_toLeftOf="@id/log_checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/CustomButton"
+        android:textSize="@dimen/log_title_txt_size"
+        android:paddingTop="@dimen/padding_small"
+        android:textColor="@android:color/holo_blue_light"
+        android:gravity="left"
+        android:text="HELOOOO"
+
+        />
+
+
     <TextView
         android:id="@+id/LOG_tag"
         android:layout_toLeftOf="@id/log_checkbox"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/operation"
+        android:layout_below="@id/result"
         style="@style/CustomButton"
         android:textSize="@dimen/log_detail_txt_size"
         android:textColor="@android:color/darker_gray"

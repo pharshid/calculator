@@ -23,8 +23,8 @@
     <dimen name="result_text_size">99sp</dimen>
     <dimen name="digital_lcd_text_size">70sp</dimen>
 
-    <dimen name="log_title_txt_size">24sp</dimen>
-    <dimen name="log_detail_txt_size">18sp</dimen>
+    <dimen name="log_title_txt_size">34sp</dimen>
+    <dimen name="log_detail_txt_size">16sp</dimen>
 
     <dimen name="icon_button_size">19sp</dimen>
 

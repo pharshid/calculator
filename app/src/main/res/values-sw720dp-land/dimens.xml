@@ -29,8 +29,8 @@
 
     <dimen name="viewpager_margin_sideways">50dp</dimen>
 
-    <dimen name="log_title_txt_size">35sp</dimen>
-    <dimen name="log_detail_txt_size">27sp</dimen>
+    <dimen name="log_title_txt_size">46sp</dimen>
+    <dimen name="log_detail_txt_size">22sp</dimen>
 
     <dimen name="btn_text_size">42.0sp</dimen>
     <dimen name="btn_clear_text_size">42.0sp</dimen>
