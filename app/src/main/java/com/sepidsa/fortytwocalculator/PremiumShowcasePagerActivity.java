@@ -180,7 +180,8 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
 
                     if (!result.isSuccess()) {
                         // Oh noes, there was a problem.
-                        complain("Problem setting up in-app billing: " + result);
+//                        complain("Problem setting up in-app billing: " + result);
+                        endTutorial();
                         return;
                     }
 
@@ -431,6 +432,9 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             super.onActivityResult(requestCode, resultCode, data);
         } else {
             Log.d(TAG, "onActivityResult handled by IABUtil.");
+        }
+        if(resultCode == 0){
+            endTutorial();
         }
 //        }
     }

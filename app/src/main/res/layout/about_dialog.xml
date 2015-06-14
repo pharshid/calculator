@@ -13,11 +13,11 @@
     <RelativeLayout
         android:id="@+id/MotherTop"
         android:orientation="vertical"
-        android:layout_weight="30"
+        android:layout_weight="25"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#fff"
-        android:padding="15dp"
+        android:padding="10dp"
         >
 
 
@@ -39,8 +39,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:text="42"
-            android:textSize="80sp"
             android:gravity="center"
             android:singleLine="true"
             android:fontFamily="sans-serif-thin"
@@ -53,34 +51,40 @@
 
             />
 
+        <TextView
+            android:id="@+id/sepidsa_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="www.sepidsa.com"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-light"
+            android:background="@android:color/white"
+            android:textColor="#1693a5"
+            android:gravity="center"
+            android:visibility="visible"
+            android:layout_below="@id/sepidsa_logo"
+            android:layout_centerHorizontal="true"
 
+            />
 
 
     </RelativeLayout>
 
 
-    <TextView
-        android:id="@+id/sepidsa_name"
+    <View android:layout_height="1dp"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="15"
-        android:text="سپیدسا"
-        android:textSize="22sp"
-        android:fontFamily="sans-serif-light"
-        android:background="@android:color/white"
-        android:textColor="#bdbdbd"
-        android:gravity="center"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:visibility="visible"
+        android:background="?android:attr/listDivider"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         />
+
 
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="60"
+        android:layout_weight="20"
         android:orientation="horizontal"
         >
         <RelativeLayout
@@ -100,6 +104,14 @@
                 android:layout_centerInParent="true"
                 android:layout_margin="@dimen/padding_large"
                 />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/avatar_farshid"
+                android:text="farshid"
+                android:layout_centerHorizontal="true"/>
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -126,7 +138,7 @@
 
                 <ImageButton
                     android:id="@+id/linked_in_farshid"
-                android:layout_toLeftOf="@id/mail_to_farshid"
+                    android:layout_toLeftOf="@id/mail_to_farshid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/linked_in"
@@ -170,6 +182,13 @@
                 android:layout_centerInParent="true"
                 android:layout_margin="@dimen/padding_large"
                 />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/avatar_ehsan"
+                android:text="Ehsan"
+                android:layout_centerHorizontal="true"/>
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
