@@ -88,7 +88,7 @@
                 android:layout_toLeftOf="@id/log_checkbox"
                 android:focusable="false"
                 android:includeFontPadding="false"
-android:paddingTop="@dimen/padding_medium"
+                android:paddingTop="@dimen/padding_medium"
 
                 />
 

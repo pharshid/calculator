@@ -3,6 +3,7 @@ package com.sepidsa.fortytwocalculator;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,8 +57,13 @@ public class FavoritesAdapter extends CursorAdapter {
         viewHolder.resultView.setTextColor(((MainActivity) mContext).getAccentColorCode());
         viewHolder.operationView.setText(operation);
         viewHolder.tagView.setText(tag);
-        viewHolder.tagView.setBackgroundColor(((MainActivity) mContext).getAccentColorCode());
-        viewHolder.starredButton.setChecked(starred);
+        if(((MainActivity) context).isRetroThemeSelected()) {
+            viewHolder.tagView.setBackgroundColor(Color.parseColor("#bdbdbd"));
+
+        }else {
+            viewHolder.tagView.setBackgroundColor(((MainActivity) mContext).getAccentColorCode());
+
+        }        viewHolder.starredButton.setChecked(starred);
         viewHolder.starredButton.setOnClickListener(mStarOnClickListener);
 
     }

@@ -37,8 +37,8 @@ public class  Expression{
             s = s.substring( 1 );
             ans =new BigDecimal( Math.PI);
 
-        }else if( s.length() > 0 && s.indexOf("rnd") == 0){
-            s = s.substring( 3 );
+        }else if( s.length() > 0 && s.indexOf("rand") == 0){
+            s = s.substring( 4 );
             ans =new BigDecimal( Math.random());
 
         }else{

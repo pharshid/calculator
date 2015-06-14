@@ -8,15 +8,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.media.Image;
+import android.graphics.Typeface;
 import android.net.Uri;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -45,6 +43,9 @@ public class AboutActivity extends Activity implements View.OnClickListener {
         mLinkedInFarshid = (ImageButton)findViewById(R.id.linked_in_farshid);
         mInstagramEhsan = (ImageButton)findViewById(R.id.instagram_ehsan);
         mInstagramFarshid = (ImageButton)findViewById(R.id.instagram_farshid);
+        mBackButton = (ImageButton)findViewById(R.id.button_back_about);
+        mSepidsaTextView = (TextView)findViewById(R.id.sepidsa_name);
+        mSepidsaTextView.setTypeface(Typeface.createFromAsset(getAssets(), "yekan.ttf"));
         prepareButtons();
 
     }
@@ -59,7 +60,7 @@ public class AboutActivity extends Activity implements View.OnClickListener {
         mMailToFarshid.setOnClickListener(this);
         mLinkedInFarshid.setOnClickListener(this);
         mInstagramFarshid.setOnClickListener(this);
-
+         mBackButton.setOnClickListener(this);
 
     }
 

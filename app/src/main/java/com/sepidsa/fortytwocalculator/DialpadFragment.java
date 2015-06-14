@@ -228,7 +228,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         if(isOn){
 //            ((Button) mView.findViewById(R.id.buttonlog)).setTag(getResources().getString(R.string.tenpowerx_tag));
 //            ((Button) mView.findViewById(R.id.buttonlog)).setText(getResources().getString(R.string.tenpowerx));
-            ((Button) mView.findViewById(R.id.buttonln)).setText(getResources().getString(R.string.epowerx));
+//            ((Button) mView.findViewById(R.id.buttonln)).setText(getResources().getString(R.string.epowerx));
 
             if(arcIsOn) {
                 ((Button) mView.findViewById(R.id.buttonSinus)).setText("a"+ getResources().getString(R.string.csc));
@@ -251,7 +251,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         }else {
 //            ((Button) mView.findViewById(R.id.buttonlog)).setText(getResources().getString(R.string.log));
 //            ((Button) mView.findViewById(R.id.buttonlog)).setTag(getResources().getString(R.string.log_tag));
-            ((Button) mView.findViewById(R.id.buttonln)).setText(getResources().getString(R.string.ln));
+//            ((Button) mView.findViewById(R.id.buttonln)).setText(getResources().getString(R.string.ln));
 
             if(arcIsOn) {
                 ((Button) mView.findViewById(R.id.buttonSinus)).setText("a"+ getResources().getString(R.string.sin));

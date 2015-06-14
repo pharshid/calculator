@@ -71,6 +71,7 @@
                         android:paddingRight="@dimen/padding_medium"
                         android:background="#1abc9c"
                         android:layout_toRightOf="@id/btn_add_star"
+                        android:includeFontPadding="false"
                         />
 
                     <TextView
@@ -179,6 +180,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="92"
                     style="@style/translation_box"
+                    android:includeFontPadding="false"
+
                     />
 
 

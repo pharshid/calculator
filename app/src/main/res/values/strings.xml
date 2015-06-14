@@ -116,7 +116,7 @@
   <string name="tenpowerx">10ˣ</string>
   <string name="epowerx">eˣ</string>
   <string name="factoriel">!</string>
-  <string name="random">rnd</string>
+  <string name="random">rand</string>
   <string name="Pi">π</string>
   <string name="e">e</string>
   <string name="power">^</string>

@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -750,12 +751,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         // This view is only present in the portrait xml file. I use it as measure for portrait/landscape judgement!
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         if (mViewPager != null) {
-
-            // if in Portrait Phone
             List<Fragment> fList = new ArrayList<Fragment>();
             fList.add(new AnimatedLogFragment());
             fList.add(new DialpadFragment());
-            fList.add(new ScientificFragment());
+            if(getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
+                // if in landscape phone also add a page for scientific
+                fList.add(new ScientificFragment());
+
+            }
+            // if in Portrait Phone
+
             mViewPager.setAdapter(new ViewPagerAdapter(fragmentManager, fList));
             mLayoutState = PORTRAIT_BOTH;
             mViewPager.setOffscreenPageLimit(0);
@@ -1961,7 +1966,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
                 getResources().getString(R.string.ln_tag), getResources().getString(R.string.power), getResources().getString(R.string.log_tag), getResources().getString(R.string.tenpowerx) + "(",
                 getResources().getString(R.string.epowerx) + "(",
-                getResources().getString(R.string.sqrt), getResources().getString(R.string.e),"+","−","-","÷","×","E"};
+                getResources().getString(R.string.sqrt), "+","−","-","÷","×"};
 
 
         List<String> myList = Arrays.asList(nonDigitStrings);
