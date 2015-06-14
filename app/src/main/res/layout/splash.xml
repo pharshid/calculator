@@ -31,6 +31,7 @@
         android:textSize="35sp"
         android:layout_centerHorizontal="true"
         android:paddingTop="30dp"
+        android:visibility="gone"
         />
 
 </RelativeLayout>
