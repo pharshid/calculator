@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ public class AboutActivity extends Activity implements View.OnClickListener {
             mBackButton;
 
     TextView mSepidsaTextView;
+    Button webpageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,7 @@ public class AboutActivity extends Activity implements View.OnClickListener {
         mInstagramEhsan = (ImageButton)findViewById(R.id.instagram_ehsan);
         mInstagramFarshid = (ImageButton)findViewById(R.id.instagram_farshid);
         mBackButton = (ImageButton)findViewById(R.id.button_back_about);
-        mSepidsaTextView = (TextView)findViewById(R.id.sepidsa_name);
+        mSepidsaTextView = (TextView)findViewById(R.id.sepidsa_web_page_button);
         mSepidsaTextView.setTypeface(Typeface.createFromAsset(getAssets(), "yekan.ttf"));
         prepareButtons();
 
@@ -61,7 +63,7 @@ public class AboutActivity extends Activity implements View.OnClickListener {
         mLinkedInFarshid.setOnClickListener(this);
         mInstagramFarshid.setOnClickListener(this);
          mBackButton.setOnClickListener(this);
-
+        webpageButton.setOnClickListener(this);
     }
 
     @Override
@@ -120,7 +122,16 @@ public class AboutActivity extends Activity implements View.OnClickListener {
          case R.id.button_back_about:
             this.finish();
 
+            case R.id.sepidsa_web_page_button:
+                goToURL("www.sepidsa.com");
         }
+
+    }
+
+    private void goToURL(String input) {
+        Uri uri = Uri.parse(input);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
 
     }
 
