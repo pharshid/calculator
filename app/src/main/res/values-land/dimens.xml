@@ -14,7 +14,7 @@
     <dimen name="margin_scroller_stack">13.0dp</dimen>
      <dimen name="tool_bar_side_margin">25dp</dimen>
     <dimen name="translation_text_size">25sp</dimen>
-    <dimen name="btn_scientific_text_size">20sp</dimen>
+    <dimen name="btn_scientific_text_size">19sp</dimen>
 
     <dimen name="btn_text_size">30.0sp</dimen>
     <dimen name="btn_clear_text_size">23.0sp</dimen>

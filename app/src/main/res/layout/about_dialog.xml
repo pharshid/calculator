@@ -55,15 +55,15 @@
         <ImageButton
             android:id="@+id/instagram_sepidsa"
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/ic_instagram_grey600_24dp"
             android:background="@android:color/transparent"
-            android:padding="@dimen/padding_medium"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
+            android:padding="@dimen/padding_small"
 
-            />
+            android:layout_alignParentBottom="true"
+            android:layout_alignLeft="@+id/button_back_about"
+           />
 
     </RelativeLayout>
 
@@ -117,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_below="@id/farshid_name"
-                android:layout_margin="@dimen/padding_medium"
+                android:layout_margin="@dimen/padding_small"
                 android:layout_centerHorizontal="true"
                 >
 
@@ -201,7 +201,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_below="@id/ehsan_name"
-                android:layout_margin="@dimen/padding_medium"
+                android:layout_margin="@dimen/padding_small"
                 android:layout_centerHorizontal="true"
 
                 >

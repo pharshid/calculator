@@ -48,7 +48,11 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mIsRetroOn = ((MainActivity)getActivity()).isRetroThemeSelected();
+       if(savedInstanceState == null){
+           mIsRetroOn = ((MainActivity)getActivity()).isRetroThemeSelected();
+       }else {
+           mIsRetroOn = savedInstanceState.getBoolean("mIsRetroOn",false);
+       }
         if(mIsRetroOn) {
             mView = inflater.inflate(R.layout.fragment_scientific_retro, container, false);
             ((ToggleButton) (mView.findViewById(R.id.switch_deg_rad))).setTextSize(scientific_toggle_textSize);
@@ -61,13 +65,12 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
         }        // Set the listener for all the gray_buttons
 //        this.setRetainInstance(false);
         idList =getScientificButtonsID();
-        defaultFont = ((MainActivity)getActivity()).getFontForComponent("SCIENTIFIC_FONT");
         for(int id : idList) {
             View v = mView.findViewById(id);
             if (v != null) {
                 v.setOnClickListener(this);
                 if( v instanceof Button){
-                    ((Button) v).setTypeface(defaultFont);
+                    ((Button) v).setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "roboto_light.ttf"));
                 }
             }
         }
@@ -87,17 +90,17 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
                 // Extract data included in the Intent
                 String message = intent.getStringExtra("message");
                 switch (message) {
-                    case "changeDialpadFont":
-                        if(!((MainActivity) getActivity()).isRetroThemeSelected()) {
-                            defaultFont = ((MainActivity) getActivity()).getFontForComponent("DIALPAD_FONT");
-                            for (int id : idList) {
-                                View v = mView.findViewById(id);
-                                if (v != null && (v instanceof Button)) {
-                                    ((Button) v).setTypeface(defaultFont);
-                                }
-                            }
-                            break;
-                        }
+//                    case "changeDialpadFont":
+//                        if(!mIsRetroOn) {
+//                            defaultFont = ((MainActivity) getActivity()).getFontForComponent("DIALPAD_FONT");
+//                            for (int id : idList) {
+//                                View v = mView.findViewById(id);
+//                                if (v != null && (v instanceof Button)) {
+//                                    ((Button) v).setTypeface(defaultFont);
+//                                }
+//                            }
+//                            break;
+//                        }
 
                     case "changeKeypadFontColor":
                         if(!mIsRetroOn) {
@@ -272,6 +275,8 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean("mIsRetroOn",mIsRetroOn);
+//        outState.putSerializable("defaultFont", (Serializable) defaultFont);
 
     }
 

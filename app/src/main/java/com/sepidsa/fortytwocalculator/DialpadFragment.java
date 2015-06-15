@@ -75,7 +75,11 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
             if (v != null) {
                 v.setOnClickListener(this);
                 if( v instanceof Button){
-                    ((Button) v).setTypeface(defaultFont);
+                    if(mIsRetroOn){
+                        ((Button) v).setTypeface(scientificFont);
+                    }else{
+                        ((Button) v).setTypeface(defaultFont);
+                    }
                 }
             }
         }
@@ -187,6 +191,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
                             for (int id : idList) {
                                 View v = mView.findViewById(id);
                                 if (v != null && (v instanceof Button)) {
+                                    if(!mIsRetroOn)
                                     ((Button) v).setTypeface(defaultFont);
                                 }
                             }
@@ -528,7 +533,13 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         {
             //Change Clear Button's Text to C
             ((Button) mView.findViewById(R.id.buttonClear)).setText("C");
-            ((Button) mView.findViewById(R.id.buttonClear)).setTypeface(defaultFont);
+            if(mIsRetroOn){
+                ((Button) mView.findViewById(R.id.buttonClear)).setTypeface(scientificFont);
+
+            }else{
+                ((Button) mView.findViewById(R.id.buttonClear)).setTypeface(defaultFont);
+
+            }
             ((Button) mView.findViewById(R.id.buttonClear)).setTextSize(getResources().getDimension(R.dimen.btn_clear_text_size) / getResources().getDisplayMetrics().density);
 
         }else {
