@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/chevron"
                 android:gravity="center"
-                android:textColor="#9E9E9E"
+                android:textColor="#bdbdbd"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignStart="@id/log_checkbox"

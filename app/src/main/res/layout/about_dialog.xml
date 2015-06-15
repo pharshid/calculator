@@ -13,7 +13,7 @@
     <RelativeLayout
         android:id="@+id/MotherTop"
         android:orientation="vertical"
-        android:layout_weight="23"
+        android:layout_weight="20"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#fff"
@@ -27,7 +27,7 @@
             android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_margin="10dp"
+            android:layout_margin="3dp"
             android:src="@drawable/arrow_left"
             android:background="@android:color/transparent"
             />
@@ -60,19 +60,24 @@
 
 
 
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="20"
-        android:orientation="horizontal"
         >
-        <RelativeLayout
-            android:layout_width="0dp"
+        <View
+            android:id="@+id/centerShim"
             android:layout_height="match_parent"
-            android:layout_weight="40"
-            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:visibility="invisible"
+            android:layout_centerHorizontal="true"/>
+
+        <RelativeLayout
+            android:id="@+id/left_pane"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_margin="@dimen/padding_medium"
+            android:layout_toLeftOf="@id/centerShim"
             >
 
 
@@ -90,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/avatar_farshid"
-                android:text="farshid"
+                android:text="Farshid"
                 android:textColor="@android:color/white"
                 android:layout_centerHorizontal="true"
                 />
@@ -101,8 +106,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_below="@id/farshid_name"
-                android:layout_margin="@dimen/padding_large"
-
+                android:layout_margin="@dimen/padding_medium"
+                android:layout_centerHorizontal="true"
                 >
 
 
@@ -132,6 +137,8 @@
 
 
 
+
+
                 <ImageButton
                     android:id="@+id/instagram_farshid"
                     android:layout_toRightOf="@id/mail_to_farshid"
@@ -140,7 +147,6 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_instagram_white_24dp"
                     android:background="@android:color/transparent"
-                    android:layout_centerInParent="true"
                     android:padding="@dimen/padding_medium"
 
                     />
@@ -148,12 +154,14 @@
             </RelativeLayout>
         </RelativeLayout>
 
+
         <RelativeLayout
-            android:layout_width="0dp"
+            android:id="@+id/right_pane"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="40"
-            android:orientation="vertical"
             android:layout_margin="@dimen/padding_medium"
+            android:layout_toRightOf="@id/centerShim"
+
             >
 
 
@@ -182,7 +190,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_below="@id/ehsan_name"
-                android:layout_margin="@dimen/padding_large"
+                android:layout_margin="@dimen/padding_medium"
+                android:layout_centerHorizontal="true"
 
                 >
 
@@ -218,14 +227,18 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_instagram_white_24dp"
                     android:background="@android:color/transparent"
-                    android:layout_centerInParent="true"
                     android:padding="@dimen/padding_medium"
 
                     />
             </RelativeLayout>
         </RelativeLayout>
 
-    </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+
 
 
     <TextView
@@ -240,18 +253,12 @@
         android:textColor="@android:color/white"
         android:gravity="center"
         android:visibility="visible"
-        android:layout_below="@id/sepidsa_logo"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
+        android:paddingBottom="@dimen/padding_medium"
+
         />
-
-
-
-
-
-
-
-
-
 
 
 

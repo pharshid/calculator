@@ -100,7 +100,7 @@ public class AboutActivity extends Activity implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.instagram_ehsan:
-                uri = Uri.parse("http://instagram.com/dr.katana");
+                uri = Uri.parse("http://instagram.com/dr.shuriken");
                 intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
                 break;

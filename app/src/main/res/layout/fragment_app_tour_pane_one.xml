@@ -44,7 +44,7 @@
         android:gravity="top|center_horizontal"
 
         android:id="@+id/tour_title"
-        android:text="نتیجه محاسبات را به حروف  ببینید"
+        android:text="نتیجه محاسبات به حروف"
         android:textSize="@dimen/abc_text_size_large_material"
         android:textStyle="bold"
         android:textColor="@android:color/white"

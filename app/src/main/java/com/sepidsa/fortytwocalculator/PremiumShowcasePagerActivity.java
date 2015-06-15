@@ -189,7 +189,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
                     if (mHelper == null) return;
 
                     // IAB is fully set up. Now, let's get an inventory of stuff we own.
-                    Log.d(TAG, "Setup successful. Querying inventory.");
+//                    Log.d(TAG, "Setup successful. Querying inventory.");
                     mSetupFinished = true;
                     mHelper.queryInventoryAsync(mGotInventoryListener);
 //                buyPre.setVisibility(View.VISIBLE);
@@ -199,7 +199,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
                 mHelper.dispose();
                 mHelper = null;
             }
-            Toast.makeText(getApplicationContext(),"problem setting up helper",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"خطا در دریافت اطلاعات شما",Toast.LENGTH_LONG).show();
 
         }
     }
@@ -225,7 +225,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
     // Listener that's called when we finish querying the items and subscriptions we own
     IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
         public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-            Log.d(TAG, "Query inventory finished.");
+//            Log.d(TAG, "Query inventory finished.");
 
             // Have we been disposed of in the meantime? If so, quit.
             if (mHelper == null) return;
@@ -236,7 +236,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
                 return;
             }
 
-            Log.d(TAG, "Query inventory was successful.");
+//            Log.d(TAG, "Query inventory was successful.");
 
             /*
              * Check for items we own. Notice that for each purchase, we check
@@ -253,11 +253,11 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
 //                endTutorial();
 
             }
-            Log.d(TAG, "User is " + (getPremiumPreference() ? "PREMIUM" : "NOT PREMIUM"));
+//            Log.d(TAG, "User is " + (getPremiumPreference() ? "PREMIUM" : "NOT PREMIUM"));
 
 //            updateUi();
 //            setWaitScreen(false);
-            Log.d(TAG, "Initial inventory query finished; enabling main UI.");
+//            Log.d(TAG, "Initial inventory query finished; enabling main UI.");
         }
     };
 
@@ -270,17 +270,17 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             showDownloadBazaarDialog();
         }else {
             if (mHelper != null && mSetupFinished) {
-                try {
+//                try {
                     mHelper.launchPurchaseFlow(this, SKU_PREMIUM, RC_REQUEST,
                             mPurchaseFinishedListener, "");
                     // Fade the premium tour
-                } catch (Exception e) {
-                    mHelper.dispose();
-                    mHelper = null;
-                    Toast.makeText(getApplicationContext(), "مشکل در ارتباط با بازار", Toast.LENGTH_LONG).show();
-                }
+//                } catch (Exception e) {
+//                    mHelper.dispose();
+//                    mHelper = null;
+//                    Toast.makeText(getApplicationContext(), "مشکل در ارتباط با بازار", Toast.LENGTH_LONG).show();
+//                }
             } else {
-                Toast.makeText(getApplicationContext(), "لطفا چند لحظه بعد دوباره امتحان کنید", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "لطفا در بازار با اکانت خود وارد شوید و دوباره امتحان کنید", Toast.LENGTH_LONG).show();
 
             }
         }
@@ -294,7 +294,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
         adb.setTitle("ظاهرا بازار نصب نیست. لطفا بازار رو دانلود کنید و برنامه رو از طریق بازار مجددا نصب کنید تا بتونید طلایی بشید");
 
 
-        adb.setPositiveButton("موافقم", new DialogInterface.OnClickListener() {
+        adb.setPositiveButton("دانلود بازار", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 goToUrl("http://cafebazaar.ir/download/bazaar.apk");
             } });

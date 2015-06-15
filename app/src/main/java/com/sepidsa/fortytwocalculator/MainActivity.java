@@ -331,7 +331,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 .withAccountHeader(headerResult)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName("راهنما").withIcon(getResources().getDrawable(R.drawable.ic_lightbulb_outline_grey600_24dp)),
-                        new PrimaryDrawerItem().withName("درباره").withIcon(getResources().getDrawable(R.drawable.ic_information_outline_grey600_24dp)),
+                        new PrimaryDrawerItem().withName("درباره ما").withIcon(getResources().getDrawable(R.drawable.about_us)),
                         new PrimaryDrawerItem().withName("پیام به ما").withIcon(getResources().getDrawable(R.drawable.ic_email_outline_grey600_24dp)),
 //                        new DividerDrawerItem(),
                         new PrimaryDrawerItem().withName("نسخه طلایی").withIcon(getResources().getDrawable(R.drawable.badge))
