@@ -31,7 +31,7 @@ public class AboutActivity extends Activity implements View.OnClickListener {
             mBackButton;
 
     Button webpageButton;
-    private ImageButton mInstagramSepidsa;
+     ImageButton mInstagramSepidsa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
