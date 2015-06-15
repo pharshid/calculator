@@ -167,6 +167,7 @@ public class ConstantSelectFragment  extends DialogFragment implements LoaderMan
 
                 else {
                         Intent myIntent = new Intent(getActivity(), PremiumShowcasePagerActivity.class);
+                        myIntent.putExtra("page", 3);
                         startActivity(myIntent);
                     }
 

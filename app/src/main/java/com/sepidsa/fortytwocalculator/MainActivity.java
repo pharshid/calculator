@@ -369,6 +369,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private void displayUpgradeToPremium(int i) {
         try{
             Intent myIntent = new Intent(MainActivity.this, PremiumShowcasePagerActivity.class);
+            myIntent.putExtra("page", i);
             MainActivity.this.startActivity(myIntent);
         }
         catch (RuntimeException e ){
@@ -1378,7 +1379,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         if(isRetroThemeSelected()){
             if(!getPremiumPreference()){
-                displayUpgradeToPremium(0);
+                displayUpgradeToPremium(1);
                 return false;
             }
         }

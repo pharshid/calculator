@@ -161,6 +161,7 @@ public class ColorPickerActivity extends FragmentActivity implements ColorPicker
 
     private void displayUpgradeToPremium(int i) {
         Intent myIntent = new Intent(ColorPickerActivity.this, PremiumShowcasePagerActivity.class);
+        myIntent.putExtra("page", i);
         ColorPickerActivity.this.startActivity(myIntent);
 
     }
