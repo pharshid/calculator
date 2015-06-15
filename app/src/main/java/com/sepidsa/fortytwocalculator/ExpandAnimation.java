@@ -47,7 +47,7 @@ public class ExpandAnimation extends Animation {
         mMarginEnd = (mMarginStart == 0 ? (0- view.getHeight()) : 0);
 
         mArrow = (TextView) parent.findViewById(R.id.arrow);
-        mArrow.setTextColor(((MainActivity)context).getDialpadFontColor());
+//        mArrow.setTextColor(((MainActivity)context).getDialpadFontColor());
 
 //        setClipView(mArrow, false);
 //        setClipView(parent, false);
