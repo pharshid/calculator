@@ -250,7 +250,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             setPremiumPreference (mIsPremium);
             if(getPremiumPreference()){
                 Toast.makeText(getApplicationContext(),"شما در حال حاضر طلایی هستید",Toast.LENGTH_LONG).show();
-//                endTutorial();
+                endTutorial();
 
             }
 //            Log.d(TAG, "User is " + (getPremiumPreference() ? "PREMIUM" : "NOT PREMIUM"));
@@ -341,6 +341,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
                 Toast.makeText(getApplicationContext(),"شما طلایی هستید...مبارک باشه!",Toast.LENGTH_LONG).show();
 //                mIsPremium = true;
                 setPremiumPreference(true);
+                endTutorial();
 //todo update ui for finished
 //                updateUi();
 //                setWaitScreen(false);
