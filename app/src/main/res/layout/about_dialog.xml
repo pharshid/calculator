@@ -241,15 +241,16 @@
 
 
 
-    <TextView
+    <Button
 
-        android:id="@+id/sepidsa_name"
+        android:id="@+id/sepidsa_web_page_button"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="2"
-        android:text="www.sepidsa.com"
+        android:text="@string/sepidsa_webpage"
         android:textSize="16sp"
         android:fontFamily="sans-serif-light"
+        android:background="@android:color/transparent"
         android:textColor="@android:color/white"
         android:gravity="center"
         android:visibility="visible"
