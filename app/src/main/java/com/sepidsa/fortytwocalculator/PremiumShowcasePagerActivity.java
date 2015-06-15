@@ -277,7 +277,6 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
 //                } catch (Exception e) {
 //                    mHelper.dispose();
 //                    mHelper = null;
-//                    Toast.makeText(getApplicationContext(), "مشکل در ارتباط با بازار", Toast.LENGTH_LONG).show();
 //                }
             } else {
                 Toast.makeText(getApplicationContext(), "لطفا در بازار با اکانت خود وارد شوید و دوباره امتحان کنید", Toast.LENGTH_LONG).show();
