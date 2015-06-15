@@ -39,7 +39,7 @@ public class SplashScreen extends Activity {
                 }
 
                 // Run next activity
-                Intent intent = new Intent(sPlashScreen, MainActivity.class);
+                Intent intent = new Intent(sPlashScreen, ParallaxPagerActivity.class);
                 startActivity(intent);
 
             }

@@ -289,8 +289,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         buildNavigationDrawer();
         CurrencySyncAdapter.initializeSyncAdapter(this);
 
-
-        showAppTour();
     }
 
 
@@ -615,6 +613,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }else{
             mScientificModeTextView.setText("RAD");
         }
+        showSplashAndTour();
         Runnable runnable = new Runnable() {
             public void run() {
                 prepareAnimationStuff();
@@ -626,6 +625,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         };
         Thread mythread = new Thread(runnable);
         mythread.start();
+
 
 
 
@@ -834,18 +834,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         SharedPreferences.Editor editor = appPreferences.edit();
         editor.putBoolean("IS_BAZAAR_INSTALLED", hasBazaar);
         editor.commit();
-    }
-
-
-
-    public void showAppTour(){
-        if(hasWatchedAppTour()){
-            return;
-        }else{
-            setWatchedAppTour();
-            Intent myIntent = new Intent(MainActivity.this, ParallaxPagerActivity.class);
-            MainActivity.this.startActivity(myIntent);
-        }
     }
 
 
@@ -1263,6 +1251,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         editor.apply();
 
 
+    }
+
+
+    void showSplashAndTour(){
+        if(!getPopulateConstantDatabase()){
+            Intent intent = new Intent(this, SplashScreen.class);
+            startActivity(intent);
+        }
     }
 
     void populateConstantDatabaseFirstRun(){
