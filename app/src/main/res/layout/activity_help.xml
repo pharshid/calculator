@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="#5C6BC0"
+    android:background="#00838F"
     >
 
     
@@ -13,7 +13,7 @@
         android:id="@+id/header_section"
         android:elevation="4dp"
         android:layout_alignParentTop="true"
-        android:background="#3949AB"
+        android:background="#00ACC1"
 
         >
 
@@ -55,6 +55,8 @@
         android:layout_width="match_parent"
         android:groupIndicator="@null"
         android:layout_below="@id/header_section"
+        android:layoutDirection="rtl"
+        android:textDirection="rtl"
         />
 
 </RelativeLayout>

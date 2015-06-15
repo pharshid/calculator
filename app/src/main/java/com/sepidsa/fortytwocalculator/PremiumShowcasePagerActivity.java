@@ -270,15 +270,15 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             showDownloadBazaarDialog();
         }else {
             if (mHelper != null && mSetupFinished) {
-                try {
+//                try {
                     mHelper.launchPurchaseFlow(this, SKU_PREMIUM, RC_REQUEST,
                             mPurchaseFinishedListener, "");
                     // Fade the premium tour
-                } catch (Exception e) {
-                    mHelper.dispose();
-                    mHelper = null;
-                    Toast.makeText(getApplicationContext(), "مشکل در ارتباط با بازار", Toast.LENGTH_LONG).show();
-                }
+//                } catch (Exception e) {
+//                    mHelper.dispose();
+//                    mHelper = null;
+//                    Toast.makeText(getApplicationContext(), "مشکل در ارتباط با بازار", Toast.LENGTH_LONG).show();
+//                }
             } else {
                 Toast.makeText(getApplicationContext(), "لطفا چند لحظه بعد دوباره امتحان کنید", Toast.LENGTH_LONG).show();
 
