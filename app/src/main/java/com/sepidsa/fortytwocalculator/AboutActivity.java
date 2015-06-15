@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -32,8 +30,8 @@ public class AboutActivity extends Activity implements View.OnClickListener {
             mLinkedInFarshid, mLinkedInEhsan,
             mBackButton;
 
-    TextView mSepidsaTextView;
     Button webpageButton;
+    private ImageButton mInstagramSepidsa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +43,9 @@ public class AboutActivity extends Activity implements View.OnClickListener {
         mLinkedInFarshid = (ImageButton)findViewById(R.id.linked_in_farshid);
         mInstagramEhsan = (ImageButton)findViewById(R.id.instagram_ehsan);
         mInstagramFarshid = (ImageButton)findViewById(R.id.instagram_farshid);
+        mInstagramSepidsa = (ImageButton)findViewById(R.id.instagram_sepidsa);
         mBackButton = (ImageButton)findViewById(R.id.button_back_about);
-        mSepidsaTextView = (TextView)findViewById(R.id.sepidsa_web_page_button);
-        mSepidsaTextView.setTypeface(Typeface.createFromAsset(getAssets(), "yekan.ttf"));
+        webpageButton = (Button)findViewById(R.id.sepidsa_web_page_button);
         prepareButtons();
 
     }
@@ -62,8 +60,9 @@ public class AboutActivity extends Activity implements View.OnClickListener {
         mMailToFarshid.setOnClickListener(this);
         mLinkedInFarshid.setOnClickListener(this);
         mInstagramFarshid.setOnClickListener(this);
-         mBackButton.setOnClickListener(this);
+        mBackButton.setOnClickListener(this);
         webpageButton.setOnClickListener(this);
+        mInstagramSepidsa.setOnClickListener(this);
     }
 
     @Override
@@ -119,11 +118,17 @@ public class AboutActivity extends Activity implements View.OnClickListener {
                 intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
                 break;
-         case R.id.button_back_about:
-            this.finish();
-
+            case R.id.button_back_about:
+                this.finish();
+                break;
             case R.id.sepidsa_web_page_button:
-                goToURL("www.sepidsa.com");
+                goToURL("http://www.sepidsa.com");
+                break;
+            case R.id.instagram_sepidsa:
+                uri = Uri.parse("http://instagram.com/teamsepidsa");
+                intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+                break;
         }
 
     }

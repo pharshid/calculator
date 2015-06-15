@@ -491,7 +491,7 @@ public class  Expression{
 
             else if (s.indexOf("ln") == 0) {
                 s = s.substring(2);
-                ans = BigDecimalUtils.ln(trig(), 6);
+                ans = new BigDecimal(Math.log(trig().doubleValue()));
                 found = true;
             } else if (s.charAt(0) == '\u221a') {
                 s = s.substring(1);

@@ -155,7 +155,6 @@
                     android:scrollbars = "vertical"
                     android:layout_toRightOf="@id/currency_list"
                     android:layout_marginBottom="@dimen/padding_small"
-                    android:includeFontPadding="false"
 
                     />
 
