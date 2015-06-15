@@ -271,6 +271,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
         }else {
             if (mHelper != null && mSetupFinished) {
 //                try {
+                mHelper.flagEndAsync();
                     mHelper.launchPurchaseFlow(this, SKU_PREMIUM, RC_REQUEST,
                             mPurchaseFinishedListener, "");
                     // Fade the premium tour

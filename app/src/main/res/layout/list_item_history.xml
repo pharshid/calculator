@@ -74,27 +74,8 @@
                 android:textSize="15sp" />
 
 
-
-
-            <TextView
-                android:id="@+id/operation"
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/CustomButton"
-                android:textSize="@dimen/log_detail_txt_size"
-                android:textColor="@android:color/darker_gray"
-                android:gravity="left"
-                android:layout_toLeftOf="@id/log_checkbox"
-                android:focusable="false"
-                android:includeFontPadding="false"
-                android:paddingTop="@dimen/padding_medium"
-
-                />
-
             <TextView
                 android:id="@+id/result"
-                android:layout_below="@id/operation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/CustomButton"
@@ -110,11 +91,31 @@
 
                 />
 
+            <TextView
+                android:id="@+id/operation"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/result"
+
+                style="@style/CustomButton"
+                android:textSize="@dimen/log_detail_txt_size"
+                android:textColor="@android:color/darker_gray"
+                android:gravity="left"
+                android:layout_toLeftOf="@id/log_checkbox"
+                android:focusable="false"
+                android:includeFontPadding="false"
+                android:paddingTop="@dimen/padding_medium"
+
+                />
+
+
+
             <FrameLayout
                 android:id="@+id/tag_background"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/result"
+                android:layout_below="@id/operation"
                 android:layout_toLeftOf="@id/log_checkbox"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
