@@ -536,6 +536,12 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             mFragments[3] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_four);
             mFragments[4] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_five);
             mFragments[5] = ParallaxPane.newInstance(R.layout.fragment_parallax_pane_transparent);
+            Intent intent = getIntent();
+            int page = intent.getIntExtra("page", 0);
+            Fragment temp = mFragments[0];
+            mFragments[0] = mFragments[page];
+            mFragments[page] = temp;
+
             Typeface flatIcon = Typeface.createFromAsset(getAssets(), "yekan.ttf");
 //            for (Fragment fg:mFragments){
 //
