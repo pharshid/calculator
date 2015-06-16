@@ -242,8 +242,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         Log.d(TAG_recreate, "Activity oncreate");
         super.onCreate(savedInstanceState);
 
-
-
         // You can find it in your Bazaar console, in the Dealers section.
         // It is recommended to add more security than just pasting it in your source code;
 //        prepareinAppHelper(base64EncodedPublicKey);
@@ -614,7 +612,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }else{
             mScientificModeTextView.setText("RAD");
         }
-        showSplashAndTour();
         Runnable runnable = new Runnable() {
             public void run() {
                 prepareAnimationStuff();
@@ -645,6 +642,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         redrawKeypadBackground();
 
         super.onResume();
+        showSplashAndTour();
+
     }
 
     private void prepareBottomIcons() {
@@ -1256,7 +1255,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
     void showSplashAndTour(){
-        if(!getPopulateConstantDatabase()){
+        if(!getSplashAndTourViewed()){
+            setSplashAndTourViewed(true);
             Intent intent = new Intent(this, SplashScreen.class);
             startActivity(intent);
         }
@@ -1300,9 +1300,24 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         editor.apply();
     }
 
+    private void setSplashAndTourViewed(boolean hasViewed) {
+        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
+        SharedPreferences.Editor editor = appPreferences.edit();
+
+        editor.putBoolean("hasViewedTour", hasViewed);
+
+
+        editor.apply();
+    }
+
     private boolean getPopulateConstantDatabase() {
         SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
        return  appPreferences.getBoolean("hasPopulatedConstantDatabase",false);
+    }
+
+    private boolean getSplashAndTourViewed() {
+        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
+        return  appPreferences.getBoolean("hasViewedTour",false);
     }
 
     private void performBackspace() {
