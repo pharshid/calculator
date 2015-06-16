@@ -642,7 +642,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         redrawKeypadBackground();
 
         super.onResume();
-        showSplashAndTour();
 
     }
 
@@ -1259,6 +1258,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             setSplashAndTourViewed(true);
             Intent intent = new Intent(this, SplashScreen.class);
             startActivity(intent);
+            finish();
         }
     }
 

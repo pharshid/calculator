@@ -10,6 +10,7 @@ import android.view.MotionEvent;
  */
 public class SplashScreen extends Activity {
 
+
     /**
      * The thread to process splash screen events
      */
@@ -68,6 +69,7 @@ public class SplashScreen extends Activity {
         super.onPause();
         overridePendingTransition(R.anim.appear, R.anim.disappear);
         finish();
+        StartActivity.fa.finish();
 
     }
 }

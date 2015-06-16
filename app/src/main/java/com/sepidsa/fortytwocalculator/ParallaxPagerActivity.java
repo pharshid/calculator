@@ -1,5 +1,6 @@
 package com.sepidsa.fortytwocalculator;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -266,5 +267,15 @@ public class ParallaxPagerActivity extends FragmentActivity {
                 }
             }
         }
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Intent intent = new Intent(this, MainActivity.class);
+        overridePendingTransition(R.anim.appear, R.anim.disappear);
+        startActivity(intent);
+
     }
 }
