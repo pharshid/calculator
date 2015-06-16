@@ -836,7 +836,12 @@ public class IabHelper {
 //        logDebug("Package name: " + mContext.getPackageName());
         boolean verificationFailed = false;
         String continueToken = null;
+            if(mContext == null){
 
+                flagEndAsync();
+                this.dispose();
+                return BILLING_RESPONSE_RESULT_ERROR;
+            }
         do {
             logDebug("Calling getPurchases with continuation token: " + continueToken);
             Bundle ownedItems = mService.getPurchases(3, mContext.getPackageName(),
