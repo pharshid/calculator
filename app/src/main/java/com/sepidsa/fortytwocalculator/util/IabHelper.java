@@ -836,7 +836,7 @@ public class IabHelper {
 //        logDebug("Package name: " + mContext.getPackageName());
         boolean verificationFailed = false;
         String continueToken = null;
-        if (mService == null || mContext == null) {
+        if (mService == null || mContext == null||mDisposed ) {
             logError("Our service and/or our context are null.  Exiting.");
             return IABHELPER_UNKNOWN_ERROR;
         }
