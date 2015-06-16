@@ -836,7 +836,10 @@ public class IabHelper {
 //        logDebug("Package name: " + mContext.getPackageName());
         boolean verificationFailed = false;
         String continueToken = null;
-
+        if (mService == null || mContext == null) {
+            logError("Our service and/or our context are null.  Exiting.");
+            return IABHELPER_UNKNOWN_ERROR;
+        }
         do {
             logDebug("Calling getPurchases with continuation token: " + continueToken);
             Bundle ownedItems = mService.getPurchases(3, mContext.getPackageName(),

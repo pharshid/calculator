@@ -464,7 +464,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
         Log.d(TAG, "Destroying helper.");
         if (mHelper != null) {
           try {
-              mHelper.flagEndAsync();
+//              mHelper.flagEndAsync();
               mHelper.dispose();
           }catch (Exception e){}
             
