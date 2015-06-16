@@ -17,7 +17,6 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:background="#fff"
-        android:padding="10dp"
         >
 
 
@@ -43,28 +42,74 @@
             android:singleLine="true"
             android:fontFamily="sans-serif-thin"
             android:textColor="@android:color/white"
-            android:layout_margin="10dp"
-            android:layout_above="@+id/fortyTwoSampleTranslation"
-            android:layout_below="@+id/scientific_mode_textview"
-            android:src="@drawable/sepidsa_icon_915"
+            android:layout_margin="2dp"
+            android:src="@drawable/sepidsa_icon_1440"
             android:layout_centerInParent="true"
-
             />
 
 
-        <ImageButton
-            android:id="@+id/instagram_sepidsa"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_instagram_grey600_24dp"
-            android:background="@android:color/transparent"
-            android:padding="@dimen/padding_small"
 
+        <RelativeLayout
+            android:id="@+id/packet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_alignLeft="@+id/button_back_about"
-           />
+            android:paddingBottom="1dp"
+            android:paddingRight="5dp"
+            >
 
 
+            <ImageButton
+                android:id="@+id/instagram_sepidsa"
+
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_instagram_grey600_24dp"
+                android:background="@android:color/transparent"
+                android:layout_toRightOf="@+id/email_info_sepidsa"
+                android:layout_toEndOf="@+id/email_info_sepidsa"
+                android:layout_below="@id/sepidsa_web_page_button"
+                />
+
+            <ImageButton
+                android:id="@+id/sepidsa_webpage_icon_button"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_web_grey600_24dp"
+                android:background="@android:color/transparent"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/sepidsa_web_page_button"
+
+                />
+
+
+            <ImageButton
+                android:id="@+id/email_info_sepidsa"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_email_outline_grey600_24dp"
+                android:background="@android:color/transparent"
+                android:layout_toRightOf="@id/sepidsa_webpage_icon_button"
+                android:layout_below="@id/sepidsa_web_page_button"
+                />
+
+            <Button
+
+                android:id="@+id/sepidsa_web_page_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="سپیدسا"
+                android:background="@android:color/transparent"
+                android:textColor="@android:color/darker_gray"
+                android:layout_alignParentTop="true"
+                android:textSize="19sp"
+                android:layout_centerHorizontal="true"
+                />
+
+
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
@@ -114,7 +159,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/avatar_farshid"
-                        android:text="Farshid"
+                        android:text="فرشید"
                         android:textColor="@android:color/white"
                         android:layout_centerHorizontal="true"
                         />
@@ -197,7 +242,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/avatar_ehsan"
-                        android:text="Ehsan"
+                        android:text="احسان"
                         android:layout_centerHorizontal="true"
                         android:textColor="@android:color/white"
 
@@ -262,24 +307,6 @@
 
 
 
-            <Button
-
-                android:id="@+id/sepidsa_web_page_button"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:text="@string/sepidsa_webpage"
-                android:textSize="16sp"
-                android:fontFamily="sans-serif-light"
-                android:background="@android:color/transparent"
-                android:textColor="@android:color/white"
-                android:gravity="center"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:paddingBottom="@dimen/padding_medium"
-
-                />
 
 
 

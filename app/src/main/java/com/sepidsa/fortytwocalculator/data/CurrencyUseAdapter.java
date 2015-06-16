@@ -87,7 +87,7 @@ public class CurrencyUseAdapter extends CursorAdapter {
         viewHolder.nameView.setText(currencyMap.get(key));
         viewHolder.nameView.setTypeface(Typeface.createFromAsset(context.getAssets(), "yekan.ttf"));
         viewHolder.numberView.setText(number);
-        viewHolder.numberView.setTypeface(Typeface.createFromAsset(context.getAssets(), "yekan.ttf"));
+        viewHolder.numberView.setTypeface(Typeface.createFromAsset(context.getAssets(), "notoregular.ttf"));
 
 
 

@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -31,12 +33,16 @@ public class AboutActivity extends Activity implements View.OnClickListener {
             mBackButton;
 
     Button webpageButton;
-     ImageButton mInstagramSepidsa;
+     ImageButton mInstagramSepidsa,mInfoMailSepidsa,mWebSiteSepidsa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about_dialog);
+        TextView ehsanNameTV = (TextView) findViewById(R.id.ehsan_name);
+        TextView farshidNameTV = (TextView) findViewById(R.id.farshid_name);
+        ehsanNameTV.setTypeface(Typeface.createFromAsset(getApplicationContext().getAssets(), "notoregular.ttf"));
+        farshidNameTV.setTypeface(Typeface.createFromAsset(getApplicationContext().getAssets(), "notoregular.ttf"));
         mMailToEhsan = (ImageButton)findViewById(R.id.mail_to_ehsan);
         mMailToFarshid = (ImageButton)findViewById(R.id.mail_to_farshid);
         mLinkedInEhsan = (ImageButton)findViewById(R.id.linked_in_ehsan);
@@ -44,8 +50,12 @@ public class AboutActivity extends Activity implements View.OnClickListener {
         mInstagramEhsan = (ImageButton)findViewById(R.id.instagram_ehsan);
         mInstagramFarshid = (ImageButton)findViewById(R.id.instagram_farshid);
         mInstagramSepidsa = (ImageButton)findViewById(R.id.instagram_sepidsa);
+        mInfoMailSepidsa = (ImageButton)findViewById(R.id.email_info_sepidsa);
+        mWebSiteSepidsa = (ImageButton)findViewById(R.id.sepidsa_webpage_icon_button);
         mBackButton = (ImageButton)findViewById(R.id.button_back_about);
         webpageButton = (Button)findViewById(R.id.sepidsa_web_page_button);
+        webpageButton.setTypeface(Typeface.createFromAsset(getApplicationContext().getAssets(), "notoregular.ttf"));
+
         prepareButtons();
 
     }
@@ -63,6 +73,8 @@ public class AboutActivity extends Activity implements View.OnClickListener {
         mBackButton.setOnClickListener(this);
         webpageButton.setOnClickListener(this);
         mInstagramSepidsa.setOnClickListener(this);
+        mInfoMailSepidsa.setOnClickListener(this);
+        mWebSiteSepidsa.setOnClickListener(this);
     }
 
     @Override
@@ -95,6 +107,9 @@ public class AboutActivity extends Activity implements View.OnClickListener {
             case R.id.mail_to_ehsan:
                 sendEmail(this,"ehsan@sepidsa.com","","",null);
                 break;
+            case R.id.email_info_sepidsa:
+                sendEmail(this,"info@sepidsa.com","","",null);
+                break;
             case R.id.linked_in_ehsan:
                 uri = Uri.parse("https://www.linkedin.com/pub/ehsan-parhizkar/97/843/b79");
                 intent = new Intent(Intent.ACTION_VIEW, uri);
@@ -122,6 +137,7 @@ public class AboutActivity extends Activity implements View.OnClickListener {
                 this.finish();
                 break;
             case R.id.sepidsa_web_page_button:
+            case R.id.sepidsa_webpage_icon_button:
                 goToURL("http://www.sepidsa.com");
                 break;
             case R.id.instagram_sepidsa:

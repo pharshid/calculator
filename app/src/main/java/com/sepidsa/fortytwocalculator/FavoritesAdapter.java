@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,7 +64,10 @@ public class FavoritesAdapter extends CursorAdapter {
         }else {
             viewHolder.tagView.setBackgroundColor(((MainActivity) mContext).getAccentColorCode());
 
-        }        viewHolder.starredButton.setChecked(starred);
+        }
+        viewHolder.tagView.setTypeface(Typeface.createFromAsset(context.getAssets(), "notoregular.ttf"));
+
+        viewHolder.starredButton.setChecked(starred);
         viewHolder.starredButton.setOnClickListener(mStarOnClickListener);
 
     }

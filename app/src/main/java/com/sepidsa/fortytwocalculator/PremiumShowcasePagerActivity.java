@@ -460,14 +460,14 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
 
     @Override
     protected void onDestroy() {
+
+        super.onDestroy();
         Log.d(TAG, "Destroying helper.");
         if (mHelper != null) {
             mHelper.dispose();
             mHelper = null;
         }
         Log.d(TAG, "Destroying helper.");
-
-        super.onDestroy();
 
 
 

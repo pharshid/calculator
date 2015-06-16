@@ -54,6 +54,7 @@
                 android:textColor="@android:color/white"
                 android:paddingLeft="@dimen/padding_small"
                 android:text="RAD"
+                android:textSize="@dimen/retro_m_variable_text_size"
 
                 />
 

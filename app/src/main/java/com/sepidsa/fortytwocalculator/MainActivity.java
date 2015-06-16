@@ -752,6 +752,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         if (mViewPager != null) {
             List<Fragment> fList = new ArrayList<Fragment>();
+            mViewPager.setOffscreenPageLimit(0);
             fList.add(new AnimatedLogFragment());
             fList.add(new DialpadFragment());
             if( mViewPager.getTag().equals("portrait_phone")) {
@@ -762,7 +763,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             mViewPager.setAdapter(new ViewPagerAdapter(fragmentManager, fList));
             mLayoutState = PORTRAIT_BOTH;
-            mViewPager.setOffscreenPageLimit(0);
             mViewPager.setCurrentItem(DIALPAD_FRAGMENT);
             setmDefaultPage(DIALPAD_FRAGMENT);
 
