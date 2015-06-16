@@ -241,6 +241,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG_recreate, "Activity oncreate");
         super.onCreate(savedInstanceState);
+        showSplashAndTour();
+
 
         // You can find it in your Bazaar console, in the Dealers section.
         // It is recommended to add more security than just pasting it in your source code;
@@ -1256,9 +1258,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     void showSplashAndTour(){
         if(!getSplashAndTourViewed()){
             setSplashAndTourViewed(true);
-            Intent intent = new Intent(this, SplashScreen.class);
+            Intent intent = new Intent(this, ParallaxPagerActivity.class);
+            overridePendingTransition(R.anim.appear, R.anim.disappear);
             startActivity(intent);
-            finish();
         }
     }
 

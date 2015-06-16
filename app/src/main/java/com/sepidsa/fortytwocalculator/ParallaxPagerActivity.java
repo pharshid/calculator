@@ -268,14 +268,4 @@ public class ParallaxPagerActivity extends FragmentActivity {
             }
         }
     }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Intent intent = new Intent(this, MainActivity.class);
-        overridePendingTransition(R.anim.appear, R.anim.disappear);
-        startActivity(intent);
-
-    }
 }
