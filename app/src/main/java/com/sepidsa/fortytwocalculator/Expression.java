@@ -146,7 +146,15 @@ public class  Expression{
             }
             if( s.charAt( 0 ) == '!' ) {
                 s = s.substring(1);
-                ans = compute_factorial(ans.round(new MathContext(6)),ans.round(new MathContext(6)));
+                try{
+                if(ans.scale()>0 || ans.compareTo(BigDecimal.ZERO)== -1){
+                        throw new NumberFormatException();
+                }else {
+                    ans = compute_factorial(ans.round(new MathContext(6)), ans.round(new MathContext(6)));
+                }
+                }finally {
+                    //
+                }
                 //todo
             }else if ( s.charAt( 0 ) == '%'){
                 PERCENT_FLAG = true;

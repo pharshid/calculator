@@ -686,7 +686,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         Log.d(TAG_recreate, "Activity ondestroy");
 
         if (isFinishing()) {
@@ -703,6 +702,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             }
         }
 
+        super.onDestroy();
 
 
     }
