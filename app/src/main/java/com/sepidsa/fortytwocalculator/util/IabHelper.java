@@ -576,6 +576,9 @@ public class IabHelper {
         catch (JSONException e) {
             throw new IabException(IABHELPER_BAD_RESPONSE, "Error parsing JSON response while refreshing inventory.", e);
         }
+        catch (NullPointerException e) {
+            throw new IabException(IABHELPER_UNKNOWN_ERROR, "NullPointer while refreshing inventory.", e);
+        }
     }
 
     /**
@@ -836,10 +839,10 @@ public class IabHelper {
 //        logDebug("Package name: " + mContext.getPackageName());
         boolean verificationFailed = false;
         String continueToken = null;
-        if (mService == null || mContext == null||mDisposed ) {
-            logError("Our service and/or our context are null.  Exiting.");
-            return IABHELPER_UNKNOWN_ERROR;
-        }
+//        if (mService == null || mContext == null||mDisposed ) {
+//            logError("Our service and/or our context are null.  Exiting.");
+//            return IABHELPER_UNKNOWN_ERROR;
+//        }
         do {
             logDebug("Calling getPurchases with continuation token: " + continueToken);
             Bundle ownedItems = mService.getPurchases(3, mContext.getPackageName(),
