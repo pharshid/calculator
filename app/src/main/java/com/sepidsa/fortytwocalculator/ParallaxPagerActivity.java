@@ -179,7 +179,7 @@ public class ParallaxPagerActivity extends FragmentActivity {
             mFragments[2] = ParallaxPane.newInstance(R.layout.fragment_app_tour_pane_three);
             mFragments[3] = ParallaxPane.newInstance(R.layout.fragment_app_tour_pane_four);
             mFragments[4] = ParallaxPane.newInstance(R.layout.fragment_app_tour_pane_five);
-            mFragments[5] = ParallaxPane.newInstance(R.layout.fragment_parallax_pane_transparent_old);
+            mFragments[5] = ParallaxPane.newInstance(R.layout.fragment_parallax_pane_transparent);
         }
 
         @Override
