@@ -209,11 +209,11 @@
   <string name="farsi_rub">روبل روسیه</string>
   <string name="farsi_sar">ریال عربستان</string>
   <string name="loading_message">در حال بارگذاری اولیه, لطفا چند لحظه صبر کنید...</string>
-  <string name="farsi_ons"> انس طلا</string>
+  <string name="farsi_ons">انس طلا (به دلار)</string>
   <string name="farsi_mesghal"> مثقال طلا</string>
   <string name="farsi_geram18"> گرم طلای 18</string>
   <string name="farsi_geram24"> گرم طلای 24</string>
-  <string name="farsi_silver"> انس نقره</string>
+  <string name="farsi_silver">انس نقره (به دلار)</string>
   <string name="farsi_sekeb">سکه بهار آزادی</string>
   <string name="farsi_sekee">سکه امامی</string>
   <string name="farsi_nim">سکه نیم بهار آزادی</string>
