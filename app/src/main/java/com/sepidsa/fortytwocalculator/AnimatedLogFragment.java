@@ -308,5 +308,9 @@ public class AnimatedLogFragment extends Fragment implements LoaderManager.Loade
     }
 
 
+    public void scrollToLast() {
+        mListView.smoothScrollToPosition(mLogAdapter.getCount()+1);
+    }
+
 
 }
