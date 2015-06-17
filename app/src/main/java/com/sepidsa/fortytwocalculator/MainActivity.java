@@ -19,6 +19,7 @@ import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -224,6 +225,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private Button mCurrencyList;
     private Animation out_anim_clear;
+    private AnimatedLogFragment mLogFragment;
 
     // Container Activity must implement this interface
     public interface OnHeadlineSelectedListener {
@@ -731,7 +733,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         if (mViewPager != null) {
             List<Fragment> fList = new ArrayList<Fragment>();
             mViewPager.setOffscreenPageLimit(0);
-            fList.add(new AnimatedLogFragment());
+            mLogFragment = new AnimatedLogFragment();
+            fList.add(mLogFragment);
             fList.add(new DialpadFragment());
             if( mViewPager.getTag().equals("portrait_phone")) {
                 // if in landscape phone also add a page for scientific
@@ -1744,13 +1747,33 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             public void onAnimationEnd(Animation animation) {
                 resultTextView.setText(mTempResult);
                 resultTextView.startAnimation(in_anim);
-                Runnable runnable = new Runnable() {
-                    public void run() {
+//                Runnable runnable = new Runnable() {
+//                    public void run() {
+//                    }
+//                };
+//                Thread mythread = new Thread(runnable);
+//                mythread.start();
+
+                AsyncTask asyncTask = new AsyncTask() {
+                    @Override
+                    protected Object doInBackground(Object[] params) {
                         sendLogMessage(getMExpressionString().toString(), mTempResult, false, "");
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Object o) {
+                        mLogFragment.scrollToLast();
                     }
                 };
-                Thread mythread = new Thread(runnable);
-                mythread.start();
+                asyncTask.execute();
+
+
 
             }
 
@@ -1839,7 +1862,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             dialpadFragment.setClearButtonText(value);
         }else{
             //it means we're in tablet mode
-            DialpadFragment dialpadFragment = (DialpadFragment)getSupportFragmentManager().findFragmentById(R.id.dialpad_frame);
+            DialpadFragment dialpadFragment = (DialpadFragment)getSupportFragmentManager().findFragmentByTag("log_fragment_tag");
             dialpadFragment.setClearButtonText(value);
 
         }
