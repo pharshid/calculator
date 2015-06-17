@@ -62,7 +62,7 @@
                 android:layout_height="fill_parent"
                 android:background="@android:color/darker_gray"
                 style="@style/text_switcher"
-                android:text=" "
+                android:text="0"
                 android:layout_toRightOf="@id/btn_add_star"
                 android:gravity="center_vertical|right"
                 android:ellipsize="none"
@@ -160,7 +160,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textSize="27sp"
-                android:text=" "
+                android:text="@string/dollar_icon_string"
 
 
                 />
@@ -197,13 +197,12 @@
 
             >
 
-            <LinearLayout
+            <android.support.v4.view.ViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="86"
                 android:tag="portrait_phone"
-                android:orientation="vertical"
                 />
 
             <com.viewpagerindicator.CirclePageIndicator
@@ -232,7 +231,7 @@
                     android:id="@+id/buttonSettings"
                     style="@style/icon_button.portrait"
                     android:layout_weight="1"
-                    android:text=" "
+                    android:text="@string/settings"
                     android:tag="feedback"
                     android:gravity="center_horizontal"
                     android:textColor="#90A4AE"
@@ -247,7 +246,7 @@
                     android:id="@+id/buttonMute"
                     style="@style/icon_button.portrait"
                     android:layout_weight="1"
-                    android:text=" "
+                    android:text="@string/volume_high"
                     android:tag="@string/volume_high"
                     android:gravity="center_horizontal"
                     android:textColor="#BDBDBD"
@@ -259,7 +258,7 @@
                     android:id="@+id/buttonColors"
                     style="@style/icon_button.portrait"
                     android:layout_weight="1"
-                    android:text=" "
+                    android:text="@string/theme"
                     android:textColor="#E0E0E0"
                     android:tag="@string/theme"
                     android:gravity="center_horizontal"
@@ -272,7 +271,7 @@
                     android:id="@+id/buttonHamburgerMenu"
                     style="@style/icon_button.portrait"
                     android:layout_weight="1"
-                    android:text=" "
+                    android:text="@string/hamburger_menu"
                     android:textColor="#FF3D00"
                     android:tag="p"
                     android:gravity="center_horizontal"

@@ -540,7 +540,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             mFragments[2] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_three);
             mFragments[3] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_four);
             mFragments[4] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_five);
-            mFragments[5] = ParallaxPane.newInstance(R.layout.fragment_parallax_pane_transparent);
+            mFragments[5] = ParallaxPane.newInstance(R.layout.fragment_parallax_pane_transparent_old);
             Intent intent = getIntent();
             int page = intent.getIntExtra("page", 0);
             Fragment temp = mFragments[0];
