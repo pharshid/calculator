@@ -44,7 +44,6 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
-import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -170,17 +169,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     //These are modes for UI update
     private static final byte DIGIT_BUTTON_PRESSED = 1
             , EXECUTE_BUTTON_PRESSED = 3;
-    private TextSwitcher mResult;
     private View result_textView_holder;
     BigDecimal mResultBeforeSignification = new BigDecimal(0);
     BigDecimal mMemoryVariable = new BigDecimal(0);
     TextView mMemoryVariableTextView;
-    String mMemoryVariableString = "";
     private Animation mErrorBlink;
     public Animation mBlink;
-    private Animation mFadeIn;
-    private Animation mFadeOut;
-
     private SoundPool mSoundPool;
     private boolean mSoundPoolLoaded = false;
     private int numericButtonSoundID
@@ -198,10 +192,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private TextView mScientificModeTextView;
     private Typeface mMajalla;
     private Typeface mMitra;
-    private Typeface mDastnevis;
     //    PopoverView popoverView;
     Button mFavoritesList;
-    private boolean mShowingBack = false;
 //    EditText mTagHimself;
 
 
@@ -242,18 +234,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         Log.d(TAG_recreate, "Activity oncreate");
         super.onCreate(savedInstanceState);
         showSplashAndTour();
-
-
-        // You can find it in your Bazaar console, in the Dealers section.
-        // It is recommended to add more security than just pasting it in your source code;
-//        prepareinAppHelper(base64EncodedPublicKey);
-
-
-
-
-
         setTypeFaces();
-
         if(isRetroThemeSelected()){
             setContentView(R.layout.activity_main_retro);
         }else {
@@ -509,8 +490,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private void displayAbout() {
         Intent myIntent = new Intent(MainActivity.this, AboutActivity.class);
         MainActivity.this.startActivity(myIntent);
-//        Intent myIntent = new Intent(MainActivity.this, HelpActivityOld.class);
-//        MainActivity.this.startActivity(myIntent);
 
     }
 
@@ -618,7 +597,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             public void run() {
                 prepareAnimationStuff();
                 prepareSoundStuff();
-                settHasbazaar(isBazaarPackageInstalled(getApplicationContext(), BAZAAR_PACKAGE_NAME));
                 populateConstantDatabaseFirstRun();
 
             }
@@ -826,31 +804,18 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         return appPreferences.getInt("ACCENT_COLOR_CODE", Color.parseColor("#009688"));
     }
 
-
-
-
-    public void settHasbazaar(boolean hasBazaar){
-        //TODO set a cool default theme color
-        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
-        SharedPreferences.Editor editor = appPreferences.edit();
-        editor.putBoolean("IS_BAZAAR_INSTALLED", hasBazaar);
-        editor.commit();
-    }
-
-
-
-    public boolean hasWatchedAppTour(){
-
-        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
-        return appPreferences.getBoolean("has_watched_app_tour_v2.00", false);
-    }
-
-    private void setWatchedAppTour(){
-        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
-        SharedPreferences.Editor editor = appPreferences.edit();
-        editor.putBoolean("has_watched_app_tour_v2.00", true);
-        editor.commit();
-    }
+//    public boolean hasWatchedAppTour(){
+//
+//        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
+//        return appPreferences.getBoolean("has_watched_app_tour_v2.00", false);
+//    }
+//
+//    private void setWatchedAppTour(){
+//        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
+//        SharedPreferences.Editor editor = appPreferences.edit();
+//        editor.putBoolean("has_watched_app_tour_v2.00", true);
+//        editor.commit();
+//    }
 
     public boolean getAngleMode(){
         //TODO set a cool default theme color
@@ -882,35 +847,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         return currentThemeNumber;
     }
-
-
-
-
-    // Saving the selected color theme to prefrence
-    public void saveAccentColorCode(int colorCode){
-        SharedPreferences appPreferences =getApplicationContext().getSharedPreferences("THEME",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = appPreferences.edit();
-        editor.putInt("ACCENT_COLOR_CODE", colorCode);
-        editor.commit();
-    }
-
-
-    private void saveKeypadBackgroundColorCode(int themeNumber) {
-        SharedPreferences appPreferences =getApplicationContext().getSharedPreferences("THEME", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = appPreferences.edit();
-        editor.putInt("KEYPAD_BACKGROUND_COLOR_CODE", themeNumber);
-        editor.commit();
-    }
-    private void saveKeypadFontColorCode(int colorCode) {
-        SharedPreferences appPreferences =getApplicationContext().getSharedPreferences("THEME",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = appPreferences.edit();
-        editor.putInt("KEYPAD_FONT_COLOR_CODE", colorCode);
-        editor.commit();
-    }
-
-
-
-
 
     void redrawAccent(){
 
@@ -955,36 +891,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             mTranslationBox.setBackgroundColor(Color.TRANSPARENT);
 
         }else{
-            View fragmentContainer = findViewById(R.id.fragment_container);
-
 //            fragmentContainer.setBackground(key());
             mTranslationBox.setBackgroundColor(getKeypadBackgroundColorCode());
-            int testtt = getKeypadBackgroundColorCode();
             mTranslationBox.setTextColor(getDialpadFontColor());
-            fragmentContainer = findViewById(R.id.lower_half);
             activityView.setBackgroundColor(getKeypadBackgroundColorCode());
 
         }
     }
 
-    //
-    private void sendChangeAccentColorIntent() {
-        if(mViewPager!= null) {
-            ViewPagerAdapter adapter = (ViewPagerAdapter) mViewPager.getAdapter();
-            DialpadFragment dialpadFragment = (DialpadFragment)adapter.getItem(1);
-            dialpadFragment.redrawKeypadInFlatTheme();
-        }
-//        Intent intent = new Intent("themeIntent");
-//        intent.putExtra("message", "changeAccentColor");
-//        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
-    }
 
-    public void setMViewPagerIndicatorColor(){
-        if(mViewPagerIndicator!= null)
-            mViewPagerIndicator.setFillColor(getAccentColorCode());
-//        mViewPagerIndicator.setPageColor(getAccentColorCode());
-
-    }
 
     public int getTranslationLanguage(){
         SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("LanguagePreference", MODE_PRIVATE);
@@ -1864,18 +1779,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         out_anim_clear.setDuration(100);
         prepareBlinkingErrorAnimation();
         prepareBlinkingAnimation();
-
     }
     void prepareBlinkingErrorAnimation(){
-
         mErrorBlink = new AlphaAnimation(0.0f, 1.0f);
         mErrorBlink.setDuration(100); //You can manage the time of the blink with this parameter
         mErrorBlink.setRepeatMode(Animation.REVERSE);
         mErrorBlink.setRepeatCount(4);
-
     }
-    void prepareBlinkingAnimation(){
 
+    void prepareBlinkingAnimation(){
         mBlink = new AlphaAnimation(0.0f, 1.0f);
         mBlink.setDuration(100); //You can manage the time of the blink with this parameter
         mBlink.setRepeatMode(Animation.REVERSE);
@@ -1883,22 +1795,18 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
-
     public void setMExpressionString(String input){
-
         mExpressionBuffer.replace(0, mExpressionBuffer.length(), input);
     }
     public StringBuilder getMExpressionString(){
-
         return mExpressionBuffer;
-
     }
-    public void appendMExpressionString(CharSequence input){
 
+    public void appendMExpressionString(CharSequence input){
         mExpressionBuffer.append(input);
     }
-    public void deleteMExpressionStringAt(int index){
 
+    public void deleteMExpressionStringAt(int index){
         mExpressionBuffer.deleteCharAt(index);
     }
 
@@ -1906,7 +1814,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     void sendLogMessage(String Operation, String Result, boolean starred, String tagText) {
         Intent intent = new Intent("LogIntent");
         // add data
-
         intent.putExtra("OPERATION", Operation );
         intent.putExtra("RESULT", Result);
         intent.putExtra("RESULT_NO_COMMA", Result.replace(",", ""));
@@ -1926,10 +1833,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
     public void sendClearButtonMessage(String value) {
-//        Intent intent = new Intent("clearIntent");
-//        // add data
-//        intent.putExtra("buttonValue", value);
-//        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
         if(mViewPager!= null) {
             ViewPagerAdapter adapter = (ViewPagerAdapter) mViewPager.getAdapter();
             DialpadFragment dialpadFragment = (DialpadFragment)adapter.getItem(1);
@@ -2111,14 +2014,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 FragmentManager fm = getSupportFragmentManager();
                 FavoritesFragment favoritesDialog = new FavoritesFragment();
                 favoritesDialog.show(fm, "fragment_favorites");
-//                break;
-
-
-
                 break;
-
-
-
 
             case R.id.btn_add_star: {
 
@@ -2242,21 +2138,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 mDrawer.openDrawer();
                 break;
 
-//         case R.id.buttonPremium:
-//             Log.d(TAG, "Upgrade button clicked; launching purchase flow for upgrade.");
-////             setWaitScreen(true);
-//
-//        /* TODO: for security, generate your payload here for verification. See the comments on
-//         *        verifyDeveloperPayload() for more info. Since this is a SAMPLE, we just use
-//         *        an empty string, but on a production app you should carefully generate this. */
-//             String payload = "";
-//
-//             mHelper.launchPurchaseFlow(this, SKU_PREMIUM, RC_REQUEST,
-//                     mPurchaseFinishedListener, payload);
-//                break;
-
-
-
             case R.id.buttonMute:
                 reverseVolume();
                 if (getVolumeFromPreference() == true) {
@@ -2300,14 +2181,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
     }
 
-
-
-
-
-
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        boolean on = ((Switch) buttonView).isChecked();
+        boolean on = buttonView.isChecked();
 
         if (on) {
             //result in Radian
@@ -2337,25 +2213,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         if(requestCode == resultCode ){
             if(data.getBooleanExtra("switchTheme",true)){
                 switchTheme();
-//                Intent i = getBaseContext().getPackageManager()
-//                        .getLaunchIntentForPackage( getBaseContext().getPackageName() );
-//                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(i);
                 Log.d(TAG_recreate, "Acrivity Right before recreate");
                 recreate();
             }
         }
     }
-
-
-
-
-    // Callback for when a purchase is finished
-
-
-
-
 }
-
-//----------------------------------------------------------
-

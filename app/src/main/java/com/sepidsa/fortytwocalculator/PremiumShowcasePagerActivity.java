@@ -215,12 +215,6 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
         return list.size() > 0;
     }
 
-    public boolean getHasbazaar(){
-        //TODO set a cool default theme color
-        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
-        return appPreferences.getBoolean("IS_BAZAAR_INSTALLED", false);
-    }
-
     //    private boolean mGotInventory =false;
     // Listener that's called when we finish querying the items and subscriptions we own
     IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
@@ -591,9 +585,6 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
                     @Override
                     public void onClick(View v) {
                         buyPremium();
-                        if(getHasbazaar()){
-//                            endTutorial();
-                        }
                     }
                 });
             }
