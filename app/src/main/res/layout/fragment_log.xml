@@ -59,8 +59,7 @@
         android:layout_width="fill_parent"
         android:background="@android:color/transparent"
         android:cacheColorHint="@android:color/transparent"
-        android:layout_marginLeft="@dimen/padding_large"
-        android:layout_marginRight="@dimen/padding_large"
+        android:paddingRight="@dimen/padding_large"
         >
     </ListView>
 

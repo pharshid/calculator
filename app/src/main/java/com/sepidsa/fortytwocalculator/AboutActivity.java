@@ -138,7 +138,7 @@ public class AboutActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.sepidsa_web_page_button:
             case R.id.sepidsa_webpage_icon_button:
-                goToURL("http://www.sepidsa.com");
+                goToURL("http://blog.sepidsa.com");
                 break;
             case R.id.instagram_sepidsa:
                 uri = Uri.parse("http://instagram.com/teamsepidsa");
