@@ -2005,7 +2005,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 default:
                     setFontForComponent("TRANSLATION_LITERAL_FONT", FONT_ROBOTO_THIN);
             }
-            setFontForComponent("TRANSLATION_NUMERIC_FONT", FONT_ROBOTO_THIN);
+            setFontForComponent("TRANSLATION_NUMERIC_FONT", FONT_ROBOTO_LIGHT);
             setFontForComponent("RESULT_FONT", FONT_ROBOTO_THIN);
             setFontForComponent("DIALPAD_FONT", FONT_ROBOTO_THIN);
         }
