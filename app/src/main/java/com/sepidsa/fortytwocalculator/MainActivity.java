@@ -1937,7 +1937,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 outputFont = appPreferences.getInt(key, FONT_ROBOTO_THIN);
                 break;
             case "TRANSLATION_NUMERIC_FONT":
-                outputFont = appPreferences.getInt(key, FONT_ROBOTO_THIN);
+                outputFont = appPreferences.getInt(key, FONT_ROBOTO_LIGHT);
                 break;
             case "TRANSLATION_LITERAL_FONT":
                 outputFont = appPreferences.getInt(key, FONT_MITRA);

@@ -13,7 +13,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sepidsa.fortytwocalculator.data.LogContract;
 
@@ -123,7 +122,6 @@ public class FavoritesAdapter extends CursorAdapter {
                             selectionArgs
                     );
 
-                    showMessage(Integer.toString(position) + isCheckedInteger);
 
 
                 }
@@ -143,9 +141,7 @@ public class FavoritesAdapter extends CursorAdapter {
     }
 
 
-    private void showMessage(String message) {
-        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-    }
+
 
 
 }
