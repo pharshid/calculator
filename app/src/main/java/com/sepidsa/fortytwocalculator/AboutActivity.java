@@ -33,7 +33,7 @@ public class AboutActivity extends Activity implements View.OnClickListener {
             mBackButton;
 
     Button webpageButton;
-     ImageButton mInstagramSepidsa,mInfoMailSepidsa,mWebSiteSepidsa;
+     ImageButton mInstagramSepidsa,mInfoMailSepidsa,mFacebookSepidsa,mWebSiteSepidsa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,7 @@ public class AboutActivity extends Activity implements View.OnClickListener {
         mInstagramEhsan = (ImageButton)findViewById(R.id.instagram_ehsan);
         mInstagramFarshid = (ImageButton)findViewById(R.id.instagram_farshid);
         mInstagramSepidsa = (ImageButton)findViewById(R.id.instagram_sepidsa);
+        mFacebookSepidsa = (ImageButton)findViewById(R.id.facebook_sepidsa);
         mInfoMailSepidsa = (ImageButton)findViewById(R.id.email_info_sepidsa);
         mWebSiteSepidsa = (ImageButton)findViewById(R.id.sepidsa_webpage_icon_button);
         mBackButton = (ImageButton)findViewById(R.id.button_back_about);
@@ -73,6 +74,7 @@ public class AboutActivity extends Activity implements View.OnClickListener {
         mBackButton.setOnClickListener(this);
         webpageButton.setOnClickListener(this);
         mInstagramSepidsa.setOnClickListener(this);
+        mFacebookSepidsa.setOnClickListener(this);
         mInfoMailSepidsa.setOnClickListener(this);
         mWebSiteSepidsa.setOnClickListener(this);
     }
@@ -142,6 +144,11 @@ public class AboutActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.instagram_sepidsa:
                 uri = Uri.parse("http://instagram.com/teamsepidsa");
+                intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+                break;
+            case R.id.facebook_sepidsa:
+                uri = Uri.parse("http://facebook.com/teamsepidsa");
                 intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
                 break;

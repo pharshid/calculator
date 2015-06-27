@@ -35,7 +35,7 @@
             android:layout_height="match_parent"
             android:layout_weight="50"
             android:textSize="@dimen/log_detail_txt_size"
-            android:textColor="@android:color/holo_blue_light"
+            android:textColor="#00ACC1"
             android:gravity="right"
             android:clickable="false"
             android:focusable="false"

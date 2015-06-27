@@ -300,6 +300,8 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
     @Override
     public void onStart() {
         super.onStart();
+        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mThemeChangedReciever, new IntentFilter("themeIntent"));
+
         ((MainActivity)getActivity()).checkCLRButtonSendIntent();
         if(!mIsRetroOn){
             redrawKeypadInFlatTheme();
@@ -317,7 +319,6 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         super.onResume();
 
 
-        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mThemeChangedReciever, new IntentFilter("themeIntent"));
         Log.d(TAG, "Fragment onResume ");
 
 

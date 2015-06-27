@@ -97,7 +97,6 @@
                 android:layout_below="@id/result"
                 android:layout_toLeftOf="@id/log_checkbox"
                 android:layout_alignParentLeft="true"
-                android:paddingLeft="@dimen/padding_small"
                 >
             <TextView
                 android:id="@+id/LOG_tag"

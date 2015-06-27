@@ -101,7 +101,13 @@ public class LogAdapter extends CursorAdapter {
             viewHolder.resultView.setTextColor(((MainActivity) context).getAccentColorCode());
 
             viewHolder.operationView.setTextColor(iconColor);
-            viewHolder.arrow.setTextColor(iconColor);
+            if(((MainActivity) context).getKeypadBackgroundColorCode() == Color.WHITE){
+                viewHolder.arrow.setTextColor(Color.parseColor("#EEEEEE"));
+            }else{
+                viewHolder.arrow.setTextColor(iconColor);
+            }
+
+
             viewHolder.shareButton.setTextColor(iconColor);
             viewHolder.labelButton.setTextColor(iconColor);
             viewHolder.deleteButton.setTextColor(iconColor);

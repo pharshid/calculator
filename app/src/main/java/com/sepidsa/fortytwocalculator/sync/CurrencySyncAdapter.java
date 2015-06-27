@@ -3,6 +3,7 @@ package com.sepidsa.fortytwocalculator.sync;
 /**
  * Created by Farshid on 6/6/2015.
  */
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.AbstractThreadedSyncAdapter;
@@ -10,18 +11,23 @@ import android.content.ContentProviderClient;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.SyncRequest;
 import android.content.SyncResult;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import com.sepidsa.fortytwocalculator.R;
-import com.sepidsa.fortytwocalculator.data.CurrencyContract;
-import java.util.Vector;
+
 import com.jaunt.Elements;
 import com.jaunt.JauntException;
 import com.jaunt.UserAgent;
+import com.sepidsa.fortytwocalculator.R;
+import com.sepidsa.fortytwocalculator.data.CurrencyContract;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Vector;
 
 public class CurrencySyncAdapter extends AbstractThreadedSyncAdapter {
     public final String LOG_TAG = CurrencySyncAdapter.class.getSimpleName();
@@ -118,6 +124,8 @@ public class CurrencySyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
             Log.d(LOG_TAG, "Syncing... " + item + " + " + value + " Inserted");
+            setCurrencyFetchTime();
+
         }
 
 
@@ -132,17 +140,29 @@ public class CurrencySyncAdapter extends AbstractThreadedSyncAdapter {
             ContentValues[] cvArray = new ContentValues[cVVector.size()];
             cVVector.toArray(cvArray);
             getContext().getContentResolver().bulkInsert(CurrencyContract.CurrencyEntry.CONTENT_URI, cvArray);
-
+            setCurrencyFetchTime();
             Log.d(LOG_TAG, "Sync Complete. " + cVVector.size() + " Inserted");
         }
 
 
-
-
-
+    }
+    public void setCurrencyFetchTime(){
+        //TODO set a cool default theme color
+        SharedPreferences appPreferences = getContext().getSharedPreferences("APP", Context.MODE_PRIVATE);
+        SharedPreferences.Editor timeEditor = appPreferences.edit() ;
+        Date rightNow= new Date();
+//        String curTime = String.format("%02d:%02d", rightNow.get(Calendar.HOUR_OF_DAY), rightNow.get(Calendar.MINUTE));
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm"); //like "HH:mm" or just "mm", whatever you want
+        String curTime = sdf.format(rightNow);
+        timeEditor.putString("CURRENCY_FETCH_TIME", curTime);
+        timeEditor.apply();
     }
 
-
+    //    private String getCurrentTime(long timeInMillis){
+//
+//      return (new SimpleDateFormat("mm:ss:SSS")).format(new Date(timeInMillis));
+//
+//    }
     /**
      * Helper method to schedule the sync adapter periodic execution
      */

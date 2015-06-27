@@ -47,7 +47,7 @@ public class ConstantUseAdapter extends CursorAdapter {
 
 
         viewHolder.nameView.setText(name);
-        viewHolder.nameView.setTextColor(((MainActivity)mContext).getAccentColorCode());
+//        viewHolder.nameView.setTextColor(((MainActivity)mContext).getAccentColorCode());
         viewHolder.nameView.setTypeface(Typeface.createFromAsset(context.getAssets(), "yekan.ttf"));
         viewHolder.numberView.setText(Double.toString(number));
 

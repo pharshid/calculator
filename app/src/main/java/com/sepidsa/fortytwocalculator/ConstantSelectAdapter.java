@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sepidsa.fortytwocalculator.data.ConstantContract;
 
@@ -53,7 +52,7 @@ public class ConstantSelectAdapter extends CursorAdapter {
 
 
         viewHolder.nameView.setText(name);
-        viewHolder.nameView.setTextColor(((MainActivity)mContext).getAccentColorCode());
+//        viewHolder.nameView.setTextColor(((MainActivity)mContext).getAccentColorCode());
         viewHolder.nameView.setTypeface(Typeface.createFromAsset(context.getAssets(), "yekan.ttf"));
         viewHolder.numberView.setText(Double.toString(number));
         viewHolder.selectedButton.setChecked(selected);

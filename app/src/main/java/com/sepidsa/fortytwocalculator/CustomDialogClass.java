@@ -188,16 +188,17 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
                         break;
 
                     case 0:
-                        fortyTwoSample.setTypeface(mRobotoLight);
                         fontSizeeditor.putInt("DIALPAD_FONT", DIALPAD_FONT_ROBOTO_LIGHT);
                         fontSizeeditor.apply();
+                        fortyTwoSample.setTypeface(mRobotoLight);
                         sendChangeDialpadTypefaceMessage(1);
                         break;
 
                     case 1:
-                        fortyTwoSample.setTypeface(mRobotoRegular);
                         fontSizeeditor.putInt("DIALPAD_FONT", DIALPAD_FONT_ROBOTO_REGULAR);
                         fontSizeeditor.apply();
+                        fortyTwoSample.setTypeface(mRobotoRegular);
+
                         sendChangeDialpadTypefaceMessage(2);
                         break;
                 }

@@ -62,7 +62,7 @@ public class ConstantUseFragment  extends DialogFragment implements LoaderManage
 
         mListView = (ListView) rootView.findViewById(R.id.listview_constant);
         mGotoSelect = (Button) rootView.findViewById(R.id.button_goto_select);
-        mGotoSelect.setTextColor(((MainActivity)getActivity()).getAccentColorCode());
+//        mGotoSelect.setTextColor(((MainActivity)getActivity()).getAccentColorCode());
         mGotoSelect.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "yekan.ttf"));
         TextView empty = (TextView) rootView.findViewById(R.id.empty_list);
         mListView.setEmptyView(empty);

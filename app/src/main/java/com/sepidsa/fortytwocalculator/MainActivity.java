@@ -1983,17 +1983,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             switch (getTranslationLanguage()) {
                 case LANGUAGE_PERSIAN:
                 case LANGUAGE_ARABIC:
-
                     setFontForComponent("TRANSLATION_LITERAL_FONT", FONT_YEKAN);
                     break;
                 default:
                     setFontForComponent("TRANSLATION_LITERAL_FONT", FONT_DIGITAL_7);
             }
-
             setFontForComponent("TRANSLATION_NUMERIC_FONT", FONT_DIGITAL_7);
             setFontForComponent("RESULT_FONT", FONT_DIGITAL_7);
             setFontForComponent("DIALPAD_FONT", FONT_ROBOTO_LIGHT);
-
         } else {
             switch (getTranslationLanguage()) {
                 case LANGUAGE_PERSIAN:
@@ -2009,7 +2006,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             setFontForComponent("RESULT_FONT", FONT_ROBOTO_THIN);
             setFontForComponent("DIALPAD_FONT", FONT_ROBOTO_THIN);
         }
-        setFontForComponent("SCIENTIFIC_FONT", FONT_ROBOTO_LIGHT);
+//        setFontForComponent("SCIENTIFIC_FONT", FONT_ROBOTO_LIGHT);
 
     }
 

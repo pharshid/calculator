@@ -194,9 +194,6 @@
             android:orientation="vertical"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:paddingLeft="15dp"
-            android:layout_marginRight="15dp"
-
             >
 
             <android.support.v4.view.ViewPager

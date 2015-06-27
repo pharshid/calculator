@@ -208,7 +208,7 @@
   <string name="farsi_pkr">روپیه پاکستان</string>
   <string name="farsi_rub">روبل روسیه</string>
   <string name="farsi_sar">ریال عربستان</string>
-  <string name="loading_message">در حال بارگذاری اولیه, لطفا چند لحظه صبر کنید...</string>
+  <string name="loading_message">در حال بارگذاری اولیه...\n لطفا چند لحظه صبور باشید</string>
   <string name="farsi_ons">انس طلا (به دلار)</string>
   <string name="farsi_mesghal"> مثقال طلا</string>
   <string name="farsi_geram18"> گرم طلای 18</string>

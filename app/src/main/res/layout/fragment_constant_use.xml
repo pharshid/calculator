@@ -38,14 +38,16 @@
         style="?android:attr/buttonBarStyle"
         android:orientation="horizontal"
         android:gravity="center"
-      >
+        android:background="#00ACC1"
+
+        >
 
         <Button
             android:id="@+id/button_goto_select"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:textSize="26sp"
-            android:textColor="@android:color/holo_green_dark"
+            android:textColor="@android:color/white"
             android:background="@android:color/transparent"
             android:text="تنظیمات"
 

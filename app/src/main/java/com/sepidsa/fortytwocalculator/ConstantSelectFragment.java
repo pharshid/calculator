@@ -5,11 +5,11 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
-import android.support.v4.app.DialogFragment;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -26,7 +26,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sepidsa.fortytwocalculator.data.ConstantContract;
 
@@ -77,6 +76,12 @@ public class ConstantSelectFragment  extends DialogFragment implements LoaderMan
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView adapterView, final View view, final int position, long l) {
+                TextView resultView = (TextView) view.findViewById(R.id.constant_number);
+                String result = resultView.getText().toString();
+                ((MainActivity) getActivity()).addNumberToCalculation(result);
+                ((MainActivity) getActivity()).switchToMainFragment();
+                dismiss();
+
 //                Toast.makeText(getActivity(),
 //                        "item " + position + " clicked , IMPLEMENT ME.", Toast.LENGTH_SHORT).show();
             }

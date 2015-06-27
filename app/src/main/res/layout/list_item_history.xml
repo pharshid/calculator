@@ -90,7 +90,7 @@
                 android:focusable="false"
                 android:includeFontPadding="false"
                 android:paddingTop="@dimen/padding_small"
-                android:paddingLeft="@dimen/padding_large"
+                android:paddingLeft="@dimen/padding_medium"
 
                 />
 
@@ -107,7 +107,7 @@
                 android:clickable="false"
                 android:focusable="false"
                 android:includeFontPadding="false"
-                android:paddingLeft="@dimen/padding_large"
+                android:paddingLeft="@dimen/padding_medium"
 
                 />
 

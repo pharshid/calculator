@@ -1,7 +1,10 @@
 package com.sepidsa.fortytwocalculator;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -19,6 +22,9 @@ import android.widget.TextView;
 
 import com.sepidsa.fortytwocalculator.data.CurrencyContract;
 import com.sepidsa.fortytwocalculator.data.CurrencyUseAdapter;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Farshid on 5/20/2015.
@@ -57,10 +63,22 @@ public class CurrencyUseFragment  extends DialogFragment implements LoaderManage
         View rootView = inflater.inflate(R.layout.fragment_currency_use, container, false);
 
 
+        TextView lastUpdatedTitle = (TextView)rootView.findViewById(R.id.last_updated_tv);
+        lastUpdatedTitle.setText(lastUpdatedTitle.getText() + getCurrencyFetchTime());
+        lastUpdatedTitle.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "yekanfarsinumeral.ttf"));
+
+//        TextView lastUpdatedTime = (TextView)rootView.findViewById(R.id.last_update_time);
+//        lastUpdatedTime.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "yekansagi.ttf"));
+
+        TextView updatedFrom = (TextView)rootView.findViewById(R.id.updated_from);
+        updatedFrom.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "yekan.ttf"));
+
         mListView = (ListView) rootView.findViewById(R.id.listview_currency);
         TextView empty = (TextView) rootView.findViewById(R.id.empty_list);
         mListView.setEmptyView(empty);
         mListView.setAdapter(mCurrencyUseAdapter);
+
+
         mProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
         mProgress.setVisibility(View.GONE);
         mProgress.setIndeterminate(true);
@@ -113,6 +131,14 @@ public class CurrencyUseFragment  extends DialogFragment implements LoaderManage
             mProgress2.setVisibility(View.GONE);
             mProgress2.setProgress(24);
                     }
+    }
+    public String getCurrencyFetchTime(){
+        SharedPreferences appPreferences = getActivity().getSharedPreferences("APP", Context.MODE_PRIVATE);
+        Date rightNow= new Date();
+//        String curTime = String.format("%02d:%02d", rightNow.get(Calendar.HOUR_OF_DAY), rightNow.get(Calendar.MINUTE));
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm"); //like "HH:mm" or just "mm", whatever you want
+        String curTime = sdf.format(rightNow);
+        return appPreferences.getString("CURRENCY_FETCH_TIME", "-:-");
     }
 
     @Override
