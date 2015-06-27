@@ -30,10 +30,11 @@ public class  Expression{
             s = s.substring( 1 );
         }
 
-        if( s.length() > 0 && s.charAt( 0 ) == 'e') {
-            s = s.substring(1);
-            ans =new BigDecimal( Math.E);
-        } else if( s.length() > 0 && s.charAt( 0 ) == 'π'){
+//        if( s.length() > 0 && s.charAt( 0 ) == 'e') {
+//            s = s.substring(1);
+//            ans =new BigDecimal( Math.E);
+//        } else
+        if( s.length() > 0 && s.charAt( 0 ) == 'π'){
             s = s.substring( 1 );
             ans =new BigDecimal( Math.PI);
 
@@ -54,17 +55,17 @@ public class  Expression{
                     s = s.substring( 1 );
                 }
             }
-//            if( s.length() > 0 && (s.charAt(0) == 'e' || s.charAt(0) == 'E') ){
-//                temp.append( 'e' );
-//                s = s.substring( 1 );
-//                temp.append( s.charAt( 0 ) );
-//                s = s.substring( 1 );
-//                while( s.length() > 0 && Character.isDigit( s.charAt( 0 ) ) ){
-//                    temp.append(Integer.parseInt( "" + s.charAt( 0 ) ));
-//                    s = s.substring( 1 );
-//
-//                }
-//            }
+            if( s.length() > 0 && (s.charAt(0) == 'e' || s.charAt(0) == 'E') ){
+                temp.append( 'e' );
+                s = s.substring( 1 );
+                temp.append( s.charAt( 0 ) );
+                s = s.substring( 1 );
+                while( s.length() > 0 && Character.isDigit( s.charAt( 0 ) ) ){
+                    temp.append(Integer.parseInt( "" + s.charAt( 0 ) ));
+                    s = s.substring( 1 );
+
+                }
+            }
            /* if(s.length() > 0 && (s.charAt(0) == ')')){
                 ans = (double)1;
                 return ans;

@@ -19,7 +19,6 @@ import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -63,7 +62,6 @@ import com.viewpagerindicator.CirclePageIndicator;
 import java.io.File;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
@@ -129,7 +127,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private Typeface mRobotoLight;
     private Typeface mRobotoRegular;
 
-    private static final byte PORTRAIT_BOTH = 0,
+    private static final byte PORTRAIT_PHONE = 0,
             LANDSCAPE_PHONE = 1,
             LANDSCAPE_TABLET = 2;
     public byte mLayoutState ;
@@ -137,7 +135,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private CirclePageIndicator mViewPagerIndicator = null;
 
     AutoResizeTextView resultTextView;
-    String mTempResult = "0";
+    String mResultToDisplay = "0";
 
 
     // for "2.4+4.5 this variable is 4.right after the first operator we see
@@ -171,7 +169,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private static final byte DIGIT_BUTTON_PRESSED = 1
             , EXECUTE_BUTTON_PRESSED = 3;
     private View result_textView_holder;
-    BigDecimal mResultBeforeSignification = new BigDecimal(0);
+    BigDecimal mRawResult = new BigDecimal(0);
     BigDecimal mMemoryVariable = new BigDecimal(0);
     TextView mMemoryVariableTextView;
     private Animation mErrorBlink;
@@ -243,11 +241,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             setContentView(R.layout.activity_main);
         }
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
         if (savedInstanceState == null) {
 
             mJustPressedExecuteButton = true;
         }
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
         setMViewPager(fragmentManager);
         setMViewPagerIndicator();
 
@@ -518,9 +517,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         outState.putBoolean("mJustPressedExecuteButton", mJustPressedExecuteButton);
         outState.putBoolean("mISRetroThemeOn", isRetroThemeSelected());
         outState.putSerializable("mMemoryVariable", mMemoryVariable);
-        outState.putString("mTempResult", mTempResult);
+        outState.putString("mResultToDisplay", mResultToDisplay);
         outState.putString("mDecimal_fraction", mDecimal_fraction);
         Log.d(TAG_recreate, "Activity onSaveInstanceState ");
+//        mViewPager.removeAllViews();
+//        mViewPager = null;
+
 
 
     }
@@ -532,7 +534,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
+//        super.onRestoreInstanceState(savedInstanceState);
         Log.d(TAG_recreate, "Activity onRestoreInstanceState and is " + savedInstanceState);
 
         // todo mtranslationbox restore
@@ -551,7 +553,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             mMemoryVariable = (BigDecimal) savedInstanceState.getSerializable("mMemoryVariable");
             mMemoryVariableTextView.setText(" M = " + mMemoryVariable.toString());
-            mTempResult = savedInstanceState.getString("mTempResult");
+            mResultToDisplay = savedInstanceState.getString("mResultToDisplay");
             mDecimal_fraction = savedInstanceState.getString("mDecimal_fraction");
 
 
@@ -681,7 +683,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 mHandler.removeCallbacks(mRunnable);
             }
         }
-
         super.onDestroy();
 
 
@@ -730,7 +731,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private void setMViewPager(FragmentManager fragmentManager) {
         // This view is only present in the portrait xml file. I use it as measure for portrait/landscape judgement!
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        if (mViewPager != null) {
+        if (mViewPager!= null && mViewPager.getVisibility() == View.VISIBLE) {
             List<Fragment> fList = new ArrayList<Fragment>();
             mViewPager.setOffscreenPageLimit(0);
             mLogFragment = new AnimatedLogFragment();
@@ -739,11 +740,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             if( mViewPager.getTag().equals("portrait_phone")) {
                 // if in landscape phone also add a page for scientific
                 fList.add(new ScientificFragment());
+                mLayoutState = PORTRAIT_PHONE;
+            }else {
+                mLayoutState = LANDSCAPE_PHONE;
             }
             // if in Portrait Phone
 
             mViewPager.setAdapter(new ViewPagerAdapter(fragmentManager, fList));
-            mLayoutState = PORTRAIT_BOTH;
             mViewPager.setCurrentItem(DIALPAD_FRAGMENT);
             setmDefaultPage(DIALPAD_FRAGMENT);
 
@@ -965,17 +968,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
 
-        boolean shouldPrevent ;
-        if  ( mJustPressedExecuteButton)
+        if  ( mJustPressedExecuteButton){
             if ( Character.isDigit(currentButtonValue.charAt(0))
                     || currentButtonValue.equals(getResources().getString(R.string.Pi))
                     || currentButtonValue.equals(getResources().getString(R.string.e))) {
                 setMExpressionString("");
                 mButtonsStack.clear();
             }
-
+        }
         mJustPressedExecuteButton = false;
-        shouldPrevent = preventCommonErrors(currentButtonValue.charAt(0));
+        boolean  shouldPrevent = preventCommonErrors(currentButtonValue.charAt(0));
         if(shouldPrevent) {
             playSound(errorSoundID);
             mTranslationBox.startAnimation(mErrorBlink);
@@ -1030,7 +1032,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         String result = df.format(mMemoryVariable);
         result = result.replaceAll("^-(?=0(.0*)?$)", "");
         mButtonsStack.clear();
-        mButtonsStack.push(mTempResult);
+        mButtonsStack.push(mResultToDisplay);
         mJustPressedExecuteButton = true;
         playSound(clearAllButtonSoundID);
         checkCLRButtonSendIntent();
@@ -1052,7 +1054,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         String result = df.format(mMemoryVariable);
         result = result.replaceAll("^-(?=0(.0*)?$)", "");
         mButtonsStack.clear();
-        mButtonsStack.push(mTempResult);
+        mButtonsStack.push(mResultToDisplay);
         mJustPressedExecuteButton = true;
         playSound(clearAllButtonSoundID);
         checkCLRButtonSendIntent();
@@ -1078,9 +1080,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             setMExpressionString(getMExpressionString().append(inputString).toString());
             Expression expression = new Expression(getMExpressionString().toString(),getAngleMode(),getApplicationContext());
-            mTempResult = evaluateResult(expression);
-            mResultBeforeSignification = new BigDecimal(mTempResult.replace(",",""));
-            resultTextView.setText(mTempResult);
+            mResultToDisplay = evaluateResult(expression);
+            mRawResult = new BigDecimal(mResultToDisplay.replace(",",""));
+            resultTextView.setText(mResultToDisplay);
             CharSequence mr = inputString;
             if(mr != null) {
                 for(int index=0; index < mr.length(); index++) {
@@ -1097,29 +1099,31 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             df.setMaximumFractionDigits(6);
             df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
             BigDecimal inputDecimal = new BigDecimal(inputString.replace(",",""));
-            mTempResult = df.format(inputDecimal);
-            mTempResult = mTempResult.replaceAll("^-(?=0(.0*)?$)", "");
+            mResultToDisplay = df.format(inputDecimal);
+            mResultToDisplay = mResultToDisplay.replaceAll("^-(?=0(.0*)?$)", "");
 
-            mResultBeforeSignification = new BigDecimal(mTempResult.replace(",",""));
+            mRawResult = new BigDecimal(mResultToDisplay.replace(",",""));
 
             //new code
             mButtonsStack.clear();
-            CharSequence mr = mTempResult;
+            CharSequence mr = mResultToDisplay.replace(",","");
             if(mr != null) {
                 for(int index=0; index < mr.length(); index++) {
                     mButtonsStack.push(String.valueOf(mr.charAt(index)));
                 }
             }
             mJustPressedExecuteButton = true;
-            setMExpressionString(mResultBeforeSignification.toString());
+            setMExpressionString(mRawResult.toString());
+            mDecimal_fraction = "";
+            if(mResultToDisplay.indexOf(".") != -1){
+                mDecimal_fraction = mResultToDisplay.substring(mResultToDisplay.indexOf(".")+ 1);
+            }
             resultTextView.startAnimation(out_anim_execute);
             displayTranslation(true);
             checkCLRButtonSendIntent();
 
         }
-        if(mTempResult.indexOf(".") != -1){
-            mDecimal_fraction = mTempResult.substring(mTempResult.indexOf(".")+ 1);
-        }
+
 
         playSound(clearAllButtonSoundID);
     }
@@ -1246,8 +1250,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
         if (mButtonsStack.size() > 0) {
-            this.setMExpressionString(getMExpressionString()
-                    .substring(0, getMExpressionString().length() - lastButtonLength()));
+            String tempexpString = getMExpressionString()
+                    .substring(0, getMExpressionString().length() - lastButtonLength());
+            this.setMExpressionString(tempexpString);
             popPressedButton();
 
             if (isNonDigit(peekLastButton())) {
@@ -1284,7 +1289,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         setMExpressionString("");
         setTranslationText("");
 //        mResult.setText(getResources().getString(R.string.zero)); todo
-        mTempResult = "0";
+        mResultToDisplay = "0";
         resultTextView.startAnimation(out_anim_clear);
 
         mButtonsStack.clear();
@@ -1319,9 +1324,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             }
         }
         mDecimal_fraction = "";
-        byte decimalIndex = (byte) mTempResult.indexOf(".");
+        byte decimalIndex = (byte) mResultToDisplay.indexOf(".");
         if(decimalIndex != -1){
-            mDecimal_fraction = mTempResult.substring(mTempResult.indexOf(".")+1);
+            mDecimal_fraction = mResultToDisplay.substring(mResultToDisplay.indexOf(".")+1);
         }
 
         try {
@@ -1358,7 +1363,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             playSound(executeButtonSoundID);
             resultTextView.startAnimation(out_anim_execute);
         }else{
-            resultTextView.setText(mTempResult);
+            resultTextView.setText(mResultToDisplay);
 
         }
         return false;
@@ -1370,7 +1375,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         if(getMExpressionString().length()>0) {
             //any button But Equal pressed ..refresh result With mMathexpression
             //Also mResult With Value of mExp
-            resultTextView.setText(mTempResult);
+            resultTextView.setText(mResultToDisplay);
             String gg = getMExpressionString().toString().replaceAll("(?<!\\.\\d{0,6})\\d+?(?=(?:\\d{3})+(?:\\D|$))", "$0,");
             mTranslationBox.setTypeface(mTranslationBoxNumericFont);
             mTranslationBox.setText(gg);
@@ -1382,7 +1387,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     private byte calculateResult(String currentButtonValue) {
-        mTempResult = "0";
+        mResultToDisplay = "0";
         String testSubject ;
         testSubject = mExpressionBuffer.toString();
         if(currentButtonValue != null){
@@ -1391,7 +1396,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         try {
             String withoutcomas = testSubject.toString().replace(",","");
             Expression expression = new Expression(withoutcomas,getAngleMode(), getApplicationContext());
-            mTempResult = evaluateResult(expression);
+            mResultToDisplay = evaluateResult(expression);
             mExpressionBuffer = new StringBuilder(testSubject);
             if(currentButtonValue != null) {
                 pushLastButton(currentButtonValue);
@@ -1404,7 +1409,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             if(currentButtonValue != null) {
                 pushLastButton(currentButtonValue);
             }
-            mTempResult = "∞";
+            mResultToDisplay = "∞";
 
             // Happens if it is devision by zero
             return 1;
@@ -1415,7 +1420,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             if(currentButtonValue != null) {
                 pushLastButton(currentButtonValue);
             }
-            mTempResult = "error";
+            mResultToDisplay = "error";
             // Happens if it is devision by zero
             return 1;
         }
@@ -1469,10 +1474,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
     private void printResultWithTranslation(String decimal_fraction, int Language) {
-        String resultWithoutCommas = mTempResult.replace(",", "");
+        String resultWithoutCommas = mResultToDisplay.replace(",", "");
         int pointIndex = resultWithoutCommas.indexOf(".");
         String integerFraction = "";
-        boolean resultIsNegative = mResultBeforeSignification.compareTo(new BigDecimal(-0.0000009)) < 0;
+        boolean resultIsNegative = mRawResult.compareTo(new BigDecimal(-0.0000009)) < 0;
 
         if(pointIndex == -1){
             integerFraction = resultWithoutCommas;
@@ -1517,11 +1522,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             case LANGUAGE_ARABIC:
                 if(resultIsNegative) {
-                    NumberConverterArabic arabic = new NumberConverterArabic(mResultBeforeSignification.abs());
+                    NumberConverterArabic arabic = new NumberConverterArabic(mRawResult.abs());
                     mTranslationBox.setText("ناقص " + arabic.ConvertToArabic());
                 }
                 else {
-                    NumberConverterArabic arabic = new NumberConverterArabic(mResultBeforeSignification);
+                    NumberConverterArabic arabic = new NumberConverterArabic(mRawResult);
                     mTranslationBox.setText(arabic.ConvertToArabic());
                 }
                 break;
@@ -1645,16 +1650,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private String evaluateResult(Expression exp) {
 
         String result ="";
-        mResultBeforeSignification = exp.evaluate();
+        mRawResult = exp.evaluate();
+//        mRawResult.round(new MathContext(6, RoundingMode.HALF_UP));
         DecimalFormat df = new DecimalFormat();
 
         df.setGroupingUsed(true);
         df.setGroupingSize(3);
-        df.setRoundingMode(RoundingMode.HALF_EVEN);
         df.setMaximumFractionDigits(6);
         df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
 
-        result  =   df.format(mResultBeforeSignification);
+        result  =   df.format(mRawResult);
 //        result = result.replaceAll("^-(?=0(.0*)?$)", "");
 
         return result;
@@ -1745,7 +1750,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                resultTextView.setText(mTempResult);
+                resultTextView.setText(mResultToDisplay);
                 resultTextView.startAnimation(in_anim);
 //                Runnable runnable = new Runnable() {
 //                    public void run() {
@@ -1753,26 +1758,28 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 //                };
 //                Thread mythread = new Thread(runnable);
 //                mythread.start();
+//
+//                AsyncTask asyncTask = new AsyncTask() {
+//                    @Override
+//                    protected Object doInBackground(Object[] params) {
+//                        sendLogMessage(getMExpressionString().toString(), mResultToDisplay, false, "");
+//                        try {
+//                            Thread.sleep(500);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                        return null;
+//                    }
+//
+//                    @Override
+//                    protected void onPostExecute(Object o) {
+//                        mLogFragment.scrollToLast();
+//                    }
+//                };
+//                asyncTask.execute();
 
-                AsyncTask asyncTask = new AsyncTask() {
-                    @Override
-                    protected Object doInBackground(Object[] params) {
-                        sendLogMessage(getMExpressionString().toString(), mTempResult, false, "");
-                        try {
-                            Thread.sleep(500);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        return null;
-                    }
-
-                    @Override
-                    protected void onPostExecute(Object o) {
-                        mLogFragment.scrollToLast();
-                    }
-                };
-                asyncTask.execute();
-
+                sendLogMessage(getMExpressionString().toString(), mResultToDisplay, false, "");
+                mLogFragment.scrollToLast();
 
 
             }
@@ -1791,7 +1798,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                resultTextView.setText(mTempResult);
+                resultTextView.setText(mResultToDisplay);
                 resultTextView.startAnimation(in_anim);
             }
 
@@ -1856,15 +1863,26 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
     public void sendClearButtonMessage(String value) {
-        if(mViewPager!= null) {
+        if(mLayoutState != LANDSCAPE_TABLET) {
             ViewPagerAdapter adapter = (ViewPagerAdapter) mViewPager.getAdapter();
             DialpadFragment dialpadFragment = (DialpadFragment)adapter.getItem(1);
             dialpadFragment.setClearButtonText(value);
         }else{
             //it means we're in tablet mode
-            DialpadFragment dialpadFragment = (DialpadFragment)getSupportFragmentManager().findFragmentByTag("log_fragment_tag");
+            DialpadFragment dialpadFragment = (DialpadFragment)getSupportFragmentManager().findFragmentByTag("dialpad_fragment_tag");
             dialpadFragment.setClearButtonText(value);
+        }
 
+    }
+    public void sendChangeFontThicknessMessage() {
+        if(mLayoutState != LANDSCAPE_TABLET) {
+            ViewPagerAdapter adapter = (ViewPagerAdapter) mViewPager.getAdapter();
+            DialpadFragment dialpadFragment = (DialpadFragment)adapter.getItem(1);
+            dialpadFragment.changeFontThickness();
+        }else{
+            //it means we're in tablet mode
+            DialpadFragment dialpadFragment = (DialpadFragment)getSupportFragmentManager().findFragmentByTag("dialpad_fragment_tag");
+            dialpadFragment.changeFontThickness();
         }
 
     }
@@ -1902,7 +1920,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 getResources().getString(R.string.asech) + "(",
                 getResources().getString(R.string.acsch) + "(",
 
-                getResources().getString(R.string.ln_tag), getResources().getString(R.string.power), getResources().getString(R.string.log_tag), getResources().getString(R.string.tenpowerx) + "(",
+                getResources().getString(R.string.ln_tag), getResources().getString(R.string.power), getResources().getString(R.string.log_tag), getResources().getString(R.string.tenpowerx) + "(","e",
                 getResources().getString(R.string.epowerx) + "(",
                 getResources().getString(R.string.sqrt), "+","−","-","÷","×"};
 

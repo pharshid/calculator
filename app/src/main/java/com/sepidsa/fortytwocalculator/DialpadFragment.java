@@ -6,8 +6,6 @@ package com.sepidsa.fortytwocalculator;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -15,7 +13,6 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -177,32 +174,32 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
 
 
-        mThemeChangedReciever = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-//                if (isAdded()) {
-                // Extract data included in the Intent
-                String message = intent.getStringExtra("message");
-                if (!((MainActivity) getActivity()).isRetroThemeSelected()) {
-
-                    switch (message) {
-                        case "changeDialpadFont":
-                            defaultFont = ((MainActivity) getActivity()).getFontForComponent("DIALPAD_FONT");
-                            for (int id : idList) {
-                                View v = mView.findViewById(id);
-                                if (v != null && (v instanceof Button)) {
-                                    if(!mIsRetroOn)
-                                    ((Button) v).setTypeface(defaultFont);
-                                }
-                            }
-                            refreshCButtonTypeface();
-                            break;
-
-                    }
-                }
-            }
+//        mThemeChangedReciever = new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+////                if (isAdded()) {
+//                // Extract data included in the Intent
+//                String message = intent.getStringExtra("message");
+//                if (!((MainActivity) getActivity()).isRetroThemeSelected()) {
+//
+//                    switch (message) {
+//                        case "changeDialpadFont":
+//                            defaultFont = ((MainActivity) getActivity()).getFontForComponent("DIALPAD_FONT");
+//                            for (int id : idList) {
+//                                View v = mView.findViewById(id);
+//                                if (v != null && (v instanceof Button)) {
+//                                    if(!mIsRetroOn)
+//                                    ((Button) v).setTypeface(defaultFont);
+//                                }
+//                            }
+//                            refreshCButtonTypeface();
+//                            break;
+//
+//                    }
+//                }
 //            }
-        };
+////            }
+//        };
 
         return mView;
     }
@@ -300,7 +297,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
     @Override
     public void onStart() {
         super.onStart();
-        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mThemeChangedReciever, new IntentFilter("themeIntent"));
+//        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mThemeChangedReciever, new IntentFilter("themeIntent"));
 
         ((MainActivity)getActivity()).checkCLRButtonSendIntent();
         if(!mIsRetroOn){
@@ -314,10 +311,24 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
 
     }
 
+
+    public void changeFontThickness() {
+        defaultFont = ((MainActivity) getActivity()).getFontForComponent("DIALPAD_FONT");
+        for (int id : idList) {
+            View v = mView.findViewById(id);
+            if (v != null && (v instanceof Button)) {
+                if(!mIsRetroOn)
+                    ((Button) v).setTypeface(defaultFont);
+            }
+        }
+        refreshCButtonTypeface();
+    }
+
     @Override
     public void onResume() {
         super.onResume();
 
+        changeFontThickness();
 
         Log.d(TAG, "Fragment onResume ");
 
@@ -583,7 +594,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
     public void onPause() {
         Log.d(TAG,"Fragment onpause");
 
-        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).unregisterReceiver(mThemeChangedReciever);
+//        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).unregisterReceiver(mThemeChangedReciever);
 //        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).unregisterReceiver(mClearButtonChangedReceiver);
         super.onPause();
     }

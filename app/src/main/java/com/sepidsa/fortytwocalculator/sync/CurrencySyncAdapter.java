@@ -26,6 +26,7 @@ import com.sepidsa.fortytwocalculator.R;
 import com.sepidsa.fortytwocalculator.data.CurrencyContract;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
 
@@ -33,7 +34,7 @@ public class CurrencySyncAdapter extends AbstractThreadedSyncAdapter {
     public final String LOG_TAG = CurrencySyncAdapter.class.getSimpleName();
     // Interval at which to sync with the weather, in seconds.
     // 60 seconds (1 minute) * 180 = 3 hours
-    public static final int SYNC_INTERVAL = 60 * 30;
+    public static final int SYNC_INTERVAL = 60 * 40;
     public static final int SYNC_FLEXTIME = SYNC_INTERVAL/3;
 
     public CurrencySyncAdapter(Context context, boolean autoInitialize) {
@@ -102,9 +103,7 @@ public class CurrencySyncAdapter extends AbstractThreadedSyncAdapter {
             }
             Log.d(LOG_TAG, "Syncing... " + currency + " + " + value + " Inserted");
         }
-
         String[] gold = new String[] { "ons", "mesghal" , "geram18", "geram24", "silver", "sekeb", "sekee", "nim", "rob" , "gerami"};
-
         index = 20;
         for(String item:gold) {
             String value;
@@ -131,16 +130,20 @@ public class CurrencySyncAdapter extends AbstractThreadedSyncAdapter {
 
         if ( cVVector.size() > 0 ) {
 
-            // delete old data so we don't build up an endless history
-            getContext().getContentResolver().delete(CurrencyContract.CurrencyEntry.CONTENT_URI,
-                    null,
-                    null
-            );
+            // only fetch currency when it is being updated from the website
+            if(Calendar.HOUR_OF_DAY>10 && Calendar.HOUR_OF_DAY< 18) {
+                // delete old data so we don't build up an endless history
+                getContext().getContentResolver().delete(CurrencyContract.CurrencyEntry.CONTENT_URI,
+                        null,
+                        null
+                );
 
-            ContentValues[] cvArray = new ContentValues[cVVector.size()];
-            cVVector.toArray(cvArray);
-            getContext().getContentResolver().bulkInsert(CurrencyContract.CurrencyEntry.CONTENT_URI, cvArray);
-            setCurrencyFetchTime();
+                ContentValues[] cvArray = new ContentValues[cVVector.size()];
+                cVVector.toArray(cvArray);
+                getContext().getContentResolver().bulkInsert(CurrencyContract.CurrencyEntry.CONTENT_URI, cvArray);
+                setCurrencyFetchTime();
+
+            }
             Log.d(LOG_TAG, "Sync Complete. " + cVVector.size() + " Inserted");
         }
 

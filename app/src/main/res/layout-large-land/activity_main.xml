@@ -7,7 +7,7 @@
     tools:context=".MainActivity"
     android:id="@+id/activity_body"
     android:elevation="0.2dp"
-
+android:tag="tablet"
     >
 
 
@@ -280,11 +280,6 @@
                         />
 
 
-
-
-
-
-
                 </LinearLayout>
 
 
@@ -304,7 +299,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:name="com.sepidsa.fortytwocalculator.DialpadFragment"
-                    tools:layout="@layout/fragment_dialpad_flat" />
+                    tools:layout="@layout/fragment_dialpad_flat"
+                    android:tag="dialpad_fragment_tag"/>
 
 
             </LinearLayout>

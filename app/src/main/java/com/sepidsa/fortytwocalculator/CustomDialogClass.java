@@ -203,6 +203,7 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
                         break;
                 }
                 set_dialpad_textSize_Button_typeface();
+                ((MainActivity) mContext).sendChangeFontThicknessMessage();
                 break;
 
 
