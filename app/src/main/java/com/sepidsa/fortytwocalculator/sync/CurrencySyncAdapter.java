@@ -78,9 +78,10 @@ public class CurrencySyncAdapter extends AbstractThreadedSyncAdapter {
         );
         Boolean isListEmpty = false;
         if(cur.getCount()==0) isListEmpty = true;
+        
+//      if((Calendar.HOUR_OF_DAY>10 && Calendar.HOUR_OF_DAY< 18) || isListEmpty)
 
         Vector<ContentValues> cVVector = new Vector<ContentValues>(24);
-
 
         String[] currencies = new String[] { "dollar", "eur" , "gbp", "try", "aed", "cad", "cny", "dkk", "hkd" , "myr", "nok", "pkr", "rub", "sar"};
         int[] currencyPri = new int[] {11,12,13,14,15,16,17,31,32,33,34,35,36,37};
@@ -145,6 +146,9 @@ public class CurrencySyncAdapter extends AbstractThreadedSyncAdapter {
 
             }
             Log.d(LOG_TAG, "Sync Complete. " + cVVector.size() + " Inserted");
+            
+            
+            // end if
         }
 
 
