@@ -161,15 +161,6 @@
         android:orientation="horizontal"
         android:gravity="center">
 
-
-        <Button
-            android:id="@+id/buttone"
-            style="@style/CustomButton.SCIENTIFIC"
-            android:layout_weight="1"
-            android:text="@string/e"
-            android:tag="@string/e"
-            />
-
         <Button
             style="@style/CustomButton.SCIENTIFIC"
             android:id="@+id/buttonfact"
@@ -178,7 +169,6 @@
             android:text="@string/factoriel"
             android:tag="@string/factoriel"
             />
-
 
         <Button
             android:id="@+id/buttonpie"
@@ -189,6 +179,8 @@
 
             />
 
+
+
         <Button
             android:id="@+id/buttonln"
             style="@style/CustomButton.SCIENTIFIC"
@@ -197,6 +189,15 @@
             android:tag="@string/ln_tag"
 
             />
+
+        <Button
+            android:id="@+id/buttonlog"
+            style="@style/CustomButton.SCIENTIFIC"
+            android:layout_weight="1"
+            android:text="@string/log"
+            android:tag="@string/log_tag"
+            />
+
 
 
 
@@ -237,15 +238,14 @@
             android:tag="@string/trigonomic"
             />
 
-
-
         <Button
-            android:id="@+id/buttonlog"
+            android:id="@+id/buttonEXP"
             style="@style/CustomButton.SCIENTIFIC"
             android:layout_weight="1"
-            android:text="@string/log"
-            android:tag="@string/log_tag"
+            android:text="@string/EXP"
+            android:tag="@string/EXPTag"
             />
+
 
 
 

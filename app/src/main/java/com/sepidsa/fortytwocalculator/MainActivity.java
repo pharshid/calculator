@@ -19,6 +19,7 @@ import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -44,6 +45,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -224,7 +226,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private Button mCurrencyList;
     private Animation out_anim_clear;
     private AnimatedLogFragment mLogFragment;
+    private DialpadFragment mDialpadFragment;
 
+    private TextSwitcher mTextSwitcher;
     // Container Activity must implement this interface
     public interface OnHeadlineSelectedListener {
         public void onArticleSelected(int position);
@@ -233,6 +237,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG_recreate, "Activity oncreate");
         super.onCreate(savedInstanceState);
+
+
+
+
         showSplashAndTour();
         setTypeFaces();
         if(isRetroThemeSelected()){
@@ -264,6 +272,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mAddLabel.setOnClickListener(this);
         mCurrencyList.setOnClickListener(this);
 
+        mTextSwitcher = (TextSwitcher)findViewById(R.id.text_switcher);
 //        If it's a new instance of application i.e. Not because of rotation or configuration changes =================
         prepareBottomIcons();
         refreshFonts();
@@ -313,9 +322,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 .withAccountHeader(headerResult)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName("راهنما").withIcon(getResources().getDrawable(R.drawable.ic_lightbulb_outline_grey600_24dp)),
-                        new PrimaryDrawerItem().withName("درباره ما").withIcon(getResources().getDrawable(R.drawable.about_us)),
+                        new PrimaryDrawerItem().withName("امتیاز و نظر").withIcon(getResources().getDrawable(R.drawable.ic_thumb_up_outline_grey600_24dp)),
+                        new PrimaryDrawerItem().withName("درباره").withIcon(getResources().getDrawable(R.drawable.about_us)),
                         new PrimaryDrawerItem().withName("پیام به ما").withIcon(getResources().getDrawable(R.drawable.ic_email_outline_grey600_24dp)),
-//                        new DividerDrawerItem(),
                         new PrimaryDrawerItem().withName("نسخه طلایی").withIcon(getResources().getDrawable(R.drawable.badge))
 
                 )
@@ -330,12 +339,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                                 displayHelp();
                                 break;
                             case 1:
-                                displayAbout();
+                                displayRateUs();
                                 break;
                             case 2:
-                                displayContactUs();
+                                displayAbout();
                                 break;
                             case 3:
+                                displayContactUs();
+                                break;
+                            case 4:
                                 displayUpgradeToPremium(0);
                                 break;
                             default:
@@ -345,6 +357,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 })
                 .build();
         mDrawer = result;
+    }
+
+    private void displayRateUs() {
+        Intent giveStarsIntent = new Intent(
+                Intent.ACTION_EDIT,
+                Uri.parse("http://cafebazaar.ir/app/com.sepidsa.fortytwocalculator/?l=fa"));
+        startActivity(giveStarsIntent);
+
     }
 
 
@@ -753,6 +773,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
         else {
             mLayoutState = LANDSCAPE_TABLET;
+            mLogFragment = (AnimatedLogFragment)getSupportFragmentManager().findFragmentByTag("fragment_log_tablet_land");
         }
 
     }
@@ -971,7 +992,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         if  ( mJustPressedExecuteButton){
             if ( Character.isDigit(currentButtonValue.charAt(0))
                     || currentButtonValue.equals(getResources().getString(R.string.Pi))
-                    || currentButtonValue.equals(getResources().getString(R.string.e))) {
+                    || currentButtonValue.equals(getResources().getString(R.string.EXP))) {
                 setMExpressionString("");
                 mButtonsStack.clear();
             }
@@ -1118,7 +1139,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             if(mResultToDisplay.indexOf(".") != -1){
                 mDecimal_fraction = mResultToDisplay.substring(mResultToDisplay.indexOf(".")+ 1);
             }
-            resultTextView.startAnimation(out_anim_execute);
+//            resultTextView.startAnimation(out_anim_execute);
+            mTextSwitcher.startAnimation(out_anim_execute);
             displayTranslation(true);
             checkCLRButtonSendIntent();
 
@@ -1354,14 +1376,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
 
 
-        setMExpressionString(getMExpressionString().toString().replace(",", ""));
+        setMExpressionString(mResultToDisplay.replace(",", ""));
         mButtonsStack.clear();
         mButtonsStack.push(resultTextView.getText().toString().replace(",", ""));
 
         displayTranslation(sendLogMessage);
         if(sendLogMessage) {
             playSound(executeButtonSoundID);
-            resultTextView.startAnimation(out_anim_execute);
+//            resultTextView.startAnimation(out_anim_execute);
+            mTextSwitcher.startAnimation(out_anim_execute);
         }else{
             resultTextView.setText(mResultToDisplay);
 
@@ -1740,6 +1763,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     void prepareAnimationStuff() {
+
         in_anim = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
         out_anim_execute = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
         out_anim_execute.setAnimationListener(new Animation.AnimationListener() {
@@ -1750,36 +1774,43 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                resultTextView.setText(mResultToDisplay);
-                resultTextView.startAnimation(in_anim);
+                //revert here
+//                resultTextView.setText(mResultToDisplay);
+//                resultTextView.startAnimation(in_anim);
+                mTextSwitcher.setCurrentText(mResultToDisplay);
+                mTextSwitcher.startAnimation(in_anim);
+
+
 //                Runnable runnable = new Runnable() {
 //                    public void run() {
+//                        sendLogMessage(getMExpressionString().toString(), mResultToDisplay, false, "");
+//                        if(mLogFragment != null) {
+//                            mLogFragment.scrollToLast();
+//                        }
 //                    }
 //                };
 //                Thread mythread = new Thread(runnable);
 //                mythread.start();
-//
-//                AsyncTask asyncTask = new AsyncTask() {
-//                    @Override
-//                    protected Object doInBackground(Object[] params) {
-//                        sendLogMessage(getMExpressionString().toString(), mResultToDisplay, false, "");
-//                        try {
-//                            Thread.sleep(500);
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
-//                        return null;
-//                    }
-//
-//                    @Override
-//                    protected void onPostExecute(Object o) {
-//                        mLogFragment.scrollToLast();
-//                    }
-//                };
-//                asyncTask.execute();
 
-                sendLogMessage(getMExpressionString().toString(), mResultToDisplay, false, "");
-                mLogFragment.scrollToLast();
+                AsyncTask asyncTask = new AsyncTask() {
+                    @Override
+                    protected Object doInBackground(Object[] params) {
+                        sendLogMessage(getMExpressionString().toString(), mResultToDisplay, false, "");
+                        try {
+                            Thread.sleep(600);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Object o) {
+                        mLogFragment.scrollToLast();
+                    }
+                };
+                asyncTask.execute();
+
 
 
             }
@@ -1799,7 +1830,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             @Override
             public void onAnimationEnd(Animation animation) {
                 resultTextView.setText(mResultToDisplay);
-                resultTextView.startAnimation(in_anim);
+//                resultTextView.startAnimation(in_anim);
+                mTextSwitcher.startAnimation(in_anim);
             }
 
             @Override
@@ -1920,7 +1952,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 getResources().getString(R.string.asech) + "(",
                 getResources().getString(R.string.acsch) + "(",
 
-                getResources().getString(R.string.ln_tag), getResources().getString(R.string.power), getResources().getString(R.string.log_tag), getResources().getString(R.string.tenpowerx) + "(","e",
+                getResources().getString(R.string.ln_tag), getResources().getString(R.string.power), getResources().getString(R.string.log_tag), getResources().getString(R.string.tenpowerx) + "(","E",
                 getResources().getString(R.string.epowerx) + "(",
                 getResources().getString(R.string.sqrt), "+","−","-","÷","×"};
 

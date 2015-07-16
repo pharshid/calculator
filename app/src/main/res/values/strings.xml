@@ -118,7 +118,9 @@
   <string name="factoriel">!</string>
   <string name="random">rand</string>
   <string name="Pi">π</string>
-  <string name="e">e</string>
+  <string name="EXP">EXP</string>
+  <string name="EXPTag">E</string>
+  <string name="neper">e</string>
   <string name="power">^</string>
 
   <string name="devide">÷</string>
@@ -226,7 +228,7 @@
   <string name="favorites_list_empty">اعداد ستاره دار اینجا میاد</string>
   <string name="log_empty_string">لیست خالیست</string>
   <string name="farsi_label">برچسب را وارد کنید</string>
-  <string name="farsi_ok">خب</string>
+  <string name="farsi_ok">ثبت</string>
   <string name="farsi_cancel">بیخیال</string>
   <string name="farsi_clear_log">پاک کردن تاریخچه</string>
   <string name="farsi_clear_log_confirm">آیا مایلید تاریخچه پاک شه؟</string>

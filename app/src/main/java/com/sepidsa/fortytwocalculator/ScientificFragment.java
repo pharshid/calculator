@@ -227,6 +227,8 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
 //            ((Button) mView.findViewById(R.id.buttonlog)).setTag(getResources().getString(R.string.tenpowerx_tag));
 
 //            ((Button) mView.findViewById(R.id.buttonln)).setText(getResources().getString(R.string.epowerx));
+            (mView.findViewById(R.id.buttonpie)).setTag(getResources().getString(R.string.neper));
+            ((Button) mView.findViewById(R.id.buttonpie)).setText(getResources().getString(R.string.neper));
 
             if(arcIsOn) {
                 ((Button) mView.findViewById(R.id.buttonSinus)).setText("a"+ getResources().getString(R.string.csc));
@@ -250,6 +252,9 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
 //            ((Button) mView.findViewById(R.id.buttonlog)).setText(getResources().getString(R.string.log));
 //            ((Button) mView.findViewById(R.id.buttonlog)).setTag(getResources().getString(R.string.log_tag));
 //            ((Button) mView.findViewById(R.id.buttonln)).setText(getResources().getString(R.string.ln));
+            ( mView.findViewById(R.id.buttonpie)).setTag(getResources().getString(R.string.Pi));
+            ((Button) mView.findViewById(R.id.buttonpie)).setText(getResources().getString(R.string.Pi));
+
 
             if(arcIsOn) {
                 ((Button) mView.findViewById(R.id.buttonSinus)).setText("a"+ getResources().getString(R.string.sin));
@@ -325,7 +330,7 @@ public class ScientificFragment extends Fragment implements OnClickListener,Comp
     int[] getScientificButtonsID(){
         int [] buttonsPointerArray;
 
-        buttonsPointerArray = new int[]{ R.id.buttonSinus , R.id.buttonCosinus , R.id.buttonTan , R.id.buttonln , R.id.buttonlog , R.id.buttonlog , R.id.buttonpie , R.id.buttone, R.id.buttonpower ,
+        buttonsPointerArray = new int[]{ R.id.buttonSinus , R.id.buttonCosinus , R.id.buttonTan , R.id.buttonln , R.id.buttonlog , R.id.buttonlog , R.id.buttonpie , R.id.buttonEXP, R.id.buttonpower ,
                 R.id.buttonrad , R.id.buttonfact,  R.id.buttonPow2 , R.id.buttonPow3 , R.id.buttonSinusH , R.id.buttonCosinusH , R.id.buttonTanH , R.id.buttonRandom
                 , R.id.buttonConstant , R.id.buttonARC , R.id.switch_deg_rad ,R.id.buttonInverse
 

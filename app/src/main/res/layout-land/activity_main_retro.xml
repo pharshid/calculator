@@ -111,7 +111,7 @@
                     android:layout_alignParentBottom="true"
                     android:background="@android:color/transparent"
                     android:text="@string/star_icon"
-                    android:textSize="21sp"
+                    android:textSize="22sp"
                     android:visibility="gone"
 
                     />
@@ -148,6 +148,12 @@
 
                 >
 
+                <TextSwitcher
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/text_switcher"
+                    android:layout_toRightOf="@id/currency_list"
+                    >
                 <com.sepidsa.fortytwocalculator.AutoResizeTextView
                     android:id="@+id/result"
                     android:layout_width="match_parent"
@@ -163,10 +169,9 @@
                     android:textColor="@android:color/black"
                     android:scrollbars = "vertical"
                     android:singleLine="false"
-                    android:layout_toRightOf="@id/currency_list"
 
                     />
-
+            </TextSwitcher>
                 <Button
                     android:id="@+id/currency_list"
                     android:layout_width="42dp"
@@ -188,6 +193,8 @@
                     android:background="@android:color/transparent"
                     android:layout_alignTop="@+id/currency_list"
                     android:layout_centerVertical="true"
+                    android:textSize="27sp"
+
                     />
 
 

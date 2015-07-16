@@ -19,8 +19,20 @@
                 android:layout_gravity="center"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
-                android:layout_margin="@dimen/padding_small"
+                android:paddingTop="@dimen/padding_small"
                 />
+
+        <TextView
+            android:id="@+id/update_time_notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="( بروزرسانی از ساعت ۱۱ الی ۶ بعد از ظهر)"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="9sp"
+            android:padding="1dp"
+            />
 
         <TextView
             android:id="@+id/updated_from"

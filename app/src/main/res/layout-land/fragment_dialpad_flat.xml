@@ -177,13 +177,7 @@
             />
 
 
-        <Button
-            android:id="@+id/buttone"
-            style="@style/CustomButton.SCIENTIFIC"
-            android:layout_weight="1"
-            android:text="@string/e"
-            android:tag="@string/e"
-            />
+
 
         <Button
             android:id="@+id/buttonln"
@@ -194,6 +188,13 @@
 
             />
 
+        <Button
+            android:id="@+id/buttonlog"
+            style="@style/CustomButton.SCIENTIFIC"
+            android:layout_weight="1"
+            android:text="@string/log"
+            android:tag="@string/log_tag"
+            />
 
 
         <Button
@@ -330,14 +331,14 @@
             android:tag="@string/trigonomic"
             />
 
-
         <Button
-            android:id="@+id/buttonlog"
+            android:id="@+id/buttonEXP"
             style="@style/CustomButton.SCIENTIFIC"
             android:layout_weight="1"
-            android:text="@string/log"
-            android:tag="@string/log_tag"
+            android:text="@string/EXP"
+            android:tag="@string/EXPTag"
             />
+
 
         <Button
             android:id="@+id/closeParen"

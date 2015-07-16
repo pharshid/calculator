@@ -189,15 +189,6 @@
             />
 
 
-        <Button
-            android:id="@+id/buttone"
-            style="@style/CustomButton.RETRO.black.scientific"
-            android:layout_weight="1"
-            android:text="@string/e"
-            android:tag="@string/e"
-            android:textSize="@dimen/retro_scientific_text_size"
-
-            />
 
         <Button
             android:id="@+id/buttonln"
@@ -207,6 +198,17 @@
             android:tag="@string/ln_tag"
             android:textSize="@dimen/retro_scientific_text_size"
             />
+
+        <Button
+            android:id="@+id/buttonlog"
+            style="@style/CustomButton.RETRO.black.scientific"
+            android:layout_weight="1"
+            android:text="@string/log"
+            android:tag="@string/log_tag"
+            android:textSize="@dimen/retro_scientific_text_size"
+
+            />
+
 
         <Button
             android:id="@+id/openParen"
@@ -350,16 +352,17 @@
 
             />
 
+
+
         <Button
-            android:id="@+id/buttonlog"
+            android:id="@+id/buttonEXP"
             style="@style/CustomButton.RETRO.black.scientific"
             android:layout_weight="1"
-            android:text="@string/log"
-            android:tag="@string/log_tag"
+            android:text="@string/EXP"
+            android:tag="@string/EXPTag"
             android:textSize="@dimen/retro_scientific_text_size"
 
             />
-
 
 
 

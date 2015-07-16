@@ -78,85 +78,87 @@ public class CurrencySyncAdapter extends AbstractThreadedSyncAdapter {
         );
         Boolean isListEmpty = false;
         if(cur.getCount()==0) isListEmpty = true;
-        
-//      if((Calendar.HOUR_OF_DAY>10 && Calendar.HOUR_OF_DAY< 18) || isListEmpty)
 
-        Vector<ContentValues> cVVector = new Vector<ContentValues>(24);
+        Calendar c = Calendar.getInstance();
+        int curerntHour = c.get(Calendar.HOUR_OF_DAY);
+      if((curerntHour > 10 && curerntHour < 18) || isListEmpty) {
 
-        String[] currencies = new String[] { "dollar", "eur" , "gbp", "try", "aed", "cad", "cny", "dkk", "hkd" , "myr", "nok", "pkr", "rub", "sar"};
-        int[] currencyPri = new int[] {11,12,13,14,15,16,17,31,32,33,34,35,36,37};
-        int index = 0;
-        for(String currency:currencies) {
-            String value;
-            ContentValues currencyValues = new ContentValues();
-            Elements elements = userAgent.doc.findEvery("<tr id=\"f-price_" + currency + "\">");
-            elements = elements.findEvery("<td class=\"nf\">");
-            value = elements.innerText();
-            currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_KEY, currency);
-            currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_VALUE, value);
-            currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_TYPE, 1);
-            currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_SELECTED, 1);
-            currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_PRIORITY, currencyPri[index++]);
-            if(isListEmpty) {
-                getContext().getContentResolver().insert(CurrencyContract.CurrencyEntry.CONTENT_URI, currencyValues);
-            } else {
-                cVVector.add(currencyValues);
-            }
-            Log.d(LOG_TAG, "Syncing... " + currency + " + " + value + " Inserted");
-        }
-        String[] gold = new String[] { "ons", "mesghal" , "geram18", "geram24", "silver", "sekeb", "sekee", "nim", "rob" , "gerami"};
-        index = 20;
-        for(String item:gold) {
-            String value;
-            ContentValues currencyValues = new ContentValues();
-            Elements elements = userAgent.doc.findEvery("<tr id=\"f-" + item + "\">");
-            elements = elements.findEvery("<td class=\"nf\">");
-            value = elements.innerText();
-            currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_KEY, item);
-            currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_VALUE, value);
-            currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_TYPE, 2);
-            currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_SELECTED, 1);
-            currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_PRIORITY, index++);
-            if(isListEmpty) {
-                getContext().getContentResolver().insert(CurrencyContract.CurrencyEntry.CONTENT_URI, currencyValues);
-            } else {
-                cVVector.add(currencyValues);
-            }
+          Vector<ContentValues> cVVector = new Vector<ContentValues>(24);
 
-            Log.d(LOG_TAG, "Syncing... " + item + " + " + value + " Inserted");
-            setCurrencyFetchTime();
+          String[] currencies = new String[]{"dollar", "eur", "gbp", "try", "aed", "cad", "cny", "dkk", "hkd", "myr", "nok", "pkr", "rub", "sar"};
+          int[] currencyPri = new int[]{11, 12, 13, 14, 15, 16, 17, 31, 32, 33, 34, 35, 36, 37};
+          int index = 0;
+          for (String currency : currencies) {
+              String value;
+              ContentValues currencyValues = new ContentValues();
+              Elements elements = userAgent.doc.findEvery("<tr id=\"f-price_" + currency + "\">");
+              elements = elements.findEvery("<td class=\"nf\">");
+              value = elements.innerText();
+              currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_KEY, currency);
+              currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_VALUE, value);
+              currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_TYPE, 1);
+              currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_SELECTED, 1);
+              currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_PRIORITY, currencyPri[index++]);
+              if (isListEmpty) {
+                  getContext().getContentResolver().insert(CurrencyContract.CurrencyEntry.CONTENT_URI, currencyValues);
+              } else {
+                  cVVector.add(currencyValues);
+              }
+              Log.d(LOG_TAG, "Syncing... " + currency + " + " + value + " Inserted");
+          }
+          String[] gold = new String[]{"ons", "mesghal", "geram18", "geram24", "silver", "sekeb", "sekee", "nim", "rob", "gerami"};
+          index = 20;
+          for (String item : gold) {
+              String value;
+              ContentValues currencyValues = new ContentValues();
+              Elements elements = userAgent.doc.findEvery("<tr id=\"f-" + item + "\">");
+              elements = elements.findEvery("<td class=\"nf\">");
+              value = elements.innerText();
+              currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_KEY, item);
+              currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_VALUE, value);
+              currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_TYPE, 2);
+              currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_SELECTED, 1);
+              currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_PRIORITY, index++);
+              if (isListEmpty) {
+                  getContext().getContentResolver().insert(CurrencyContract.CurrencyEntry.CONTENT_URI, currencyValues);
+              } else {
+                  cVVector.add(currencyValues);
+              }
 
-        }
+              Log.d(LOG_TAG, "Syncing... " + item + " + " + value + " Inserted");
+              setCurrencyFetchTime();
+
+          }
 
 
-        if ( cVVector.size() > 0 ) {
+          if (cVVector.size() > 0) {
 
-            // only fetch currency when it is being updated from the website
-            if(Calendar.HOUR_OF_DAY>10 && Calendar.HOUR_OF_DAY< 18) {
-                // delete old data so we don't build up an endless history
-                getContext().getContentResolver().delete(CurrencyContract.CurrencyEntry.CONTENT_URI,
-                        null,
-                        null
-                );
+              // only fetch currency when it is being updated from the website
+              // delete old data so we don't build up an endless history
+              getContext().getContentResolver().delete(CurrencyContract.CurrencyEntry.CONTENT_URI,
+                      null,
+                      null
+              );
 
-                ContentValues[] cvArray = new ContentValues[cVVector.size()];
-                cVVector.toArray(cvArray);
-                getContext().getContentResolver().bulkInsert(CurrencyContract.CurrencyEntry.CONTENT_URI, cvArray);
-                setCurrencyFetchTime();
+              ContentValues[] cvArray = new ContentValues[cVVector.size()];
+              cVVector.toArray(cvArray);
+              getContext().getContentResolver().bulkInsert(CurrencyContract.CurrencyEntry.CONTENT_URI, cvArray);
+              setCurrencyFetchTime();
 
-            }
-            Log.d(LOG_TAG, "Sync Complete. " + cVVector.size() + " Inserted");
-            
-            
-            // end if
-        }
+              Log.d(LOG_TAG, "Sync Complete. " + cVVector.size() + " Inserted");
 
+
+              // end if
+          }
+      }
 
     }
     public void setCurrencyFetchTime(){
         //TODO set a cool default theme color
         SharedPreferences appPreferences = getContext().getSharedPreferences("APP", Context.MODE_PRIVATE);
         SharedPreferences.Editor timeEditor = appPreferences.edit() ;
+
+
         Date rightNow= new Date();
 //        String curTime = String.format("%02d:%02d", rightNow.get(Calendar.HOUR_OF_DAY), rightNow.get(Calendar.MINUTE));
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm"); //like "HH:mm" or just "mm", whatever you want

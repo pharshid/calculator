@@ -228,9 +228,8 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
     private void applyInverse(boolean isOn) {
 
         if(isOn){
-//            ((Button) mView.findViewById(R.id.buttonlog)).setTag(getResources().getString(R.string.tenpowerx_tag));
-//            ((Button) mView.findViewById(R.id.buttonlog)).setText(getResources().getString(R.string.tenpowerx));
-//            ((Button) mView.findViewById(R.id.buttonln)).setText(getResources().getString(R.string.epowerx));
+            (mView.findViewById(R.id.buttonpie)).setTag(getResources().getString(R.string.neper));
+            ((Button) mView.findViewById(R.id.buttonpie)).setText(getResources().getString(R.string.neper));
 
             if(arcIsOn) {
                 ((Button) mView.findViewById(R.id.buttonSinus)).setText("a"+ getResources().getString(R.string.csc));
@@ -251,9 +250,9 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
                 ((Button) mView.findViewById(R.id.buttonTanH)).setText(getResources().getString(R.string.coth));
             }
         }else {
-//            ((Button) mView.findViewById(R.id.buttonlog)).setText(getResources().getString(R.string.log));
-//            ((Button) mView.findViewById(R.id.buttonlog)).setTag(getResources().getString(R.string.log_tag));
-//            ((Button) mView.findViewById(R.id.buttonln)).setText(getResources().getString(R.string.ln));
+            ( mView.findViewById(R.id.buttonpie)).setTag(getResources().getString(R.string.Pi));
+            ((Button) mView.findViewById(R.id.buttonpie)).setText(getResources().getString(R.string.Pi));
+
 
             if(arcIsOn) {
                 ((Button) mView.findViewById(R.id.buttonSinus)).setText("a"+ getResources().getString(R.string.sin));
@@ -402,7 +401,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
                 R.id.button6, R.id.button5, R.id.button4, R.id.button1, R.id.button2, R.id.button3, R.id.button0,
                 R.id.buttonPlus, R.id.buttonMinus, R.id.buttonDevide, R.id.buttonTimes, R.id.buttonEquals, R.id.buttonClear, R.id.buttonPoint
                 , R.id.openParen, R.id.closeParen, R.id.buttonPercent,
-                R.id.buttonSinus, R.id.buttonCosinus, R.id.buttonTan, R.id.buttonln, R.id.buttonlog, R.id.buttonlog,  R.id.buttonpie, R.id.buttone, R.id.buttonpower,
+                R.id.buttonSinus, R.id.buttonCosinus, R.id.buttonTan, R.id.buttonln, R.id.buttonlog, R.id.buttonlog,  R.id.buttonpie, R.id.buttonEXP, R.id.buttonpower,
                 R.id.buttonrad , R.id.buttonfact, R.id.switch_deg_rad, R.id.buttonPow2 , R.id.buttonPow3 ,R.id.buttonInverse , R.id.buttonSinusH , R.id.buttonCosinusH , R.id.buttonTanH , R.id.buttonRandom
                 , R.id.buttonConstant , R.id.buttonARC
 
@@ -431,7 +430,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
                 R.id.buttonPoint,
 
 
-                R.id.buttonSinus, R.id.buttonCosinus, R.id.buttonTan, R.id.buttonln, R.id.buttonlog, R.id.buttonlog,  R.id.buttonpie, R.id.buttone, R.id.buttonpower,
+                R.id.buttonSinus, R.id.buttonCosinus, R.id.buttonTan, R.id.buttonln, R.id.buttonlog, R.id.buttonlog,  R.id.buttonpie, R.id.buttonEXP, R.id.buttonpower,
                 R.id.buttonrad , R.id.buttonfact, R.id.switch_deg_rad, R.id.buttonPow2 , R.id.buttonPow3 ,R.id.buttonInverse , R.id.buttonSinusH , R.id.buttonCosinusH , R.id.buttonTanH , R.id.buttonRandom
                 , R.id.buttonConstant , R.id.buttonARC
 
@@ -446,7 +445,7 @@ public class DialpadFragment extends android.support.v4.app.Fragment implements 
         buttonsPointerArray = new int[]{
 
 
-                R.id.buttonSinus, R.id.buttonCosinus, R.id.buttonTan, R.id.buttonln, R.id.buttonlog, R.id.buttonlog,  R.id.buttonpie, R.id.buttone, R.id.buttonpower,
+                R.id.buttonSinus, R.id.buttonCosinus, R.id.buttonTan, R.id.buttonln, R.id.buttonlog, R.id.buttonlog,  R.id.buttonpie, R.id.buttonEXP, R.id.buttonpower,
                 R.id.buttonrad , R.id.buttonfact, R.id.switch_deg_rad, R.id.buttonPow2 , R.id.buttonPow3 ,R.id.buttonInverse , R.id.buttonSinusH , R.id.buttonCosinusH , R.id.buttonTanH , R.id.buttonRandom
                 , R.id.buttonConstant , R.id.buttonARC
 

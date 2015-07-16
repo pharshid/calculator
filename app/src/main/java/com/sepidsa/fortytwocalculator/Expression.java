@@ -30,10 +30,10 @@ public class  Expression{
             s = s.substring( 1 );
         }
 
-//        if( s.length() > 0 && s.charAt( 0 ) == 'e') {
-//            s = s.substring(1);
-//            ans =new BigDecimal( Math.E);
-//        } else
+        if( s.length() > 0 && s.charAt( 0 ) == 'e') {
+            s = s.substring(1);
+            ans =new BigDecimal( Math.E);
+        } else
         if( s.length() > 0 && s.charAt( 0 ) == 'π'){
             s = s.substring( 1 );
             ans =new BigDecimal( Math.PI);
@@ -55,8 +55,8 @@ public class  Expression{
                     s = s.substring( 1 );
                 }
             }
-            if( s.length() > 0 && (s.charAt(0) == 'e' || s.charAt(0) == 'E') ){
-                temp.append( 'e' );
+            if( s.length() > 0 &&  s.charAt(0) == 'E' ){
+                temp.append( 'E' );
                 s = s.substring( 1 );
                 temp.append( s.charAt( 0 ) );
                 s = s.substring( 1 );
@@ -432,10 +432,21 @@ public class  Expression{
             else if (s.indexOf("tan") == 0) {
                 s = s.substring(3);
                 if (mDeg_flag) {
+//                    double input = trig().doubleValue();
+//                    double sin = Math.sin((Math.toRadians(input)));
+//                    double cos = Math.round(Math.cos((Math.toRadians(input))));
+//                    double natije = sin/cos;
+//
+//                    ans = new BigDecimal(natije);
                     ans = new BigDecimal(Math.tan(Math.toRadians(trig().doubleValue())));
-
                 } else {
-                    ans = new BigDecimal(Math.tan(trig().doubleValue()));
+                    double input = trig().doubleValue();
+                    double sin = Math.sin((Math.toRadians(input)));
+                    double cos = Math.round(Math.cos((Math.toRadians(input))));
+                    double natije = sin/cos;
+
+                    ans = new BigDecimal(natije);
+//                    ans = new BigDecimal(Math.tan(trig().doubleValue()));
 
                 }
                 found = true;
@@ -513,6 +524,12 @@ public class  Expression{
 
         if( !found ){
             ans = exp();
+        }
+
+        BigDecimal infiniteNumber= new BigDecimal(1.633123935319537E16);
+
+        if(ans.equals(infiniteNumber)){
+            ans = new BigDecimal(Double.NaN);
         }
         return ans;
     }

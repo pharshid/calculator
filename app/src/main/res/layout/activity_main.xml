@@ -55,23 +55,32 @@ android:tag="phone"
 
 
 
-
-            <com.sepidsa.fortytwocalculator.AutoResizeTextView
-                android:id="@+id/result"
+            <TextSwitcher
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:background="@android:color/darker_gray"
-                style="@style/text_switcher"
-                android:text="0"
+                android:id="@+id/text_switcher"
                 android:layout_toRightOf="@id/btn_add_star"
-                android:gravity="center_vertical|right"
-                android:ellipsize="none"
-                android:scrollbars = "vertical"
-                android:focusable="false"
-                android:paddingLeft="@dimen/padding_medium"
-                android:paddingRight="@dimen/padding_medium"
-                android:includeFontPadding="false"
-                />
+                >
+
+
+                <com.sepidsa.fortytwocalculator.AutoResizeTextView
+                    android:id="@+id/result"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@android:color/darker_gray"
+                    style="@style/text_switcher"
+                    android:text="0"
+                    android:gravity="center_vertical|right"
+                    android:ellipsize="none"
+                    android:scrollbars = "vertical"
+                    android:focusable="false"
+                    android:paddingLeft="@dimen/padding_medium"
+                    android:paddingRight="@dimen/padding_medium"
+                    android:includeFontPadding="false"
+                    />
+
+            </TextSwitcher>
+
 
             <TextView
                 android:id="@+id/scientific_mode_textview"
@@ -114,7 +123,7 @@ android:tag="phone"
                 android:background="@android:color/transparent"
                 android:visibility="gone"
                 android:text="@string/add_label"
-                android:textSize="19sp"
+                android:textSize="21sp"
 
                 />
 
@@ -147,6 +156,7 @@ android:tag="phone"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:textSize="27sp"
 
 
                 />

@@ -27,7 +27,7 @@
     android:background="#ffffff">
 
     <RelativeLayout
-        android:id="@+id/container"
+        android:id="@+id/log_fragment"
         android:animateLayoutChanges="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

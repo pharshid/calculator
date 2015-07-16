@@ -199,7 +199,7 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
                 mHelper.dispose();
                 mHelper = null;
             }
-            Toast.makeText(getApplicationContext(),"خطا در دریافت اطلاعات شما",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"برنامه را از طریق بازار نصب کنید",Toast.LENGTH_LONG).show();
 
         }
     }

@@ -27,10 +27,16 @@
             >
 
 
+            <TextSwitcher
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/text_switcher"
+                android:layout_toRightOf="@id/add_label"
+                >
 
             <com.sepidsa.fortytwocalculator.AutoResizeTextView
                 android:id="@+id/result"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:background="#1abc9c"
                 style="@style/text_switcher"
@@ -39,11 +45,10 @@
                 android:gravity="center_vertical|right"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:layout_toRightOf="@id/add_label"
                 android:paddingRight="@dimen/padding_medium"
                 android:includeFontPadding="false"
                 />
-
+            </TextSwitcher>
             <TextView
                 android:id="@+id/scientific_mode_textview"
                 android:layout_width="wrap_content"
@@ -83,7 +88,7 @@
                 android:background="@android:color/transparent"
                 android:visibility="gone"
                 android:text="@string/star_icon"
-                android:textSize="21sp"
+                android:textSize="22sp"
                 />
             <Button
                 android:id="@+id/add_label"

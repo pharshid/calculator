@@ -73,6 +73,9 @@ public class CurrencyUseFragment  extends DialogFragment implements LoaderManage
         TextView updatedFrom = (TextView)rootView.findViewById(R.id.updated_from);
         updatedFrom.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "yekan.ttf"));
 
+        TextView updateNotice = (TextView)rootView.findViewById(R.id.update_time_notice);
+        updateNotice.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "yekan.ttf"));
+
         mListView = (ListView) rootView.findViewById(R.id.listview_currency);
         TextView empty = (TextView) rootView.findViewById(R.id.empty_list);
         mListView.setEmptyView(empty);
