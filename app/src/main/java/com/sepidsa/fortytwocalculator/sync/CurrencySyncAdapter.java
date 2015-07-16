@@ -19,12 +19,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.jaunt.Elements;
-import com.jaunt.JauntException;
-import com.jaunt.UserAgent;
 import com.sepidsa.fortytwocalculator.R;
 import com.sepidsa.fortytwocalculator.data.CurrencyContract;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -47,13 +49,13 @@ public class CurrencySyncAdapter extends AbstractThreadedSyncAdapter {
 
         try {
 
-            UserAgent userAgent = new UserAgent();                       //create new userAgent (headless browser).
-            userAgent.visit("http://www.eghtesadi.org/");             //visit a url
+            Document doc = Jsoup.connect("http://www.eghtesadi.org/").timeout(20 * 1000).get();
 
-            getCurrencyDataFromHTML(userAgent);
+
+            getCurrencyDataFromHTML(doc);
 
         }
-        catch(JauntException e){         //if an HTTP/connection error occurs, handle JauntException.
+        catch(IOException e){         //if an HTTP/connection error occurs, handle JauntException.
             System.err.println(e);
             e.printStackTrace();
 
@@ -67,7 +69,7 @@ public class CurrencySyncAdapter extends AbstractThreadedSyncAdapter {
      * Fortunately parsing is easy:  constructor takes the JSON string and converts it
      * into an Object hierarchy for us.
      */
-    private void getCurrencyDataFromHTML(UserAgent userAgent) {
+    private void getCurrencyDataFromHTML(Document doc) {
 
         Cursor cur = getContext().getContentResolver().query(
                 CurrencyContract.CurrencyEntry.CONTENT_URI,
@@ -91,9 +93,10 @@ public class CurrencySyncAdapter extends AbstractThreadedSyncAdapter {
           for (String currency : currencies) {
               String value;
               ContentValues currencyValues = new ContentValues();
-              Elements elements = userAgent.doc.findEvery("<tr id=\"f-price_" + currency + "\">");
-              elements = elements.findEvery("<td class=\"nf\">");
-              value = elements.innerText();
+
+              Element arz = doc.getElementById("f-price_" + currency);
+              org.jsoup.select.Elements price = arz.getElementsByClass("nf");
+              value = price.text();
               currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_KEY, currency);
               currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_VALUE, value);
               currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_TYPE, 1);
@@ -111,9 +114,10 @@ public class CurrencySyncAdapter extends AbstractThreadedSyncAdapter {
           for (String item : gold) {
               String value;
               ContentValues currencyValues = new ContentValues();
-              Elements elements = userAgent.doc.findEvery("<tr id=\"f-" + item + "\">");
-              elements = elements.findEvery("<td class=\"nf\">");
-              value = elements.innerText();
+
+              Element arz = doc.getElementById("f-" + item);
+              org.jsoup.select.Elements price = arz.getElementsByClass("nf");
+              value = price.text();
               currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_KEY, item);
               currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_VALUE, value);
               currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_TYPE, 2);
