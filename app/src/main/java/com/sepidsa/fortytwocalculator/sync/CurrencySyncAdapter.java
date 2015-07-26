@@ -27,7 +27,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -55,15 +54,13 @@ public class CurrencySyncAdapter extends AbstractThreadedSyncAdapter {
 
             getCurrencyDataFromHTML(doc);
 
-        } catch(SocketTimeoutException e){         //if an Timeout error occurs, handle JauntException.
-//            System.err.println(e);
-            e.printStackTrace();
-
-        } catch(IOException e){         //if an HTTP/connection error occurs, handle JauntException.
-//            System.err.println(e);
-            e.printStackTrace();
-
-        } catch(NullPointerException e){         //if an error with ilbrary occurs, handle JauntException.
+        }
+//        catch(SocketTimeoutException e){         //if an Timeout error occurs, handle JauntException.
+////            System.err.println(e);
+//            e.printStackTrace();
+//
+//        }
+        catch(IOException e){         //if an HTTP/connection error occurs, handle JauntException.
 //            System.err.println(e);
             e.printStackTrace();
 
