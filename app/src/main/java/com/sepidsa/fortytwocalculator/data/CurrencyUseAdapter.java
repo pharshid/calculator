@@ -35,12 +35,6 @@ public class CurrencyUseAdapter extends CursorAdapter {
         currencyMap.put("cad", context.getString(R.string.farsi_cad));
         currencyMap.put("cny", context.getString(R.string.farsi_cny));
         currencyMap.put("dkk", context.getString(R.string.farsi_dkk));
-        currencyMap.put("hkd", context.getString(R.string.farsi_hkd));
-        currencyMap.put("myr", context.getString(R.string.farsi_myr));
-        currencyMap.put("nok", context.getString(R.string.farsi_nok));
-        currencyMap.put("pkr", context.getString(R.string.farsi_pkr));
-        currencyMap.put("rub", context.getString(R.string.farsi_rub));
-        currencyMap.put("sar", context.getString(R.string.farsi_sar));
         currencyMap.put("ons", context.getString(R.string.farsi_ons));
         currencyMap.put("mesghal", context.getString(R.string.farsi_mesghal));
         currencyMap.put("geram18", context.getString(R.string.farsi_geram18));
