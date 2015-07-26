@@ -85,10 +85,10 @@ public class CurrencySyncAdapter extends AbstractThreadedSyncAdapter {
         int curerntHour = c.get(Calendar.HOUR_OF_DAY);
       if((curerntHour > 10 && curerntHour < 18) || isListEmpty) {
 
-          Vector<ContentValues> cVVector = new Vector<ContentValues>(24);
+          Vector<ContentValues> cVVector = new Vector<ContentValues>(18);
 
-          String[] currencies = new String[]{"dollar", "eur", "gbp", "try", "aed", "cad", "cny", "dkk", "hkd", "myr", "nok", "pkr", "rub", "sar"};
-          int[] currencyPri = new int[]{11, 12, 13, 14, 15, 16, 17, 31, 32, 33, 34, 35, 36, 37};
+          String[] currencies = new String[]{"dollar", "eur", "gbp", "try", "aed", "cad", "cny", "dkk"};
+          int[] currencyPri = new int[]{11, 12, 13, 14, 15, 16, 17, 31};
           int index = 0;
           for (String currency : currencies) {
               String value;
@@ -96,7 +96,7 @@ public class CurrencySyncAdapter extends AbstractThreadedSyncAdapter {
 
               Element arz = doc.getElementById("f-price_" + currency);
               org.jsoup.select.Elements price = arz.getElementsByClass("nf");
-              value = price.text();
+              value = price.first().text();
               currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_KEY, currency);
               currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_VALUE, value);
               currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_TYPE, 1);
@@ -117,7 +117,7 @@ public class CurrencySyncAdapter extends AbstractThreadedSyncAdapter {
 
               Element arz = doc.getElementById("f-" + item);
               org.jsoup.select.Elements price = arz.getElementsByClass("nf");
-              value = price.text();
+              value = price.first().text();
               currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_KEY, item);
               currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_VALUE, value);
               currencyValues.put(CurrencyContract.CurrencyEntry.COLUMN_TYPE, 2);

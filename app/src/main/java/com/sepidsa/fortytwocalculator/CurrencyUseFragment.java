@@ -88,7 +88,7 @@ public class CurrencyUseFragment  extends DialogFragment implements LoaderManage
         mProgress2 = (ProgressBar) rootView.findViewById(R.id.progressBar2);
         mProgress2.setVisibility(View.GONE);
         mProgress2.setIndeterminate(false);
-        mProgress2.setMax(24);
+        mProgress2.setMax(18);
         mProgress2.setProgress(0);
 
 
@@ -125,14 +125,14 @@ public class CurrencyUseFragment  extends DialogFragment implements LoaderManage
         if (mPosition != ListView.INVALID_POSITION) {
             mListView.smoothScrollToPosition(mPosition);
         }
-        if(mCurrencyUseAdapter.getCount() != 24) {
+        if(mCurrencyUseAdapter.getCount() != 18) {
             mProgress.setVisibility(View.VISIBLE);
             mProgress2.setVisibility(View.VISIBLE);
             mProgress2.setProgress(mCurrencyUseAdapter.getCount());
         } else {
             mProgress.setVisibility(View.GONE);
             mProgress2.setVisibility(View.GONE);
-            mProgress2.setProgress(24);
+            mProgress2.setProgress(18);
                     }
     }
     public String getCurrencyFetchTime(){
