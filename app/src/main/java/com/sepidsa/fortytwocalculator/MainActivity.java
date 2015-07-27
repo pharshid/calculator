@@ -1376,7 +1376,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
 
 
-        setMExpressionString(mResultToDisplay.replace(",", ""));
+        //setMExpressionString(mExpressionBuffer.replace(",", ""));
         mButtonsStack.clear();
         mButtonsStack.push(resultTextView.getText().toString().replace(",", ""));
 
