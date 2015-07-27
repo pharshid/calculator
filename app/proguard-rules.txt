@@ -17,5 +17,5 @@
 #}
 
 
--dontwarn com.jaunt.**
+-keep class org.jsoup.** { *; }
 
