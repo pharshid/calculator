@@ -1376,19 +1376,22 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
 
 
-        //setMExpressionString(mExpressionBuffer.replace(",", ""));
+
         mButtonsStack.clear();
         mButtonsStack.push(resultTextView.getText().toString().replace(",", ""));
 
         displayTranslation(sendLogMessage);
+
         if(sendLogMessage) {
             playSound(executeButtonSoundID);
 //            resultTextView.startAnimation(out_anim_execute);
             mTextSwitcher.startAnimation(out_anim_execute);
+
         }else{
             resultTextView.setText(mResultToDisplay);
 
         }
+
         return false;
     }
 
@@ -1890,6 +1893,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         cv.put(LogContract.LogEntry.COLUMN_STARRED, 0);
 
         mLatestInsertedId = ContentUris.parseId(getContentResolver().insert(LogContract.LogEntry.CONTENT_URI,cv));
+        setMExpressionString(mResultToDisplay.replace(",", ""));
 
     }
 
