@@ -19,3 +19,21 @@
 
 -keep class org.jsoup.** { *; }
 
+-dontwarn java.nio.file.Files
+-dontwarn java.nio.file.Path
+-dontwarn java.nio.file.OpenOption
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+-dontwarn android.support.v4.**
+-dontskipnonpubliclibraryclassmembers
+
+-dontwarn org.apache.http.**
+-dontwarn android.net.http.AndroidHttpClient
+-dontwarn com.google.android.gms.**
+-dontwarn com.viewpagerindicator.**
+-dontwarn com.android.volley.toolbox.**
+
+-dontwarn android.support.**
+
+-dontwarn android.support.v7.**
+-keep class android.support.v7.** { *; }
+-keep interface android.support.v7.** { *; }

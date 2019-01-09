@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 
 public class ParallaxPagerActivity extends FragmentActivity {
 
-    static final int NUM_PAGES = 6;
+    static final int NUM_PAGES = 5;
 
     ViewPager pager;
     PagerAdapter pagerAdapter;
@@ -178,8 +178,8 @@ public class ParallaxPagerActivity extends FragmentActivity {
             mFragments[1] = ParallaxPane.newInstance(R.layout.fragment_app_tour_pane_two);
             mFragments[2] = ParallaxPane.newInstance(R.layout.fragment_app_tour_pane_three);
             mFragments[3] = ParallaxPane.newInstance(R.layout.fragment_app_tour_pane_four);
-            mFragments[4] = ParallaxPane.newInstance(R.layout.fragment_app_tour_pane_five);
-            mFragments[5] = ParallaxPane.newInstance(R.layout.fragment_parallax_pane_transparent);
+//            mFragments[4] = ParallaxPane.newInstance(R.layout.fragment_app_tour_pane_five);
+            mFragments[4] = ParallaxPane.newInstance(R.layout.fragment_parallax_pane_transparent);
         }
 
         @Override

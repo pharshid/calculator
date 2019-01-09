@@ -266,9 +266,9 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
             if (mHelper != null && mSetupFinished) {
 //                try {
                 mHelper.flagEndAsync();
-                    mHelper.launchPurchaseFlow(this, SKU_PREMIUM, RC_REQUEST,
-                            mPurchaseFinishedListener, "");
-                    // Fade the premium tour
+                mHelper.launchPurchaseFlow(this, SKU_PREMIUM, RC_REQUEST,
+                        mPurchaseFinishedListener, "");
+                // Fade the premium tour
 //                } catch (Exception e) {
 //                    mHelper.dispose();
 //                    mHelper = null;
@@ -457,11 +457,11 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
 
         Log.d(TAG, "Destroying helper.");
         if (mHelper != null) {
-          try {
+            try {
 //              mHelper.flagEndAsync();
-              mHelper.dispose();
-          }catch (Exception e){}
-            
+                mHelper.dispose();
+            }catch (Exception e){}
+
             mHelper = null;
         }
         Log.d(TAG, "Destroying helper.");
@@ -527,13 +527,13 @@ public class PremiumShowcasePagerActivity extends FragmentActivity {
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
             mFragments = new Fragment[NUM_PAGES];
-            mFragments[0] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_one);
+            mFragments[0] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_three); //history
+            mFragments[1] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_four);//labels
 
+            mFragments[2] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_two); //clasic theme
+            mFragments[3] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_one); //pallet color
+            mFragments[4] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_five);//support
 
-            mFragments[1] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_two);
-            mFragments[2] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_three);
-            mFragments[3] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_four);
-            mFragments[4] = ParallaxPane.newInstance(R.layout.fragment_premium_tour_pane_five);
             mFragments[5] = ParallaxPane.newInstance(R.layout.fragment_parallax_pane_transparent);
             Intent intent = getIntent();
             int page = intent.getIntExtra("page", 0);

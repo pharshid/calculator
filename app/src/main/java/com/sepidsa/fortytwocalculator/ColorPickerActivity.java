@@ -74,6 +74,8 @@ public class ColorPickerActivity extends FragmentActivity implements ColorPicker
         fontChaange.setTypeface(mYekanFont);
         fontChaange = (TextView) findViewById(R.id.textview_use_classic);
         fontChaange.setTypeface(mYekanFont);
+        fontChaange = (TextView) findViewById(R.id.textview_go_gold_tip);
+        fontChaange.setTypeface(mYekanFont);
         fontChaange = (TextView) findViewById(R.id.textView_keypad);
         fontChaange.setTypeface(mYekanFont);
         fontChaange.setTextColor(getDialpadFontColor());

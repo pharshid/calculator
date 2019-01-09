@@ -3,6 +3,9 @@ package com.sepidsa.fortytwocalculator;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -13,10 +16,12 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -26,6 +31,7 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.text.InputType;
@@ -78,7 +84,7 @@ import java.util.Stack;
 public class MainActivity extends FragmentActivity implements View.OnClickListener,  CompoundButton.OnCheckedChangeListener {
     private static final String BAZAAR_PACKAGE_NAME = "com.farsitel.bazaar";
     OnHeadlineSelectedListener mCallback;
-
+//     MediaPlayer mMediaPlayer = null;
     private static final String FRAGMENT_TAG_LOG_ = "log fragment";
     public static final byte LANGUAGE_ARABIC = 3 ;
     static final String TAG = "mainactivity";
@@ -178,7 +184,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public Animation mBlink;
     private SoundPool mSoundPool;
     private boolean mSoundPoolLoaded = false;
-    private int numericButtonSoundID
+    private MediaPlayer numericButtonSoundID
             , executeButtonSoundID
             , clearAllButtonSoundID
             , operatorsButtonSoundID
@@ -242,6 +248,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
         showSplashAndTour();
+        if(!getGoGoldNotifViewed()&&!getPremiumPreference()){
+            setGoGoldNotifViewed(true);
+            goGoldNotif();
+        }
         setTypeFaces();
         if(isRetroThemeSelected()){
             setContentView(R.layout.activity_main_retro);
@@ -279,6 +289,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         setIconButtons();
         buildNavigationDrawer();
         CurrencySyncAdapter.initializeSyncAdapter(this);
+
 
     }
 
@@ -588,13 +599,39 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
     }
 
+public void goGoldNotif() {
+    // First let's define the intent to trigger when notification is selected
+// Start out by creating a normal intent (in this case to open an activity)
+    Intent intent = new Intent(this, PremiumShowcasePagerActivity.class);
+    // Next, let's turn this into a PendingIntent using
+//   public static PendingIntent getActivity(Context context, int requestCode,
+//       Intent intent, int flags)
+    int requestID = (int) System.currentTimeMillis(); //unique requestID to differentiate between various notification with same NotifId
+    int flags = PendingIntent.FLAG_CANCEL_CURRENT; // cancel old intent and create new one
+    PendingIntent pIntent = PendingIntent.getActivity(this, requestID, intent, flags);
+    // Now we can attach this to the notification using setContentIntent
+    Notification noti =
+            new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.drawable.ic_launcher)
+                    .setContentTitle("ماشین حساب ۴۲")
+                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher))
+                    .setContentText("نسخه طلایی ماشین حساب ۴۲ رو امتحان کردی ؟")
+                    .setContentIntent(pIntent).build();
 
+// Hide the notification after its selected
+//    noti.setAutoCancel(true);
+    noti.flags |= Notification.FLAG_AUTO_CANCEL;
 
+    NotificationManager mNotificationManager =
+            (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+// mId allows you to update the notification later on.
+    mNotificationManager.notify(0, noti);
+
+}
     @Override
     protected void onStart() {
 
         super.onStart();
-
 
         setResultTextBox();
 
@@ -1202,6 +1239,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     void showSplashAndTour(){
         if(!getSplashAndTourViewed()){
             setSplashAndTourViewed(true);
+
             Intent intent = new Intent(this, ParallaxPagerActivity.class);
             overridePendingTransition(R.anim.appear, R.anim.disappear);
             startActivity(intent);
@@ -1255,6 +1293,18 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         editor.apply();
     }
+ private void setGoGoldNotifViewed(boolean hasViewed) {
+        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
+        SharedPreferences.Editor editor = appPreferences.edit();
+
+        editor.putBoolean("hasViewedGoGoldNotif", hasViewed);
+        editor.apply();
+    }
+    private boolean getGoGoldNotifViewed() {
+        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
+        return  appPreferences.getBoolean("hasViewedGoGoldNotif",false);
+    }
+
 
     private boolean getPopulateConstantDatabase() {
         SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("APP", MODE_PRIVATE);
@@ -1693,8 +1743,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
 
-    public void playSound(int id) {
-        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+    public void playSound(MediaPlayer _mediaplayer) {
+      MediaPlayer  mMediaplayer = _mediaplayer;
+        _mediaplayer.start();
+     /*   AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         float maxVolume = (float) audioManager
                 .getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         float volume;
@@ -1707,12 +1759,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
 
         // Is the sound mSoundPoolLoaded already?
-        if (mSoundPoolLoaded) {
-            mSoundPool.play(id, volume, volume, 1, 0, 1f);
-        }
+//        if (mSoundPoolLoaded) {
+            mSoundPool.play(id, volume, volume, 1, 0, 0.99f);
+//        }*/
     }
     void prepareSoundStuff(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+     /*   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mSoundPool =  createNewSoundPool();
         }else{
             mSoundPool =  createOldSoundPool();
@@ -1723,28 +1775,28 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                                        int status) {
                 mSoundPoolLoaded = true;
             }
-        });
+        });*/
         if (isRetroThemeSelected()) {
-            numericButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.keypress_retro, 1);
-            executeButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.equal_retro, 1);
-            clearAllButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.clear_retro, 1);
-            operatorsButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.operator_retro, 1);
-            errorSoundID = mSoundPool.load(getApplicationContext(), R.raw.error_retro, 1);
+            numericButtonSoundID = MediaPlayer.create(this , R.raw.keypress_retro);
+            executeButtonSoundID = MediaPlayer.create(this, R.raw.equal_retro);
+            clearAllButtonSoundID = MediaPlayer.create(this, R.raw.clear_retro);
+            operatorsButtonSoundID = MediaPlayer.create(this, R.raw.operator_retro);
+            errorSoundID = MediaPlayer.create(this, R.raw.error_retro);
         }else{
-            numericButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.keypress, 1);
-            executeButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.equal, 1);
-            clearAllButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.clear, 1);
-            operatorsButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.keypress, 1);
-            errorSoundID = mSoundPool.load(getApplicationContext(), R.raw.error, 1);
+            numericButtonSoundID = MediaPlayer.create(this, R.raw.keypress);
+            executeButtonSoundID = MediaPlayer.create(this, R.raw.equal);
+            clearAllButtonSoundID = MediaPlayer.create(this, R.raw.clear);
+            operatorsButtonSoundID = MediaPlayer.create(this, R.raw.keypress);
+            errorSoundID = MediaPlayer.create(this, R.raw.error);
         }
-        backSpaceButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
-        mHasVolumeSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
-        mAddStarSoundID = mSoundPool.load(getApplicationContext(), R.raw.fairy, 1);
+        backSpaceButtonSoundID = MediaPlayer.create(this, R.raw.backspace);
+        mHasVolumeSoundID = MediaPlayer.create(this, R.raw.backspace);
+        mAddStarSoundID = MediaPlayer.create(this, R.raw.fairy);
 
 
     }
 
-    public  int getClearSoundID(){
+    public  MediaPlayer getClearSoundID(){
         return clearAllButtonSoundID;
     }
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -2239,7 +2291,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     public boolean getPremiumPreference(){
         SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("purchases", Context.MODE_PRIVATE);
-        return  appPreferences.getBoolean("isPremium",false);
+//        return  appPreferences.getBoolean("isPremium",false);
+        return true;
     }
 
     public static void setClipView(View view, boolean clip) {

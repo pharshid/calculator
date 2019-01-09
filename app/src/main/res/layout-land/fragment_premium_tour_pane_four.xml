@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:text="ثابت های دلخواه خود را به برنامه اضافه کنید"
+android:text= "سرعت نور، قطر خورشید و یا حتی قیمت یک کیلو شیرینی رو به عنوان یک ثابت ذخیره کنید"
             android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:layout_below="@+id/tour_title"

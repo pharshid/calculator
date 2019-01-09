@@ -30,7 +30,7 @@
             android:layout_alignParentLeft="true"
             android:textColor="@android:color/white"
             android:paddingLeft="@dimen/padding_small"
-            android:text="ver 2.08"
+            android:text="ver 2.11"
             />
 
 
