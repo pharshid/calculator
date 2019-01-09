@@ -21,7 +21,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -84,7 +83,7 @@ import java.util.Stack;
 public class MainActivity extends FragmentActivity implements View.OnClickListener,  CompoundButton.OnCheckedChangeListener {
     private static final String BAZAAR_PACKAGE_NAME = "com.farsitel.bazaar";
     OnHeadlineSelectedListener mCallback;
-//     MediaPlayer mMediaPlayer = null;
+
     private static final String FRAGMENT_TAG_LOG_ = "log fragment";
     public static final byte LANGUAGE_ARABIC = 3 ;
     static final String TAG = "mainactivity";
@@ -184,7 +183,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public Animation mBlink;
     private SoundPool mSoundPool;
     private boolean mSoundPoolLoaded = false;
-    private MediaPlayer numericButtonSoundID
+    private int numericButtonSoundID
             , executeButtonSoundID
             , clearAllButtonSoundID
             , operatorsButtonSoundID
@@ -1743,10 +1742,8 @@ public void goGoldNotif() {
     }
 
 
-    public void playSound(MediaPlayer _mediaplayer) {
-      MediaPlayer  mMediaplayer = _mediaplayer;
-        _mediaplayer.start();
-     /*   AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+    public void playSound(int id) {
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         float maxVolume = (float) audioManager
                 .getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         float volume;
@@ -1759,12 +1756,15 @@ public void goGoldNotif() {
         }
 
         // Is the sound mSoundPoolLoaded already?
-//        if (mSoundPoolLoaded) {
+        if (mSoundPoolLoaded) {
             mSoundPool.play(id, volume, volume, 1, 0, 0.99f);
-//        }*/
+
+
+
+        }
     }
     void prepareSoundStuff(){
-     /*   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mSoundPool =  createNewSoundPool();
         }else{
             mSoundPool =  createOldSoundPool();
@@ -1775,28 +1775,28 @@ public void goGoldNotif() {
                                        int status) {
                 mSoundPoolLoaded = true;
             }
-        });*/
+        });
         if (isRetroThemeSelected()) {
-            numericButtonSoundID = MediaPlayer.create(this , R.raw.keypress_retro);
-            executeButtonSoundID = MediaPlayer.create(this, R.raw.equal_retro);
-            clearAllButtonSoundID = MediaPlayer.create(this, R.raw.clear_retro);
-            operatorsButtonSoundID = MediaPlayer.create(this, R.raw.operator_retro);
-            errorSoundID = MediaPlayer.create(this, R.raw.error_retro);
+            numericButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.keypress_retro, 1);
+            executeButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.equal_retro, 1);
+            clearAllButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.clear_retro, 1);
+            operatorsButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.operator_retro, 1);
+            errorSoundID = mSoundPool.load(getApplicationContext(), R.raw.error_retro, 1);
         }else{
-            numericButtonSoundID = MediaPlayer.create(this, R.raw.keypress);
-            executeButtonSoundID = MediaPlayer.create(this, R.raw.equal);
-            clearAllButtonSoundID = MediaPlayer.create(this, R.raw.clear);
-            operatorsButtonSoundID = MediaPlayer.create(this, R.raw.keypress);
-            errorSoundID = MediaPlayer.create(this, R.raw.error);
+            numericButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.keypress, 1);
+            executeButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.equal, 1);
+            clearAllButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.clear, 1);
+            operatorsButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.keypress, 1);
+            errorSoundID = mSoundPool.load(getApplicationContext(), R.raw.error, 1);
         }
-        backSpaceButtonSoundID = MediaPlayer.create(this, R.raw.backspace);
-        mHasVolumeSoundID = MediaPlayer.create(this, R.raw.backspace);
-        mAddStarSoundID = MediaPlayer.create(this, R.raw.fairy);
+        backSpaceButtonSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
+        mHasVolumeSoundID = mSoundPool.load(getApplicationContext(), R.raw.backspace, 1);
+        mAddStarSoundID = mSoundPool.load(getApplicationContext(), R.raw.fairy, 1);
 
 
     }
 
-    public  MediaPlayer getClearSoundID(){
+    public  int getClearSoundID(){
         return clearAllButtonSoundID;
     }
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -2291,8 +2291,7 @@ public void goGoldNotif() {
 
     public boolean getPremiumPreference(){
         SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("purchases", Context.MODE_PRIVATE);
-//        return  appPreferences.getBoolean("isPremium",false);
-        return true;
+        return  appPreferences.getBoolean("isPremium",false);
     }
 
     public static void setClipView(View view, boolean clip) {
